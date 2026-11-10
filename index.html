@@ -311,7 +311,7 @@
         luxury: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><path d="M15 75 L25 45 L70 20 L140 20 L180 45 L195 60 L195 75 Z" fill="#e2e8f0" /><path d="M45 45 L80 28 L130 28 L160 45 Z" fill="#334155" /><circle cx="55" cy="75" r="16" fill="#0f172a" /><circle cx="55" cy="75" r="9" fill="#fbbf24" /><circle cx="150" cy="75" r="16" fill="#0f172a" /><circle cx="150" cy="75" r="9" fill="#fbbf24" /></svg>`
     };
 
-    // ФОТО МАШИН (Каждой машине - своя картинка)
+    // ФОТО МАШИН (Использован прокси weserv.nl, чтобы обойти блокировки)
     const CONFIG = {
         startBalanceRub: 5000000,
         startBalanceToken: 10000,
@@ -335,33 +335,33 @@
         
         cars: {
             common: [
-                { brand: 'LADA', name: 'Granta', img: 'https://i.postimg.cc/brn1c3yW/lada.jpg', svg: SVG_CARS.hatch, price: 1200000 },
-                { brand: 'KIA', name: 'Rio', img: 'https://i.postimg.cc/vH8zFzKq/kia.jpg', svg: SVG_CARS.hatch, price: 1800000 },
-                { brand: 'HYUNDAI', name: 'Solaris', img: 'https://i.postimg.cc/g2xGzG3y/hyundai.jpg', svg: SVG_CARS.sedan, price: 2000000 },
-                { brand: 'VW', name: 'Polo', img: 'https://i.postimg.cc/5tWqJt2D/vw.jpg', svg: SVG_CARS.hatch, price: 1900000 }
+                { brand: 'LADA', name: 'Granta', img: 'https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/4/44/Lada_Granta_2190_%282018%29.jpg/640px-Lada_Granta_2190_%282018%29.jpg', svg: SVG_CARS.hatch, price: 1200000 },
+                { brand: 'KIA', name: 'Rio', img: 'https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/4/40/2018_Kia_Rio_%28YB%29_Sport_hatchback_%28Australia%29.jpg/640px-2018_Kia_Rio_%28YB%29_Sport_hatchback_%28Australia%29.jpg', svg: SVG_CARS.hatch, price: 1800000 },
+                { brand: 'HYUNDAI', name: 'Solaris', img: 'https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/1/13/2017_Hyundai_Solaris_%28Russia%29_front_3.4.17.jpg/640px-2017_Hyundai_Solaris_%28Russia%29_front_3.4.17.jpg', svg: SVG_CARS.sedan, price: 2000000 },
+                { brand: 'VW', name: 'Polo', img: 'https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/f/fa/2018_Volkswagen_Polo_SE_TSI_1.0_Front.jpg/640px-2018_Volkswagen_Polo_SE_TSI_1.0_Front.jpg', svg: SVG_CARS.hatch, price: 1900000 }
             ],
             rare: [
-                { brand: 'TOYOTA', name: 'Camry', img: 'https://i.postimg.cc/W3pQ3z6x/toyota.jpg', svg: SVG_CARS.sedan, price: 4500000 },
-                { brand: 'KIA', name: 'K5', img: 'https://i.postimg.cc/5tWqJt2D/kia2.jpg', svg: SVG_CARS.sedan, price: 4000000 },
-                { brand: 'SKODA', name: 'Superb', img: 'https://i.postimg.cc/g2xGzG3y/skoda.jpg', svg: SVG_CARS.sedan, price: 4200000 },
-                { brand: 'MAZDA', name: 'Mazda 6', img: 'https://i.postimg.cc/brn1c3yW/mazda.jpg', svg: SVG_CARS.sedan, price: 3800000 }
+                { brand: 'TOYOTA', name: 'Camry', img: 'https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/a/af/2018_Toyota_Camry_%28ASV70R%29_Ascent_sedan_%28Australia%29.jpg/640px-2018_Toyota_Camry_%28ASV70R%29_Ascent_sedan_%28Australia%29.jpg', svg: SVG_CARS.sedan, price: 4500000 },
+                { brand: 'KIA', name: 'K5', img: 'https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/0/0d/2020_Kia_K5_1.6_T-GDi_Black_Premium_%28cropped%29.jpg/640px-2020_Kia_K5_1.6_T-GDi_Black_Premium_%28cropped%29.jpg', svg: SVG_CARS.sedan, price: 4000000 },
+                { brand: 'SKODA', name: 'Superb', img: 'https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/1/15/2019_Skoda_Superb_SE_L_TSi_1.5_Front.jpg/640px-2019_Skoda_Superb_SE_L_TSi_1.5_Front.jpg', svg: SVG_CARS.sedan, price: 4200000 },
+                { brand: 'MAZDA', name: 'Mazda 6', img: 'https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/2/27/2018_Mazda6_%28GL%29_Touring_wagon_%28Australia%29.jpg/640px-2018_Mazda6_%28GL%29_Touring_wagon_%28Australia%29.jpg', svg: SVG_CARS.sedan, price: 3800000 }
             ],
             epic: [
-                { brand: 'BMW', name: '5 Series', img: 'https://i.postimg.cc/W3pQ3z6x/bmw.jpg', svg: SVG_CARS.sport, price: 9000000 },
-                { brand: 'MERCEDES', name: 'E-Class', img: 'https://i.postimg.cc/vH8zFzKq/mercedes.jpg', svg: SVG_CARS.sedan, price: 8500000 },
-                { brand: 'AUDI', name: 'A6', img: 'https://i.postimg.cc/5tWqJt2D/audi.jpg', svg: SVG_CARS.sedan, price: 8000000 },
-                { brand: 'LEXUS', name: 'ES', img: 'https://i.postimg.cc/g2xGzG3y/lexus.jpg', svg: SVG_CARS.sedan, price: 7500000 }
+                { brand: 'BMW', name: '5 Series', img: 'https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/1/1b/2017_BMW_530i_xDrive_M_Sport_%28G30%29_sedan_%28Australia%29.jpg/640px-2017_BMW_530i_xDrive_M_Sport_%28G30%29_sedan_%28Australia%29.jpg', svg: SVG_CARS.sport, price: 9000000 },
+                { brand: 'MERCEDES', name: 'E-Class', img: 'https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Mercedes-Benz_W213_IMG_2571.jpg/640px-Mercedes-Benz_W213_IMG_2571.jpg', svg: SVG_CARS.sedan, price: 8500000 },
+                { brand: 'AUDI', name: 'A6', img: 'https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/9/9c/2018_Audi_A6_40_TDI_S_line_front_4.15.18.jpg/640px-2018_Audi_A6_40_TDI_S_line_front_4.15.18.jpg', svg: SVG_CARS.sedan, price: 8000000 },
+                { brand: 'LEXUS', name: 'ES', img: 'https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/1/1c/2019_Lexus_ES_350_%28GSZ10%29_Luxury_sedan_%28Australia%29.jpg/640px-2019_Lexus_ES_350_%28GSZ10%29_Luxury_sedan_%28Australia%29.jpg', svg: SVG_CARS.sedan, price: 7500000 }
             ],
             legend: [
-                { brand: 'MERCEDES', name: 'G-Class', img: 'https://i.postimg.cc/brn1c3yW/gclass.jpg', svg: SVG_CARS.suv, price: 30000000 },
-                { brand: 'PORSCHE', name: '911', img: 'https://i.postimg.cc/W3pQ3z6x/porsche.jpg', svg: SVG_CARS.sport, price: 35000000 },
-                { brand: 'BMW', name: 'M5 CS', img: 'https://i.postimg.cc/vH8zFzKq/bmw2.jpg', svg: SVG_CARS.sport, price: 32000000 },
-                { brand: 'ROLLS-ROYCE', name: 'Phantom', img: 'https://i.postimg.cc/5tWqJt2D/rolls.jpg', svg: SVG_CARS.luxury, price: 80000000 }
+                { brand: 'MERCEDES', name: 'G-Class', img: 'https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/82/Mercedes-Benz_G-Class_W463_%282018%29.jpg/640px-Mercedes-Benz_G-Class_W463_%282018%29.jpg', svg: SVG_CARS.suv, price: 30000000 },
+                { brand: 'PORSCHE', name: '911', img: 'https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Porsche_992_Carrera_S_IMG_2378.jpg/640px-Porsche_992_Carrera_S_IMG_2378.jpg', svg: SVG_CARS.sport, price: 35000000 },
+                { brand: 'BMW', name: 'M5 CS', img: 'https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/2/29/2021_BMW_M5_CS_1.jpg/640px-2021_BMW_M5_CS_1.jpg', svg: SVG_CARS.sport, price: 32000000 },
+                { brand: 'ROLLS-ROYCE', name: 'Phantom', img: 'https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/4/44/2018_Rolls-Royce_Phantom_VIII_Autobiography.jpg/640px-2018_Rolls-Royce_Phantom_VIII_Autobiography.jpg', svg: SVG_CARS.luxury, price: 80000000 }
             ]
         }
     };
 
-    const STORAGE_KEY = 'autogen_real_v12';
+    const STORAGE_KEY = 'autogen_real_v13';
 
     const STORY_LEVELS = [
         { earned: 0, rank: 'Новичок', desc: 'Ты только начинаешь свой путь.' },
@@ -843,4 +843,4 @@
     loadState(); updateUI(); checkDailyReward();
 </script>
 </body>
-                                                                          </html>
+    </html>
