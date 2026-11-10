@@ -311,7 +311,6 @@
         luxury: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><path d="M15 75 L25 45 L70 20 L140 20 L180 45 L195 60 L195 75 Z" fill="#e2e8f0" /><path d="M45 45 L80 28 L130 28 L160 45 Z" fill="#334155" /><circle cx="55" cy="75" r="16" fill="#0f172a" /><circle cx="55" cy="75" r="9" fill="#fbbf24" /><circle cx="150" cy="75" r="16" fill="#0f172a" /><circle cx="150" cy="75" r="9" fill="#fbbf24" /></svg>`
     };
 
-    // ФОТО МАШИН (прямые ссылки на PNG с прозрачным фоном)
     const CONFIG = {
         startBalanceRub: 5000000,
         startBalanceToken: 10000,
@@ -334,31 +333,32 @@
         specialNumbers: ['777', '001', '100', '007', '666', '999', '555', '123', '321'],
         
         cars: {
-    common: [
-        { brand: 'LADA', name: 'Granta', img: 'granta.png', svg: SVG_CARS.hatch, price: 1200000 },
-        { brand: 'KIA', name: 'Rio', img: 'rio.png', svg: SVG_CARS.hatch, price: 1800000 },
-        { brand: 'HYUNDAI', name: 'Solaris', img: 'solaris.png', svg: SVG_CARS.sedan, price: 2000000 },
-        { brand: 'VW', name: 'Polo', img: 'polo.png', svg: SVG_CARS.hatch, price: 1900000 }
-    ],
-    rare: [
-        { brand: 'TOYOTA', name: 'Camry', img: 'camry.png', svg: SVG_CARS.sedan, price: 4500000 },
-        { brand: 'KIA', name: 'K5', img: 'k5.png', svg: SVG_CARS.sedan, price: 4000000 },
-        { brand: 'SKODA', name: 'Superb', img: 'superb.png', svg: SVG_CARS.sedan, price: 4200000 },
-        { brand: 'MAZDA', name: 'Mazda 6', img: 'mazda6.png', svg: SVG_CARS.sedan, price: 3800000 }
-    ],
-    epic: [
-        { brand: 'BMW', name: '5 Series', img: 'bmw5.png', svg: SVG_CARS.sport, price: 9000000 },
-        { brand: 'MERCEDES', name: 'E-Class', img: 'eclass.png', svg: SVG_CARS.sedan, price: 8500000 },
-        { brand: 'AUDI', name: 'A6', img: 'a6.png', svg: SVG_CARS.sedan, price: 8000000 },
-        { brand: 'LEXUS', name: 'ES', img: 'lexus_es.png', svg: SVG_CARS.sedan, price: 7500000 }
-    ],
-    legend: [
-        { brand: 'MERCEDES', name: 'G-Class', img: 'gclass.png', svg: SVG_CARS.suv, price: 30000000 },
-        { brand: 'PORSCHE', name: '911', img: 'porsche911.png', svg: SVG_CARS.sport, price: 35000000 },
-        { brand: 'BMW', name: 'M5 CS', img: 'm5cs.png', svg: SVG_CARS.sport, price: 32000000 },
-        { brand: 'ROLLS-ROYCE', name: 'Phantom', img: 'phantom.png', svg: SVG_CARS.luxury, price: 80000000 }
-    ]
+            common: [
+                { brand: 'LADA', name: 'Granta', img: 'granta.png', svg: SVG_CARS.hatch, price: 1200000 },
+                { brand: 'KIA', name: 'Rio', img: 'rio.png', svg: SVG_CARS.hatch, price: 1800000 },
+                { brand: 'HYUNDAI', name: 'Solaris', img: 'solaris.png', svg: SVG_CARS.sedan, price: 2000000 },
+                { brand: 'VW', name: 'Polo', img: 'polo.png', svg: SVG_CARS.hatch, price: 1900000 }
+            ],
+            rare: [
+                { brand: 'TOYOTA', name: 'Camry', img: 'camry.png', svg: SVG_CARS.sedan, price: 4500000 },
+                { brand: 'KIA', name: 'K5', img: 'k5.png', svg: SVG_CARS.sedan, price: 4000000 },
+                { brand: 'SKODA', name: 'Superb', img: 'superb.png', svg: SVG_CARS.sedan, price: 4200000 },
+                { brand: 'MAZDA', name: 'Mazda 6', img: 'mazda6.png', svg: SVG_CARS.sedan, price: 3800000 }
+            ],
+            epic: [
+                { brand: 'BMW', name: '5 Series', img: 'bmw5.png', svg: SVG_CARS.sport, price: 9000000 },
+                { brand: 'MERCEDES', name: 'E-Class', img: 'eclass.png', svg: SVG_CARS.sedan, price: 8500000 },
+                { brand: 'AUDI', name: 'A6', img: 'a6.png', svg: SVG_CARS.sedan, price: 8000000 },
+                { brand: 'LEXUS', name: 'ES', img: 'lexus_es.png', svg: SVG_CARS.sedan, price: 7500000 }
+            ],
+            legend: [
+                { brand: 'MERCEDES', name: 'G-Class', img: 'gclass.png', svg: SVG_CARS.suv, price: 30000000 },
+                { brand: 'PORSCHE', name: '911', img: 'porsche911.png', svg: SVG_CARS.sport, price: 35000000 },
+                { brand: 'BMW', name: 'M5 CS', img: 'm5cs.png', svg: SVG_CARS.sport, price: 32000000 },
+                { brand: 'ROLLS-ROYCE', name: 'Phantom', img: 'phantom.png', svg: SVG_CARS.luxury, price: 80000000 }
+            ]
         }
+    };
 
     const STORAGE_KEY = 'autogen_real_v14';
 
@@ -842,4 +842,4 @@
     loadState(); updateUI(); checkDailyReward();
 </script>
 </body>
-    </html>
+</html>
