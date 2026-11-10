@@ -123,7 +123,8 @@
     .list-container { display: flex; flex-direction: column; gap: 10px; }
     .list-item { background: var(--panel); border: 1px solid var(--border); border-radius: 18px; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
     .list-photo { width: 70px; height: 48px; border-radius: 8px; object-fit: contain; margin-right: 12px; background: #000; }
-    .list-svg { width: 70px; height: 48px; margin-right: 12px; background: #000; border-radius: 8px; padding: 5px; }
+    .list-svg { width: 70px; height: 48px; margin-right: 12px; background: #000; border-radius: 8px; padding: 5px; display: flex; align-items: center; justify-content: center; }
+    .list-svg svg { width: 100%; height: 100%; }
     .list-title { font-size: 15px; font-weight: 800; }
     .list-brand { font-size: 10px; color: var(--accent); font-weight: 800; text-transform: uppercase; }
     .list-price { font-size: 15px; font-weight: 900; text-align: right; }
@@ -189,7 +190,6 @@
         </div>
     </div>
 
-    <!-- АВТОСАЛОН -->
     <div class="view" id="view-cars">
         <div class="gen-screen" id="genCarBox" data-rarity="common">
             <div class="car-showcase">
@@ -213,7 +213,6 @@
         </div>
     </div>
 
-    <!-- ГОСЗНАКИ -->
     <div class="view" id="view-plates">
         <div class="gen-screen" id="genPlateBox" data-rarity="common">
             <div class="car-showcase" style="height: 50px; margin-bottom: 0;"><div class="car-title" style="font-size: 13px; color: var(--text-muted);">Генератор номеров</div></div>
@@ -239,7 +238,6 @@
         </div>
     </div>
 
-    <!-- ГАРАЖ -->
     <div class="view" id="view-garage">
         <div class="tabs-header">
             <button class="tab-btn active" id="tabCarsBtn" onclick="switchGarageTab('cars')">🚗 Машины</button>
@@ -252,7 +250,6 @@
         <div class="list-container" id="garageList"></div>
     </div>
 
-    <!-- ТЮНИНГ -->
     <div class="view" id="view-upgrades">
         <div class="feature-card">
             <div class="icon-box" style="margin: 0 auto; width: 80px; height: 80px; font-size: 40px;">🛠️</div>
@@ -263,7 +260,6 @@
         </div>
     </div>
 
-    <!-- АУКЦИОН -->
     <div class="view" id="view-cases">
         <div class="feature-card">
             <div class="icon-box" style="margin: 0 auto; width: 80px; height: 80px; font-size: 40px;">💎</div>
@@ -274,7 +270,6 @@
         </div>
     </div>
 
-    <!-- ПРОФИЛЬ -->
     <div class="view" id="view-profile">
         <div style="text-align: center; padding: 20px 0;">
             <div class="icon-box" style="margin: 0 auto 12px auto; width: 90px; height: 90px; font-size: 45px; border-radius: 50%;">👑</div>
@@ -302,7 +297,6 @@
 </div>
 
 <script>
-    // Встроенные векторные машины (запасной вариант, если фото не загрузится)
     const SVG_CARS = {
         hatch: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 70 L40 50 L80 30 L140 30 L170 50 L185 60 L185 75 L30 75 Z" fill="#cbd5e1" /><path d="M50 50 L85 35 L130 35 L155 50 Z" fill="#94a3b8" /><circle cx="60" cy="75" r="15" fill="#1e293b" /><circle cx="60" cy="75" r="8" fill="#64748b" /><circle cx="150" cy="75" r="15" fill="#1e293b" /><circle cx="150" cy="75" r="8" fill="#64748b" /></svg>`,
         sedan: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><path d="M20 70 L30 45 L70 25 L140 25 L175 45 L190 60 L190 75 L20 75 Z" fill="#60a5fa" /><path d="M45 45 L80 30 L130 30 L160 45 Z" fill="#1e3a8a" /><circle cx="50" cy="75" r="16" fill="#0f172a" /><circle cx="50" cy="75" r="8" fill="#94a3b8" /><circle cx="150" cy="75" r="16" fill="#0f172a" /><circle cx="150" cy="75" r="8" fill="#94a3b8" /></svg>`,
@@ -334,33 +328,33 @@
         
         cars: {
             common: [
-                { brand: 'LADA', name: 'Granta', img: 'granta.png', svg: SVG_CARS.hatch, price: 1200000 },
-                { brand: 'KIA', name: 'Rio', img: 'rio.png', svg: SVG_CARS.hatch, price: 1800000 },
-                { brand: 'HYUNDAI', name: 'Solaris', img: 'solaris.png', svg: SVG_CARS.sedan, price: 2000000 },
-                { brand: 'VW', name: 'Polo', img: 'polo.png', svg: SVG_CARS.hatch, price: 1900000 }
+                { brand: 'LADA', name: 'Granta', img: './granta.png', svg: SVG_CARS.hatch, price: 1200000 },
+                { brand: 'KIA', name: 'Rio', img: './rio.png', svg: SVG_CARS.hatch, price: 1800000 },
+                { brand: 'HYUNDAI', name: 'Solaris', img: './solaris.png', svg: SVG_CARS.sedan, price: 2000000 },
+                { brand: 'VW', name: 'Polo', img: './polo.png', svg: SVG_CARS.hatch, price: 1900000 }
             ],
             rare: [
-                { brand: 'TOYOTA', name: 'Camry', img: 'camry.png', svg: SVG_CARS.sedan, price: 4500000 },
-                { brand: 'KIA', name: 'K5', img: 'k5.png', svg: SVG_CARS.sedan, price: 4000000 },
-                { brand: 'SKODA', name: 'Superb', img: 'superb.png', svg: SVG_CARS.sedan, price: 4200000 },
-                { brand: 'MAZDA', name: 'Mazda 6', img: 'mazda6.png', svg: SVG_CARS.sedan, price: 3800000 }
+                { brand: 'TOYOTA', name: 'Camry', img: './camry.png', svg: SVG_CARS.sedan, price: 4500000 },
+                { brand: 'KIA', name: 'K5', img: './k5.png', svg: SVG_CARS.sedan, price: 4000000 },
+                { brand: 'SKODA', name: 'Superb', img: './superb.png', svg: SVG_CARS.sedan, price: 4200000 },
+                { brand: 'MAZDA', name: 'Mazda 6', img: './mazda6.png', svg: SVG_CARS.sedan, price: 3800000 }
             ],
             epic: [
-                { brand: 'BMW', name: '5 Series', img: 'bmw5.png', svg: SVG_CARS.sport, price: 9000000 },
-                { brand: 'MERCEDES', name: 'E-Class', img: 'eclass.png', svg: SVG_CARS.sedan, price: 8500000 },
-                { brand: 'AUDI', name: 'A6', img: 'a6.png', svg: SVG_CARS.sedan, price: 8000000 },
-                { brand: 'LEXUS', name: 'ES', img: 'lexus_es.png', svg: SVG_CARS.sedan, price: 7500000 }
+                { brand: 'BMW', name: '5 Series', img: './bmw5.png', svg: SVG_CARS.sport, price: 9000000 },
+                { brand: 'MERCEDES', name: 'E-Class', img: './eclass.png', svg: SVG_CARS.sedan, price: 8500000 },
+                { brand: 'AUDI', name: 'A6', img: './a6.png', svg: SVG_CARS.sedan, price: 8000000 },
+                { brand: 'LEXUS', name: 'ES', img: './lexus_es.png', svg: SVG_CARS.sedan, price: 7500000 }
             ],
             legend: [
-                { brand: 'MERCEDES', name: 'G-Class', img: 'gclass.png', svg: SVG_CARS.suv, price: 30000000 },
-                { brand: 'PORSCHE', name: '911', img: 'porsche911.png', svg: SVG_CARS.sport, price: 35000000 },
-                { brand: 'BMW', name: 'M5 CS', img: 'm5cs.png', svg: SVG_CARS.sport, price: 32000000 },
-                { brand: 'ROLLS-ROYCE', name: 'Phantom', img: 'phantom.png', svg: SVG_CARS.luxury, price: 80000000 }
+                { brand: 'MERCEDES', name: 'G-Class', img: './gclass.png', svg: SVG_CARS.suv, price: 30000000 },
+                { brand: 'PORSCHE', name: '911', img: './porsche911.png', svg: SVG_CARS.sport, price: 35000000 },
+                { brand: 'BMW', name: 'M5 CS', img: './m5cs.png', svg: SVG_CARS.sport, price: 32000000 },
+                { brand: 'ROLLS-ROYCE', name: 'Phantom', img: './phantom.png', svg: SVG_CARS.luxury, price: 80000000 }
             ]
         }
     };
 
-    const STORAGE_KEY = 'autogen_real_v14';
+    const STORAGE_KEY = 'autogen_final_v16';
 
     const STORY_LEVELS = [
         { earned: 0, rank: 'Новичок', desc: 'Ты только начинаешь свой путь.' },
@@ -474,9 +468,6 @@
         updateUI();
     }
 
-    // ==========================================
-    // ГЕНЕРАЦИЯ МАШИН
-    // ==========================================
     function rollCar(isBoosted) {
         if (state.isSpinningCar) return;
         let cost = isBoosted ? CONFIG.costCarBoost : CONFIG.costCarNormal;
@@ -592,9 +583,6 @@
         document.getElementById('genCarBox').setAttribute('data-rarity', 'common');
     }
 
-    // ==========================================
-    // ГЕНЕРАЦИЯ НОМЕРОВ (Жетоны)
-    // ==========================================
     function rollPlate(isBoosted) {
         if (state.isSpinningPlate) return;
         let cost = isBoosted ? CONFIG.costPlateBoost : CONFIG.costPlateNormal;
@@ -693,9 +681,6 @@
         document.getElementById('genPlateBox').setAttribute('data-rarity', 'common');
     }
 
-    // ==========================================
-    // ДЕЙСТВИЯ И ГАРАЖ
-    // ==========================================
     function sellCurrentCar() { if (!state.currentCar) return; addRubles(state.currentCar.price); state.currentCar = null; resetCarUI(); playTone(800, 'sine', 0.05); }
     function saveCurrentCar() { if (!state.currentCar) return; if (state.garageCars.length >= CONFIG.garageLimit) return showModal('Ошибка', 'Гараж полон!', '⚠️'); state.garageCars.push(state.currentCar); state.currentCar = null; resetCarUI(); saveState(); updateUI(); }
     
@@ -727,8 +712,8 @@
         items.forEach((item, index) => {
             let div = document.createElement('div'); div.className = 'list-item';
             if (state.activeGarageTab === 'cars') {
-                let imgHTML = `<img src="${item.img}" class="list-photo" crossorigin="anonymous" referrerpolicy="no-referrer" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">`;
-                let svgStyle = item.img ? 'display:none;' : 'display:block;';
+                let imgHTML = `<img src="${item.img}" class="list-photo" crossorigin="anonymous" referrerpolicy="no-referrer" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">`;
+                let svgStyle = item.img ? 'display:none;' : 'display:flex;';
                 
                 div.innerHTML = `
                     <div style="display: flex; align-items: center;">
@@ -838,7 +823,6 @@
         }
     }
 
-    // СТАРТ
     loadState(); updateUI(); checkDailyReward();
 </script>
 </body>
