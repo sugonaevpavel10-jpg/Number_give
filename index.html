@@ -115,6 +115,7 @@
     .btn-sell { background: rgba(52, 211, 153, 0.12); color: var(--rub); border: 1px solid rgba(52, 211, 153, 0.4); }
     .btn-save { background: rgba(96, 165, 250, 0.12); color: var(--token); border: 1px solid rgba(96, 165, 250, 0.4); }
     .btn-danger { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
+    .btn-prestige { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #000; box-shadow: 0 4px 20px rgba(251, 191, 36, 0.4); }
 
     .tabs-header { display: flex; gap: 8px; margin-bottom: 16px; background: var(--panel); padding: 5px; border-radius: 14px; border: 1px solid var(--border); }
     .tab-btn { flex: 1; padding: 12px; border: none; background: transparent; color: var(--text-muted); font-weight: 800; font-size: 13px; border-radius: 10px; cursor: pointer; transition: all 0.3s; }
@@ -274,7 +275,7 @@
         <div style="text-align: center; padding: 20px 0;">
             <div class="icon-box" style="margin: 0 auto 12px auto; width: 90px; height: 90px; font-size: 45px; border-radius: 50%;">👑</div>
             <div style="font-size: 22px; font-weight: 900;" id="profileRankTitle">Новичок</div>
-            <div style="color: var(--text-muted); font-size: 14px; margin-top: 4px;">Заработано: <span id="profileTotalEarned">0</span> ₽</div>
+            <div style="color: var(--text-muted); font-size: 14px; margin-top: 4px;">Заработано (всего): <span id="profileTotalEarned">0</span> ₽</div>
         </div>
         <div style="background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 18px;">
             <div class="stat-row"><span class="stat-name">Баланс рублей</span><span class="stat-value" style="color: var(--rub);" id="profileBalanceRub">0 ₽</span></div>
@@ -282,8 +283,11 @@
             <div class="stat-row"><span class="stat-name">Машины в гараже</span><span class="stat-value" id="profileCars">0</span></div>
             <div class="stat-row"><span class="stat-name">Номера в гараже</span><span class="stat-value" id="profilePlates">0</span></div>
             <div class="stat-row"><span class="stat-name">Уровень тюнинга</span><span class="stat-value" id="profileBonus">0</span></div>
+            <div class="stat-row"><span class="stat-name">Перерождения</span><span class="stat-value" style="color: var(--legend);" id="profilePrestige">0 (Шанс +0%)</span></div>
         </div>
-        <button class="btn btn-danger" style="margin-top: 20px;" onclick="resetGame()">Сбросить прогресс</button>
+        
+        <button class="btn btn-prestige" id="btnPrestige" style="margin-top: 15px; display: none;" onclick="doPrestige()">Сделать Перерождение</button>
+        <button class="btn btn-danger" style="margin-top: 10px;" onclick="resetGame()">Сбросить прогресс</button>
     </div>
 </div>
 
@@ -344,14 +348,22 @@
                 { brand: 'MAZDA', name: 'Mazda 6', img: './mazda6.png', svg: SVG_CARS.sedan, price: 3800000 },
                 { brand: 'NISSAN', name: 'Teana', svg: SVG_CARS.sedan, price: 3200000 },
                 { brand: 'HYUNDAI', name: 'Tucson', svg: SVG_CARS.suv, price: 3500000 },
-                { brand: 'KIA', name: 'Sportage', svg: SVG_CARS.suv, price: 3400000 }
+                { brand: 'KIA', name: 'Sportage', svg: SVG_CARS.suv, price: 3400000 },
+                { brand: 'MITSUBISHI', name: 'Outlander', svg: SVG_CARS.suv, price: 3600000 },
+                { brand: 'NISSAN', name: 'X-Trail', svg: SVG_CARS.suv, price: 3700000 },
+                { brand: 'VW', name: 'Tiguan', svg: SVG_CARS.suv, price: 3900000 },
+                { brand: 'HONDA', name: 'CR-V', svg: SVG_CARS.suv, price: 4100000 },
+                { brand: 'SUBARU', name: 'Forester', svg: SVG_CARS.suv, price: 4300000 }
             ],
             epic: [
                 { brand: 'BMW', name: '5 Series', img: './bmw5.png', svg: SVG_CARS.sport, price: 9000000 },
                 { brand: 'MERCEDES', name: 'E-Class', img: './eclass.png', svg: SVG_CARS.sedan, price: 8500000 },
                 { brand: 'AUDI', name: 'A6', img: './a6.png', svg: SVG_CARS.sedan, price: 8000000 },
                 { brand: 'LEXUS', name: 'ES', img: './lexus_es.png', svg: SVG_CARS.sedan, price: 7500000 },
-                { brand: 'INFINITI', name: 'Q50', svg: SVG_CARS.sport, price: 6500000 }
+                { brand: 'INFINITI', name: 'Q50', svg: SVG_CARS.sport, price: 6500000 },
+                { brand: 'VOLVO', name: 'XC90', svg: SVG_CARS.suv, price: 7000000 },
+                { brand: 'LAND ROVER', name: 'Discovery', svg: SVG_CARS.suv, price: 7800000 },
+                { brand: 'JAGUAR', name: 'XF', svg: SVG_CARS.sedan, price: 8200000 }
             ],
             legend: [
                 { brand: 'MERCEDES', name: 'G-Class', img: './gclass.png', svg: SVG_CARS.suv, price: 30000000 },
@@ -362,13 +374,13 @@
         }
     };
 
-    const STORAGE_KEY = 'autogen_final_v17';
+    const STORAGE_KEY = 'autogen_final_v18';
 
     const STORY_LEVELS = [
         { earned: 0, rank: 'Новичок', desc: 'Ты только начинаешь свой путь.' },
         { earned: 5000000, rank: 'Барыга', desc: 'Открыто Тюнинг-ателье!', unlock: 'upgrades' },
         { earned: 20000000, rank: 'Дилер', desc: 'Открыт Премиум Аукцион!', unlock: 'cases' },
-        { earned: 100000000, rank: 'Магнат', desc: 'Ты - король дорог! Шанс на эксклюзив увеличен.' }
+        { earned: 100000000, rank: 'Магнат', desc: 'Ты - король дорог!' }
     ];
 
     let state = {
@@ -382,6 +394,7 @@
         garagePlates: [],
         activeGarageTab: 'cars',
         upgradeLevel: 0,
+        prestigeLevel: 0,
         lastDaily: 0,
         stats: { spins: 0, bestPrice: 0, earned: 0 },
         totalEarnedStory: 0,
@@ -476,6 +489,26 @@
         updateUI();
     }
 
+    // ФУНКЦИЯ ПЕРЕРОЖДЕНИЯ
+    function doPrestige() {
+        if (state.totalEarnedStory < 100000000) return;
+        if (!confirm("Вы уверены? Вы потеряете все деньги, машины и номера, но получите +10% к шансу выпадения дорогих машин навсегда.")) return;
+        
+        state.prestigeLevel++;
+        state.balanceRub = CONFIG.startBalanceRub;
+        state.balanceToken = CONFIG.startBalanceToken;
+        state.garageCars = [];
+        state.garagePlates = [];
+        state.upgradeLevel = 0;
+        state.currentCar = null;
+        state.currentPlate = null;
+        state.totalEarnedStory = 0; 
+        
+        saveState(); updateUI(); renderProfile(); resetCarUI(); resetPlateUI();
+        showModal('Перерождение!', `Теперь твой шанс на дорогие тачки увеличен!<br><br>Уровень перерождения: <b>${state.prestigeLevel}</b><br>Бонус к шансу: <b>+${state.prestigeLevel * 10}%</b>`, '✨');
+        playTone(1200, 'sine', 0.6);
+    }
+
     function rollCar(isBoosted) {
         if (state.isSpinningCar) return;
         let cost = isBoosted ? CONFIG.costCarBoost : CONFIG.costCarNormal;
@@ -509,14 +542,33 @@
 
     function generateCarItem(isBoosted) {
         let rnd = Math.random(), rarity = 'common';
-        let isMagnate = state.totalEarnedStory >= 100000000;
-        let legendChance = isMagnate ? 0.15 : 0.02;
-
+        
+        // Базовые шансы
+        let epicChance = 0.10;
+        let legendChance = 0.02;
+        let rareChance = 0.20;
+        
+        // Буст
         if (isBoosted) {
-            if (rnd < (isMagnate ? 0.25 : 0.10)) rarity = 'legend'; else if (rnd < 0.40) rarity = 'epic'; else if (rnd < 0.80) rarity = 'rare';
-        } else {
-            if (rnd < legendChance) rarity = 'legend'; else if (rnd < 0.10) rarity = 'epic'; else if (rnd < 0.30) rarity = 'rare';
+            epicChance = 0.30;
+            legendChance = 0.08;
+            rareChance = 0.40;
         }
+        
+        // Бонус от перерождения (каждый уровень +10% к шансу дорогих машин)
+        let prestigeBonus = state.prestigeLevel * 0.10;
+        epicChance += prestigeBonus;
+        legendChance += prestigeBonus;
+        
+        // Ограничители
+        if (epicChance + legendChance > 0.80) {
+            legendChance = 0.80 - epicChance;
+            if (legendChance < 0.05) { legendChance = 0.05; epicChance = 0.75; }
+        }
+
+        if (rnd < legendChance) rarity = 'legend';
+        else if (rnd < legendChance + epicChance) rarity = 'epic';
+        else if (rnd < legendChance + epicChance + rareChance) rarity = 'rare';
         
         let carPool = CONFIG.cars[rarity];
         let selectedCar, attempts = 0;
@@ -528,8 +580,11 @@
         if (state.recentCars.length > 3) state.recentCars.shift();
 
         let car = { ...selectedCar, rarity: rarity };
+        
+        // Множитель цены: тюнинг и перерождения
         let upgradeMult = 1 + (state.upgradeLevel * 0.10);
-        car.price = Math.floor(car.price * upgradeMult);
+        let prestigePriceMult = 1 + (state.prestigeLevel * 0.25); // +25% к цене за каждое перерождение
+        car.price = Math.floor(car.price * upgradeMult * prestigePriceMult);
         return car;
     }
 
@@ -654,7 +709,9 @@
         if (isBoosted && rarity === 'common') { rarity = 'rare'; base += 200; }
 
         let upgradeMult = 1 + (state.upgradeLevel * 0.10);
-        return { l1, l2, num, region: region.code, price: Math.floor(base * mult * upgradeMult), rarity: rarity };
+        let prestigePriceMult = 1 + (state.prestigeLevel * 0.25);
+        
+        return { l1, l2, num, region: region.code, price: Math.floor(base * mult * upgradeMult * prestigePriceMult), rarity: rarity };
     }
 
     function finishPlateGen(plate) {
@@ -780,12 +837,13 @@
         let carRarity = Math.random() < 0.2 ? 'legend' : 'epic';
         let carPool = CONFIG.cars[carRarity];
         let car = { ...carPool[Math.floor(Math.random() * carPool.length)], rarity: carRarity };
-        car.price = Math.floor(car.price * (1 + (state.upgradeLevel * 0.10)));
+        let mult = (1 + (state.upgradeLevel * 0.10)) * (1 + (state.prestigeLevel * 0.25));
+        car.price = Math.floor(car.price * mult);
 
         let combo = CONFIG.specialLetters[Math.floor(Math.random() * CONFIG.specialLetters.length)];
         let num = CONFIG.specialNumbers[Math.floor(Math.random() * CONFIG.specialNumbers.length)];
         let plate = { l1: combo[0], l2: combo.slice(1), num: num, region: '77', rarity: 'epic', price: 15000 };
-        plate.price = Math.floor(plate.price * (1 + (state.upgradeLevel * 0.10)));
+        plate.price = Math.floor(plate.price * mult);
 
         state.garageCars.push(car); state.garagePlates.push(plate);
         saveState(); updateUI();
@@ -812,6 +870,17 @@
         document.getElementById('profileCars').textContent = state.garageCars.length;
         document.getElementById('profilePlates').textContent = state.garagePlates.length;
         document.getElementById('profileBonus').textContent = `+${state.upgradeLevel * 10}%`;
+        
+        let prestigePct = state.prestigeLevel * 10;
+        document.getElementById('profilePrestige').textContent = `${state.prestigeLevel} (Шанс +${prestigePct}%)`;
+        
+        let btn = document.getElementById('btnPrestige');
+        if (state.totalEarnedStory >= 100000000) {
+            btn.style.display = 'flex';
+            btn.textContent = `Сделать Перерождение (Уровень ${state.prestigeLevel + 1})`;
+        } else {
+            btn.style.display = 'none';
+        }
     }
 
     function updateUI() {
@@ -819,6 +888,7 @@
         document.getElementById('uiBalanceToken').textContent = formatMoney(state.balanceToken);
         document.getElementById('menuGarageCount').textContent = `Машины: ${state.garageCars.length} | Номера: ${state.garagePlates.length}`;
         checkStoryProgress();
+        if(document.getElementById('view-profile').classList.contains('active')) renderProfile();
     }
     function formatMoney(num) { return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
     function resetGame() { if(confirm('Сбросить прогресс?')) { localStorage.removeItem(STORAGE_KEY); location.reload(); } }
@@ -834,4 +904,4 @@
     loadState(); updateUI(); checkDailyReward();
 </script>
 </body>
-                                                                                  </html>
+    </html>
