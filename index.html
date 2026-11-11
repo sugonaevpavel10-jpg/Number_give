@@ -244,6 +244,90 @@
     .aid-banner { margin: 10px 14px 0; padding: 10px 14px; border-radius: 16px; background: linear-gradient(135deg, rgba(245,158,11,.22), rgba(239,68,68,.14)); border: 1px solid rgba(245,158,11,.5); color: #fde68a; font-size: 12.5px; line-height: 1.45; font-weight: 700; box-shadow: 0 0 22px rgba(245,158,11,.18); }
     .aid-banner b { color: #fff; }
     .aid-timer { display: inline-block; margin-top: 2px; padding: 1px 10px; border-radius: 999px; background: rgba(0,0,0,.35); color: #fff; font-weight: 900; font-variant-numeric: tabular-nums; }
+
+    /* ===== ПРИКОЛЬНЫЙ ДИЗАЙН v3 ===== */
+    .hero { text-align: center; margin-bottom: 6px; }
+    .hero-title { font-size: 34px; font-weight: 900; letter-spacing: 4px; background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6, #fbbf24, #60a5fa); background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: hue 6s linear infinite; filter: drop-shadow(0 0 14px rgba(139,92,246,.55)); }
+    @keyframes hue { to { background-position: 300% 0; } }
+    .hero-plate { transform: scale(.85); animation: floaty 3.2s ease-in-out infinite; margin: 4px 0 0; }
+    @keyframes floaty { 0%,100% { transform: scale(.85) translateY(0); } 50% { transform: scale(.85) translateY(-6px); } }
+    .hero-sub { font-size: 11px; color: var(--text-muted); letter-spacing: 3px; text-transform: uppercase; margin-top: -4px; }
+
+    .menu-grid .menu-card { animation: cardin .5s cubic-bezier(.2,1.2,.4,1) both; }
+    .menu-grid .menu-card:nth-child(2) { animation-delay: .05s; } .menu-grid .menu-card:nth-child(3) { animation-delay: .10s; }
+    .menu-grid .menu-card:nth-child(4) { animation-delay: .15s; } .menu-grid .menu-card:nth-child(5) { animation-delay: .20s; }
+    .menu-grid .menu-card:nth-child(6) { animation-delay: .25s; } .menu-grid .menu-card:nth-child(7) { animation-delay: .30s; }
+    .menu-grid .menu-card:nth-child(8) { animation-delay: .35s; }
+    @keyframes cardin { from { transform: translateY(16px) scale(.94); } to { transform: none; } }
+    .menu-card:not(.locked):hover { transform: translateY(-3px); border-color: rgba(96,165,250,.45); }
+
+    .btn { position: relative; overflow: hidden; }
+    .btn-primary::after { content: ''; position: absolute; top: 0; left: -70%; width: 40%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.35), transparent); transform: skewX(-20deg); animation: btnshine 3.2s infinite; pointer-events: none; }
+    @keyframes btnshine { 0%, 55% { left: -70%; } 100% { left: 140%; } }
+    .btn-boost { animation: boostpulse 2s ease-in-out infinite; }
+    @keyframes boostpulse { 0%,100% { box-shadow: 0 0 0 rgba(251,191,36,0); } 50% { box-shadow: 0 0 18px rgba(251,191,36,.45); } }
+
+    .spinning .car-image-wrapper::before { content: ''; position: absolute; inset: 0; z-index: 2; background: linear-gradient(90deg, transparent 88%, rgba(255,255,255,.16) 88%); background-size: 44px 100%; animation: speedlines .22s linear infinite; pointer-events: none; }
+    @keyframes speedlines { to { background-position: -44px 0; } }
+
+    .pop { animation: pop .65s cubic-bezier(.2,1.4,.4,1); }
+    @keyframes pop { 0% { transform: scale(.55) rotate(-5deg); opacity: 0; filter: blur(8px); } 60% { transform: scale(1.08) rotate(1deg); opacity: 1; filter: none; } 100% { transform: none; } }
+
+    .confetti { position: fixed; inset: 0; pointer-events: none; z-index: 150; overflow: hidden; }
+    .confetti i { position: absolute; top: -20px; width: 8px; height: 14px; border-radius: 2px; animation: fall linear forwards; }
+    @keyframes fall { to { transform: translateY(108vh) rotate(720deg); } }
+
+    .road { position: relative; height: 78px; margin-top: 22px; border-radius: 20px; overflow: hidden; background: linear-gradient(180deg, #151a2c, #0a0c15); border: 1px solid var(--border); box-shadow: inset 0 0 24px rgba(0,0,0,.6); }
+    .road::before { content: ''; position: absolute; left: 0; right: 0; top: 58%; height: 3px; background: linear-gradient(90deg, #fbbf24 50%, transparent 50%); background-size: 56px 100%; animation: roadmove .6s linear infinite; opacity: .85; }
+    .road::after { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 40%; background: linear-gradient(180deg, rgba(96,165,250,.18), transparent); }
+    @keyframes roadmove { to { background-position: -56px 0; } }
+    .road-car { position: absolute; bottom: 8px; width: 92px; left: -110px; animation: drive 7s linear infinite; filter: drop-shadow(0 6px 8px rgba(0,0,0,.6)); }
+    .road-car svg { width: 100%; display: block; }
+    @keyframes drive { to { left: 112%; } }
+
+    /* ===== АНИМАЦИИ ВЫПАДЕНИЯ МАШИНЫ ПО ЦЕНЕ ===== */
+    @keyframes dripGlowEpic {
+        0%, 100% { color: #c084fc; text-shadow: 0 0 12px rgba(168,85,247,.75), 0 0 24px rgba(168,85,247,.35); }
+        50%      { color: #e9d5ff; text-shadow: 0 0 22px rgba(168,85,247,1), 0 0 46px rgba(168,85,247,.6); }
+    }
+    @keyframes dripGlowLegend {
+        0%, 100% { color: #fbbf24; text-shadow: 0 0 14px rgba(251,191,36,.85), 0 0 28px rgba(251,191,36,.45); }
+        50%      { color: #fde68a; text-shadow: 0 0 26px rgba(251,191,36,1), 0 0 54px rgba(251,191,36,.7); }
+    }
+    @keyframes framePulseEpic {
+        0%, 100% { box-shadow: 0 0 40px rgba(168,85,247,.35); }
+        50%      { box-shadow: 0 0 95px rgba(168,85,247,.85), inset 0 0 25px rgba(168,85,247,.15); }
+    }
+    @keyframes framePulseLegend {
+        0%, 100% { box-shadow: 0 0 60px rgba(251,191,36,.45); }
+        50%      { box-shadow: 0 0 135px rgba(251,191,36,.95), inset 0 0 35px rgba(251,191,36,.25); }
+    }
+    @keyframes shakeScreen {
+        0%, 100% { transform: translate(0,0) rotate(0); }
+        15% { transform: translate(-5px, 3px) rotate(-.4deg); }
+        30% { transform: translate(5px, -3px) rotate(.4deg); }
+        45% { transform: translate(-4px, -2px) rotate(-.25deg); }
+        60% { transform: translate(4px, 2px) rotate(.25deg); }
+        75% { transform: translate(-2px, 1px) rotate(0); }
+    }
+    @keyframes floatCoinUp {
+        0%   { opacity: 0; transform: translateY(0) scale(.6); }
+        15%  { opacity: 1; transform: translateY(-10px) scale(1.2); }
+        100% { opacity: 0; transform: translateY(-95px) scale(.9); }
+    }
+
+    .price-tag.price-epic { animation: dripGlowEpic 1.4s ease-in-out infinite; }
+    .price-tag.price-legend { animation: dripGlowLegend 1.2s ease-in-out infinite; }
+    .gen-screen.fx-epic { animation: framePulseEpic 1.6s ease-in-out infinite; }
+    .gen-screen.fx-legend { animation: framePulseLegend 1.4s ease-in-out infinite; }
+    .gen-screen.fx-shake { animation: shakeScreen .55s ease-out; }
+
+    .float-coin {
+        position: fixed; z-index: 160; pointer-events: none;
+        font-size: 24px; font-weight: 900; font-family: inherit;
+        text-shadow: 0 0 14px currentColor;
+        animation: floatCoinUp 1.3s ease-out forwards;
+    }
 </style>
 </head>
 <body>
@@ -265,6 +349,13 @@
     <div class="aid-banner" id="aidBanner" style="display:none;"></div>
 
     <div class="view active" id="view-menu">
+        <div class="hero">
+            <div class="hero-title">НОМЕРДАЙ</div>
+            <div class="plate-wrapper hero-plate" style="display:inline-block;">
+                <div class="plate-realistic r-legend"><div class="plate-text">О 777 ОО</div><div class="plate-side-real"><div class="plate-region-real">77</div><div class="plate-country-real">RUS</div><div class="plate-flag-css"><div class="flag-w"></div><div class="flag-b"></div><div class="flag-r"></div></div></div></div>
+            </div>
+            <div class="hero-sub">бизнес на колесах</div>
+        </div>
         <div style="text-align: center; margin-bottom: 20px;">
             <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Твой статус</div>
             <div style="font-size: 22px; font-weight: 900; color: var(--accent);" id="menuRank">Новичок</div>
@@ -303,6 +394,7 @@
             <button class="btn btn-sell" onclick="sellCurrentCar()" id="btnSellCar">Продать</button>
             <button class="btn btn-save" onclick="saveCurrentCar()">В гараж</button>
         </div>
+        <div class="road"><div class="road-car" data-type="sedan" data-color="#3b82f6"></div></div>
     </div>
 
     <div class="view" id="view-plates">
@@ -328,6 +420,7 @@
             <button class="btn btn-sell" onclick="sellCurrentPlate()" id="btnSellPlate">Продать</button>
             <button class="btn btn-save" onclick="saveCurrentPlate()">В гараж</button>
         </div>
+        <div class="road"><div class="road-car" data-type="sport" data-color="#ef4444" style="animation-duration:5.5s;"></div></div>
     </div>
 
     <div class="view" id="view-garage">
@@ -382,6 +475,14 @@
         </div>
         
         <button class="btn btn-prestige" id="btnPrestige" style="margin-top: 15px; display: none;" onclick="doPrestige()">Сделать Перерождение</button>
+        <div style="margin-top: 16px; padding: 14px; border-radius: 18px; background: var(--panel); border: 1px solid var(--border);">
+            <div style="font-size: 13px; font-weight: 900; margin-bottom: 4px;">💾 Сохранение</div>
+            <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px;">Прогресс сохраняется автоматически в этом браузере: деньги, машины и номера останутся хоть через неделю. На другом устройстве или после очистки данных браузера используй код сохранения.</div>
+            <div class="action-buttons" style="margin-top: 0;">
+                <button class="btn btn-save" style="font-size: 11px; padding: 12px;" onclick="exportSave()">Скопировать код</button>
+                <button class="btn btn-sell" style="font-size: 11px; padding: 12px;" onclick="importSave()">Загрузить сохранение</button>
+            </div>
+        </div>
         <button class="btn btn-danger" style="margin-top: 10px;" onclick="resetGame()">Сбросить прогресс</button>
     </div>
 </div>
@@ -402,6 +503,7 @@
 
         <div class="rule-item"><div class="rule-ico">💰</div><div><div class="rule-h">Старт</div><div class="rule-p">У тебя <b>5 000 000 ₽</b> и <b>10 000 💎</b>. Каждый день заходи за бонусом: <b>1 000 000 ₽</b> и <b>1 000 💎</b>.</div></div></div>
         <div class="rule-item"><div class="rule-ico">🆘</div><div><div class="rule-h">Деньги закончились?</div><div class="rule-p">Если на счёте меньше <b>2 000 000 ₽</b> (не хватает даже на обычную прокрутку), мы выдаём <b>500 000 ₽ каждый час</b>. Таймер виден вверху экрана. Эти деньги не засчитываются в «заработано» для рангов.</div></div></div>
+        <div class="rule-item"><div class="rule-ico">💾</div><div><div class="rule-h">Сохранение</div><div class="rule-p">Прогресс сохраняется <b>автоматически</b>: приходи когда угодно, деньги и машины останутся. Работает в том же браузере на этом устройстве. Для переноса на другое устройство в профиле есть <b>код сохранения</b>.</div></div></div>
         <div class="rule-item"><div class="rule-ico">🚗</div><div><div class="rule-h">Автосалон (за ₽)</div><div class="rule-p">Прокрутка стоит <b>2 млн ₽</b>, Boost — <b>6 млн ₽</b> (выше шанс на редкие машины). Редкости: Common, Rare, Epic, Legend. Чем редче машина, тем она дороже.</div></div></div>
         <div class="rule-item"><div class="rule-ico">🔢</div><div><div class="rule-h">Госзнаки (за 💎)</div><div class="rule-p">Прокрутка стоит <b>500 💎</b>, Boost — <b>1 500 💎</b>. Ценятся красивые цифры (777, 001), буквы (ААА, МММ) и столичные регионы (77, 99, 97).</div></div></div>
         <div class="rule-item"><div class="rule-ico">🏎️</div><div><div class="rule-h">Продать или в гараж</div><div class="rule-p">Выпавшее можно <b>продать</b> сразу или <b>сохранить в гараж</b> (до 50 машин и 50 номеров). Если крутишь дальше, не сохранив предыдущее, оно автоматически продаётся.</div></div></div>
@@ -596,13 +698,37 @@
     }
     document.body.addEventListener('click', initAudio, { once: true });
 
-    function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+    function saveState() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {} }
     function loadState() {
-        let saved = localStorage.getItem(STORAGE_KEY);
+        let saved = null;
+        try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
         if (saved) {
-            try { let p = JSON.parse(saved); state = { ...state, ...p }; } catch(e) {}
+            try { let p = JSON.parse(saved); state = { ...state, ...p, stats: { ...state.stats, ...(p.stats || {}) } }; } catch (e) {}
         }
         state.isSpinningCar = false; state.isSpinningPlate = false;
+    }
+
+    // ===== Сохранение: автоматически + защита от очистки + перенос на другое устройство =====
+    window.addEventListener('pagehide', saveState);
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') saveState(); });
+    try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
+
+    function exportSave() {
+        const code = btoa(unescape(encodeURIComponent(JSON.stringify(state))));
+        const done = () => showModal('Код сохранения скопирован', 'Сохрани его в заметки. Чтобы продолжить на другом устройстве или после очистки браузера, нажми в профиле «Загрузить сохранение» и вставь код.', '💾');
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(done, () => prompt('Скопируй код сохранения:', code));
+        else prompt('Скопируй код сохранения:', code);
+    }
+    function importSave() {
+        const code = prompt('Вставь код сохранения:');
+        if (!code) return;
+        try {
+            const p = JSON.parse(decodeURIComponent(escape(atob(code.trim()))));
+            if (typeof p.balanceRub !== 'number' || !Array.isArray(p.garageCars) || !Array.isArray(p.garagePlates)) throw new Error('bad');
+            if (!confirm('Заменить текущий прогресс загруженным?')) return;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
+            location.reload();
+        } catch (e) { showModal('Ошибка', 'Код сохранения не подошёл. Проверь, что скопировал его целиком.', '❌'); }
     }
 
     function showModal(title, text, icon = '🎉') {
@@ -784,14 +910,105 @@
         return car;
     }
 
+    // ===== Анимация выпадения машины по цене =====
+    // <2 млн — обычное появление
+    // 2-4 млн — цена "капает", цифры фиолетовые
+    // 4-8 млн — фиолетовые + пульсация рамки
+    // 8-20 млн — золотые + тряска + конфетти
+    // 20 млн+ — золотые + вспышка + тряска + конфетти (максимум)
+    function playCarReveal(car) {
+        const priceEl = document.getElementById('carPriceLabel');
+        const box = document.getElementById('genCarBox');
+        const price = car.price;
+
+        // Отменяем предыдущую анимацию счётчика, если она ещё идёт
+        if (window._carRevealRAF) { cancelAnimationFrame(window._carRevealRAF); window._carRevealRAF = null; }
+        // Сброс классов
+        priceEl.classList.remove('price-epic', 'price-legend');
+        box.classList.remove('fx-epic', 'fx-legend', 'fx-shake');
+
+        // До 2 млн — ничего особенного
+        if (price < 2000000) {
+            priceEl.innerHTML = `<span style="color:var(--rub)">${formatMoney(price)} ₽</span>`;
+            return;
+        }
+
+        // Определяем тир эффекта
+        let tier;
+        if (price >= 20000000) tier = 5;
+        else if (price >= 8000000) tier = 4;
+        else if (price >= 4000000) tier = 3;
+        else tier = 2;
+
+        const isGold = tier >= 4;
+
+        // Цвет и свечение цифр
+        priceEl.classList.add(isGold ? 'price-legend' : 'price-epic');
+        // Пульсация рамки (тир 3+)
+        if (tier >= 3) box.classList.add(isGold ? 'fx-legend' : 'fx-epic');
+        // Тряска экрана (тир 4+)
+        if (tier >= 4) {
+            box.classList.add('fx-shake');
+            setTimeout(() => box.classList.remove('fx-shake'), 600);
+        }
+        // Вспышка + конфетти (тир 5)
+        if (tier >= 5) {
+            document.body.insertAdjacentHTML('beforeend', '<div class="flash"></div>');
+            setTimeout(() => document.querySelector('.flash')?.remove(), 500);
+        }
+        // Конфетти (тир 4+)
+        if (tier >= 4) burst('legend');
+
+        // Эффект "капающих денег": счётчик от 0 до price
+        const dur = tier >= 5 ? 1400 : tier >= 4 ? 1200 : 1000;
+        const t0 = performance.now();
+        const tick = t => {
+            const k = Math.min(1, (t - t0) / dur);
+            const ease = 1 - Math.pow(1 - k, 2.2);   // ease-out
+            const shown = Math.round(price * ease);
+            priceEl.innerHTML = `<span>${formatMoney(shown)} ₽</span>`;
+            if (k < 1) {
+                window._carRevealRAF = requestAnimationFrame(tick);
+            } else {
+                window._carRevealRAF = null;
+                priceEl.innerHTML = `<span>${formatMoney(price)} ₽</span>`;
+            }
+        };
+        requestAnimationFrame(tick);
+
+        // Всплывающие ₽-монетки
+        const rect = priceEl.getBoundingClientRect();
+        const count = tier >= 4 ? 10 : tier >= 3 ? 6 : 4;
+        const coinColor = isGold ? '#fbbf24' : '#c084fc';
+        for (let i = 0; i < count; i++) {
+            setTimeout(() => {
+                const c = document.createElement('div');
+                c.className = 'float-coin';
+                c.textContent = '₽';
+                c.style.color = coinColor;
+                c.style.left = (rect.left + rect.width / 2 + (Math.random() * 90 - 45)) + 'px';
+                c.style.top = (rect.top + Math.random() * 15) + 'px';
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 1400);
+            }, i * 100);
+        }
+    }
+
     function finishCarGen(car) {
         state.currentCar = car; state.isSpinningCar = false; state.stats.spins++;
         if (car.price > state.stats.bestPrice) state.stats.bestPrice = car.price;
-        saveState(); document.getElementById('genCarBox').classList.remove('spinning'); showCarResult(car);
-        
-        if (car.rarity === 'legend') { 
-            document.body.insertAdjacentHTML('beforeend', '<div class="flash"></div>'); setTimeout(() => document.querySelector('.flash')?.remove(), 500); playTone(800, 'sine', 0.4); 
-        } else { playTone(500, 'sine', 0.1); }
+        saveState();
+        document.getElementById('genCarBox').classList.remove('spinning');
+        showCarResult(car);
+        popReveal('#genCarBox .car-showcase');
+
+        // Звук редкости
+        if (car.rarity === 'legend') playTone(800, 'sine', 0.4);
+        else playTone(500, 'sine', 0.1);
+
+        // Анимация по цене (вместо старого burst/flash, чтобы не дублировалось)
+        playCarReveal(car);
+
         updateUI();
     }
 
@@ -821,6 +1038,7 @@
         const rarEl = document.getElementById('carRarityBadge');
         rarEl.textContent = car.rarity; rarEl.className = `badge-rarity bg-r-${car.rarity}`; rarEl.style.display = 'inline-block';
         document.getElementById('genCarBox').setAttribute('data-rarity', car.rarity);
+        // Базовая запись цены — playCarReveal переопределит её и запустит анимацию, если price >= 2 млн
         document.getElementById('carPriceLabel').innerHTML = `<span style="color:var(--rub)">${formatMoney(car.price)} ₽</span>`;
         document.getElementById('carPriceLabel').classList.add('show');
         document.getElementById('btnSellCar').innerHTML = `Продать за ${formatMoney(car.price)} ₽`;
@@ -832,6 +1050,8 @@
         document.getElementById('actionCarResult').style.display = 'none';
         document.getElementById('actionCarStart').style.display = 'flex';
         document.getElementById('carPriceLabel').classList.remove('show');
+        document.getElementById('carPriceLabel').classList.remove('price-epic', 'price-legend');
+        document.getElementById('genCarBox').classList.remove('fx-epic', 'fx-legend', 'fx-shake');
         setCarImage(CONFIG.cars.common[0]);
         document.getElementById('carBrand').textContent = CONFIG.cars.common[0].brand;
         document.getElementById('carName').textContent = CONFIG.cars.common[0].name;
@@ -911,6 +1131,7 @@
         state.currentPlate = plate; state.isSpinningPlate = false; state.stats.spins++;
         if (plate.price > state.stats.bestPrice) state.stats.bestPrice = plate.price;
         saveState(); document.getElementById('genPlateBox').classList.remove('spinning'); showPlateResult(plate);
+        popReveal('#standalonePlate'); if (plate.rarity === 'epic' || plate.rarity === 'legend') burst(plate.rarity);
         if (plate.rarity === 'legend') { 
             document.body.insertAdjacentHTML('beforeend', '<div class="flash"></div>'); setTimeout(() => document.querySelector('.flash')?.remove(), 500); playTone(800, 'sine', 0.4); 
         } else { playTone(500, 'sine', 0.1); }
@@ -1128,9 +1349,50 @@
         updateAidBanner();
     }
 
+
+    // ===== Эффекты =====
+    function popReveal(sel) {
+        const el = document.querySelector(sel); if (!el) return;
+        el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
+    }
+    function burst(rarity) {
+        const palettes = { legend: ['#fbbf24', '#f59e0b', '#fde68a', '#ffffff'], epic: ['#a855f7', '#c084fc', '#f472b6', '#ffffff'], rare: ['#10b981', '#34d399', '#ffffff'] };
+        const cols = palettes[rarity] || palettes.rare;
+        const box = document.createElement('div'); box.className = 'confetti';
+        for (let i = 0; i < 46; i++) {
+            const c = document.createElement('i');
+            c.style.left = Math.random() * 100 + '%';
+            c.style.background = cols[Math.floor(Math.random() * cols.length)];
+            c.style.animationDuration = (1.6 + Math.random() * 1.6) + 's';
+            c.style.animationDelay = (Math.random() * 0.4) + 's';
+            c.style.transform = `rotate(${Math.random() * 360}deg)`;
+            box.appendChild(c);
+        }
+        document.body.appendChild(box);
+        setTimeout(() => box.remove(), 3800);
+    }
+    // Бегущие цифры баланса
+    const numNow = {};
+    function setNum(id, val) {
+        const el = document.getElementById(id);
+        const from = (numNow[id] === undefined) ? val : numNow[id];
+        numNow[id + '_target'] = val;
+        if (from === val) { numNow[id] = val; el.textContent = formatMoney(val); return; }
+        const t0 = performance.now(), dur = 450;
+        const step = t => {
+            if (numNow[id + '_target'] !== val) return;
+            const k = Math.max(0, Math.min(1, (t - t0) / dur));
+            numNow[id] = Math.round(from + (val - from) * (1 - Math.pow(1 - k, 3)));
+            el.textContent = formatMoney(numNow[id]);
+            if (k < 1) requestAnimationFrame(step); else { numNow[id] = val; el.textContent = formatMoney(val); }
+        };
+        requestAnimationFrame(step);
+        setTimeout(() => { if (numNow[id + '_target'] === val) { numNow[id] = val; el.textContent = formatMoney(val); } }, dur + 150);
+    }
+
     function updateUI() {
-        document.getElementById('uiBalanceRub').textContent = formatMoney(state.balanceRub);
-        document.getElementById('uiBalanceToken').textContent = formatMoney(state.balanceToken);
+        setNum('uiBalanceRub', state.balanceRub);
+        setNum('uiBalanceToken', state.balanceToken);
         document.getElementById('menuGarageCount').textContent = `Машины: ${state.garageCars.length} | Номера: ${state.garagePlates.length}`;
         checkStoryProgress();
         updateAidBanner();
@@ -1152,9 +1414,10 @@
         }
     }
 
+    document.querySelectorAll('.road-car').forEach(el => { el.innerHTML = makeCarSvg(el.dataset.type, el.dataset.color); });
     loadState(); updateUI(); checkDailyReward(); aidTick(); setInterval(aidTick, 1000);
     // Правила показываем до начала игры (при первом запуске)
     if (!state.rulesSeen) showRules();
 </script>
 </body>
-</html>
+        </html>
