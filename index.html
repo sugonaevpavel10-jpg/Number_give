@@ -55,6 +55,7 @@
 
     .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .menu-card { background: var(--panel); border: 1px solid var(--border); border-radius: 22px; padding: 20px 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; }
+    .menu-card.wide { grid-column: span 2; flex-direction: row; gap: 14px; padding: 14px; }
     .menu-card:active { transform: scale(0.96); border-color: var(--accent); }
     .menu-card.locked { opacity: 0.5; filter: grayscale(1); cursor: not-allowed; }
     .menu-card.locked::after { content: '🔒'; position: absolute; top: 10px; right: 10px; font-size: 18px; }
@@ -152,11 +153,97 @@
     .modal-title { font-size: 22px; font-weight: 900; margin-bottom: 8px; }
     .modal-text { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; }
 
+    /* ПРАВИЛА */
+    #rulesOverlay { z-index: 200; align-items: flex-start; overflow-y: auto; padding: 16px 0; }
+    .rules-content { background: var(--bg); border: 1px solid var(--border); border-radius: 28px; padding: 26px 20px; width: 92%; max-width: 440px; margin: auto; text-align: left; }
+    .rules-title { font-size: 24px; font-weight: 900; text-align: center; margin-bottom: 4px; }
+    .rules-sub { font-size: 13px; color: var(--text-muted); text-align: center; margin-bottom: 18px; }
+    .rule-item { display: flex; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); }
+    .rule-item:last-of-type { border-bottom: none; }
+    .rule-ico { font-size: 22px; flex: none; width: 30px; text-align: center; }
+    .rule-h { font-size: 14px; font-weight: 900; margin-bottom: 2px; }
+    .rule-p { font-size: 13px; color: var(--text-muted); line-height: 1.45; }
+    .rule-p b { color: #fff; }
+
     .flash { position: fixed; inset: 0; background: #fff; z-index: 999; pointer-events: none; opacity: 0; animation: flashAnim 0.5s ease-out; }
     @keyframes flashAnim { 0% { opacity: 0.8; } 100% { opacity: 0; } }
 
     .progress-bar-container { width: 100%; height: 5px; background: rgba(255,255,255,0.1); border-radius: 3px; margin-top: 8px; overflow: hidden; }
     .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #8b5cf6); width: 0%; transition: width 0.5s; }
+
+    /* ===== ДИЗАЙН v2 ===== */
+    body { background: #05060a; }
+    .bg-container { background: radial-gradient(1100px 560px at 50% -10%, #1b2a55 0%, transparent 62%), radial-gradient(800px 500px at 100% 100%, #3b1d6e 0%, transparent 55%), #05060a; }
+    .bg-container::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px); background-size: 40px 40px; -webkit-mask-image: radial-gradient(circle at 50% 30%, #000 0%, transparent 75%); mask-image: radial-gradient(circle at 50% 30%, #000 0%, transparent 75%); }
+    .top-bar { padding: 12px 14px; background: rgba(5,6,10,.72); gap: 8px; }
+    .page-title { font-size: 15px; letter-spacing: 1.5px; white-space: nowrap; }
+    .back-btn { padding-right: 10px; }
+    .wallet { white-space: nowrap; font-size: 12.5px; padding: 6px 10px; border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02)); }
+    .wallet.rub { box-shadow: 0 0 18px rgba(52,211,153,.18); }
+    .wallet.token { box-shadow: 0 0 18px rgba(96,165,250,.18); }
+
+    #menuRank { display: inline-block; padding: 4px 16px; border-radius: 999px; background: linear-gradient(135deg, rgba(59,130,246,.25), rgba(139,92,246,.25)); border: 1px solid rgba(139,92,246,.4); margin-top: 6px; font-size: 18px !important; }
+    .progress-bar-container { height: 7px; border-radius: 4px; }
+    .progress-bar { box-shadow: 0 0 12px rgba(139,92,246,.7); }
+
+    .menu-card { background: linear-gradient(160deg, rgba(255,255,255,.075), rgba(255,255,255,.015)); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.08); }
+    .icon-box { background: linear-gradient(145deg, rgba(255,255,255,.13), rgba(255,255,255,.02)); box-shadow: inset 0 1px 0 rgba(255,255,255,.15); }
+    .menu-grid .menu-card:nth-child(1) .icon-box { box-shadow: 0 0 26px rgba(59,130,246,.5), inset 0 1px 0 rgba(255,255,255,.15); }
+    .menu-grid .menu-card:nth-child(2) .icon-box { box-shadow: 0 0 26px rgba(14,165,233,.5), inset 0 1px 0 rgba(255,255,255,.15); }
+    .menu-grid .menu-card:nth-child(3) .icon-box { box-shadow: 0 0 26px rgba(251,191,36,.4), inset 0 1px 0 rgba(255,255,255,.15); }
+    .menu-grid .menu-card:nth-child(4) .icon-box { box-shadow: 0 0 26px rgba(16,185,129,.4), inset 0 1px 0 rgba(255,255,255,.15); }
+    .menu-grid .menu-card:nth-child(5) .icon-box { box-shadow: 0 0 26px rgba(168,85,247,.5), inset 0 1px 0 rgba(255,255,255,.15); }
+    .menu-grid .menu-card:nth-child(6) .icon-box { box-shadow: 0 0 26px rgba(251,191,36,.5), inset 0 1px 0 rgba(255,255,255,.15); }
+
+    .gen-screen { background: linear-gradient(170deg, rgba(255,255,255,.07), rgba(255,255,255,.015)); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 30px; box-shadow: 0 16px 40px rgba(0,0,0,.4); }
+    .car-image-wrapper { background: radial-gradient(ellipse at 50% 90%, rgba(59,130,246,.30), transparent 65%), linear-gradient(180deg, #131830, #0a0c14); }
+    .car-image-wrapper::after { content: ''; position: absolute; left: 8%; right: 8%; bottom: 14px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent); }
+    .gen-screen[data-rarity="rare"] .car-image-wrapper { background: radial-gradient(ellipse at 50% 90%, rgba(16,185,129,.38), transparent 65%), linear-gradient(180deg, #0f2220, #0a0c14); }
+    .gen-screen[data-rarity="epic"] .car-image-wrapper { background: radial-gradient(ellipse at 50% 90%, rgba(168,85,247,.45), transparent 65%), linear-gradient(180deg, #1c1236, #0a0c14); }
+    .gen-screen[data-rarity="legend"] .car-image-wrapper { background: radial-gradient(ellipse at 50% 90%, rgba(251,191,36,.50), transparent 65%), linear-gradient(180deg, #2a2110, #0a0c14); }
+    .gen-screen[data-rarity="legend"]::before { content: ''; position: absolute; top: 0; left: -60%; width: 40%; height: 100%; background: linear-gradient(100deg, transparent, rgba(251,191,36,.18), transparent); animation: sweep 2.6s infinite; pointer-events: none; z-index: 5; }
+    @keyframes sweep { to { left: 130%; } }
+    .car-title { font-size: 25px; letter-spacing: .5px; }
+    .car-brand { letter-spacing: 3px; }
+    .badge-rarity { letter-spacing: 1px; padding: 4px 12px; }
+    .bg-r-rare { box-shadow: 0 0 14px rgba(16,185,129,.6); }
+    .bg-r-epic { box-shadow: 0 0 14px rgba(168,85,247,.7); }
+    .bg-r-legend { box-shadow: 0 0 16px rgba(251,191,36,.8); }
+    .price-tag { font-size: 30px; text-shadow: 0 0 20px rgba(52,211,153,.35); }
+
+    .btn { border-radius: 16px; box-shadow: inset 0 1px 0 rgba(255,255,255,.12); }
+    .btn-primary { background: linear-gradient(135deg, #4f8cff, #2f5bea); }
+    .btn-boost { background: linear-gradient(135deg, rgba(245,158,11,.22), rgba(245,158,11,.06)); }
+
+    .tabs-header { border-radius: 16px; }
+    .tab-btn.active { background: linear-gradient(135deg, rgba(79,140,255,.35), rgba(139,92,246,.3)); }
+    .list-item { background: linear-gradient(160deg, rgba(255,255,255,.065), rgba(255,255,255,.015)); border-radius: 20px; }
+    .list-photo, .list-svg { background: linear-gradient(180deg, #131830, #0a0c14); }
+    .feature-card { background: linear-gradient(170deg, rgba(255,255,255,.07), rgba(255,255,255,.015)); box-shadow: 0 16px 40px rgba(0,0,0,.4); }
+
+    /* Каталог */
+    .cat-head { display: inline-block; font-size: 12px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 999px; margin: 14px 0 10px; }
+    .cat-head:first-child { margin-top: 0; }
+    .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .cat-card { background: linear-gradient(160deg, rgba(255,255,255,.065), rgba(255,255,255,.015)); border: 1px solid var(--border); border-radius: 18px; padding: 10px; display: flex; flex-direction: column; gap: 2px; }
+    .cat-rare { border-color: rgba(16,185,129,.45); } .cat-epic { border-color: rgba(168,85,247,.5); } .cat-legend { border-color: rgba(251,191,36,.6); box-shadow: 0 0 18px rgba(251,191,36,.15); }
+    .cat-img { height: 78px; border-radius: 12px; background: linear-gradient(180deg, #131830, #0a0c14); display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 6px; }
+    .cat-img img { width: 100%; height: 100%; object-fit: contain; }
+    .cat-svg { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 4px; }
+    .cat-svg svg { width: 100%; height: 100%; }
+    .cat-name { font-size: 14px; font-weight: 800; }
+    .cat-price { font-size: 12px; font-weight: 800; color: var(--rub); }
+
+    /* Правила */
+    .rules-content { background: linear-gradient(180deg, #0e1222, #07080c); border-radius: 30px; box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+    .rules-title { background: linear-gradient(90deg, #fff, #93a4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .rule-item { background: rgba(255,255,255,.04); border: 1px solid var(--border) !important; border-radius: 16px; padding: 12px; margin-bottom: 8px; align-items: center; }
+    .rule-ico { display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 13px; background: linear-gradient(145deg, rgba(59,130,246,.35), rgba(139,92,246,.22)); font-size: 21px; }
+
+    /* Помощь при нехватке денег */
+    .aid-banner { margin: 10px 14px 0; padding: 10px 14px; border-radius: 16px; background: linear-gradient(135deg, rgba(245,158,11,.22), rgba(239,68,68,.14)); border: 1px solid rgba(245,158,11,.5); color: #fde68a; font-size: 12.5px; line-height: 1.45; font-weight: 700; box-shadow: 0 0 22px rgba(245,158,11,.18); }
+    .aid-banner b { color: #fff; }
+    .aid-timer { display: inline-block; margin-top: 2px; padding: 1px 10px; border-radius: 999px; background: rgba(0,0,0,.35); color: #fff; font-weight: 900; font-variant-numeric: tabular-nums; }
 </style>
 </head>
 <body>
@@ -175,6 +262,8 @@
         </div>
     </div>
 
+    <div class="aid-banner" id="aidBanner" style="display:none;"></div>
+
     <div class="view active" id="view-menu">
         <div style="text-align: center; margin-bottom: 20px;">
             <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Твой статус</div>
@@ -188,6 +277,8 @@
             <div class="menu-card locked" id="nav-upgrades" onclick="checkLock('upgrades', 5000000)"><div class="icon-box">🛠️</div><div class="menu-label">Тюнинг</div><div class="menu-desc" id="menuUpgradeDesc">5 000 000 ₽</div></div>
             <div class="menu-card locked" id="nav-cases" onclick="checkLock('cases', 20000000)"><div class="icon-box">💎</div><div class="menu-label">Аукцион</div><div class="menu-desc" id="menuCaseDesc">20 000 000 ₽</div></div>
             <div class="menu-card" onclick="navigate('profile')"><div class="icon-box">👑</div><div class="menu-label">Профиль</div><div class="menu-desc">Статистика</div></div>
+            <div class="menu-card" onclick="navigate('catalog')"><div class="icon-box">📚</div><div class="menu-label">Каталог</div><div class="menu-desc">Все 32 машины</div></div>
+            <div class="menu-card" onclick="showRules()"><div class="icon-box">📖</div><div class="menu-label">Правила</div><div class="menu-desc">Как играть</div></div>
         </div>
     </div>
 
@@ -195,7 +286,7 @@
         <div class="gen-screen" id="genCarBox" data-rarity="common">
             <div class="car-showcase">
                 <div class="car-image-wrapper">
-                    <img src="" id="carImg" class="car-photo" alt="Car" crossorigin="anonymous" referrerpolicy="no-referrer" onerror="this.style.display='none'; document.getElementById('carSvgBox').style.display='flex';">
+                    <img src="" id="carImg" class="car-photo" alt="Car" referrerpolicy="no-referrer">
                     <div class="car-svg-container" id="carSvgBox" style="display:none;"></div>
                 </div>
                 <div class="car-brand" id="carBrand">LADA</div>
@@ -251,6 +342,10 @@
         <div class="list-container" id="garageList"></div>
     </div>
 
+    <div class="view" id="view-catalog">
+        <div id="catalogList"></div>
+    </div>
+
     <div class="view" id="view-upgrades">
         <div class="feature-card">
             <div class="icon-box" style="margin: 0 auto; width: 80px; height: 80px; font-size: 40px;">🛠️</div>
@@ -300,6 +395,25 @@
     </div>
 </div>
 
+<div class="modal-overlay" id="rulesOverlay">
+    <div class="rules-content">
+        <div class="rules-title">📖 Правила игры</div>
+        <div class="rules-sub">Стань королём дорог: крути тачки и номера, продавай дороже</div>
+
+        <div class="rule-item"><div class="rule-ico">💰</div><div><div class="rule-h">Старт</div><div class="rule-p">У тебя <b>5 000 000 ₽</b> и <b>10 000 💎</b>. Каждый день заходи за бонусом: <b>1 000 000 ₽</b> и <b>1 000 💎</b>.</div></div></div>
+        <div class="rule-item"><div class="rule-ico">🆘</div><div><div class="rule-h">Деньги закончились?</div><div class="rule-p">Если на счёте меньше <b>2 000 000 ₽</b> (не хватает даже на обычную прокрутку), мы выдаём <b>500 000 ₽ каждый час</b>. Таймер виден вверху экрана. Эти деньги не засчитываются в «заработано» для рангов.</div></div></div>
+        <div class="rule-item"><div class="rule-ico">🚗</div><div><div class="rule-h">Автосалон (за ₽)</div><div class="rule-p">Прокрутка стоит <b>2 млн ₽</b>, Boost — <b>6 млн ₽</b> (выше шанс на редкие машины). Редкости: Common, Rare, Epic, Legend. Чем редче машина, тем она дороже.</div></div></div>
+        <div class="rule-item"><div class="rule-ico">🔢</div><div><div class="rule-h">Госзнаки (за 💎)</div><div class="rule-p">Прокрутка стоит <b>500 💎</b>, Boost — <b>1 500 💎</b>. Ценятся красивые цифры (777, 001), буквы (ААА, МММ) и столичные регионы (77, 99, 97).</div></div></div>
+        <div class="rule-item"><div class="rule-ico">🏎️</div><div><div class="rule-h">Продать или в гараж</div><div class="rule-p">Выпавшее можно <b>продать</b> сразу или <b>сохранить в гараж</b> (до 50 машин и 50 номеров). Если крутишь дальше, не сохранив предыдущее, оно автоматически продаётся.</div></div></div>
+        <div class="rule-item"><div class="rule-ico">📈</div><div><div class="rule-h">Ранги и открытия</div><div class="rule-p">Заработай <b>5 млн ₽</b> — откроется Тюнинг. <b>20 млн ₽</b> — Премиум Аукцион. <b>100 млн ₽</b> — доступно Перерождение.</div></div></div>
+        <div class="rule-item"><div class="rule-ico">🛠️</div><div><div class="rule-h">Тюнинг</div><div class="rule-p">Каждый уровень даёт <b>+10%</b> к цене продажи машин и номеров.</div></div></div>
+        <div class="rule-item"><div class="rule-ico">💎</div><div><div class="rule-h">Премиум Аукцион</div><div class="rule-p">За <b>20 млн ₽</b> гарантированно получаешь машину Epic или Legend и редкий номер.</div></div></div>
+        <div class="rule-item"><div class="rule-ico">✨</div><div><div class="rule-h">Перерождение</div><div class="rule-p">После 100 млн ₽ можно начать заново: прогресс обнуляется, но навсегда растёт шанс дорогих машин (<b>+10%</b>) и цены (<b>+25%</b>) за каждый уровень.</div></div></div>
+
+        <button class="btn btn-primary" style="width:100%; margin-top: 18px;" onclick="closeRules()" id="rulesBtn">Играть</button>
+    </div>
+</div>
+
 <script>
     const SVG_CARS = {
         hatch: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 70 L40 50 L80 30 L140 30 L170 50 L185 60 L185 75 L30 75 Z" fill="#cbd5e1" /><path d="M50 50 L85 35 L130 35 L155 50 Z" fill="#94a3b8" /><circle cx="60" cy="75" r="15" fill="#1e293b" /><circle cx="60" cy="75" r="8" fill="#64748b" /><circle cx="150" cy="75" r="15" fill="#1e293b" /><circle cx="150" cy="75" r="8" fill="#64748b" /></svg>`,
@@ -308,6 +422,9 @@
         sport: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><path d="M10 75 L30 50 L80 35 L140 35 L180 55 L195 65 L195 75 Z" fill="#fbbf24" /><path d="M50 50 L85 40 L125 40 L155 50 Z" fill="#78350f" /><circle cx="55" cy="75" r="15" fill="#0f172a" /><circle cx="55" cy="75" r="7" fill="#e2e8f0" /><circle cx="150" cy="75" r="15" fill="#0f172a" /><circle cx="150" cy="75" r="7" fill="#e2e8f0" /></svg>`,
         luxury: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><path d="M15 75 L25 45 L70 20 L140 20 L180 45 L195 60 L195 75 Z" fill="#e2e8f0" /><path d="M45 45 L80 28 L130 28 L160 45 Z" fill="#334155" /><circle cx="55" cy="75" r="16" fill="#0f172a" /><circle cx="55" cy="75" r="9" fill="#fbbf24" /><circle cx="150" cy="75" r="16" fill="#0f172a" /><circle cx="150" cy="75" r="9" fill="#fbbf24" /></svg>`
     };
+
+    // Папка с фото машин. Имя файла = поле img у машины (например ./cars/granta.png)
+    const IMG_DIR = './cars/';
 
     const CONFIG = {
         startBalanceRub: 5000000,
@@ -332,47 +449,110 @@
         
         cars: {
             common: [
-                { brand: 'LADA', name: 'Granta', img: './granta.png', svg: SVG_CARS.hatch, price: 1200000 },
-                { brand: 'KIA', name: 'Rio', img: './rio.png', svg: SVG_CARS.hatch, price: 1800000 },
-                { brand: 'HYUNDAI', name: 'Solaris', img: './solaris.png', svg: SVG_CARS.sedan, price: 2000000 },
-                { brand: 'VW', name: 'Polo', img: './polo.png', svg: SVG_CARS.hatch, price: 1900000 },
-                { brand: 'RENAULT', name: 'Logan', svg: SVG_CARS.sedan, price: 900000 },
-                { brand: 'DATSUN', name: 'on-DO', svg: SVG_CARS.sedan, price: 800000 },
-                { brand: 'FORD', name: 'Focus', svg: SVG_CARS.hatch, price: 1500000 },
-                { brand: 'TOYOTA', name: 'Corolla', svg: SVG_CARS.sedan, price: 2200000 }
+                { brand: 'LADA', name: 'Granta', img: 'granta.png', svg: SVG_CARS.hatch, price: 1200000 },
+                { brand: 'KIA', name: 'Rio', img: 'rio.png', svg: SVG_CARS.hatch, price: 1800000 },
+                { brand: 'HYUNDAI', name: 'Solaris', img: 'solaris.png', svg: SVG_CARS.sedan, price: 2000000 },
+                { brand: 'VW', name: 'Polo', img: 'polo.png', svg: SVG_CARS.hatch, price: 1900000 },
+                { brand: 'RENAULT', name: 'Logan', img: 'logan.png', svg: SVG_CARS.sedan, price: 900000 },
+                { brand: 'DATSUN', name: 'on-DO', img: 'ondo.png', svg: SVG_CARS.sedan, price: 800000 },
+                { brand: 'FORD', name: 'Focus', img: 'focus.png', svg: SVG_CARS.hatch, price: 1500000 },
+                { brand: 'TOYOTA', name: 'Corolla', img: 'corolla.png', svg: SVG_CARS.sedan, price: 2200000 }
             ],
             rare: [
-                { brand: 'TOYOTA', name: 'Camry', img: './camry.png', svg: SVG_CARS.sedan, price: 4500000 },
-                { brand: 'KIA', name: 'K5', img: './k5.png', svg: SVG_CARS.sedan, price: 4000000 },
-                { brand: 'SKODA', name: 'Superb', img: './superb.png', svg: SVG_CARS.sedan, price: 4200000 },
-                { brand: 'MAZDA', name: 'Mazda 6', img: './mazda6.png', svg: SVG_CARS.sedan, price: 3800000 },
-                { brand: 'NISSAN', name: 'Teana', svg: SVG_CARS.sedan, price: 3200000 },
-                { brand: 'HYUNDAI', name: 'Tucson', svg: SVG_CARS.suv, price: 3500000 },
-                { brand: 'KIA', name: 'Sportage', svg: SVG_CARS.suv, price: 3400000 },
-                { brand: 'MITSUBISHI', name: 'Outlander', svg: SVG_CARS.suv, price: 3600000 },
-                { brand: 'NISSAN', name: 'X-Trail', svg: SVG_CARS.suv, price: 3700000 },
-                { brand: 'VW', name: 'Tiguan', svg: SVG_CARS.suv, price: 3900000 },
-                { brand: 'HONDA', name: 'CR-V', svg: SVG_CARS.suv, price: 4100000 },
-                { brand: 'SUBARU', name: 'Forester', svg: SVG_CARS.suv, price: 4300000 }
+                { brand: 'TOYOTA', name: 'Camry', img: 'camry.png', svg: SVG_CARS.sedan, price: 4500000 },
+                { brand: 'KIA', name: 'K5', img: 'k5.png', svg: SVG_CARS.sedan, price: 4000000 },
+                { brand: 'SKODA', name: 'Superb', img: 'superb.png', svg: SVG_CARS.sedan, price: 4200000 },
+                { brand: 'MAZDA', name: 'Mazda 6', img: 'mazda6.png', svg: SVG_CARS.sedan, price: 3800000 },
+                { brand: 'NISSAN', name: 'Teana', img: 'teana.png', svg: SVG_CARS.sedan, price: 3200000 },
+                { brand: 'HYUNDAI', name: 'Tucson', img: 'tucson.png', svg: SVG_CARS.suv, price: 3500000 },
+                { brand: 'KIA', name: 'Sportage', img: 'sportage.png', svg: SVG_CARS.suv, price: 3400000 },
+                { brand: 'MITSUBISHI', name: 'Outlander', img: 'outlander.png', svg: SVG_CARS.suv, price: 3600000 },
+                { brand: 'NISSAN', name: 'X-Trail', img: 'xtrail.png', svg: SVG_CARS.suv, price: 3700000 },
+                { brand: 'VW', name: 'Tiguan', img: 'tiguan.png', svg: SVG_CARS.suv, price: 3900000 },
+                { brand: 'HONDA', name: 'CR-V', img: 'crv.png', svg: SVG_CARS.suv, price: 4100000 },
+                { brand: 'SUBARU', name: 'Forester', img: 'forester.png', svg: SVG_CARS.suv, price: 4300000 }
             ],
             epic: [
-                { brand: 'BMW', name: '5 Series', img: './bmw5.png', svg: SVG_CARS.sport, price: 9000000 },
-                { brand: 'MERCEDES', name: 'E-Class', img: './eclass.png', svg: SVG_CARS.sedan, price: 8500000 },
-                { brand: 'AUDI', name: 'A6', img: './a6.png', svg: SVG_CARS.sedan, price: 8000000 },
-                { brand: 'LEXUS', name: 'ES', img: './lexus_es.png', svg: SVG_CARS.sedan, price: 7500000 },
-                { brand: 'INFINITI', name: 'Q50', svg: SVG_CARS.sport, price: 6500000 },
-                { brand: 'VOLVO', name: 'XC90', svg: SVG_CARS.suv, price: 7000000 },
-                { brand: 'LAND ROVER', name: 'Discovery', svg: SVG_CARS.suv, price: 7800000 },
-                { brand: 'JAGUAR', name: 'XF', svg: SVG_CARS.sedan, price: 8200000 }
+                { brand: 'BMW', name: '5 Series', img: 'bmw5.png', svg: SVG_CARS.sport, price: 9000000 },
+                { brand: 'MERCEDES', name: 'E-Class', img: 'eclass.png', svg: SVG_CARS.sedan, price: 8500000 },
+                { brand: 'AUDI', name: 'A6', img: 'a6.png', svg: SVG_CARS.sedan, price: 8000000 },
+                { brand: 'LEXUS', name: 'ES', img: 'lexus_es.png', svg: SVG_CARS.sedan, price: 7500000 },
+                { brand: 'INFINITI', name: 'Q50', img: 'q50.png', svg: SVG_CARS.sport, price: 6500000 },
+                { brand: 'VOLVO', name: 'XC90', img: 'xc90.png', svg: SVG_CARS.suv, price: 7000000 },
+                { brand: 'LAND ROVER', name: 'Discovery', img: 'discovery.png', svg: SVG_CARS.suv, price: 7800000 },
+                { brand: 'JAGUAR', name: 'XF', img: 'jaguar_xf.png', svg: SVG_CARS.sedan, price: 8200000 }
             ],
             legend: [
-                { brand: 'MERCEDES', name: 'G-Class', img: './gclass.png', svg: SVG_CARS.suv, price: 30000000 },
-                { brand: 'PORSCHE', name: '911', img: './porsche911.png', svg: SVG_CARS.sport, price: 35000000 },
-                { brand: 'BMW', name: 'M5 CS', img: './m5cs.png', svg: SVG_CARS.sport, price: 32000000 },
-                { brand: 'ROLLS-ROYCE', name: 'Phantom', img: './phantom.png', svg: SVG_CARS.luxury, price: 80000000 }
+                { brand: 'MERCEDES', name: 'G-Class', img: 'gclass.png', svg: SVG_CARS.suv, price: 30000000 },
+                { brand: 'PORSCHE', name: '911', img: 'porsche911.png', svg: SVG_CARS.sport, price: 35000000 },
+                { brand: 'BMW', name: 'M5 CS', img: 'm5cs.png', svg: SVG_CARS.sport, price: 32000000 },
+                { brand: 'ROLLS-ROYCE', name: 'Phantom', img: 'phantom.png', svg: SVG_CARS.luxury, price: 80000000 }
             ]
         }
     };
+
+    // Ищет фото машины: сначала в cars/, потом в корне; расширения png/jpg/jpeg/webp.
+    // Если ничего не нашлось, возвращает null (показывается рисунок-заглушка).
+    const IMG_DIRS = [IMG_DIR, './'];
+    const IMG_EXTS = ['png', 'jpg', 'jpeg', 'webp'];
+    const imgCache = {};
+    function resolveCarImg(car, cb) {
+        if (!car.img) return cb(null);
+        const key = car.img;
+        if (key in imgCache) return cb(imgCache[key]);
+        const base = car.img.replace(/\.[^.]+$/, '');
+        const cands = [];
+        IMG_DIRS.forEach(d => IMG_EXTS.forEach(e => cands.push(d + base + '.' + e)));
+        let i = 0;
+        const next = () => {
+            if (i >= cands.length) { imgCache[key] = null; return cb(null); }
+            const im = new Image();
+            im.onload = () => { imgCache[key] = cands[i]; cb(cands[i]); };
+            im.onerror = () => { i++; next(); };
+            im.src = cands[i];
+        };
+        next();
+    }
+
+
+    // ===== Красивые рисунки машин (цвет у каждой модели свой) =====
+    const CAR_COLORS = {
+        'Granta':'#e5e7eb','Rio':'#ef4444','Solaris':'#cbd5e1','Polo':'#60a5fa','Logan':'#a3a3a3','on-DO':'#fb923c','Focus':'#3b82f6','Corolla':'#f1f5f9',
+        'Camry':'#64748b','K5':'#dc2626','Superb':'#10b981','Mazda 6':'#be123c','Teana':'#94a3b8','Tucson':'#22d3ee','Sportage':'#f97316','Outlander':'#a78bfa',
+        'X-Trail':'#e2e8f0','Tiguan':'#34d399','CR-V':'#f87171','Forester':'#84cc16',
+        '5 Series':'#3b82f6','E-Class':'#cbd5e1','A6':'#64748b','ES':'#e2e8f0','Q50':'#c084fc','XC90':'#38bdf8','Discovery':'#4ade80','XF':'#f43f5e',
+        'G-Class':'#65a30d','911':'#fbbf24','M5 CS':'#fb923c','Phantom':'#e2e8f0'
+    };
+    const CAR_SHAPES = {
+        hatch:  { body:'M16 82 L18 66 Q20 60 30 58 L60 54 L84 33 Q88 30 94 30 L146 30 Q154 30 160 37 L178 55 L212 61 Q222 63 224 71 L224 82 Z', win:['M72 54 L90 37 L118 37 L118 54 Z','M124 37 L146 37 L164 54 L124 54 Z'], wy:82, r:17, x1:58, x2:182, xl:16, xr:224, door:121, rim:'#cbd5e1' },
+        sedan:  { body:'M14 82 L16 66 Q18 60 28 58 L62 52 L88 34 Q92 31 98 31 L150 31 Q156 31 160 35 L184 54 L214 60 Q224 62 226 70 L226 82 Z', win:['M70 52 L92 37 L120 37 L120 52 Z','M126 37 L150 37 L172 52 L126 52 Z'], wy:82, r:17, x1:56, x2:184, xl:14, xr:226, door:123, rim:'#cbd5e1' },
+        suv:    { body:'M14 84 L14 56 Q14 50 22 48 L50 44 L66 24 Q70 20 76 20 L160 20 Q168 20 172 26 L190 46 L216 52 Q226 54 226 62 L226 84 Z', win:['M72 44 L80 27 L116 27 L116 44 Z','M122 27 L160 27 L176 44 L122 44 Z'], wy:84, r:19, x1:60, x2:182, xl:14, xr:226, door:119, rim:'#cbd5e1' },
+        sport:  { body:'M10 80 L14 68 Q18 62 30 60 L74 52 L108 36 Q114 33 122 33 L150 33 Q158 34 164 40 L186 54 L218 60 Q230 63 232 72 L232 80 Z', win:['M92 51 L112 38 L146 38 L170 52 Z'], wy:80, r:16, x1:58, x2:186, xl:10, xr:232, door:128, rim:'#e2e8f0' },
+        luxury: { body:'M8 84 L10 66 Q12 58 24 56 L60 50 L90 30 Q95 26 104 26 L160 26 Q168 26 174 31 L196 50 L226 56 Q234 58 234 68 L234 84 Z', win:['M70 50 L94 32 L124 32 L124 50 Z','M130 32 L162 32 L184 50 L130 50 Z'], wy:84, r:18, x1:56, x2:188, xl:8, xr:234, door:127, rim:'#fbbf24' }
+    };
+    function makeCarSvg(type, color) {
+        const p = CAR_SHAPES[type] || CAR_SHAPES.sedan;
+        const wheel = cx => `<circle cx="${cx}" cy="${p.wy}" r="${p.r + 4}" fill="#05070c"/><circle cx="${cx}" cy="${p.wy}" r="${p.r}" fill="#111827"/><circle cx="${cx}" cy="${p.wy}" r="${(p.r * 0.62).toFixed(1)}" fill="${p.rim}"/><circle cx="${cx}" cy="${p.wy}" r="${(p.r * 0.62).toFixed(1)}" fill="none" stroke="#0f172a" stroke-width="2" stroke-dasharray="4 4"/><circle cx="${cx}" cy="${p.wy}" r="${(p.r * 0.2).toFixed(1)}" fill="#475569"/>`;
+        return `<svg viewBox="0 0 240 110" xmlns="http://www.w3.org/2000/svg">`
+            + `<defs><clipPath id="cp-${type}"><path d="${p.body}"/></clipPath></defs>`
+            + `<ellipse cx="120" cy="${p.wy + p.r - 1}" rx="106" ry="7" fill="#000" opacity=".5"/>`
+            + `<path d="${p.body}" fill="${color}"/>`
+            + `<g clip-path="url(#cp-${type})"><rect x="0" y="0" width="240" height="46" fill="#fff" opacity=".16"/><rect x="0" y="${p.wy - 10}" width="240" height="14" fill="#000" opacity=".28"/><path d="M${p.door} 40 L${p.door} ${p.wy - 8}" stroke="#000" stroke-opacity=".3" stroke-width="1.5"/><rect x="${p.door + 6}" y="${p.wy - 28}" width="11" height="2.5" rx="1" fill="#000" opacity=".35"/></g>`
+            + p.win.map(w => `<path d="${w}" fill="#0b1324"/><path d="${w}" fill="#fff" opacity=".10"/>`).join('')
+            + `<rect x="${p.xr - 11}" y="${p.wy - 24}" width="10" height="5" rx="2" fill="#fde68a"/>`
+            + `<rect x="${p.xl + 1}" y="${p.wy - 24}" width="8" height="5" rx="2" fill="#ef4444"/>`
+            + wheel(p.x1) + wheel(p.x2)
+            + `</svg>`;
+    }
+    (function applyCarArt() {
+        const typeOf = svg => Object.keys(SVG_CARS).find(k => SVG_CARS[k] === svg) || 'sedan';
+        Object.values(CONFIG.cars).flat().forEach(c => { c.type = typeOf(c.svg); c.svg = makeCarSvg(c.type, CAR_COLORS[c.name] || '#60a5fa'); });
+    })();
+    // Рисунок берём из актуального конфига (чтобы старые сохранения тоже выглядели красиво)
+    function svgFor(car) {
+        const c = Object.values(CONFIG.cars).flat().find(x => x.brand === car.brand && x.name === car.name);
+        return (c && c.svg) || car.svg || '';
+    }
 
     const STORAGE_KEY = 'autogen_final_v18';
 
@@ -396,6 +576,8 @@
         upgradeLevel: 0,
         prestigeLevel: 0,
         lastDaily: 0,
+        aidReadyAt: 0,
+        rulesSeen: false,
         stats: { spins: 0, bestPrice: 0, earned: 0 },
         totalEarnedStory: 0,
         recentCars: []
@@ -430,6 +612,19 @@
         document.getElementById('modal').classList.add('active');
     }
     function closeModal() { document.getElementById('modal').classList.remove('active'); }
+
+    // ПРАВИЛА
+    let pendingDailyModal = false;
+    function showRules() {
+        document.getElementById('rulesBtn').textContent = state.rulesSeen ? 'Понятно' : 'Играть';
+        document.getElementById('rulesOverlay').classList.add('active');
+        document.getElementById('rulesOverlay').scrollTop = 0;
+    }
+    function closeRules() {
+        document.getElementById('rulesOverlay').classList.remove('active');
+        if (!state.rulesSeen) { state.rulesSeen = true; saveState(); }
+        if (pendingDailyModal) { pendingDailyModal = false; showDailyModal(); }
+    }
 
     function checkStoryProgress() {
         let currentRank = STORY_LEVELS[0].rank;
@@ -475,13 +670,14 @@
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById(`view-${viewId}`).classList.add('active');
         
-        const titles = { menu: 'Номердай', cars: 'Автосалон', plates: 'Госзнаки', garage: 'Гараж', upgrades: 'Тюнинг', profile: 'Профиль', cases: 'Аукцион' };
+        const titles = { menu: 'Номердай', cars: 'Автосалон', plates: 'Госзнаки', garage: 'Гараж', upgrades: 'Тюнинг', profile: 'Профиль', cases: 'Аукцион', catalog: 'Каталог' };
         document.getElementById('pageTitle').textContent = titles[viewId] || 'Номердай';
         document.getElementById('backBtn').style.display = viewId === 'menu' ? 'none' : 'block';
 
         if (viewId === 'cars') { state.currentCar ? showCarResult(state.currentCar) : resetCarUI(); }
         if (viewId === 'plates') { state.currentPlate ? showPlateResult(state.currentPlate) : resetPlateUI(); }
         if (viewId === 'garage') renderGarage();
+        if (viewId === 'catalog') renderCatalog();
         if (viewId === 'profile') renderProfile();
         if (viewId === 'upgrades') renderUpgrades();
         if (viewId === 'menu') checkStoryProgress();
@@ -512,7 +708,7 @@
     function rollCar(isBoosted) {
         if (state.isSpinningCar) return;
         let cost = isBoosted ? CONFIG.costCarBoost : CONFIG.costCarNormal;
-        if (state.balanceRub < cost) return showModal('Мало рублей', 'Не хватает рублей для прокрутки!', '❌');
+        if (state.balanceRub < cost) return showModal('Мало рублей', 'Не хватает рублей для прокрутки!<br><br>Когда деньги заканчиваются, мы выдаём <b>500 000 ₽</b> каждый час. Следи за таймером вверху.', '❌');
 
         if (state.currentCar) addRubles(state.currentCar.price);
 
@@ -599,25 +795,22 @@
         updateUI();
     }
 
+    // Показывает фото машины; пока оно ищется или если его нет, рисует SVG-заглушку
+    let carImgToken = 0;
     function setCarImage(car) {
         const imgEl = document.getElementById('carImg');
         const svgEl = document.getElementById('carSvgBox');
-        
-        imgEl.onerror = function() {
-            this.style.display = 'none';
-            svgEl.style.display = 'flex';
-            svgEl.innerHTML = car.svg;
-        };
-        
-        if (car.img) {
-            imgEl.src = car.img;
+        const token = ++carImgToken;
+        imgEl.alt = `${car.brand} ${car.name}`;
+        imgEl.style.display = 'none';
+        svgEl.style.display = 'flex';
+        svgEl.innerHTML = svgFor(car);
+        resolveCarImg(car, src => {
+            if (token !== carImgToken || !src) return;
+            imgEl.src = src;
             imgEl.style.display = 'block';
             svgEl.style.display = 'none';
-        } else {
-            imgEl.style.display = 'none';
-            svgEl.style.display = 'flex';
-            svgEl.innerHTML = car.svg;
-        }
+        });
     }
 
     function showCarResult(car) {
@@ -777,13 +970,10 @@
         items.forEach((item, index) => {
             let div = document.createElement('div'); div.className = 'list-item';
             if (state.activeGarageTab === 'cars') {
-                let imgHTML = `<img src="${item.img}" class="list-photo" crossorigin="anonymous" referrerpolicy="no-referrer" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">`;
-                let svgStyle = item.img ? 'display:none;' : 'display:flex;';
-                
                 div.innerHTML = `
                     <div style="display: flex; align-items: center;">
-                        ${imgHTML}
-                        <div class="list-svg" style="${svgStyle}">${item.svg || ''}</div>
+                        <img class="list-photo" alt="" style="display:none;">
+                        <div class="list-svg" style="display:flex;">${svgFor(item)}</div>
                         <div>
                             <div class="list-brand">${item.brand}</div>
                             <div class="list-title">${item.name}</div>
@@ -793,6 +983,8 @@
                         <div class="list-price rub">${formatMoney(item.price)} ₽</div>
                         <button class="sell-btn" onclick="sellFromGarage('cars', ${index})">Продать</button>
                     </div>`;
+                const gImg = div.querySelector('.list-photo'), gSvg = div.querySelector('.list-svg');
+                resolveCarImg(item, src => { if (src) { gImg.src = src; gImg.style.display = 'block'; gSvg.style.display = 'none'; } });
             } else {
                 div.innerHTML = `
                     <div style="display: flex; align-items: center;">
@@ -850,6 +1042,24 @@
         showModal('Аукцион выигран!', `Вы получили:<br><br>🚗 <b>${car.brand} ${car.name}</b><br>🔢 <b>${plate.l1} ${plate.num} ${plate.l2}</b>`, '💎');
     }
 
+
+    function renderCatalog() {
+        const box = document.getElementById('catalogList'); box.innerHTML = '';
+        const names = { common: 'Common', rare: 'Rare', epic: 'Epic', legend: 'Legend' };
+        Object.entries(CONFIG.cars).forEach(([rar, arr]) => {
+            const h = document.createElement('div'); h.className = 'cat-head bg-r-' + rar; h.textContent = `${names[rar]} · ${arr.length}`; box.appendChild(h);
+            const grid = document.createElement('div'); grid.className = 'cat-grid';
+            arr.forEach(car => {
+                const d = document.createElement('div'); d.className = 'cat-card cat-' + rar;
+                d.innerHTML = `<div class="cat-img"><img alt="${car.brand} ${car.name}" style="display:none;"><div class="cat-svg">${car.svg}</div></div><div class="list-brand">${car.brand}</div><div class="cat-name">${car.name}</div><div class="cat-price">${formatMoney(car.price)} ₽</div>`;
+                const im = d.querySelector('img'), sv = d.querySelector('.cat-svg');
+                resolveCarImg(car, src => { if (src) { im.src = src; im.style.display = 'block'; sv.style.display = 'none'; } });
+                grid.appendChild(d);
+            });
+            box.appendChild(grid);
+        });
+    }
+
     function renderUpgrades() {
         let cost = 10000000 + (state.upgradeLevel * 15000000);
         document.getElementById('upgradeLevelDisplay').textContent = `Ур. ${state.upgradeLevel}`;
@@ -883,25 +1093,68 @@
         }
     }
 
+
+    // ===== Помощь: если деньги закончились, раз в час даём 500 000 ₽ =====
+    const AID_AMOUNT = 500000;
+    const AID_HOUR = 60 * 60 * 1000;
+    const AID_MAX_CATCHUP = 12;
+    function fmtTime(ms) {
+        const t = Math.max(0, Math.ceil(ms / 1000));
+        const h = Math.floor(t / 3600), m = Math.floor((t % 3600) / 60), sec = t % 60;
+        const pad = n => String(n).padStart(2, '0');
+        return (h ? h + ':' : '') + pad(m) + ':' + pad(sec);
+    }
+    function updateAidBanner() {
+        const el = document.getElementById('aidBanner');
+        if (state.balanceRub >= CONFIG.costCarNormal) {
+            if (state.aidReadyAt) { state.aidReadyAt = 0; saveState(); }
+            el.style.display = 'none';
+            return;
+        }
+        if (!state.aidReadyAt) { state.aidReadyAt = Date.now() + AID_HOUR; saveState(); }
+        el.innerHTML = `⚠️ <b>Деньги заканчиваются!</b> Не хватает даже на обычную прокрутку (${formatMoney(CONFIG.costCarNormal)} ₽). Пока на счёте меньше этой суммы, каждый час выдаём <b>${formatMoney(AID_AMOUNT)} ₽</b>. Следующая выдача через <span class="aid-timer">${fmtTime(state.aidReadyAt - Date.now())}</span>`;
+        el.style.display = 'block';
+    }
+    function aidTick() {
+        if (state.balanceRub < CONFIG.costCarNormal && state.aidReadyAt && Date.now() >= state.aidReadyAt) {
+            const n = Math.min(AID_MAX_CATCHUP, 1 + Math.floor((Date.now() - state.aidReadyAt) / AID_HOUR));
+            const total = n * AID_AMOUNT;
+            state.balanceRub += total;   // не идёт в «заработано», чтобы не ускорять ранги
+            state.aidReadyAt = 0;
+            saveState(); updateUI();
+            showModal('Помощь от дилерского центра', `Деньги закончились, поэтому мы выдали вам <b>${formatMoney(total)} ₽</b>${n > 1 ? ` (за ${n} ч.)` : ''}.<br>Пока на счёте меньше ${formatMoney(CONFIG.costCarNormal)} ₽, такая помощь приходит <b>каждый час</b>.`, '🆘');
+            return;
+        }
+        updateAidBanner();
+    }
+
     function updateUI() {
         document.getElementById('uiBalanceRub').textContent = formatMoney(state.balanceRub);
         document.getElementById('uiBalanceToken').textContent = formatMoney(state.balanceToken);
         document.getElementById('menuGarageCount').textContent = `Машины: ${state.garageCars.length} | Номера: ${state.garagePlates.length}`;
         checkStoryProgress();
+        updateAidBanner();
         if(document.getElementById('view-profile').classList.contains('active')) renderProfile();
     }
     function formatMoney(num) { return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
     function resetGame() { if(confirm('Сбросить прогресс?')) { localStorage.removeItem(STORAGE_KEY); location.reload(); } }
 
+    function showDailyModal() {
+        showModal('Бонус за вход', 'Вы получили <b>1 000 000 ₽</b> и <b>1 000 💎</b>!', '⛽');
+    }
+
     function checkDailyReward() {
         const now = new Date().setHours(0,0,0,0);
         if (state.lastDaily !== now) {
             state.lastDaily = now; addRubles(1000000); addTokens(1000);
-            setTimeout(() => { if (document.getElementById('view-menu').classList.contains('active')) showModal('Бонус за вход', 'Вы получили <b>1 000 000 ₽</b> и <b>1 000 💎</b>!', '⛽'); }, 500);
+            if (!state.rulesSeen) { pendingDailyModal = true; return; }
+            setTimeout(() => { if (document.getElementById('view-menu').classList.contains('active')) showDailyModal(); }, 500);
         }
     }
 
-    loadState(); updateUI(); checkDailyReward();
+    loadState(); updateUI(); checkDailyReward(); aidTick(); setInterval(aidTick, 1000);
+    // Правила показываем до начала игры (при первом запуске)
+    if (!state.rulesSeen) showRules();
 </script>
 </body>
-    </html>
+</html>
