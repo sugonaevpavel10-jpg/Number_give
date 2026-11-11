@@ -8,23 +8,36 @@
 :root{--bg:#07080c;--panel:rgba(22,25,35,0.75);--border:rgba(255,255,255,0.08);--text:#fff;--text-muted:#8892b0;--rub:#34d399;--token:#60a5fa;--accent:#3b82f6;--common:#94a3b8;--rare:#10b981;--epic:#a855f7;--legend:#fbbf24;}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background-color:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;user-select:none;-webkit-user-select:none;}
-.bg-container{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;}
-.orb{position:absolute;border-radius:50%;filter:blur(110px);opacity:0.35;animation:float 14s infinite alternate ease-in-out;}
-body.theme-default .bg-container{background:radial-gradient(circle at 50% 0%,#182038 0%,#07080c 75%);}
-body.theme-default .orb-1{width:50vw;height:50vw;background:#3b82f6;top:-10%;left:-10%;}
-body.theme-default .orb-2{width:60vw;height:60vw;background:#8b5cf6;bottom:-20%;right:-20%;animation-delay:-6s;}
-body.theme-cyber .bg-container{background:radial-gradient(circle at 50% 0%,#2a0a3a 0%,#05060a 75%);}
-body.theme-cyber .orb-1{width:50vw;height:50vw;background:#ec4899;top:-10%;left:-10%;}
-body.theme-cyber .orb-2{width:60vw;height:60vw;background:#06b6d4;bottom:-20%;right:-20%;}
-body.theme-gold .bg-container{background:radial-gradient(circle at 50% 0%,#2a1f0a 0%,#05060a 75%);}
-body.theme-gold .orb-1{width:50vw;height:50vw;background:#fbbf24;top:-10%;left:-10%;}
-body.theme-gold .orb-2{width:60vw;height:60vw;background:#f59e0b;bottom:-20%;right:-20%;}
-body.theme-emerald .bg-container{background:radial-gradient(circle at 50% 0%,#0a2a1f 0%,#05060a 75%);}
-body.theme-emerald .orb-1{width:50vw;height:50vw;background:#10b981;top:-10%;left:-10%;}
-body.theme-emerald .orb-2{width:60vw;height:60vw;background:#06b6d4;bottom:-20%;right:-20%;}
-@keyframes float{0%{transform:translate(0,0) scale(1);}100%{transform:translate(10%,15%) scale(1.1);}}
+
+/* ============ ЖИВОЙ ФОН ============ */
+.bg-container{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:var(--bg-base,#05060a);transition:background 0.8s;}
+.bg-mesh{position:absolute;inset:-20%;filter:blur(80px);opacity:0.55;transition:opacity 0.5s;}
+.bg-mesh span{position:absolute;border-radius:50%;mix-blend-mode:screen;animation:meshFloat 20s ease-in-out infinite;transition:background 0.8s;}
+.bg-mesh span:nth-child(1){width:45vw;height:45vw;background:var(--t1,#3b82f6);top:0;left:-10%;animation-delay:0s;}
+.bg-mesh span:nth-child(2){width:50vw;height:50vw;background:var(--t2,#a855f7);top:20%;right:-15%;animation-delay:-5s;}
+.bg-mesh span:nth-child(3){width:40vw;height:40vw;background:var(--t3,#ec4899);bottom:0;left:30%;animation-delay:-10s;}
+.bg-mesh span:nth-child(4){width:35vw;height:35vw;background:var(--t4,#06b6d4);bottom:10%;right:10%;animation-delay:-15s;}
+@keyframes meshFloat{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(8%,12%) scale(1.15);}66%{transform:translate(-6%,8%) scale(0.9);}}
+.bg-grid{position:absolute;inset:0;background-image:linear-gradient(var(--t-grid,rgba(96,165,250,0.15)) 1px,transparent 1px),linear-gradient(90deg,var(--t-grid,rgba(96,165,250,0.15)) 1px,transparent 1px);background-size:50px 50px;transform:perspective(600px) rotateX(60deg) scale(2.5);transform-origin:center bottom;animation:gridMove 8s linear infinite;-webkit-mask-image:linear-gradient(to top,#000 0%,transparent 70%);mask-image:linear-gradient(to top,#000 0%,transparent 70%);transition:background-image 0.5s;}
+@keyframes gridMove{0%{background-position:0 0;}100%{background-position:0 50px;}}
+.bg-noise{position:absolute;inset:0;opacity:0.04;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none;}
+.bg-vignette{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,transparent 30%,rgba(0,0,0,0.75) 100%);pointer-events:none;}
+.bg-particles{position:absolute;inset:0;overflow:hidden;}
+.bg-particles .p{position:absolute;border-radius:50%;animation:particleRise linear infinite;pointer-events:none;}
+@keyframes particleRise{0%{transform:translateY(100vh) scale(1);opacity:0;}10%{opacity:1;}90%{opacity:1;}100%{transform:translateY(-10vh) scale(0.5);opacity:0;}}
+
+/* ============ ЦВЕТОВЫЕ ТЕМЫ ============ */
+body.theme-black{--bg-base:#05060a;--t1:#2a2a35;--t2:#3a3a45;--t3:#1e1e28;--t4:#4a4a55;--t-grid:rgba(120,120,140,0.12);--t-particle:#787878;}
+body.theme-white{--bg-base:#0a0a10;--t1:#ffffff;--t2:#e5e5ec;--t3:#c8c8d0;--t4:#f0f0f5;--t-grid:rgba(200,200,220,0.18);--t-particle:#ffffff;}
+body.theme-pink{--bg-base:#0a0510;--t1:#ec4899;--t2:#f472b6;--t3:#db2777;--t4:#f9a8d4;--t-grid:rgba(236,72,153,0.18);--t-particle:#f472b6;}
+body.theme-gray{--bg-base:#0a0a0e;--t1:#6b7280;--t2:#9ca3af;--t3:#4b5563;--t4:#d1d5db;--t-grid:rgba(156,163,175,0.18);--t-particle:#9ca3af;}
+body.theme-blue{--bg-base:#05101a;--t1:#06b6d4;--t2:#0ea5e9;--t3:#0284c7;--t4:#38bdf8;--t-grid:rgba(56,189,248,0.18);--t-particle:#22d3ee;}
+body.theme-cyber{--bg-base:#0a0510;--t1:#ec4899;--t2:#a855f7;--t3:#06b6d4;--t4:#f0abfc;--t-grid:rgba(168,85,247,0.18);--t-particle:#a855f7;}
+body.theme-gold{--bg-base:#100c05;--t1:#fbbf24;--t2:#f59e0b;--t3:#eab308;--t4:#fde68a;--t-grid:rgba(251,191,36,0.18);--t-particle:#fbbf24;}
+body.theme-emerald{--bg-base:#05100c;--t1:#10b981;--t2:#34d399;--t3:#06b6d4;--t4:#6ee7b7;--t-grid:rgba(16,185,129,0.18);--t-particle:#34d399;}
+
 .app-container{max-width:600px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;}
-.top-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:rgba(5,6,10,.72);backdrop-filter:blur(20px);position:sticky;top:0;z-index:50;border-bottom:1px solid var(--border);gap:8px;}
+.top-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:rgba(5,6,10,0.55);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(255,255,255,0.08);gap:8px;box-shadow:0 4px 30px rgba(0,0,0,0.5),inset 0 -1px 0 rgba(255,255,255,0.05);}
 .back-btn{background:none;border:none;color:var(--text);font-size:24px;cursor:pointer;padding-right:10px;display:none;}
 .page-title{font-size:15px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;background:linear-gradient(90deg,#fff,#8892b0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap;}
 .balances{display:flex;gap:8px;}
@@ -36,15 +49,36 @@ body.theme-emerald .orb-2{width:60vw;height:60vw;background:#06b6d4;bottom:-20%;
 .view{display:none;flex:1;padding:20px;animation:slideIn 0.3s cubic-bezier(0.16,1,0.3,1);}
 .view.active{display:block;}
 @keyframes slideIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.menu-card{background:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.015));backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:24px;padding:20px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.35);animation:cardin .5s cubic-bezier(.2,1.2,.4,1) both;}
-.menu-card:active{transform:scale(0.96);}
+
+/* ============ ЗАЛИПАТЕЛЬНЫЕ ВКЛАДКИ ============ */
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;perspective:800px;}
+.menu-card{position:relative;background:linear-gradient(160deg,rgba(255,255,255,0.09),rgba(255,255,255,0.02));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.12);border-radius:24px;padding:20px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:transform 0.4s cubic-bezier(0.2,1.2,0.4,1), box-shadow 0.4s;overflow:hidden;transform-style:preserve-3d;animation:cardIn 0.6s cubic-bezier(0.2,1.2,0.4,1) both;box-shadow:0 10px 30px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.15);}
+.menu-card::before{content:'';position:absolute;inset:-2px;border-radius:26px;padding:2px;background:conic-gradient(from var(--angle,0deg), #60a5fa, #a855f7, #ec4899, #fbbf24, #60a5fa);-webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity 0.4s;animation:rotateBorder 3s linear infinite;pointer-events:none;}
+.menu-card:hover::before{opacity:1;}
+@property --angle{syntax:'<angle>';inherits:false;initial-value:0deg;}
+@keyframes rotateBorder{to{--angle:360deg;}}
+.menu-card::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,0.35),transparent);transform:skewX(-20deg);pointer-events:none;}
+.menu-card:hover::after{animation:shimmer 0.9s ease;}
+@keyframes shimmer{to{left:150%;}}
+.menu-card:hover{transform:translateY(-4px) rotateX(4deg) rotateY(-2deg) scale(1.02);box-shadow:0 20px 50px rgba(0,0,0,0.6),0 0 30px rgba(96,165,250,0.25),inset 0 1px 0 rgba(255,255,255,0.2);}
+.menu-card:active{transform:translateY(-1px) scale(0.97);transition:transform 0.1s;}
 .menu-card.locked{opacity:0.5;filter:grayscale(1);cursor:not-allowed;}
-.menu-card.locked::after{content:'🔒';position:absolute;top:10px;right:10px;font-size:18px;}
-@keyframes cardin{from{transform:translateY(16px) scale(.94);}to{transform:none;}}
+.menu-card.locked::before,.menu-card.locked::after{display:none;}
+.menu-card.locked::after{content:'🔒';position:absolute;top:10px;right:10px;font-size:18px;display:block;left:auto;width:auto;height:auto;background:none;transform:none;}
+.menu-card .icon-box{transition:transform 0.4s cubic-bezier(0.2,1.2,0.4,1), box-shadow 0.4s;box-shadow:0 0 20px rgba(96,165,250,0.3),inset 0 1px 0 rgba(255,255,255,0.2);}
+.menu-card:hover .icon-box{transform:scale(1.15) rotate(-5deg);box-shadow:0 0 35px rgba(96,165,250,0.6),0 0 60px rgba(168,85,247,0.4),inset 0 1px 0 rgba(255,255,255,0.3);}
+.menu-label{font-size:15px;font-weight:800;text-align:center;background:linear-gradient(90deg,#fff,#94a3b8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;transition:filter 0.3s;}
+.menu-card:hover .menu-label{filter:brightness(1.3) drop-shadow(0 0 8px rgba(255,255,255,0.5));}
+@keyframes cardIn{from{opacity:0;transform:translateY(30px) scale(0.9);}to{opacity:1;transform:none;}}
+.menu-card:nth-child(1){animation-delay:0.05s;}.menu-card:nth-child(2){animation-delay:0.1s;}.menu-card:nth-child(3){animation-delay:0.15s;}.menu-card:nth-child(4){animation-delay:0.2s;}.menu-card:nth-child(5){animation-delay:0.25s;}.menu-card:nth-child(6){animation-delay:0.3s;}.menu-card:nth-child(7){animation-delay:0.35s;}.menu-card:nth-child(8){animation-delay:0.4s;}.menu-card:nth-child(9){animation-delay:0.45s;}.menu-card:nth-child(10){animation-delay:0.5s;}.menu-card:nth-child(11){animation-delay:0.55s;}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,0.4);transform:scale(0);animation:rippleAnim 0.7s ease-out;pointer-events:none;z-index:2;}
+@keyframes rippleAnim{to{transform:scale(4);opacity:0;}}
+
 .icon-box{width:56px;height:56px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:28px;background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,0.08);}
 .menu-label{font-size:15px;font-weight:800;text-align:center;}
 .menu-desc{font-size:11px;color:var(--text-muted);text-align:center;font-weight:600;}
+
+/* Остальное — из прошлой версии */
 .vibe-container{width:100%;margin-top:10px;display:flex;flex-direction:column;gap:4px;}
 .vibe-label{font-size:10px;font-weight:900;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;display:flex;justify-content:space-between;}
 .vibe-label span{color:#c084fc;}
@@ -202,11 +236,15 @@ body.theme-emerald .orb-2{width:60vw;height:60vw;background:#06b6d4;bottom:-20%;
 @keyframes floatCoinUp{0%{opacity:0;transform:translateY(0) scale(.6);}15%{opacity:1;}100%{opacity:0;transform:translateY(-95px);}}
 .customize-section{background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:16px;margin-top:15px;}
 .customize-title{font-size:13px;font-weight:900;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;}
-.theme-grid,.avatar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:15px;}
-.theme-btn,.avatar-btn{padding:10px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:12px;font-weight:800;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;}
-.theme-btn.active,.avatar-btn.active{border-color:var(--accent);background:rgba(59,130,246,0.15);}
-.theme-preview{width:100%;height:20px;border-radius:6px;margin-bottom:4px;}
-.avatar-btn{font-size:20px;padding:8px;}
+.theme-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:15px;}
+.theme-btn{padding:10px 8px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:11px;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px;transition:all 0.25s;position:relative;}
+.theme-btn:hover{border-color:rgba(96,165,250,0.5);transform:translateY(-1px);}
+.theme-btn.active{border-color:var(--accent);background:rgba(59,130,246,0.15);box-shadow:0 0 15px rgba(59,130,246,0.3);}
+.theme-btn.active::after{content:'✓';position:absolute;top:-6px;right:-6px;width:20px;height:20px;background:var(--accent);border-radius:50%;font-size:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;box-shadow:0 0 10px rgba(59,130,246,0.6);}
+.theme-preview{width:24px;height:24px;border-radius:8px;flex:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.15);}
+.avatar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:15px;}
+.avatar-btn{padding:8px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:20px;font-weight:800;color:#fff;}
+.avatar-btn.active{border-color:var(--accent);background:rgba(59,130,246,0.15);}
 
 .upg-tabs{display:flex;gap:8px;margin-bottom:15px;background:var(--panel);padding:5px;border-radius:16px;border:1px solid var(--border);}
 .upg-tab{flex:1;padding:12px;border:none;background:transparent;color:var(--text-muted);font-weight:800;font-size:13px;border-radius:10px;cursor:pointer;}
@@ -229,7 +267,6 @@ body.theme-emerald .orb-2{width:60vw;height:60vw;background:#06b6d4;bottom:-20%;
 .upg-select-item .name{font-size:10px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .upg-select-item .price-mini{font-size:10px;font-weight:900;color:var(--rub);}
 .upg-select-plate-mini{font-size:9px;font-weight:800;padding:2px 4px;background:#fbfbfb;color:#000;border-radius:3px;border:1px solid #111;margin-bottom:4px;}
-
 .upg-wheel-wrapper{position:relative;width:220px;height:220px;margin:20px auto 5px;}
 .upg-wheel-spin{width:100%;height:100%;border-radius:50%;border:4px solid #1e293b;box-shadow:0 0 40px rgba(0,0,0,0.7),inset 0 0 25px rgba(0,0,0,0.4),0 0 0 2px rgba(255,255,255,0.1);position:relative;}
 .upg-wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80px;height:80px;border-radius:50%;background:linear-gradient(145deg,#1e293b,#0f172a);border:3px solid #334155;display:flex;align-items:center;justify-content:center;box-shadow:0 0 25px rgba(0,0,0,0.8);z-index:5;}
@@ -325,8 +362,14 @@ body.theme-emerald .orb-2{width:60vw;height:60vw;background:#06b6d4;bottom:-20%;
 .battle-result-prize{font-size:15px;color:#fff;font-weight:900;margin-bottom:20px;line-height:1.6;}
 </style>
 </head>
-<body class="theme-default">
-<div class="bg-container"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
+<body class="theme-black">
+<div class="bg-container">
+    <div class="bg-mesh"><span></span><span></span><span></span><span></span></div>
+    <div class="bg-grid"></div>
+    <div class="bg-particles" id="bgParticles"></div>
+    <div class="bg-noise"></div>
+    <div class="bg-vignette"></div>
+</div>
 <div class="app-container">
     <div class="top-bar">
         <div style="display:flex;align-items:center;">
@@ -494,15 +537,9 @@ body.theme-emerald .orb-2{width:60vw;height:60vw;background:#06b6d4;bottom:-20%;
                 <div class="upg-select-list" id="upgCarList"></div>
             </div>
             <div style="display:flex;justify-content:space-between;gap:10px;">
-                <div class="upg-stake-box" style="flex:1;">
-                    <div class="upg-label">Твоя</div>
-                    <div class="upg-car-card"><div class="upg-car-svg" id="upgCarStakeSvg"></div><div class="upg-car-price" id="upgCarStakePrice">0 ₽</div></div>
-                </div>
+                <div class="upg-stake-box" style="flex:1;"><div class="upg-label">Твоя</div><div class="upg-car-card"><div class="upg-car-svg" id="upgCarStakeSvg"></div><div class="upg-car-price" id="upgCarStakePrice">0 ₽</div></div></div>
                 <div style="display:flex;align-items:center;font-size:24px;color:var(--accent);">➡️</div>
-                <div class="upg-stake-box" style="flex:1;">
-                    <div class="upg-label">Приз</div>
-                    <div class="upg-car-card"><div class="upg-car-svg" id="upgCarPrizeSvg"></div><div class="upg-car-price" style="color:var(--token);" id="upgCarPrizePrice">0 ₽</div></div>
-                </div>
+                <div class="upg-stake-box" style="flex:1;"><div class="upg-label">Приз</div><div class="upg-car-card"><div class="upg-car-svg" id="upgCarPrizeSvg"></div><div class="upg-car-price" style="color:var(--token);" id="upgCarPrizePrice">0 ₽</div></div></div>
             </div>
             <div class="upg-stake-box">
                 <div class="upg-label">Шанс выигрыша</div>
@@ -515,7 +552,7 @@ body.theme-emerald .orb-2{width:60vw;height:60vw;background:#06b6d4;bottom:-20%;
                 <div class="upg-wheel-wrapper">
                     <div class="upg-wheel-spin" id="carWheelSpin"></div>
                     <div class="upg-wheel-center"><span id="carWheelChance">50%</span></div>
-                    <div class="wheel-pointer-wrap" id="carPointerWrap"><div class="wheel-pointer-arrow" id="carPointerArrow">▼</div></div>
+                    <div class="wheel-pointer-wrap" id="carPointerWrap"><div class="wheel-pointer-arrow">▼</div></div>
                 </div>
             </div>
             <button class="btn btn-primary" id="btnDoCarUpgrade" onclick="doCarUpgrade()" style="padding:20px;font-size:16px;">Апгрейд машины</button>
@@ -526,15 +563,9 @@ body.theme-emerald .orb-2{width:60vw;height:60vw;background:#06b6d4;bottom:-20%;
                 <div class="upg-select-list" id="upgPlateList"></div>
             </div>
             <div style="display:flex;justify-content:space-between;gap:10px;">
-                <div class="upg-stake-box" style="flex:1;">
-                    <div class="upg-label">Твой</div>
-                    <div class="upg-car-card"><div id="upgPlateStakeDisplay" style="transform:scale(0.7);transform-origin:center;"></div><div class="upg-car-price" id="upgPlateStakePrice">0 💎</div></div>
-                </div>
+                <div class="upg-stake-box" style="flex:1;"><div class="upg-label">Твой</div><div class="upg-car-card"><div id="upgPlateStakeDisplay" style="transform:scale(0.7);transform-origin:center;"></div><div class="upg-car-price" id="upgPlateStakePrice">0 💎</div></div></div>
                 <div style="display:flex;align-items:center;font-size:24px;color:var(--accent);">➡️</div>
-                <div class="upg-stake-box" style="flex:1;">
-                    <div class="upg-label">Приз</div>
-                    <div class="upg-car-card"><div id="upgPlatePrizeDisplay" style="transform:scale(0.7);transform-origin:center;"></div><div class="upg-car-price" style="color:var(--token);" id="upgPlatePrizePrice">0 💎</div></div>
-                </div>
+                <div class="upg-stake-box" style="flex:1;"><div class="upg-label">Приз</div><div class="upg-car-card"><div id="upgPlatePrizeDisplay" style="transform:scale(0.7);transform-origin:center;"></div><div class="upg-car-price" style="color:var(--token);" id="upgPlatePrizePrice">0 💎</div></div></div>
             </div>
             <div class="upg-stake-box">
                 <div class="upg-label">Шанс выигрыша</div>
@@ -547,7 +578,7 @@ body.theme-emerald .orb-2{width:60vw;height:60vw;background:#06b6d4;bottom:-20%;
                 <div class="upg-wheel-wrapper">
                     <div class="upg-wheel-spin" id="plateWheelSpin"></div>
                     <div class="upg-wheel-center"><span id="plateWheelChance">50%</span></div>
-                    <div class="wheel-pointer-wrap" id="platePointerWrap"><div class="wheel-pointer-arrow" id="platePointerArrow">▼</div></div>
+                    <div class="wheel-pointer-wrap" id="platePointerWrap"><div class="wheel-pointer-arrow">▼</div></div>
                 </div>
             </div>
             <button class="btn btn-primary" id="btnDoPlateUpgrade" onclick="doPlateUpgrade()" style="padding:20px;font-size:16px;">Апгрейд номера</button>
@@ -603,12 +634,16 @@ body.theme-emerald .orb-2{width:60vw;height:60vw;background:#06b6d4;bottom:-20%;
         </div>
         <button class="btn btn-prestige" id="btnPrestige" style="margin-top:15px;display:none;" onclick="doPrestige()">Перерождение</button>
         <div class="customize-section">
-            <div class="customize-title">🎨 Фон</div>
+            <div class="customize-title">🎨 Цвет фона</div>
             <div class="theme-grid">
-                <div class="theme-btn active" data-theme="default" onclick="setTheme('default')"><div class="theme-preview" style="background:linear-gradient(90deg,#3b82f6,#8b5cf6);"></div>Тёмный</div>
-                <div class="theme-btn" data-theme="cyber" onclick="setTheme('cyber')"><div class="theme-preview" style="background:linear-gradient(90deg,#ec4899,#06b6d4);"></div>Кибер</div>
-                <div class="theme-btn" data-theme="gold" onclick="setTheme('gold')"><div class="theme-preview" style="background:linear-gradient(90deg,#fbbf24,#f59e0b);"></div>Золото</div>
-                <div class="theme-btn" data-theme="emerald" onclick="setTheme('emerald')"><div class="theme-preview" style="background:linear-gradient(90deg,#10b981,#06b6d4);"></div>Изумруд</div>
+                <div class="theme-btn active" data-theme="black" onclick="setTheme('black')"><div class="theme-preview" style="background:linear-gradient(90deg,#1a1a1a,#3a3a45);"></div>🌑 Чёрный</div>
+                <div class="theme-btn" data-theme="white" onclick="setTheme('white')"><div class="theme-preview" style="background:linear-gradient(90deg,#fff,#e5e5ec);"></div>⚪ Белый</div>
+                <div class="theme-btn" data-theme="pink" onclick="setTheme('pink')"><div class="theme-preview" style="background:linear-gradient(90deg,#ec4899,#f9a8d4);"></div>🌸 Розовый</div>
+                <div class="theme-btn" data-theme="gray" onclick="setTheme('gray')"><div class="theme-preview" style="background:linear-gradient(90deg,#6b7280,#d1d5db);"></div>🩶 Серый</div>
+                <div class="theme-btn" data-theme="blue" onclick="setTheme('blue')"><div class="theme-preview" style="background:linear-gradient(90deg,#06b6d4,#38bdf8);"></div>🌊 Голубой</div>
+                <div class="theme-btn" data-theme="cyber" onclick="setTheme('cyber')"><div class="theme-preview" style="background:linear-gradient(90deg,#ec4899,#06b6d4);"></div>🟣 Кибер</div>
+                <div class="theme-btn" data-theme="gold" onclick="setTheme('gold')"><div class="theme-preview" style="background:linear-gradient(90deg,#fbbf24,#f59e0b);"></div>🟡 Золото</div>
+                <div class="theme-btn" data-theme="emerald" onclick="setTheme('emerald')"><div class="theme-preview" style="background:linear-gradient(90deg,#10b981,#06b6d4);"></div>🟢 Изумруд</div>
             </div>
             <div class="customize-title">👤 Аватар</div>
             <div class="avatar-grid">
@@ -636,15 +671,9 @@ body.theme-emerald .orb-2{width:60vw;height:60vw;background:#06b6d4;bottom:-20%;
 
 <div class="lobby-transition" id="lobbyTransition">
     <div class="lobby-transition-vs">
-        <div class="lobby-transition-player">
-            <div class="lobby-transition-avatar" id="lobbyMyAvatar">👑</div>
-            <div class="lobby-transition-name">Ты</div>
-        </div>
+        <div class="lobby-transition-player"><div class="lobby-transition-avatar" id="lobbyMyAvatar">👑</div><div class="lobby-transition-name">Ты</div></div>
         <div class="lobby-transition-vs-text">VS</div>
-        <div class="lobby-transition-enemy">
-            <div class="lobby-transition-avatar enemy" id="lobbyEnemyAvatar">🐺</div>
-            <div class="lobby-transition-name" id="lobbyEnemyName">Соперник</div>
-        </div>
+        <div class="lobby-transition-enemy"><div class="lobby-transition-avatar enemy" id="lobbyEnemyAvatar">🐺</div><div class="lobby-transition-name" id="lobbyEnemyName">Соперник</div></div>
     </div>
     <div class="lobby-transition-text" id="lobbyTransitionText">Подключение к лобби...</div>
 </div>
@@ -686,49 +715,13 @@ const CONFIG = {
     specialLetters:['АМР','ЕКХ','ООО','МММ','ААА','ККХ','ВВВ','ЕЕЕ','ХКХ'],
     specialNumbers:['777','001','100','007','666','999','555','123','321'],
     cars:{
-        common:[
-            {brand:'LADA',name:'Granta',svg:SVG_CARS.hatch,price:1200000},
-            {brand:'KIA',name:'Rio',svg:SVG_CARS.hatch,price:1800000},
-            {brand:'HYUNDAI',name:'Solaris',svg:SVG_CARS.sedan,price:2000000},
-            {brand:'VW',name:'Polo',svg:SVG_CARS.hatch,price:1900000},
-            {brand:'RENAULT',name:'Logan',svg:SVG_CARS.sedan,price:900000},
-            {brand:'DATSUN',name:'on-DO',svg:SVG_CARS.sedan,price:800000},
-            {brand:'FORD',name:'Focus',svg:SVG_CARS.hatch,price:1500000},
-            {brand:'TOYOTA',name:'Corolla',svg:SVG_CARS.sedan,price:2200000}
-        ],
-        rare:[
-            {brand:'TOYOTA',name:'Camry',svg:SVG_CARS.sedan,price:4500000},
-            {brand:'KIA',name:'K5',svg:SVG_CARS.sedan,price:4000000},
-            {brand:'SKODA',name:'Superb',svg:SVG_CARS.sedan,price:4200000},
-            {brand:'MAZDA',name:'Mazda 6',svg:SVG_CARS.sedan,price:3800000},
-            {brand:'NISSAN',name:'Teana',svg:SVG_CARS.sedan,price:3200000},
-            {brand:'HYUNDAI',name:'Tucson',svg:SVG_CARS.suv,price:3500000},
-            {brand:'KIA',name:'Sportage',svg:SVG_CARS.suv,price:3400000},
-            {brand:'MITSUBISHI',name:'Outlander',svg:SVG_CARS.suv,price:3600000},
-            {brand:'NISSAN',name:'X-Trail',svg:SVG_CARS.suv,price:3700000},
-            {brand:'VW',name:'Tiguan',svg:SVG_CARS.suv,price:3900000},
-            {brand:'HONDA',name:'CR-V',svg:SVG_CARS.suv,price:4100000},
-            {brand:'SUBARU',name:'Forester',svg:SVG_CARS.suv,price:4300000}
-        ],
-        epic:[
-            {brand:'BMW',name:'5 Series',svg:SVG_CARS.sport,price:9000000},
-            {brand:'MERCEDES',name:'E-Class',svg:SVG_CARS.sedan,price:8500000},
-            {brand:'AUDI',name:'A6',svg:SVG_CARS.sedan,price:8000000},
-            {brand:'LEXUS',name:'ES',svg:SVG_CARS.sedan,price:7500000},
-            {brand:'INFINITI',name:'Q50',svg:SVG_CARS.sport,price:6500000},
-            {brand:'VOLVO',name:'XC90',svg:SVG_CARS.suv,price:7000000},
-            {brand:'LAND ROVER',name:'Discovery',svg:SVG_CARS.suv,price:7800000},
-            {brand:'JAGUAR',name:'XF',svg:SVG_CARS.sedan,price:8200000}
-        ],
-        legend:[
-            {brand:'MERCEDES',name:'G-Class',svg:SVG_CARS.suv,price:30000000},
-            {brand:'PORSCHE',name:'911',svg:SVG_CARS.sport,price:35000000},
-            {brand:'BMW',name:'M5 CS',svg:SVG_CARS.sport,price:32000000},
-            {brand:'ROLLS-ROYCE',name:'Phantom',svg:SVG_CARS.luxury,price:80000000}
-        ]
+        common:[{brand:'LADA',name:'Granta',svg:SVG_CARS.hatch,price:1200000},{brand:'KIA',name:'Rio',svg:SVG_CARS.hatch,price:1800000},{brand:'HYUNDAI',name:'Solaris',svg:SVG_CARS.sedan,price:2000000},{brand:'VW',name:'Polo',svg:SVG_CARS.hatch,price:1900000},{brand:'RENAULT',name:'Logan',svg:SVG_CARS.sedan,price:900000},{brand:'DATSUN',name:'on-DO',svg:SVG_CARS.sedan,price:800000},{brand:'FORD',name:'Focus',svg:SVG_CARS.hatch,price:1500000},{brand:'TOYOTA',name:'Corolla',svg:SVG_CARS.sedan,price:2200000}],
+        rare:[{brand:'TOYOTA',name:'Camry',svg:SVG_CARS.sedan,price:4500000},{brand:'KIA',name:'K5',svg:SVG_CARS.sedan,price:4000000},{brand:'SKODA',name:'Superb',svg:SVG_CARS.sedan,price:4200000},{brand:'MAZDA',name:'Mazda 6',svg:SVG_CARS.sedan,price:3800000},{brand:'NISSAN',name:'Teana',svg:SVG_CARS.sedan,price:3200000},{brand:'HYUNDAI',name:'Tucson',svg:SVG_CARS.suv,price:3500000},{brand:'KIA',name:'Sportage',svg:SVG_CARS.suv,price:3400000},{brand:'MITSUBISHI',name:'Outlander',svg:SVG_CARS.suv,price:3600000},{brand:'NISSAN',name:'X-Trail',svg:SVG_CARS.suv,price:3700000},{brand:'VW',name:'Tiguan',svg:SVG_CARS.suv,price:3900000},{brand:'HONDA',name:'CR-V',svg:SVG_CARS.suv,price:4100000},{brand:'SUBARU',name:'Forester',svg:SVG_CARS.suv,price:4300000}],
+        epic:[{brand:'BMW',name:'5 Series',svg:SVG_CARS.sport,price:9000000},{brand:'MERCEDES',name:'E-Class',svg:SVG_CARS.sedan,price:8500000},{brand:'AUDI',name:'A6',svg:SVG_CARS.sedan,price:8000000},{brand:'LEXUS',name:'ES',svg:SVG_CARS.sedan,price:7500000},{brand:'INFINITI',name:'Q50',svg:SVG_CARS.sport,price:6500000},{brand:'VOLVO',name:'XC90',svg:SVG_CARS.suv,price:7000000},{brand:'LAND ROVER',name:'Discovery',svg:SVG_CARS.suv,price:7800000},{brand:'JAGUAR',name:'XF',svg:SVG_CARS.sedan,price:8200000}],
+        legend:[{brand:'MERCEDES',name:'G-Class',svg:SVG_CARS.suv,price:30000000},{brand:'PORSCHE',name:'911',svg:SVG_CARS.sport,price:35000000},{brand:'BMW',name:'M5 CS',svg:SVG_CARS.sport,price:32000000},{brand:'ROLLS-ROYCE',name:'Phantom',svg:SVG_CARS.luxury,price:80000000}]
     }
 };
-const STORAGE_KEY='autogen_final_v29';
+const STORAGE_KEY='autogen_final_v30';
 const STORY_LEVELS=[{earned:0,rank:'Новичок'},{earned:5000000,rank:'Барыга'},{earned:20000000,rank:'Дилер'},{earned:100000000,rank:'Магнат'}];
 const BOT_NAMES=['Neo','DarkRider','Turbo','Макс','King77','Shadow','Vitalya','Stylez','Дима','Ghost','XS1','Boss','Кекс','Frost','Kolya','Sigma','N1ght','Zohan'];
 const BOT_AVATARS=['🐺','🕶️','👽','🐉','🎭','💀','🦁','🐯','🦅','🧙','🎩','🥷','🐲','👹','🧛','🤖'];
@@ -744,7 +737,7 @@ let state = {
     totalEarnedStory:0, recentCars:[],
     soundOn:true, autosellCommon:false, autosellRare:false,
     recordPrice:0, garageSort:'default',
-    quests:null, vibe:0, bgTheme:'default', avatar:'👑',
+    quests:null, vibe:0, bgTheme:'black', avatar:'👑',
     upgraderTab:'cars',
     carUpgIdx:-1, carUpgChance:50, carUpgRolling:false,
     plateUpgIdx:-1, plateUpgChance:50, plateUpgRolling:false,
@@ -759,19 +752,90 @@ function playTone(freq,type,dur,vol=0.05){if(!audioCtx||!state.soundOn)return;tr
 function playChing(){if(!state.soundOn)return;playTone(880,'sine',0.15,0.08);setTimeout(()=>playTone(1320,'sine',0.2,0.06),60);}
 function playSpinTicks(dur){let el=0;const tick=()=>{if(el>=dur-500)return;playTone(700+Math.random()*300,'square',0.02,0.015);const p=el/dur;const d=30+Math.pow(p,3)*600;el+=d;if(el<dur-500)setTimeout(tick,d);};tick();}
 function toggleSound(){state.soundOn=!state.soundOn;document.getElementById('soundBtn').textContent=state.soundOn?'🔊':'🔇';document.getElementById('soundBtn').classList.toggle('off',!state.soundOn);saveState();}
-function toggleAutosell(r){if(r==='common'){state.autosellCommon=!state.autosellCommon;document.getElementById('autosellCommonLabel').classList.toggle('on',state.autosellCommon);}else{state.autosellRare=!state.autosellRare;document.getElementById('autosellRareLabel').classList.toggle('on',state.autosellRare);}saveState();}
+function toggleAutosell(r){if(r==='common'){state.autosellCommon=!state.autosellCommon;document.getElementById('autosellCommonLabel').classList.toggle('on',state.autosellCommon);document.getElementById('autosellCommonChk').checked=state.autosellCommon;}else{state.autosellRare=!state.autosellRare;document.getElementById('autosellRareLabel').classList.toggle('on',state.autosellRare);document.getElementById('autosellRareChk').checked=state.autosellRare;}saveState();}
 function setGarageSort(m){state.garageSort=m;['default','price','rarity'].forEach(x=>{const el=document.getElementById('sort'+x.charAt(0).toUpperCase()+x.slice(1));if(el)el.classList.toggle('active',x===m);});renderGarage();}
 document.body.addEventListener('click',initAudio,{once:true});
 document.body.addEventListener('pointerdown',e=>{
     const c=['#60a5fa','#a78bfa','#34d399','#fbbf24','#ec4899'];
     for(let i=0;i<6;i++){const s=document.createElement('div');s.className='click-spark';s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';s.style.background=c[Math.floor(Math.random()*c.length)];s.style.boxShadow='0 0 8px currentColor';const a=Math.random()*Math.PI*2,d=30+Math.random()*40;s.style.setProperty('--tx',Math.cos(a)*d+'px');s.style.setProperty('--ty',Math.sin(a)*d+'px');document.body.appendChild(s);setTimeout(()=>s.remove(),600);}
 });
+
 function saveState(){try{const s={...state};delete s.battleState;localStorage.setItem(STORAGE_KEY,JSON.stringify(s));}catch(e){}}
-function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){const p=JSON.parse(s);state={...state,...p,stats:{...state.stats,...(p.stats||{})}};}}catch(e){}state.isSpinningCar=false;state.isSpinningPlate=false;state.carUpgRolling=false;state.plateUpgRolling=false;applyTheme(state.bgTheme||'default');applyAvatar(state.avatar||'👑');}
-function setTheme(t){state.bgTheme=t;applyTheme(t);saveState();document.querySelectorAll('.theme-btn').forEach(b=>b.classList.toggle('active',b.dataset.theme===t));}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){const p=JSON.parse(s);state={...state,...p,stats:{...state.stats,...(p.stats||{})}};}}catch(e){}state.isSpinningCar=false;state.isSpinningPlate=false;state.carUpgRolling=false;state.plateUpgRolling=false;if(state.bgTheme==='default'||!state.bgTheme)state.bgTheme='black';applyTheme(state.bgTheme);applyAvatar(state.avatar||'👑');}
+
+function setTheme(t){state.bgTheme=t;applyTheme(t);saveState();document.querySelectorAll('.theme-btn').forEach(b=>b.classList.toggle('active',b.dataset.theme===t));playTone(600,'sine',0.1,0.04);initParticles();}
 function applyTheme(t){document.body.className=document.body.className.replace(/theme-\w+/g,'').trim();document.body.classList.add('theme-'+t);}
 function setAvatar(e){state.avatar=e;applyAvatar(e);saveState();document.querySelectorAll('.avatar-btn').forEach(b=>b.classList.toggle('active',b.dataset.avatar===e));}
 function applyAvatar(e){const el=document.getElementById('profileAvatar');if(el)el.textContent=e;}
+
+// ============ ЧАСТИЦЫ ============
+function initParticles() {
+    const container = document.getElementById('bgParticles');
+    if (!container) return;
+    container.innerHTML = '';
+    const cs = getComputedStyle(document.body);
+    const color = cs.getPropertyValue('--t-particle').trim() || '#60a5fa';
+    const color2 = cs.getPropertyValue('--t2').trim() || color;
+    for (let i = 0; i < 40; i++) {
+        const p = document.createElement('div');
+        p.className = 'p';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.bottom = '-10px';
+        const col = Math.random() < 0.7 ? color : color2;
+        p.style.background = col;
+        p.style.boxShadow = `0 0 8px ${col}`;
+        const sz = (1 + Math.random() * 3).toFixed(1);
+        p.style.width = sz + 'px';
+        p.style.height = sz + 'px';
+        p.style.animationDuration = (8 + Math.random() * 12) + 's';
+        p.style.animationDelay = (-Math.random() * 20) + 's';
+        container.appendChild(p);
+    }
+}
+
+// ============ ИСКРЫ ОТ КУРСОРА ============
+(function initCursorSparks() {
+    let lastBurst = 0;
+    document.addEventListener('pointermove', (e) => {
+        const now = Date.now();
+        if (now - lastBurst < 50) return;
+        lastBurst = now;
+        const cs = getComputedStyle(document.body);
+        const color = cs.getPropertyValue('--t-particle').trim() || '#60a5fa';
+        for (let i = 0; i < 2; i++) {
+            const s = document.createElement('div');
+            s.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:4px;height:4px;border-radius:50%;background:${color};box-shadow:0 0 10px ${color};pointer-events:none;z-index:1;transition:transform 1s ease-out,opacity 1s;`;
+            document.body.appendChild(s);
+            requestAnimationFrame(() => {
+                const angle = Math.random() * Math.PI * 2;
+                const dist = 20 + Math.random() * 60;
+                s.style.transform = `translate(${Math.cos(angle) * dist}px,${Math.sin(angle) * dist}px) scale(0)`;
+                s.style.opacity = '0';
+            });
+            setTimeout(() => s.remove(), 1100);
+        }
+    });
+})();
+
+// ============ RIPPLE ============
+function initRipple() {
+    document.querySelectorAll('.menu-card').forEach(card => {
+        if (card.dataset.rippleInit) return;
+        card.dataset.rippleInit = '1';
+        card.addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+            this.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 700);
+        });
+    });
+}
+
 function formatMoney(n){return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ');}
 function getPrestigeRequirement(){return 100000000+state.prestigeLevel*100000000;}
 function checkStoryProgress(){
@@ -856,74 +920,36 @@ function rollCar(boosted){
         if(++ticks>30){clearInterval(timer);document.getElementById('rollProgress').classList.remove('active');finishCarGen(result);}
     },100);
 }
-
-// ==== ПРАВИЛЬНАЯ ЛОГИКА АВТОПРОДАЖИ В X10 ====
 function rollCarX10(){
     if(state.isSpinningCar)return;
     const cost=CONFIG.costCarX10;
     if(state.balanceRub<cost)return showModal('Мало рублей',`Нужно ${formatMoney(cost)} ₽ для x10.`,'❌');
-    state.balanceRub-=cost;
-    state.stats.spent+=cost;
-    trackQuest('spin',10);
-    const vf=state.vibe>=10;
-    state.vibe=0;
-    updateVibeUI();
-    
-    // Генерируем 10 машин
+    state.balanceRub-=cost;state.stats.spent+=cost;trackQuest('spin',10);
+    const vf=state.vibe>=10;state.vibe=0;updateVibeUI();
     const results=[];
     for(let i=0;i<10;i++)results.push(generateCarItem(false,vf&&i===0));
-    
-    // Определяем что в авто-продаже
-    const isAutoSell=(c)=>{
-        if(state.autosellCommon && c.rarity==='common') return true;
-        if(state.autosellRare && (c.rarity==='common'||c.rarity==='rare')) return true;
-        return false;
-    };
-    
+    const isAutoSell=(c)=>{if(state.autosellCommon&&c.rarity==='common')return true;if(state.autosellRare&&(c.rarity==='common'||c.rarity==='rare'))return true;return false;};
     const toSell=results.filter(isAutoSell);
     const toConsider=results.filter(c=>!isAutoSell(c));
     toConsider.sort((a,b)=>b.price-a.price);
-    
-    // Оставляем только ЛУЧШУЮ из оставшихся, остальные тоже продаём
     const bestToKeep=toConsider[0]||null;
     const extraSold=toConsider.slice(1);
-    
-    // Выручка от продажи
     let sum=0;
-    [...toSell,...extraSold].forEach(c=>{
-        sum+=c.price;
-        state.stats.carSales[c.brand]=(state.stats.carSales[c.brand]||0)+1;
-    });
-    
-    state.balanceRub+=sum;
-    state.stats.earned+=sum;
-    state.totalEarnedStory+=sum;
-    trackQuest('earn',sum);
-    
+    [...toSell,...extraSold].forEach(c=>{sum+=c.price;state.stats.carSales[c.brand]=(state.stats.carSales[c.brand]||0)+1;});
+    state.balanceRub+=sum;state.stats.earned+=sum;state.totalEarnedStory+=sum;trackQuest('earn',sum);
     if(bestToKeep){
-        // Сохраняем лучшую
-        state.currentCar=bestToKeep;
-        saveState();
-        showCarResult(bestToKeep);
-        popReveal('#genCarBox .car-showcase');
-        playCarReveal(bestToKeep);
-        playChing();
+        state.currentCar=bestToKeep;saveState();showCarResult(bestToKeep);
+        popReveal('#genCarBox .car-showcase');playCarReveal(bestToKeep);playChing();
         const totalSold=toSell.length+extraSold.length;
         let modalText=`<b>${bestToKeep.brand} ${bestToKeep.name}</b> — <b>${formatMoney(bestToKeep.price)} ₽</b><br><br>`;
-        if(totalSold>0) modalText+=`Продано ${totalSold} машин на <b>${formatMoney(sum)} ₽</b>`;
-        else modalText+=`Остальные машин не было`;
+        if(totalSold>0)modalText+=`Продано ${totalSold} машин на <b>${formatMoney(sum)} ₽</b>`;
         showModal('🎰 x10 Круток!',modalText,'🎰');
     }else{
-        // Всё в авто-продаже — всё продано
-        state.currentCar=null;
-        saveState();
-        resetCarUI();
-        playChing();
+        state.currentCar=null;saveState();resetCarUI();playChing();
         showModal('🎰 x10 Круток!',`Все <b>10</b> машин проданы на <b>${formatMoney(sum)} ₽</b> (авто-продажа).`,'🎰');
     }
     updateUI();
 }
-
 function generateCarItem(boosted,forceHigh=false){
     let rnd=Math.random(),rarity='common';
     let ec=0.05,lc=0.01,rc=0.20;
@@ -955,42 +981,17 @@ function playCarReveal(car){
     if(tier>=4)burst('legend');
     const dur=tier>=5?1400:tier>=4?1200:1000;
     const t0=performance.now();
-    const tick=t=>{
-        const k=Math.min(1,(t-t0)/dur);
-        const ease=1-Math.pow(1-k,2.2);
-        pEl.innerHTML=`<span>${formatMoney(Math.round(price*ease))} ₽</span>`;
-        if(k<1)window._carRevealRAF=requestAnimationFrame(tick);
-        else{window._carRevealRAF=null;pEl.innerHTML=`<span>${formatMoney(price)} ₽</span>`;checkRecord(car);}
-    };
+    const tick=t=>{const k=Math.min(1,(t-t0)/dur);const ease=1-Math.pow(1-k,2.2);pEl.innerHTML=`<span>${formatMoney(Math.round(price*ease))} ₽</span>`;if(k<1)window._carRevealRAF=requestAnimationFrame(tick);else{window._carRevealRAF=null;pEl.innerHTML=`<span>${formatMoney(price)} ₽</span>`;checkRecord(car);}};
     requestAnimationFrame(tick);
     const rect=pEl.getBoundingClientRect();
     const count=tier>=4?10:tier>=3?6:4;
     const coinColor=tier>=4?'#fbbf24':'#c084fc';
-    for(let i=0;i<count;i++)setTimeout(()=>{
-        const c=document.createElement('div');
-        c.className='float-coin';c.textContent='₽';c.style.color=coinColor;
-        c.style.left=(rect.left+rect.width/2+(Math.random()*90-45))+'px';
-        c.style.top=(rect.top+Math.random()*15)+'px';
-        document.body.appendChild(c);
-        setTimeout(()=>c.remove(),1400);
-    },i*100);
+    for(let i=0;i<count;i++)setTimeout(()=>{const c=document.createElement('div');c.className='float-coin';c.textContent='₽';c.style.color=coinColor;c.style.left=(rect.left+rect.width/2+(Math.random()*90-45))+'px';c.style.top=(rect.top+Math.random()*15)+'px';document.body.appendChild(c);setTimeout(()=>c.remove(),1400);},i*100);
 }
 function checkRecord(car){if(car.price>state.recordPrice&&car.price>=2000000){state.recordPrice=car.price;saveState();showRecordBanner();}}
 function showRecordBanner(){const b=document.getElementById('recordBanner');if(!b)return;b.style.display='block';b.style.animation='none';void b.offsetWidth;b.style.animation='pop .6s';setTimeout(()=>b.style.display='none',2500);}
-function showMemeText(text,color,xOff=0){
-    const box=document.getElementById('genCarBox');
-    const el=document.createElement('div');
-    el.className='meme-popup';el.textContent=text;el.style.color=color;
-    el.style.left='50%';el.style.top='40%';el.style.transform='translate(-50%,-50%)';el.style.marginLeft=xOff+'px';
-    box.appendChild(el);setTimeout(()=>el.remove(),1200);
-}
-function finishCarGen(car){
-    state.currentCar=car;state.isSpinningCar=false;state.stats.spins++;
-    saveState();document.getElementById('genCarBox').classList.remove('spinning');
-    showCarResult(car);popReveal('#genCarBox .car-showcase');
-    playTone(car.rarity==='legend'?800:500,'sine',car.rarity==='legend'?0.4:0.1);
-    playCarReveal(car);updateUI();
-}
+function showMemeText(text,color,xOff=0){const box=document.getElementById('genCarBox');const el=document.createElement('div');el.className='meme-popup';el.textContent=text;el.style.color=color;el.style.left='50%';el.style.top='40%';el.style.transform='translate(-50%,-50%)';el.style.marginLeft=xOff+'px';box.appendChild(el);setTimeout(()=>el.remove(),1200);}
+function finishCarGen(car){state.currentCar=car;state.isSpinningCar=false;state.stats.spins++;saveState();document.getElementById('genCarBox').classList.remove('spinning');showCarResult(car);popReveal('#genCarBox .car-showcase');playTone(car.rarity==='legend'?800:500,'sine',car.rarity==='legend'?0.4:0.1);playCarReveal(car);updateUI();}
 function setCarImage(car){const el=document.getElementById('carSvgBox');el.innerHTML=svgFor(car);}
 function showCarResult(car){
     setCarImage(car);
@@ -1054,11 +1055,7 @@ function generatePlateItem(boosted){
     const isSpecN=Math.random()<(boosted?0.20:0.05);
     let l1,l2,num;
     if(isSpecL){const c=CONFIG.specialLetters[Math.floor(Math.random()*CONFIG.specialLetters.length)];l1=c[0];l2=c.slice(1);base+=1500;rarity='epic';mult*=3;}
-    else{
-        l1=CONFIG.letters[Math.floor(Math.random()*CONFIG.letters.length)];
-        l2=CONFIG.letters[Math.floor(Math.random()*CONFIG.letters.length)]+CONFIG.letters[Math.floor(Math.random()*CONFIG.letters.length)];
-        if(l1===l2[0]&&l2[0]===l2[1]){base+=500;rarity='rare';}
-    }
+    else{l1=CONFIG.letters[Math.floor(Math.random()*CONFIG.letters.length)];l2=CONFIG.letters[Math.floor(Math.random()*CONFIG.letters.length)]+CONFIG.letters[Math.floor(Math.random()*CONFIG.letters.length)];if(l1===l2[0]&&l2[0]===l2[1]){base+=500;rarity='rare';}}
     if(isSpecN){num=CONFIG.specialNumbers[Math.floor(Math.random()*CONFIG.specialNumbers.length)];base+=1000;if(rarity!=='epic')rarity='rare';}
     else{const rn=Math.floor(Math.random()*999)+1;num=rn.toString().padStart(3,'0');if(rn%100===0){base+=300;rarity='rare';}else if(rn%10===0)base+=100;}
     if(rarity==='epic'&&isSpecN){rarity='legend';base+=5000;mult*=5;}
@@ -1098,109 +1095,38 @@ function sellCurrentCar(){if(!state.currentCar)return;addRubles(state.currentCar
 function saveCurrentCar(){if(!state.currentCar)return;if(state.garageCars.length>=CONFIG.garageLimit)return showModal('Ошибка','Гараж полон!','⚠️');state.garageCars.push(state.currentCar);state.currentCar=null;resetCarUI();saveState();updateUI();}
 function sellCurrentPlate(){if(!state.currentPlate)return;addTokens(state.currentPlate.price);state.currentPlate=null;resetPlateUI();playChing();}
 function saveCurrentPlate(){if(!state.currentPlate)return;if(state.garagePlates.length>=CONFIG.garageLimit)return showModal('Ошибка','Гараж полон!','⚠️');state.garagePlates.push(state.currentPlate);state.currentPlate=null;resetPlateUI();saveState();updateUI();}
-function switchGarageTab(t){
-    state.activeGarageTab=t;
-    document.getElementById('tabCarsBtn').classList.toggle('active',t==='cars');
-    document.getElementById('tabPlatesBtn').classList.toggle('active',t==='plates');
-    document.getElementById('btnCustomPlate').style.display=t==='plates'?'block':'none';
-    renderGarage();
-}
+function switchGarageTab(t){state.activeGarageTab=t;document.getElementById('tabCarsBtn').classList.toggle('active',t==='cars');document.getElementById('tabPlatesBtn').classList.toggle('active',t==='plates');document.getElementById('btnCustomPlate').style.display=t==='plates'?'block':'none';renderGarage();}
 function renderGarage(){
     const list=document.getElementById('garageList');list.innerHTML='';
     const rarOrder={legend:4,epic:3,rare:2,common:1};
     let items,label;
-    if(state.activeGarageTab==='cars'){
-        items=[...state.garageCars];
-        if(state.garageSort==='rarity')items.sort((a,b)=>(rarOrder[b.rarity]||0)-(rarOrder[a.rarity]||0)||b.price-a.price);
-        else items.sort((a,b)=>b.price-a.price);
-        label=`Машины (${state.garageCars.length}/${CONFIG.garageLimit})`;
-    }else{
-        items=[...state.garagePlates];
-        if(state.garageSort==='rarity')items.sort((a,b)=>(rarOrder[b.rarity]||0)-(rarOrder[a.rarity]||0)||b.price-a.price);
-        else items.sort((a,b)=>b.price-a.price);
-        label=`Номера (${state.garagePlates.length}/${CONFIG.garageLimit})`;
-    }
+    if(state.activeGarageTab==='cars'){items=[...state.garageCars];if(state.garageSort==='rarity')items.sort((a,b)=>(rarOrder[b.rarity]||0)-(rarOrder[a.rarity]||0)||b.price-a.price);else items.sort((a,b)=>b.price-a.price);label=`Машины (${state.garageCars.length}/${CONFIG.garageLimit})`;}
+    else{items=[...state.garagePlates];if(state.garageSort==='rarity')items.sort((a,b)=>(rarOrder[b.rarity]||0)-(rarOrder[a.rarity]||0)||b.price-a.price);else items.sort((a,b)=>b.price-a.price);label=`Номера (${state.garagePlates.length}/${CONFIG.garageLimit})`;}
     document.getElementById('garageCapacityLabel').textContent=label;
     if(items.length===0){list.innerHTML='<div class="empty-state">Пусто. Крутите удачу!</div>';return;}
     items.forEach(item=>{
         const div=document.createElement('div');div.className='list-item';
         const ri=state.activeGarageTab==='cars'?state.garageCars.indexOf(item):state.garagePlates.indexOf(item);
-        if(state.activeGarageTab==='cars'){
-            div.innerHTML=`<div style="display:flex;align-items:center;"><div class="list-svg">${svgFor(item)}</div><div><div class="list-brand">${item.brand}</div><div class="list-title">${item.name}</div></div></div><div style="text-align:right;"><div class="list-price rub">${formatMoney(item.price)} ₽</div><button class="sell-btn" onclick="sellFromGarage('cars',${ri})">Продать</button></div>`;
-        }else{
-            div.innerHTML=`<div style="display:flex;align-items:center;"><div style="font-size:24px;margin-right:10px;">🔢</div><div><div class="list-title">${item.l1} ${item.num} ${item.l2}</div><div class="list-brand">${item.region} рег.</div></div></div><div style="text-align:right;"><div class="list-price token">${formatMoney(item.price)} 💎</div><button class="sell-btn" onclick="sellFromGarage('plates',${ri})">Продать</button></div>`;
-        }
+        if(state.activeGarageTab==='cars'){div.innerHTML=`<div style="display:flex;align-items:center;"><div class="list-svg">${svgFor(item)}</div><div><div class="list-brand">${item.brand}</div><div class="list-title">${item.name}</div></div></div><div style="text-align:right;"><div class="list-price rub">${formatMoney(item.price)} ₽</div><button class="sell-btn" onclick="sellFromGarage('cars',${ri})">Продать</button></div>`;}
+        else{div.innerHTML=`<div style="display:flex;align-items:center;"><div style="font-size:24px;margin-right:10px;">🔢</div><div><div class="list-title">${item.l1} ${item.num} ${item.l2}</div><div class="list-brand">${item.region} рег.</div></div></div><div style="text-align:right;"><div class="list-price token">${formatMoney(item.price)} 💎</div><button class="sell-btn" onclick="sellFromGarage('plates',${ri})">Продать</button></div>`;}
         list.appendChild(div);
     });
 }
-function sellFromGarage(type,idx){
-    const arr=type==='cars'?state.garageCars:state.garagePlates;
-    if(idx<0||idx>=arr.length)return;
-    const item=arr[idx];
-    if(type==='cars')addRubles(item.price);else addTokens(item.price);
-    arr.splice(idx,1);saveState();renderGarage();playChing();
-}
-function sellAllActiveGarage(){
-    const arr=state.activeGarageTab==='cars'?state.garageCars:state.garagePlates;
-    if(arr.length===0)return;
-    const total=arr.reduce((s,p)=>s+p.price,0);
-    if(state.activeGarageTab==='cars'){addRubles(total);state.garageCars=[];}
-    else{addTokens(total);state.garagePlates=[];}
-    saveState();renderGarage();playChing();
-    showModal('Продано',`Вы получили <b>${formatMoney(total)}</b>`,'💰');
-}
-function createCustomPlate(){
-    if(state.balanceToken<CONFIG.costCustomPlate)return showModal('Мало жетонов',`Нужно ${formatMoney(CONFIG.costCustomPlate)} 💎.`,'❌');
-    let input=prompt('Введи номер (например: О 777 ОО):');
-    if(!input)return;
-    input=input.trim().toUpperCase().replace(/[^А-ЯA-Z0-9 ]/g,'');
-    const parts=input.split(/\s+/);
-    if(parts.length!==3||parts[1].length!==3||isNaN(parts[1]))return showModal('Ошибка','Формат: [Буква] [3 цифры] [2 буквы]','⚠️');
-    state.balanceToken-=CONFIG.costCustomPlate;
-    state.garagePlates.push({l1:parts[0],l2:parts[2],num:parts[1],region:'77',rarity:'epic',price:25000});
-    saveState();updateUI();renderGarage();
-    showModal('Готово!',`Номер <b>${parts[0]} ${parts[1]} ${parts[2]}</b> в гараже!`,'✨');
-}
-function openCase(){
-    if(state.balanceRub<CONFIG.costCase)return showModal('Ошибка','Аукцион 20 млн ₽!','❌');
-    state.balanceRub-=CONFIG.costCase;state.stats.spent+=CONFIG.costCase;
-    const r=Math.random()<0.2?'legend':'epic';
-    const pool=CONFIG.cars[r];
-    const car={...pool[Math.floor(Math.random()*pool.length)],rarity:r};
-    const m=(1+state.upgradeLevel*0.1)*(1+state.prestigeLevel*0.25);
-    car.price=Math.floor(car.price*m);
-    const combo=CONFIG.specialLetters[Math.floor(Math.random()*CONFIG.specialLetters.length)];
-    const num=CONFIG.specialNumbers[Math.floor(Math.random()*CONFIG.specialNumbers.length)];
-    const plate={l1:combo[0],l2:combo.slice(1),num,region:'77',rarity:'epic',price:15000};
-    plate.price=Math.floor(plate.price*m);
-    state.garageCars.push(car);state.garagePlates.push(plate);
-    saveState();updateUI();
-    showModal('Аукцион выигран!',`🚗 <b>${car.brand} ${car.name}</b><br>🔢 <b>${plate.l1} ${plate.num} ${plate.l2}</b>`,'💎');
-}
+function sellFromGarage(type,idx){const arr=type==='cars'?state.garageCars:state.garagePlates;if(idx<0||idx>=arr.length)return;const item=arr[idx];if(type==='cars')addRubles(item.price);else addTokens(item.price);arr.splice(idx,1);saveState();renderGarage();playChing();}
+function sellAllActiveGarage(){const arr=state.activeGarageTab==='cars'?state.garageCars:state.garagePlates;if(arr.length===0)return;const total=arr.reduce((s,p)=>s+p.price,0);if(state.activeGarageTab==='cars'){addRubles(total);state.garageCars=[];}else{addTokens(total);state.garagePlates=[];}saveState();renderGarage();playChing();showModal('Продано',`Вы получили <b>${formatMoney(total)}</b>`,'💰');}
+function createCustomPlate(){if(state.balanceToken<CONFIG.costCustomPlate)return showModal('Мало жетонов',`Нужно ${formatMoney(CONFIG.costCustomPlate)} 💎.`,'❌');let input=prompt('Введи номер (например: О 777 ОО):');if(!input)return;input=input.trim().toUpperCase().replace(/[^А-ЯA-Z0-9 ]/g,'');const parts=input.split(/\s+/);if(parts.length!==3||parts[1].length!==3||isNaN(parts[1]))return showModal('Ошибка','Формат: [Буква] [3 цифры] [2 буквы]','⚠️');state.balanceToken-=CONFIG.costCustomPlate;state.garagePlates.push({l1:parts[0],l2:parts[2],num:parts[1],region:'77',rarity:'epic',price:25000});saveState();updateUI();renderGarage();showModal('Готово!',`Номер <b>${parts[0]} ${parts[1]} ${parts[2]}</b> в гараже!`,'✨');}
+function openCase(){if(state.balanceRub<CONFIG.costCase)return showModal('Ошибка','Аукцион 20 млн ₽!','❌');state.balanceRub-=CONFIG.costCase;state.stats.spent+=CONFIG.costCase;const r=Math.random()<0.2?'legend':'epic';const pool=CONFIG.cars[r];const car={...pool[Math.floor(Math.random()*pool.length)],rarity:r};const m=(1+state.upgradeLevel*0.1)*(1+state.prestigeLevel*0.25);car.price=Math.floor(car.price*m);const combo=CONFIG.specialLetters[Math.floor(Math.random()*CONFIG.specialLetters.length)];const num=CONFIG.specialNumbers[Math.floor(Math.random()*CONFIG.specialNumbers.length)];const plate={l1:combo[0],l2:combo.slice(1),num,region:'77',rarity:'epic',price:15000};plate.price=Math.floor(plate.price*m);state.garageCars.push(car);state.garagePlates.push(plate);saveState();updateUI();showModal('Аукцион выигран!',`🚗 <b>${car.brand} ${car.name}</b><br>🔢 <b>${plate.l1} ${plate.num} ${plate.l2}</b>`,'💎');}
 function renderCatalog(){
     const box=document.getElementById('catalogList');box.innerHTML='';
     const names={common:'Common',rare:'Rare',epic:'Epic',legend:'Legend'};
     Object.entries(CONFIG.cars).forEach(([rar,arr])=>{
-        const h=document.createElement('div');h.className='bg-r-'+rar;
-        h.style.cssText='display:inline-block;font-size:12px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:999px;margin:14px 0 10px;';
-        h.textContent=`${names[rar]} · ${arr.length}`;box.appendChild(h);
+        const h=document.createElement('div');h.className='bg-r-'+rar;h.style.cssText='display:inline-block;font-size:12px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:999px;margin:14px 0 10px;';h.textContent=`${names[rar]} · ${arr.length}`;box.appendChild(h);
         const g=document.createElement('div');g.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:10px;';
-        arr.forEach(car=>{
-            const d=document.createElement('div');
-            d.style.cssText='background:linear-gradient(160deg,rgba(255,255,255,.065),rgba(255,255,255,.015));border:1px solid var(--border);border-radius:18px;padding:10px;';
-            d.innerHTML=`<div style="height:78px;border-radius:12px;background:linear-gradient(180deg,#131830,#0a0c14);display:flex;align-items:center;justify-content:center;margin-bottom:6px;padding:4px;">${svgFor(car)}</div><div class="list-brand">${car.brand}</div><div style="font-size:14px;font-weight:800;">${car.name}</div><div style="font-size:12px;font-weight:800;color:var(--rub);">${formatMoney(car.price)} ₽</div>`;
-            g.appendChild(d);
-        });
+        arr.forEach(car=>{const d=document.createElement('div');d.style.cssText='background:linear-gradient(160deg,rgba(255,255,255,.065),rgba(255,255,255,.015));border:1px solid var(--border);border-radius:18px;padding:10px;';d.innerHTML=`<div style="height:78px;border-radius:12px;background:linear-gradient(180deg,#131830,#0a0c14);display:flex;align-items:center;justify-content:center;margin-bottom:6px;padding:4px;">${svgFor(car)}</div><div class="list-brand">${car.brand}</div><div style="font-size:14px;font-weight:800;">${car.name}</div><div style="font-size:12px;font-weight:800;color:var(--rub);">${formatMoney(car.price)} ₽</div>`;g.appendChild(d);});
         box.appendChild(g);
     });
 }
-function renderUpgrades(){
-    const cost=10000000+state.upgradeLevel*15000000;
-    document.getElementById('upgradeLevelDisplay').textContent=`Ур. ${state.upgradeLevel}`;
-    const btn=document.getElementById('btnBuyUpgrade');
-    btn.textContent=`Прокачать за ${formatMoney(cost)} ₽`;
-    btn.disabled=state.balanceRub<cost;
-}
+function renderUpgrades(){const cost=10000000+state.upgradeLevel*15000000;document.getElementById('upgradeLevelDisplay').textContent=`Ур. ${state.upgradeLevel}`;const btn=document.getElementById('btnBuyUpgrade');btn.textContent=`Прокачать за ${formatMoney(cost)} ₽`;btn.disabled=state.balanceRub<cost;}
 function buyUpgrade(){const c=10000000+state.upgradeLevel*15000000;if(state.balanceRub>=c){state.balanceRub-=c;state.stats.spent+=c;state.upgradeLevel++;saveState();renderUpgrades();updateUI();playTone(1000,'sine',0.3);}}
 function renderProfile(){
     document.getElementById('profileRankTitle').textContent=document.getElementById('menuRank').textContent;
@@ -1208,8 +1134,7 @@ function renderProfile(){
     document.getElementById('profileBalanceRub').textContent=formatMoney(state.balanceRub)+' ₽';
     document.getElementById('profileBalanceToken').textContent=formatMoney(state.balanceToken)+' 💎';
     document.getElementById('profileSpent').textContent=formatMoney(state.stats.spent||0)+' ₽';
-    const brands=state.stats.carSales||{};
-    let fav='—',fc=0;
+    const brands=state.stats.carSales||{};let fav='—',fc=0;
     Object.entries(brands).forEach(([b,c])=>{if(c>fc){fc=c;fav=b;}});
     document.getElementById('profileFavBrand').textContent=fav!=='—'?`${fav} (${fc})`:'—';
     document.getElementById('profileCars').textContent=state.garageCars.length;
@@ -1221,45 +1146,23 @@ function renderProfile(){
 }
 
 // UPGRADER
-function switchUpgraderTab(t){
-    state.upgraderTab=t;
-    document.getElementById('upgTabCars').classList.toggle('active',t==='cars');
-    document.getElementById('upgTabPlates').classList.toggle('active',t==='plates');
-    document.getElementById('upgCarsPanel').style.display=t==='cars'?'flex':'none';
-    document.getElementById('upgPlatesPanel').style.display=t==='plates'?'flex':'none';
-    renderUpgrader();
-}
-function renderUpgrader(){
-    if(state.upgraderTab==='cars')renderCarUpgrader();
-    else renderPlateUpgrader();
-}
+function switchUpgraderTab(t){state.upgraderTab=t;document.getElementById('upgTabCars').classList.toggle('active',t==='cars');document.getElementById('upgTabPlates').classList.toggle('active',t==='plates');document.getElementById('upgCarsPanel').style.display=t==='cars'?'flex':'none';document.getElementById('upgPlatesPanel').style.display=t==='plates'?'flex':'none';renderUpgrader();}
+function renderUpgrader(){if(state.upgraderTab==='cars')renderCarUpgrader();else renderPlateUpgrader();}
 function renderCarUpgrader(){
     const list=document.getElementById('upgCarList');
-    if(state.garageCars.length===0){
-        list.innerHTML='<div style="color:var(--text-muted);font-size:12px;text-align:center;padding:10px;width:100%;">Гараж пуст</div>';
-        document.getElementById('btnDoCarUpgrade').disabled=true;
-        return;
-    }
+    if(state.garageCars.length===0){list.innerHTML='<div style="color:var(--text-muted);font-size:12px;text-align:center;padding:10px;width:100%;">Гараж пуст</div>';document.getElementById('btnDoCarUpgrade').disabled=true;return;}
     if(state.carUpgIdx===-1||state.carUpgIdx>=state.garageCars.length)state.carUpgIdx=0;
     list.innerHTML='';
-    state.garageCars.forEach((car,idx)=>{
-        const d=document.createElement('div');
-        d.className='upg-select-item'+(idx===state.carUpgIdx?' selected':'');
-        d.onclick=()=>{state.carUpgIdx=idx;renderCarUpgrader();};
-        d.innerHTML=`${svgFor(car)}<div class="name">${car.name}</div><div class="price-mini">${formatMoney(car.price)} ₽</div>`;
-        list.appendChild(d);
-    });
+    state.garageCars.forEach((car,idx)=>{const d=document.createElement('div');d.className='upg-select-item'+(idx===state.carUpgIdx?' selected':'');d.onclick=()=>{state.carUpgIdx=idx;renderCarUpgrader();};d.innerHTML=`${svgFor(car)}<div class="name">${car.name}</div><div class="price-mini">${formatMoney(car.price)} ₽</div>`;list.appendChild(d);});
     const stake=state.garageCars[state.carUpgIdx];
     document.getElementById('upgCarStakeSvg').innerHTML=svgFor(stake);
     document.getElementById('upgCarStakePrice').textContent=formatMoney(stake.price)+' ₽';
-    const greenDeg=state.carUpgChance*3.6;
-    const halfGreen=greenDeg/2;
+    const greenDeg=state.carUpgChance*3.6;const halfGreen=greenDeg/2;
     const wheel=document.getElementById('carWheelSpin');
     wheel.style.background=`conic-gradient(from ${-halfGreen}deg, #10b981 0deg ${greenDeg}deg, #ef4444 ${greenDeg}deg 360deg)`;
     document.getElementById('carWheelChance').textContent=state.carUpgChance+'%';
     document.querySelectorAll('#upgCarsPanel .upg-chance-btn').forEach(b=>b.classList.toggle('active',parseInt(b.textContent)===state.carUpgChance));
-    const mult=100/state.carUpgChance;
-    const targetPrice=stake.price*mult;
+    const mult=100/state.carUpgChance;const targetPrice=stake.price*mult;
     const all=Object.values(CONFIG.cars).flat();
     let best=all[0],bestDiff=Infinity;
     all.forEach(c=>{const cp=c.price*(1+state.upgradeLevel*0.1)*(1+state.prestigeLevel*0.25);const d=Math.abs(cp-targetPrice);if(d<bestDiff){bestDiff=d;best=c;}});
@@ -1267,162 +1170,70 @@ function renderCarUpgrader(){
     document.getElementById('upgCarPrizePrice').textContent=formatMoney(best.price)+' ₽';
     document.getElementById('btnDoCarUpgrade').disabled=state.carUpgRolling;
 }
-function setCarUpgradeChance(c){
-    if(state.carUpgRolling)return;
-    state.carUpgChance=c;saveState();
-    carPointerRotation=0;
-    document.getElementById('carPointerWrap').style.transition='none';
-    document.getElementById('carPointerWrap').style.transform='rotate(0deg)';
-    renderCarUpgrader();
-}
+function setCarUpgradeChance(c){if(state.carUpgRolling)return;state.carUpgChance=c;saveState();carPointerRotation=0;document.getElementById('carPointerWrap').style.transition='none';document.getElementById('carPointerWrap').style.transform='rotate(0deg)';renderCarUpgrader();}
 function doCarUpgrade(){
     if(state.carUpgRolling||state.carUpgIdx===-1||state.garageCars.length===0)return;
-    state.carUpgRolling=true;
-    const btn=document.getElementById('btnDoCarUpgrade');
-    btn.disabled=true;btn.textContent='Крутим...';
-    const chance=state.carUpgChance;
-    const win=Math.random()<chance/100;
+    state.carUpgRolling=true;const btn=document.getElementById('btnDoCarUpgrade');btn.disabled=true;btn.textContent='Крутим...';
+    const chance=state.carUpgChance;const win=Math.random()<chance/100;
     const greenDeg=chance*3.6,halfGreen=greenDeg/2;
-    let Rmod;
-    if(win){if(Math.random()<0.5)Rmod=Math.random()*halfGreen*0.9;else Rmod=360-halfGreen+Math.random()*halfGreen*0.9;}
-    else Rmod=halfGreen+Math.random()*(360-2*halfGreen)*0.9;
-    const baseMod=((carPointerRotation%360)+360)%360;
-    const deltaMod=((Rmod-baseMod)%360+360)%360;
-    const spins=6+Math.floor(Math.random()*3);
-    const finalRot=carPointerRotation+deltaMod+spins*360;
-    const wrap=document.getElementById('carPointerWrap');
-    wrap.style.transition='transform 5s cubic-bezier(0.15, 0.7, 0.2, 1)';
-    wrap.style.transform=`rotate(${finalRot}deg)`;
-    carPointerRotation=finalRot;
+    let Rmod;if(win){if(Math.random()<0.5)Rmod=Math.random()*halfGreen*0.9;else Rmod=360-halfGreen+Math.random()*halfGreen*0.9;}else Rmod=halfGreen+Math.random()*(360-2*halfGreen)*0.9;
+    const baseMod=((carPointerRotation%360)+360)%360;const deltaMod=((Rmod-baseMod)%360+360)%360;const spins=6+Math.floor(Math.random()*3);const finalRot=carPointerRotation+deltaMod+spins*360;
+    const wrap=document.getElementById('carPointerWrap');wrap.style.transition='transform 5s cubic-bezier(0.15, 0.7, 0.2, 1)';wrap.style.transform=`rotate(${finalRot}deg)`;carPointerRotation=finalRot;
     playSpinTicks(4500);
     setTimeout(()=>{
-        state.carUpgRolling=false;
-        const stake=state.garageCars[state.carUpgIdx];
+        state.carUpgRolling=false;const stake=state.garageCars[state.carUpgIdx];
         if(win){
-            const mult=100/chance;
-            const targetPrice=stake.price*mult;
-            const all=Object.values(CONFIG.cars).flat();
-            let best=all[0],bestDiff=Infinity;
+            const mult=100/chance;const targetPrice=stake.price*mult;const all=Object.values(CONFIG.cars).flat();let best=all[0],bestDiff=Infinity;
             all.forEach(c=>{const cp=c.price*(1+state.upgradeLevel*0.1)*(1+state.prestigeLevel*0.25);const d=Math.abs(cp-targetPrice);if(d<bestDiff){bestDiff=d;best=c;}});
-            let priR='common';
-            if(best.price>=30000000)priR='legend';else if(best.price>=7000000)priR='epic';else if(best.price>=3200000)priR='rare';
-            const newCar={...best,rarity:priR};
-            newCar.price=Math.floor(best.price*(1+state.upgradeLevel*0.1)*(1+state.prestigeLevel*0.25));
-            state.garageCars.splice(state.carUpgIdx,1);
-            state.garageCars.push(newCar);
-            state.carUpgIdx=state.garageCars.length-1;
+            let priR='common';if(best.price>=30000000)priR='legend';else if(best.price>=7000000)priR='epic';else if(best.price>=3200000)priR='rare';
+            const newCar={...best,rarity:priR};newCar.price=Math.floor(best.price*(1+state.upgradeLevel*0.1)*(1+state.prestigeLevel*0.25));
+            state.garageCars.splice(state.carUpgIdx,1);state.garageCars.push(newCar);state.carUpgIdx=state.garageCars.length-1;
             saveState();renderCarUpgrader();playChing();burst('legend');
             showModal('🎉 АПГРЕЙД!',`Ты выбил <b>${newCar.brand} ${newCar.name}</b><br>Стоимость: <b>${formatMoney(newCar.price)} ₽</b>`,'🏆');
-        }else{
-            state.garageCars.splice(state.carUpgIdx,1);
-            state.carUpgIdx=state.garageCars.length>0?0:-1;
-            saveState();renderCarUpgrader();
-            playTone(150,'sawtooth',0.5,0.1);
-            showModal('💥 ПРОИГРЫШ','Машина сгорела.','💀');
-        }
-        btn.textContent='Апгрейд машины';
-        btn.disabled=state.garageCars.length===0;
-        updateUI();
+        }else{state.garageCars.splice(state.carUpgIdx,1);state.carUpgIdx=state.garageCars.length>0?0:-1;saveState();renderCarUpgrader();playTone(150,'sawtooth',0.5,0.1);showModal('💥 ПРОИГРЫШ','Машина сгорела.','💀');}
+        btn.textContent='Апгрейд машины';btn.disabled=state.garageCars.length===0;updateUI();
     },5100);
 }
 function renderPlateUpgrader(){
     const list=document.getElementById('upgPlateList');
-    if(state.garagePlates.length===0){
-        list.innerHTML='<div style="color:var(--text-muted);font-size:12px;text-align:center;padding:10px;width:100%;">Гараж пуст</div>';
-        document.getElementById('btnDoPlateUpgrade').disabled=true;
-        return;
-    }
+    if(state.garagePlates.length===0){list.innerHTML='<div style="color:var(--text-muted);font-size:12px;text-align:center;padding:10px;width:100%;">Гараж пуст</div>';document.getElementById('btnDoPlateUpgrade').disabled=true;return;}
     if(state.plateUpgIdx===-1||state.plateUpgIdx>=state.garagePlates.length)state.plateUpgIdx=0;
     list.innerHTML='';
-    state.garagePlates.forEach((plate,idx)=>{
-        const d=document.createElement('div');
-        d.className='upg-select-item'+(idx===state.plateUpgIdx?' selected':'');
-        d.onclick=()=>{state.plateUpgIdx=idx;renderPlateUpgrader();};
-        d.innerHTML=`<div class="upg-select-plate-mini">${plate.l1} ${plate.num} ${plate.l2}</div><div class="name">${plate.region} рег.</div><div class="price-mini">${formatMoney(plate.price)} 💎</div>`;
-        list.appendChild(d);
-    });
+    state.garagePlates.forEach((plate,idx)=>{const d=document.createElement('div');d.className='upg-select-item'+(idx===state.plateUpgIdx?' selected':'');d.onclick=()=>{state.plateUpgIdx=idx;renderPlateUpgrader();};d.innerHTML=`<div class="upg-select-plate-mini">${plate.l1} ${plate.num} ${plate.l2}</div><div class="name">${plate.region} рег.</div><div class="price-mini">${formatMoney(plate.price)} 💎</div>`;list.appendChild(d);});
     const stake=state.garagePlates[state.plateUpgIdx];
     document.getElementById('upgPlateStakeDisplay').innerHTML=plateDisplaySmall(stake);
     document.getElementById('upgPlateStakePrice').textContent=formatMoney(stake.price)+' 💎';
-    const greenDeg=state.plateUpgChance*3.6;
-    const halfGreen=greenDeg/2;
+    const greenDeg=state.plateUpgChance*3.6;const halfGreen=greenDeg/2;
     const wheel=document.getElementById('plateWheelSpin');
     wheel.style.background=`conic-gradient(from ${-halfGreen}deg, #10b981 0deg ${greenDeg}deg, #ef4444 ${greenDeg}deg 360deg)`;
     document.getElementById('plateWheelChance').textContent=state.plateUpgChance+'%';
     document.querySelectorAll('#upgPlatesPanel .upg-chance-btn').forEach(b=>b.classList.toggle('active',parseInt(b.textContent)===state.plateUpgChance));
-    const target=stake.price*(100/state.plateUpgChance);
-    const prize=generatePrizePlate(target);
+    const target=stake.price*(100/state.plateUpgChance);const prize=generatePrizePlate(target);
     document.getElementById('upgPlatePrizeDisplay').innerHTML=plateDisplaySmall(prize);
     document.getElementById('upgPlatePrizePrice').textContent=formatMoney(prize.price)+' 💎';
     document.getElementById('btnDoPlateUpgrade').disabled=state.plateUpgRolling;
 }
-function plateDisplaySmall(plate){
-    return `<div class="plate-realistic r-${plate.rarity}" style="transform:scale(0.85);transform-origin:center;">
-        <div class="plate-text" style="font-size:22px;padding:2px 8px;min-width:100px;">${plate.l1} ${plate.num} ${plate.l2}</div>
-        <div class="plate-side-real" style="min-width:36px;padding:1px 4px;">
-            <div class="plate-region-real" style="font-size:14px;">${plate.region}</div>
-            <div class="plate-country-real" style="font-size:6px;">RUS</div>
-        </div>
-    </div>`;
-}
-function generatePrizePlate(targetPrice){
-    let best=null,bestDiff=Infinity;
-    for(let i=0;i<40;i++){
-        const p=generatePlateItem(true);
-        const d=Math.abs(p.price-targetPrice);
-        if(d<bestDiff){bestDiff=d;best=p;}
-    }
-    return best;
-}
-function setPlateUpgradeChance(c){
-    if(state.plateUpgRolling)return;
-    state.plateUpgChance=c;saveState();
-    platePointerRotation=0;
-    document.getElementById('platePointerWrap').style.transition='none';
-    document.getElementById('platePointerWrap').style.transform='rotate(0deg)';
-    renderPlateUpgrader();
-}
+function plateDisplaySmall(plate){return `<div class="plate-realistic r-${plate.rarity}" style="transform:scale(0.85);transform-origin:center;"><div class="plate-text" style="font-size:22px;padding:2px 8px;min-width:100px;">${plate.l1} ${plate.num} ${plate.l2}</div><div class="plate-side-real" style="min-width:36px;padding:1px 4px;"><div class="plate-region-real" style="font-size:14px;">${plate.region}</div><div class="plate-country-real" style="font-size:6px;">RUS</div></div></div>`;}
+function generatePrizePlate(targetPrice){let best=null,bestDiff=Infinity;for(let i=0;i<40;i++){const p=generatePlateItem(true);const d=Math.abs(p.price-targetPrice);if(d<bestDiff){bestDiff=d;best=p;}}return best;}
+function setPlateUpgradeChance(c){if(state.plateUpgRolling)return;state.plateUpgChance=c;saveState();platePointerRotation=0;document.getElementById('platePointerWrap').style.transition='none';document.getElementById('platePointerWrap').style.transform='rotate(0deg)';renderPlateUpgrader();}
 function doPlateUpgrade(){
     if(state.plateUpgRolling||state.plateUpgIdx===-1||state.garagePlates.length===0)return;
-    state.plateUpgRolling=true;
-    const btn=document.getElementById('btnDoPlateUpgrade');
-    btn.disabled=true;btn.textContent='Крутим...';
-    const chance=state.plateUpgChance;
-    const win=Math.random()<chance/100;
+    state.plateUpgRolling=true;const btn=document.getElementById('btnDoPlateUpgrade');btn.disabled=true;btn.textContent='Крутим...';
+    const chance=state.plateUpgChance;const win=Math.random()<chance/100;
     const greenDeg=chance*3.6,halfGreen=greenDeg/2;
-    let Rmod;
-    if(win){if(Math.random()<0.5)Rmod=Math.random()*halfGreen*0.9;else Rmod=360-halfGreen+Math.random()*halfGreen*0.9;}
-    else Rmod=halfGreen+Math.random()*(360-2*halfGreen)*0.9;
-    const baseMod=((platePointerRotation%360)+360)%360;
-    const deltaMod=((Rmod-baseMod)%360+360)%360;
-    const spins=6+Math.floor(Math.random()*3);
-    const finalRot=platePointerRotation+deltaMod+spins*360;
-    const wrap=document.getElementById('platePointerWrap');
-    wrap.style.transition='transform 5s cubic-bezier(0.15, 0.7, 0.2, 1)';
-    wrap.style.transform=`rotate(${finalRot}deg)`;
-    platePointerRotation=finalRot;
+    let Rmod;if(win){if(Math.random()<0.5)Rmod=Math.random()*halfGreen*0.9;else Rmod=360-halfGreen+Math.random()*halfGreen*0.9;}else Rmod=halfGreen+Math.random()*(360-2*halfGreen)*0.9;
+    const baseMod=((platePointerRotation%360)+360)%360;const deltaMod=((Rmod-baseMod)%360+360)%360;const spins=6+Math.floor(Math.random()*3);const finalRot=platePointerRotation+deltaMod+spins*360;
+    const wrap=document.getElementById('platePointerWrap');wrap.style.transition='transform 5s cubic-bezier(0.15, 0.7, 0.2, 1)';wrap.style.transform=`rotate(${finalRot}deg)`;platePointerRotation=finalRot;
     playSpinTicks(4500);
     setTimeout(()=>{
-        state.plateUpgRolling=false;
-        const stake=state.garagePlates[state.plateUpgIdx];
+        state.plateUpgRolling=false;const stake=state.garagePlates[state.plateUpgIdx];
         if(win){
-            const target=stake.price*(100/chance);
-            const prize=generatePrizePlate(target);
-            state.garagePlates.splice(state.plateUpgIdx,1);
-            state.garagePlates.push(prize);
-            state.plateUpgIdx=state.garagePlates.length-1;
+            const target=stake.price*(100/chance);const prize=generatePrizePlate(target);
+            state.garagePlates.splice(state.plateUpgIdx,1);state.garagePlates.push(prize);state.plateUpgIdx=state.garagePlates.length-1;
             saveState();renderPlateUpgrader();playChing();burst('legend');
             showModal('🎉 АПГРЕЙД!',`Ты выбил номер <b>${prize.l1} ${prize.num} ${prize.l2}</b><br>Стоимость: <b>${formatMoney(prize.price)} 💎</b>`,'🏆');
-        }else{
-            state.garagePlates.splice(state.plateUpgIdx,1);
-            state.plateUpgIdx=state.garagePlates.length>0?0:-1;
-            saveState();renderPlateUpgrader();
-            playTone(150,'sawtooth',0.5,0.1);
-            showModal('💥 ПРОИГРЫШ','Номер сгорел.','💀');
-        }
-        btn.textContent='Апгрейд номера';
-        btn.disabled=state.garagePlates.length===0;
-        updateUI();
+        }else{state.garagePlates.splice(state.plateUpgIdx,1);state.plateUpgIdx=state.garagePlates.length>0?0:-1;saveState();renderPlateUpgrader();playTone(150,'sawtooth',0.5,0.1);showModal('💥 ПРОИГРЫШ','Номер сгорел.','💀');}
+        btn.textContent='Апгрейд номера';btn.disabled=state.garagePlates.length===0;updateUI();
     },5100);
 }
 
@@ -1432,8 +1243,7 @@ function generateBattleRooms(){
     const myPrices=state.garageCars.length>0?state.garageCars.map(c=>c.price):[5000000];
     const avg=myPrices.reduce((a,b)=>a+b,0)/myPrices.length;
     for(let i=0;i<5;i++){
-        let name;
-        do{name=BOT_NAMES[Math.floor(Math.random()*BOT_NAMES.length)]+Math.floor(Math.random()*99);}while(used.has(name));
+        let name;do{name=BOT_NAMES[Math.floor(Math.random()*BOT_NAMES.length)]+Math.floor(Math.random()*99);}while(used.has(name));
         used.add(name);
         const av=BOT_AVATARS[Math.floor(Math.random()*BOT_AVATARS.length)];
         const target=avg*(0.7+Math.random()*1.3);
@@ -1449,26 +1259,17 @@ function generateBattleRooms(){
 }
 function renderBattleLobby(){
     const myCars=document.getElementById('battleMyCars');
-    if(state.garageCars.length===0){
-        myCars.innerHTML='<div style="color:var(--text-muted);font-size:12px;padding:15px;text-align:center;width:100%;">Гараж пуст. Накрути машин!</div>';
-    }else{
+    if(state.garageCars.length===0){myCars.innerHTML='<div style="color:var(--text-muted);font-size:12px;padding:15px;text-align:center;width:100%;">Гараж пуст. Накрути машин!</div>';}
+    else{
         if(state.battleMyIdx===-1||state.battleMyIdx>=state.garageCars.length)state.battleMyIdx=0;
         myCars.innerHTML='';
-        state.garageCars.forEach((car,i)=>{
-            const d=document.createElement('div');
-            d.className='battle-car-item'+(i===state.battleMyIdx?' selected':'');
-            d.onclick=()=>{state.battleMyIdx=i;renderBattleLobby();};
-            d.innerHTML=`${svgFor(car)}<div class="battle-car-name">${car.name}</div><div class="battle-car-price">${formatMoney(car.price)} ₽</div>`;
-            myCars.appendChild(d);
-        });
+        state.garageCars.forEach((car,i)=>{const d=document.createElement('div');d.className='battle-car-item'+(i===state.battleMyIdx?' selected':'');d.onclick=()=>{state.battleMyIdx=i;renderBattleLobby();};d.innerHTML=`${svgFor(car)}<div class="battle-car-name">${car.name}</div><div class="battle-car-price">${formatMoney(car.price)} ₽</div>`;myCars.appendChild(d);});
     }
     const roomsEl=document.getElementById('battleRooms');
     const rooms=generateBattleRooms();
     roomsEl.innerHTML='';
     rooms.forEach((room,i)=>{
-        const d=document.createElement('div');
-        d.className='battle-room';
-        d.style.animationDelay=(i*0.08)+'s';
+        const d=document.createElement('div');d.className='battle-room';d.style.animationDelay=(i*0.08)+'s';
         d.innerHTML=`<div class="battle-room-avatar">${room.avatar}</div><div class="battle-room-info"><div class="battle-room-name">${room.name}</div><div class="battle-room-rating">${room.rating} ⭐ · Ставка</div></div><div class="battle-room-car">${svgFor(room.car)}<div class="battle-room-price">${formatMoney(room.car.price)} ₽</div></div><button class="battle-room-join">⚔️ Войти</button>`;
         d.querySelector('.battle-room-join').onclick=(e)=>{e.stopPropagation();joinBattleRoom(room);};
         d.onclick=()=>joinBattleRoom(room);
@@ -1479,9 +1280,7 @@ function renderBattleLobby(){
     document.getElementById('battleActive').style.display='none';
 }
 function joinBattleRoom(room){
-    if(state.garageCars.length===0||state.battleMyIdx===-1||state.battleMyIdx>=state.garageCars.length){
-        return showModal('Нет ставки','Выбери машину из гаража для ставки.','⚠️');
-    }
+    if(state.garageCars.length===0||state.battleMyIdx===-1||state.battleMyIdx>=state.garageCars.length)return showModal('Нет ставки','Выбери машину из гаража для ставки.','⚠️');
     const myBetCar=state.garageCars[state.battleMyIdx];
     const overlay=document.getElementById('lobbyTransition');
     document.getElementById('lobbyMyAvatar').textContent=state.avatar;
@@ -1496,9 +1295,7 @@ function joinBattleRoom(room){
 }
 function startBattle(room,myBetCar){
     state.battleState={opponent:room,myBetCar,enemyBetCar:room.car,myScore:0,enemyScore:0,timeLeft:180,myDrops:[],enemyDrops:[],timerId:null,enemyTimerId:null,finished:false};
-    state.garageCars.splice(state.battleMyIdx,1);
-    state.battleMyIdx=-1;
-    saveState();
+    state.garageCars.splice(state.battleMyIdx,1);state.battleMyIdx=-1;saveState();
     document.getElementById('battleLobbySetup').style.display='none';
     document.getElementById('battleActive').style.display='block';
     document.getElementById('battleArenaMyCar').innerHTML=svgFor(myBetCar);
@@ -1511,95 +1308,25 @@ function startBattle(room,myBetCar){
     document.getElementById('battleScoreEnemyVal').textContent='0 ₽';
     document.getElementById('battleHistory').innerHTML='';
     document.getElementById('battleLastDrop').innerHTML='<div class="battle-last-drop-label">Последний дроп</div><div style="color:var(--text-muted);font-size:12px;">Крути машины или номера!</div>';
-    updateBattleTimer();
-    startBattleTimers();
+    updateBattleTimer();startBattleTimers();
 }
-function updateBattleTimer(){
-    if(!state.battleState)return;
-    const t=state.battleState.timeLeft;
-    const m=Math.floor(t/60),s=t%60;
-    const el=document.getElementById('battleTimerVal');
-    if(el){el.textContent=`${m}:${s.toString().padStart(2,'0')}`;el.classList.toggle('danger',t<=30);}
-}
+function updateBattleTimer(){if(!state.battleState)return;const t=state.battleState.timeLeft;const m=Math.floor(t/60),s=t%60;const el=document.getElementById('battleTimerVal');if(el){el.textContent=`${m}:${s.toString().padStart(2,'0')}`;el.classList.toggle('danger',t<=30);}}
 function startBattleTimers(){
     if(!state.battleState)return;
-    state.battleState.timerId=setInterval(()=>{
-        if(!state.battleState||state.battleState.finished)return;
-        state.battleState.timeLeft--;
-        updateBattleTimer();
-        if(state.battleState.timeLeft<=0)finishBattle();
-    },1000);
-    const enemyRoll=()=>{
-        if(!state.battleState||state.battleState.finished)return;
-        const isPlate=Math.random()<0.3;
-        let value;
-        if(isPlate){const plate=generatePlateItem(false);value=plate.price*180;state.battleState.enemyScore+=value;}
-        else{const car=generateCarItem(false);value=car.price;state.battleState.enemyScore+=value;}
-        state.battleState.enemyDrops.push(value);
-        updateBattleScores();
-        state.battleState.enemyTimerId=setTimeout(enemyRoll,1500+Math.random()*1500);
-    };
+    state.battleState.timerId=setInterval(()=>{if(!state.battleState||state.battleState.finished)return;state.battleState.timeLeft--;updateBattleTimer();if(state.battleState.timeLeft<=0)finishBattle();},1000);
+    const enemyRoll=()=>{if(!state.battleState||state.battleState.finished)return;const isPlate=Math.random()<0.3;let value;if(isPlate){const plate=generatePlateItem(false);value=plate.price*180;state.battleState.enemyScore+=value;}else{const car=generateCarItem(false);value=car.price;state.battleState.enemyScore+=value;}state.battleState.enemyDrops.push(value);updateBattleScores();state.battleState.enemyTimerId=setTimeout(enemyRoll,1500+Math.random()*1500);};
     state.battleState.enemyTimerId=setTimeout(enemyRoll,1500);
 }
-function battleRollCar(){
-    if(!state.battleState||state.battleState.finished)return;
-    if(state.balanceRub<CONFIG.costCarNormal)return showModal('Мало рублей','Нужно 2 000 000 ₽.','❌');
-    state.balanceRub-=CONFIG.costCarNormal;state.stats.spent+=CONFIG.costCarNormal;
-    const car=generateCarItem(false);
-    state.battleState.myScore+=car.price;
-    state.battleState.myDrops.push(car.price);
-    state.balanceRub+=Math.floor(car.price*0.5);
-    showBattleLastDrop(car,'car');
-    updateBattleScores();
-    addBattleHistory('my',car.price,car.brand+' '+car.name);
-    playChing();updateUI();
-}
-function battleRollPlate(){
-    if(!state.battleState||state.battleState.finished)return;
-    if(state.balanceToken<CONFIG.costPlateNormal)return showModal('Мало жетонов','Нужно 500 💎.','❌');
-    state.balanceToken-=CONFIG.costPlateNormal;
-    const plate=generatePlateItem(false);
-    const scoreValue=plate.price*180;
-    state.battleState.myScore+=scoreValue;
-    state.battleState.myDrops.push(scoreValue);
-    state.balanceToken+=Math.floor(plate.price*0.5);
-    showBattleLastDrop(plate,'plate');
-    updateBattleScores();
-    addBattleHistory('my',scoreValue,`${plate.l1} ${plate.num} ${plate.l2}`);
-    playChing();updateUI();
-}
-function showBattleLastDrop(item,type){
-    const el=document.getElementById('battleLastDrop');
-    if(!el)return;
-    if(type==='car'){
-        el.innerHTML=`<div class="battle-last-drop-label">Твой дроп</div><div class="battle-last-drop-content"><div class="battle-last-drop-svg">${svgFor(item)}</div><div><div style="font-size:13px;font-weight:800;">${item.brand} ${item.name}</div><div class="battle-last-drop-price">+${formatMoney(item.price)} ₽</div></div></div>`;
-    }else{
-        el.innerHTML=`<div class="battle-last-drop-label">Твой дроп</div><div class="battle-last-drop-content"><div class="battle-last-drop-plate"><span>${item.l1}</span><span>${item.num}</span><span>${item.l2}</span></div><div class="battle-last-drop-price">+${formatMoney(item.price*180)} ₽</div></div>`;
-    }
-}
-function addBattleHistory(who,value,name){
-    const el=document.getElementById('battleHistory');
-    if(!el)return;
-    const div=document.createElement('div');
-    div.className='battle-history-item'+(who==='enemy'?' enemy':'');
-    div.innerHTML=`<span class="who">${who==='my'?'Ты':state.battleState.opponent.name}</span><span style="flex:1;text-align:center;color:var(--text-muted);">${name}</span><span class="val">+${formatMoney(value)} ₽</span>`;
-    el.insertBefore(div,el.firstChild);
-    while(el.children.length>10)el.removeChild(el.lastChild);
-}
-function updateBattleScores(){
-    if(!state.battleState)return;
-    document.getElementById('battleScoreMyVal').textContent=formatMoney(state.battleState.myScore)+' ₽';
-    document.getElementById('battleScoreEnemyVal').textContent=formatMoney(state.battleState.enemyScore)+' ₽';
-    document.getElementById('battleScoreMy').classList.toggle('winning',state.battleState.myScore>state.battleState.enemyScore);
-    document.getElementById('battleScoreEnemy').classList.toggle('winning',state.battleState.enemyScore>state.battleState.myScore);
-}
+function battleRollCar(){if(!state.battleState||state.battleState.finished)return;if(state.balanceRub<CONFIG.costCarNormal)return showModal('Мало рублей','Нужно 2 000 000 ₽.','❌');state.balanceRub-=CONFIG.costCarNormal;state.stats.spent+=CONFIG.costCarNormal;const car=generateCarItem(false);state.battleState.myScore+=car.price;state.battleState.myDrops.push(car.price);state.balanceRub+=Math.floor(car.price*0.5);showBattleLastDrop(car,'car');updateBattleScores();addBattleHistory('my',car.price,car.brand+' '+car.name);playChing();updateUI();}
+function battleRollPlate(){if(!state.battleState||state.battleState.finished)return;if(state.balanceToken<CONFIG.costPlateNormal)return showModal('Мало жетонов','Нужно 500 💎.','❌');state.balanceToken-=CONFIG.costPlateNormal;const plate=generatePlateItem(false);const scoreValue=plate.price*180;state.battleState.myScore+=scoreValue;state.battleState.myDrops.push(scoreValue);state.balanceToken+=Math.floor(plate.price*0.5);showBattleLastDrop(plate,'plate');updateBattleScores();addBattleHistory('my',scoreValue,`${plate.l1} ${plate.num} ${plate.l2}`);playChing();updateUI();}
+function showBattleLastDrop(item,type){const el=document.getElementById('battleLastDrop');if(!el)return;if(type==='car'){el.innerHTML=`<div class="battle-last-drop-label">Твой дроп</div><div class="battle-last-drop-content"><div class="battle-last-drop-svg">${svgFor(item)}</div><div><div style="font-size:13px;font-weight:800;">${item.brand} ${item.name}</div><div class="battle-last-drop-price">+${formatMoney(item.price)} ₽</div></div></div>`;}else{el.innerHTML=`<div class="battle-last-drop-label">Твой дроп</div><div class="battle-last-drop-content"><div class="battle-last-drop-plate"><span>${item.l1}</span><span>${item.num}</span><span>${item.l2}</span></div><div class="battle-last-drop-price">+${formatMoney(item.price*180)} ₽</div></div>`;}}
+function addBattleHistory(who,value,name){const el=document.getElementById('battleHistory');if(!el)return;const div=document.createElement('div');div.className='battle-history-item'+(who==='enemy'?' enemy':'');div.innerHTML=`<span class="who">${who==='my'?'Ты':state.battleState.opponent.name}</span><span style="flex:1;text-align:center;color:var(--text-muted);">${name}</span><span class="val">+${formatMoney(value)} ₽</span>`;el.insertBefore(div,el.firstChild);while(el.children.length>10)el.removeChild(el.lastChild);}
+function updateBattleScores(){if(!state.battleState)return;document.getElementById('battleScoreMyVal').textContent=formatMoney(state.battleState.myScore)+' ₽';document.getElementById('battleScoreEnemyVal').textContent=formatMoney(state.battleState.enemyScore)+' ₽';document.getElementById('battleScoreMy').classList.toggle('winning',state.battleState.myScore>state.battleState.enemyScore);document.getElementById('battleScoreEnemy').classList.toggle('winning',state.battleState.enemyScore>state.battleState.myScore);}
 function finishBattle(){
     if(!state.battleState||state.battleState.finished)return;
     state.battleState.finished=true;
-    clearInterval(state.battleState.timerId);
-    clearTimeout(state.battleState.enemyTimerId);
-    const s=state.battleState;
-    const win=s.myScore>=s.enemyScore;
+    clearInterval(state.battleState.timerId);clearTimeout(state.battleState.enemyTimerId);
+    const s=state.battleState;const win=s.myScore>=s.enemyScore;
     const overlay=document.getElementById('battleResultOverlay');
     document.getElementById('battleResultIcon').textContent=win?'🏆':'💀';
     const titleEl=document.getElementById('battleResultTitle');
@@ -1607,8 +1334,7 @@ function finishBattle(){
     titleEl.className='battle-result-title '+(win?'win':'lose');
     document.getElementById('battleResultScore').innerHTML=`Ты: <b>${formatMoney(s.myScore)} ₽</b><br>${s.opponent.name}: <b>${formatMoney(s.enemyScore)} ₽</b>`;
     if(win){
-        state.garageCars.push(s.enemyBetCar);
-        state.garageCars.push(s.myBetCar);
+        state.garageCars.push(s.enemyBetCar);state.garageCars.push(s.myBetCar);
         state.stats.battleWins=(state.stats.battleWins||0)+1;
         document.getElementById('battleResultPrize').innerHTML=`Ты забрал:<br>🏆 <b>${s.enemyBetCar.brand} ${s.enemyBetCar.name}</b> (${formatMoney(s.enemyBetCar.price)} ₽)<br><br>И вернул свою ставку.`;
         burst('legend');playChing();
@@ -1618,54 +1344,19 @@ function finishBattle(){
     }
     saveState();overlay.classList.add('active');
 }
-function closeBattleResult(){
-    document.getElementById('battleResultOverlay').classList.remove('active');
-    state.battleState=null;
-    document.getElementById('battleLobbySetup').style.display='block';
-    document.getElementById('battleActive').style.display='none';
-    renderBattleLobby();updateUI();
-}
+function closeBattleResult(){document.getElementById('battleResultOverlay').classList.remove('active');state.battleState=null;document.getElementById('battleLobbySetup').style.display='block';document.getElementById('battleActive').style.display='none';renderBattleLobby();updateUI();}
 
 // QUESTS
-function ensureQuestsReset(){
-    const today=new Date().setHours(0,0,0,0);
-    if(!state.quests||state.quests.date!==today){
-        state.quests={date:today,spins:0,earned:0,epics:0,claimed:{}};
-        saveState();
-    }
-}
-function getQuests(){
-    ensureQuestsReset();
-    return[
-        {id:'spins10',icon:'🎲',title:'Прокрути удачу',desc:'10 прокруток',reward:'1 000 000 ₽',
-            progress:Math.min(10,state.quests.spins),target:10,
-            canClaim:state.quests.spins>=10&&!state.quests.claimed.spins10,
-            claimed:!!state.quests.claimed.spins10,
-            claim:()=>{addRubles(1000000);state.quests.claimed.spins10=true;saveState();}},
-        {id:'epic1',icon:'💎',title:'Редкая тачка',desc:'Epic или Legend',reward:'2 500 💎',
-            progress:Math.min(1,state.quests.epics),target:1,
-            canClaim:state.quests.epics>=1&&!state.quests.claimed.epic1,
-            claimed:!!state.quests.claimed.epic1,
-            claim:()=>{addTokens(2500);state.quests.claimed.epic1=true;saveState();}},
-        {id:'earn50',icon:'💰',title:'Крупный куш',desc:'50 000 000 ₽ за день',reward:'500 💎 + 5 000 000 ₽',
-            progress:Math.min(50000000,state.quests.earned),target:50000000,
-            canClaim:state.quests.earned>=50000000&&!state.quests.claimed.earn50,
-            claimed:!!state.quests.claimed.earn50,
-            claim:()=>{addRubles(5000000);addTokens(500);state.quests.claimed.earn50=true;saveState();}}
-    ];
-}
-function trackQuest(action,value){
-    ensureQuestsReset();
-    if(action==='spin')state.quests.spins+=value;
-    if(action==='epic')state.quests.epics+=value;
-    if(action==='earn')state.quests.earned+=value;
-    saveState();
-}
+function ensureQuestsReset(){const today=new Date().setHours(0,0,0,0);if(!state.quests||state.quests.date!==today){state.quests={date:today,spins:0,earned:0,epics:0,claimed:{}};saveState();}}
+function getQuests(){ensureQuestsReset();return[
+    {id:'spins10',icon:'🎲',title:'Прокрути удачу',desc:'10 прокруток',reward:'1 000 000 ₽',progress:Math.min(10,state.quests.spins),target:10,canClaim:state.quests.spins>=10&&!state.quests.claimed.spins10,claimed:!!state.quests.claimed.spins10,claim:()=>{addRubles(1000000);state.quests.claimed.spins10=true;saveState();}},
+    {id:'epic1',icon:'💎',title:'Редкая тачка',desc:'Epic или Legend',reward:'2 500 💎',progress:Math.min(1,state.quests.epics),target:1,canClaim:state.quests.epics>=1&&!state.quests.claimed.epic1,claimed:!!state.quests.claimed.epic1,claim:()=>{addTokens(2500);state.quests.claimed.epic1=true;saveState();}},
+    {id:'earn50',icon:'💰',title:'Крупный куш',desc:'50 000 000 ₽ за день',reward:'500 💎 + 5 000 000 ₽',progress:Math.min(50000000,state.quests.earned),target:50000000,canClaim:state.quests.earned>=50000000&&!state.quests.claimed.earn50,claimed:!!state.quests.claimed.earn50,claim:()=>{addRubles(5000000);addTokens(500);state.quests.claimed.earn50=true;saveState();}}
+];}
+function trackQuest(action,value){ensureQuestsReset();if(action==='spin')state.quests.spins+=value;if(action==='epic')state.quests.epics+=value;if(action==='earn')state.quests.earned+=value;saveState();}
 function renderQuests(){
-    const list=document.getElementById('questsList');
-    if(!list)return;
-    const quests=getQuests();
-    list.innerHTML='';
+    const list=document.getElementById('questsList');if(!list)return;
+    const quests=getQuests();list.innerHTML='';
     quests.forEach(q=>{
         const card=document.createElement('div');
         card.className='quest-card'+(q.claimed?' claimed':q.canClaim?' done':'');
@@ -1673,139 +1364,38 @@ function renderQuests(){
         if(q.canClaim)card.querySelector('.quest-claim-btn').onclick=()=>{q.claim();renderQuests();updateUI();playChing();};
         list.appendChild(card);
     });
-    const claimable=quests.filter(q=>q.canClaim).length;
-    const claimed=quests.filter(q=>q.claimed).length;
-    const badge=document.getElementById('questsBadge');
-    if(badge)badge.textContent=claimable>0?`🎁 ${claimable} готово`:`${claimed}/3`;
+    const claimable=quests.filter(q=>q.canClaim).length;const claimed=quests.filter(q=>q.claimed).length;
+    const badge=document.getElementById('questsBadge');if(badge)badge.textContent=claimable>0?`🎁 ${claimable} готово`:`${claimed}/3`;
 }
-function updateQuestsCountdown(){
-    const label=document.getElementById('questsResetLabel');
-    if(!label)return;
-    const now=new Date();
-    const tom=new Date(now);tom.setDate(tom.getDate()+1);tom.setHours(0,0,0,0);
-    const ms=tom-now;
-    const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000),s=Math.floor((ms%60000)/1000);
-    const pad=n=>String(n).padStart(2,'0');
-    label.textContent=`Обновятся через ${pad(h)}:${pad(m)}:${pad(s)}`;
-}
+function updateQuestsCountdown(){const label=document.getElementById('questsResetLabel');if(!label)return;const now=new Date();const tom=new Date(now);tom.setDate(tom.getDate()+1);tom.setHours(0,0,0,0);const ms=tom-now;const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000),s=Math.floor((ms%60000)/1000);const pad=n=>String(n).padStart(2,'0');label.textContent=`Обновятся через ${pad(h)}:${pad(m)}:${pad(s)}`;}
 
 // HELPERS
-function updateVibeUI(){
-    const pct=Math.min(100,state.vibe*10);
-    const f=document.getElementById('vibeFill');const t=document.getElementById('vibeText');
-    if(f)f.style.width=pct+'%';
-    if(t)t.textContent=pct+'%';
-    if(f)f.classList.toggle('full',pct>=100);
-}
-function svgFor(car){
-    const c=Object.values(CONFIG.cars).flat().find(x=>x.brand===car.brand&&x.name===car.name);
-    return(c&&c.svg)||car.svg||'';
-}
+function updateVibeUI(){const pct=Math.min(100,state.vibe*10);const f=document.getElementById('vibeFill');const t=document.getElementById('vibeText');if(f)f.style.width=pct+'%';if(t)t.textContent=pct+'%';if(f)f.classList.toggle('full',pct>=100);}
+function svgFor(car){const c=Object.values(CONFIG.cars).flat().find(x=>x.brand===car.brand&&x.name===car.name);return(c&&c.svg)||car.svg||'';}
 function popReveal(sel){const el=document.querySelector(sel);if(!el)return;el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');}
-function burst(rarity){
-    const pal={legend:['#fbbf24','#f59e0b','#fde68a','#fff'],epic:['#a855f7','#c084fc','#f472b6','#fff'],rare:['#10b981','#34d399','#fff']};
-    const cols=pal[rarity]||pal.rare;
-    const box=document.createElement('div');box.className='confetti';
-    for(let i=0;i<46;i++){
-        const c=document.createElement('i');
-        c.style.left=Math.random()*100+'%';
-        c.style.background=cols[Math.floor(Math.random()*cols.length)];
-        c.style.animationDuration=(1.6+Math.random()*1.6)+'s';
-        c.style.animationDelay=(Math.random()*0.4)+'s';
-        box.appendChild(c);
-    }
-    document.body.appendChild(box);
-    setTimeout(()=>box.remove(),3800);
-}
+function burst(rarity){const pal={legend:['#fbbf24','#f59e0b','#fde68a','#fff'],epic:['#a855f7','#c084fc','#f472b6','#fff'],rare:['#10b981','#34d399','#fff']};const cols=pal[rarity]||pal.rare;const box=document.createElement('div');box.className='confetti';for(let i=0;i<46;i++){const c=document.createElement('i');c.style.left=Math.random()*100+'%';c.style.background=cols[Math.floor(Math.random()*cols.length)];c.style.animationDuration=(1.6+Math.random()*1.6)+'s';c.style.animationDelay=(Math.random()*0.4)+'s';box.appendChild(c);}document.body.appendChild(box);setTimeout(()=>box.remove(),3800);}
 const numNow={};
-function setNum(id,val){
-    const el=document.getElementById(id);if(!el)return;
-    const from=(numNow[id]===undefined)?val:numNow[id];
-    numNow[id+'_t']=val;
-    if(from===val){numNow[id]=val;el.textContent=formatMoney(val);return;}
-    const t0=performance.now(),dur=450;
-    const step=t=>{
-        if(numNow[id+'_t']!==val)return;
-        const k=Math.min(1,(t-t0)/dur);
-        numNow[id]=Math.round(from+(val-from)*(1-Math.pow(1-k,3)));
-        el.textContent=formatMoney(numNow[id]);
-        if(k<1)requestAnimationFrame(step);
-        else{numNow[id]=val;el.textContent=formatMoney(val);}
-    };
-    requestAnimationFrame(step);
-}
+function setNum(id,val){const el=document.getElementById(id);if(!el)return;const from=(numNow[id]===undefined)?val:numNow[id];numNow[id+'_t']=val;if(from===val){numNow[id]=val;el.textContent=formatMoney(val);return;}const t0=performance.now(),dur=450;const step=t=>{if(numNow[id+'_t']!==val)return;const k=Math.min(1,(t-t0)/dur);numNow[id]=Math.round(from+(val-from)*(1-Math.pow(1-k,3)));el.textContent=formatMoney(numNow[id]);if(k<1)requestAnimationFrame(step);else{numNow[id]=val;el.textContent=formatMoney(val);}};requestAnimationFrame(step);}
 function updateUI(){
     setNum('uiBalanceRub',state.balanceRub);
     setNum('uiBalanceToken',state.balanceToken);
     document.getElementById('menuGarageCount').textContent=`${state.garageCars.length} | ${state.garagePlates.length}`;
-    checkStoryProgress();
-    updateAidBanner();
-    renderQuests();
-    updateVibeUI();
+    checkStoryProgress();updateAidBanner();renderQuests();updateVibeUI();
     if(document.getElementById('view-profile').classList.contains('active'))renderProfile();
 }
-function showModal(title,text,icon='🎉'){
-    document.getElementById('modalTitle').textContent=title;
-    document.getElementById('modalText').innerHTML=text;
-    document.getElementById('modalIcon').textContent=icon;
-    document.getElementById('modal').classList.add('active');
-}
+function showModal(title,text,icon='🎉'){document.getElementById('modalTitle').textContent=title;document.getElementById('modalText').innerHTML=text;document.getElementById('modalIcon').textContent=icon;document.getElementById('modal').classList.add('active');}
 function closeModal(){document.getElementById('modal').classList.remove('active');}
-function showRules(){
-    document.getElementById('rulesBtn').textContent=state.rulesSeen?'Понятно':'Играть';
-    document.getElementById('rulesOverlay').classList.add('active');
-}
-function closeRules(){
-    document.getElementById('rulesOverlay').classList.remove('active');
-    if(!state.rulesSeen){state.rulesSeen=true;saveState();}
-}
+function showRules(){document.getElementById('rulesBtn').textContent=state.rulesSeen?'Понятно':'Играть';document.getElementById('rulesOverlay').classList.add('active');}
+function closeRules(){document.getElementById('rulesOverlay').classList.remove('active');if(!state.rulesSeen){state.rulesSeen=true;saveState();}}
 const AID_AMOUNT=500000,AID_HOUR=3600000,AID_MAX=12;
 function fmtTime(ms){const t=Math.max(0,Math.ceil(ms/1000));const h=Math.floor(t/3600),m=Math.floor((t%3600)/60),s=t%60;const p=n=>String(n).padStart(2,'0');return(h?h+':':'')+p(m)+':'+p(s);}
-function updateAidBanner(){
-    const el=document.getElementById('aidBanner');
-    if(state.balanceRub>=CONFIG.costCarNormal){if(state.aidReadyAt){state.aidReadyAt=0;saveState();}el.style.display='none';return;}
-    if(!state.aidReadyAt){state.aidReadyAt=Date.now()+AID_HOUR;saveState();}
-    el.innerHTML=`⚠️ <b>Деньги на нуле!</b> Пока на счёте меньше ${formatMoney(CONFIG.costCarNormal)} ₽, каждый час выдаём <b>${formatMoney(AID_AMOUNT)} ₽</b>. Через <span class="aid-timer">${fmtTime(state.aidReadyAt-Date.now())}</span>`;
-    el.style.display='block';
-}
-function aidTick(){
-    if(state.balanceRub<CONFIG.costCarNormal&&state.aidReadyAt&&Date.now()>=state.aidReadyAt){
-        const n=Math.min(AID_MAX,1+Math.floor((Date.now()-state.aidReadyAt)/AID_HOUR));
-        const total=n*AID_AMOUNT;
-        state.balanceRub+=total;state.aidReadyAt=0;
-        saveState();updateUI();
-        showModal('Помощь',`Выдали <b>${formatMoney(total)} ₽</b>`,'🆘');
-        return;
-    }
-    updateAidBanner();
-}
-function exportSave(){
-    const code=btoa(unescape(encodeURIComponent(JSON.stringify(state))));
-    const done=()=>showModal('Скопировано','Сохрани код для переноса.','💾');
-    if(navigator.clipboard)navigator.clipboard.writeText(code).then(done,()=>prompt('Код:',code));
-    else prompt('Код:',code);
-}
-function importSave(){
-    const code=prompt('Вставь код сохранения:');
-    if(!code)return;
-    try{
-        const p=JSON.parse(decodeURIComponent(escape(atob(code.trim()))));
-        if(typeof p.balanceRub!=='number')throw 'bad';
-        if(!confirm('Заменить прогресс?'))return;
-        localStorage.setItem(STORAGE_KEY,JSON.stringify(p));
-        location.reload();
-    }catch(e){showModal('Ошибка','Код не подошёл.','❌');}
-}
+function updateAidBanner(){const el=document.getElementById('aidBanner');if(state.balanceRub>=CONFIG.costCarNormal){if(state.aidReadyAt){state.aidReadyAt=0;saveState();}el.style.display='none';return;}if(!state.aidReadyAt){state.aidReadyAt=Date.now()+AID_HOUR;saveState();}el.innerHTML=`⚠️ <b>Деньги на нуле!</b> Пока на счёте меньше ${formatMoney(CONFIG.costCarNormal)} ₽, каждый час выдаём <b>${formatMoney(AID_AMOUNT)} ₽</b>. Через <span class="aid-timer">${fmtTime(state.aidReadyAt-Date.now())}</span>`;el.style.display='block';}
+function aidTick(){if(state.balanceRub<CONFIG.costCarNormal&&state.aidReadyAt&&Date.now()>=state.aidReadyAt){const n=Math.min(AID_MAX,1+Math.floor((Date.now()-state.aidReadyAt)/AID_HOUR));const total=n*AID_AMOUNT;state.balanceRub+=total;state.aidReadyAt=0;saveState();updateUI();showModal('Помощь',`Выдали <b>${formatMoney(total)} ₽</b>`,'🆘');return;}updateAidBanner();}
+function exportSave(){const code=btoa(unescape(encodeURIComponent(JSON.stringify(state))));const done=()=>showModal('Скопировано','Сохрани код для переноса.','💾');if(navigator.clipboard)navigator.clipboard.writeText(code).then(done,()=>prompt('Код:',code));else prompt('Код:',code);}
+function importSave(){const code=prompt('Вставь код сохранения:');if(!code)return;try{const p=JSON.parse(decodeURIComponent(escape(atob(code.trim()))));if(typeof p.balanceRub!=='number')throw 'bad';if(!confirm('Заменить прогресс?'))return;localStorage.setItem(STORAGE_KEY,JSON.stringify(p));location.reload();}catch(e){showModal('Ошибка','Код не подошёл.','❌');}}
 function resetGame(){if(confirm('Сбросить прогресс?')){localStorage.removeItem(STORAGE_KEY);location.reload();}}
 function showDailyModal(){showModal('Бонус за вход','Вы получили <b>1 000 000 ₽</b> и <b>1 000 💎</b>!','⛽');}
-function checkDailyReward(){
-    const now=new Date().setHours(0,0,0,0);
-    if(state.lastDaily!==now){
-        state.lastDaily=now;addRubles(1000000);addTokens(1000);
-        if(!state.rulesSeen)return;
-        setTimeout(()=>{if(document.getElementById('view-menu').classList.contains('active'))showDailyModal();},500);
-    }
-}
+function checkDailyReward(){const now=new Date().setHours(0,0,0,0);if(state.lastDaily!==now){state.lastDaily=now;addRubles(1000000);addTokens(1000);if(!state.rulesSeen)return;setTimeout(()=>{if(document.getElementById('view-menu').classList.contains('active'))showDailyModal();},500);}}
 
 // INIT
 loadState();
@@ -1817,10 +1407,12 @@ document.getElementById('autosellCommonChk').checked=state.autosellCommon;
 document.getElementById('autosellRareChk').checked=state.autosellRare;
 document.querySelectorAll('.theme-btn').forEach(b=>b.classList.toggle('active',b.dataset.theme===state.bgTheme));
 document.querySelectorAll('.avatar-btn').forEach(b=>b.classList.toggle('active',b.dataset.avatar===state.avatar));
+initParticles();
+initRipple();
 updateUI();checkDailyReward();aidTick();
 setInterval(aidTick,1000);
 setInterval(updateQuestsCountdown,1000);
 if(!state.rulesSeen)showRules();
 </script>
 </body>
-                                                                                                  </html>
+                </html>
