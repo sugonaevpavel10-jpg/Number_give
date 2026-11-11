@@ -9,13 +9,14 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background-color:var(--bg-base,#05060a);color:var(--text);min-height:100vh;overflow-x:hidden;user-select:none;-webkit-user-select:none;transition:background-color 0.5s;}
 
-/* ЗАСТАВКА */
+/* ЗАСТАВКА (объединённая) */
 .splash{position:fixed;inset:0;z-index:9999;background:radial-gradient(circle at 50% 40%,#1a2545 0%,#05060a 75%);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.8s,transform 0.8s;overflow:hidden;}
 .splash.hide{opacity:0;transform:scale(1.2);pointer-events:none;}
 .splash-logo{font-size:52px;font-weight:900;letter-spacing:8px;background:linear-gradient(90deg,#60a5fa,#a78bfa,#f472b6,#fbbf24,#60a5fa);background-size:300% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:hue 2s linear infinite,logoIn 1.2s cubic-bezier(0.2,1.4,0.4,1);filter:drop-shadow(0 0 30px rgba(139,92,246,0.8));position:relative;z-index:2;}
 @keyframes logoIn{0%{opacity:0;transform:scale(0.3) rotate(-10deg);filter:blur(20px);}100%{opacity:1;transform:scale(1) rotate(0);filter:blur(0);}}
 .splash-sub{font-size:12px;color:#8892b0;letter-spacing:6px;margin-top:12px;text-transform:uppercase;animation:fadeInUp 1s ease 0.5s both;}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes hue{to{background-position:300% 0;}}
 .splash-bar{width:200px;height:3px;background:rgba(255,255,255,0.1);border-radius:2px;margin-top:40px;overflow:hidden;z-index:2;position:relative;}
 .splash-bar-fill{height:100%;width:0;background:linear-gradient(90deg,#60a5fa,#a78bfa,#f472b6);border-radius:2px;box-shadow:0 0 15px rgba(139,92,246,0.8);animation:splashBar 2s ease-in-out forwards;}
 @keyframes splashBar{to{width:100%;}}
@@ -256,7 +257,6 @@ body.theme-emerald{--bg-base:#051f14;--text:#ffffff;--text-muted:#6ee7b7;--panel
 @keyframes pop{0%{transform:scale(.55);opacity:0;}60%{transform:scale(1.08);opacity:1;}100%{transform:none;}}
 .hero{text-align:center;margin-bottom:6px;}
 .hero-title{font-size:34px;font-weight:900;letter-spacing:4px;background:linear-gradient(90deg,#60a5fa,#a78bfa,#f472b6,#fbbf24,#60a5fa);background-size:300% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:hue 6s linear infinite;}
-@keyframes hue{to{background-position:300% 0;}}
 .hero-plate{transform:scale(.85);animation:floaty 3.2s ease-in-out infinite;margin:4px 0 0;}
 @keyframes floaty{0%,100%{transform:scale(.85) translateY(0);}50%{transform:scale(.85) translateY(-6px);}}
 .hero-sub{font-size:11px;color:var(--text-muted);letter-spacing:3px;text-transform:uppercase;}
@@ -336,8 +336,8 @@ body.theme-emerald{--bg-base:#051f14;--text:#ffffff;--text-muted:#6ee7b7;--panel
 </head>
 <body class="theme-black">
 
-<!-- ЗАСТАВКА -->
-<div class="splash" id="splash">
+<!-- ЗАСТАВКА (объединённая, id из кода 1) -->
+<div class="splash" id="splashScreen">
     <div class="splash-logo">НОМЕРДАЙ</div>
     <div class="splash-sub">бизнес на колесах</div>
     <div class="splash-bar"><div class="splash-bar-fill"></div></div>
@@ -978,7 +978,14 @@ checkStreak();
 aidTick();
 setInterval(aidTick,1000);
 setInterval(()=>{updateQuestsCountdown();renderFortune();renderShop();},1000);
-setTimeout(()=>{document.getElementById('splash').classList.add('hide');},2500);
+
+/* --- СКРИПТ СКРЫТИЯ ЗАСТАВКИ (объединённый из двух кодов) --- */
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        const splash = document.getElementById('splashScreen') || document.getElementById('splash');
+        if (splash) splash.classList.add('hide');
+    }, 2500);
+});
 </script>
 </body>
-    </html>
+                                                                                                                                </html>
