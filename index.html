@@ -258,20 +258,23 @@
     .upg-select-item .price-mini { font-size: 10px; font-weight: 900; color: var(--rub); }
     .upg-select-plate-mini { font-size: 9px; font-weight: 800; padding: 2px 4px; background: #fbfbfb; color: #000; border-radius: 3px; border: 1px solid #111; margin-bottom: 4px; }
 
-    /* КОЛЕСО */
+    /* КОЛЕСО (плавное: вращение через rAF, отдельный GPU-слой) */
     .upg-wheel-wrapper { position: relative; width: 220px; height: 220px; margin: 20px auto 5px; }
     .upg-wheel-pointer { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 32px; color: #fff; z-index: 10; filter: drop-shadow(0 0 10px rgba(255,255,255,0.9)); line-height: 1; }
-    .upg-wheel-spin { width: 100%; height: 100%; border-radius: 50%; border: 4px solid #1e293b; box-shadow: 0 0 40px rgba(0,0,0,0.7), inset 0 0 25px rgba(0,0,0,0.4), 0 0 0 2px rgba(255,255,255,0.1); will-change: transform; }
+    .upg-wheel-pointer.tick { animation: pointer-tick 0.12s ease-out; }
+    @keyframes pointer-tick { 0% { transform: translateX(-50%) rotate(0deg); } 40% { transform: translateX(-50%) rotate(-14deg); } 100% { transform: translateX(-50%) rotate(0deg); } }
+    .upg-wheel-spin { width: 100%; height: 100%; border-radius: 50%; border: 4px solid #1e293b; box-shadow: 0 0 40px rgba(0,0,0,0.7), inset 0 0 25px rgba(0,0,0,0.4), 0 0 0 2px rgba(255,255,255,0.1); will-change: transform; transform: translateZ(0) rotate(0deg); backface-visibility: hidden; -webkit-backface-visibility: hidden; transform-origin: 50% 50%; }
     .upg-wheel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(145deg,#1e293b,#0f172a); border: 3px solid #334155; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 25px rgba(0,0,0,0.8); z-index: 5; }
     .upg-wheel-center span { font-size: 20px; font-weight: 900; color: #fff; text-shadow: 0 0 12px rgba(255,255,255,0.6); }
 
-    /* ===== БАТЛ ===== */
+    /* ===== БАТЛ (ЛОББИ) ===== */
     .battle-title { font-size: 26px; font-weight: 900; text-align: center; margin-bottom: 4px; background: linear-gradient(90deg,#ef4444,#f97316,#fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .battle-sub { font-size: 12px; color: var(--text-muted); text-align: center; margin-bottom: 20px; }
-    .battle-section-title { font-size: 12px; font-weight: 900; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin: 15px 0 8px 4px; display: flex; justify-content: space-between; align-items: center; }
-    .battle-online-badge { font-size: 10px; font-weight: 800; color: var(--rub); background: rgba(52,211,153,0.15); padding: 3px 8px; border-radius: 999px; border: 1px solid rgba(52,211,153,0.4); display: flex; align-items: center; gap: 5px; }
+    .battle-sub { font-size: 12px; color: var(--text-muted); text-align: center; margin-bottom: 20px; line-height: 1.5; }
+    .battle-section-title { font-size: 12px; font-weight: 900; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin: 15px 0 8px 4px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .battle-online-badge { font-size: 10px; font-weight: 800; color: var(--rub); background: rgba(52,211,153,0.15); padding: 3px 8px; border-radius: 999px; border: 1px solid rgba(52,211,153,0.4); display: flex; align-items: center; gap: 5px; text-transform: none; letter-spacing: 0; }
     .battle-online-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rub); box-shadow: 0 0 6px var(--rub); animation: blink 1.5s infinite; }
     @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .battle-refresh { background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: var(--text); font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 999px; cursor: pointer; text-transform: none; letter-spacing: 0; }
     .battle-my-cars { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 8px; scrollbar-width: none; }
     .battle-my-cars::-webkit-scrollbar { display: none; }
     .battle-car-item { flex: 0 0 110px; padding: 10px; border-radius: 16px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); cursor: pointer; text-align: center; }
@@ -283,27 +286,49 @@
     .battle-opponent-card { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 16px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); cursor: pointer; transition: all 0.2s; }
     .battle-opponent-card.selected { border-color: #ef4444; background: rgba(239,68,68,0.15); box-shadow: 0 0 15px rgba(239,68,68,0.3); }
     .battle-opponent-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(145deg,#1e293b,#0f172a); display: flex; align-items: center; justify-content: center; font-size: 22px; flex: none; border: 2px solid var(--border); }
-    .battle-opponent-info { flex: 1; }
+    .battle-opponent-info { flex: 1; min-width: 0; }
     .battle-opponent-name { font-size: 13px; font-weight: 800; }
     .battle-opponent-rating { font-size: 10px; color: var(--text-muted); font-weight: 700; }
+    .battle-opponent-wait { font-size: 10px; color: var(--rub); font-weight: 800; margin-top: 2px; }
     .battle-opponent-car { flex: 0 0 80px; text-align: center; }
     .battle-opponent-car svg { width: 100%; height: 30px; }
     .battle-opponent-price { font-size: 11px; font-weight: 900; color: var(--legend); }
-    .battle-arena-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 20px 0 25px; }
-    .battle-side { flex: 1; text-align: center; padding: 15px 8px; border-radius: 20px; background: var(--panel); border: 1px solid var(--border); }
+
+    .battle-bank { text-align: center; margin-top: 4px; }
+    .battle-bank-label { font-size: 11px; font-weight: 900; letter-spacing: 4px; color: var(--text-muted); }
+    .battle-bank-val { font-size: 34px; font-weight: 900; color: var(--legend); text-shadow: 0 0 22px rgba(251,191,36,.55); font-variant-numeric: tabular-nums; }
+    .battle-bank-val.counting { animation: bank-pulse .35s infinite alternate; }
+    @keyframes bank-pulse { from { transform: scale(1); } to { transform: scale(1.07); } }
+    .battle-timer { text-align: center; font-size: 46px; font-weight: 900; font-variant-numeric: tabular-nums; letter-spacing: 2px; margin: 2px 0 0; }
+    .battle-timer.low { color: #ef4444; text-shadow: 0 0 20px rgba(239,68,68,.7); animation: pulse-vs 1s infinite; }
+    .battle-arena-top { display: flex; align-items: stretch; justify-content: space-between; gap: 8px; margin: 14px 0 14px; }
+    .battle-side { flex: 1; text-align: center; padding: 12px 8px; border-radius: 20px; background: var(--panel); border: 1px solid var(--border); transition: all .3s; min-width: 0; }
     .battle-side.winner { border-color: var(--legend); box-shadow: 0 0 30px rgba(251,191,36,0.4); }
     .battle-side.loser { opacity: 0.4; filter: grayscale(0.8); }
-    .battle-side-name { font-size: 12px; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-    .battle-side-car { width: 100%; height: 70px; display: flex; align-items: center; justify-content: center; }
-    .battle-side-car svg { width: 110%; height: auto; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6)); }
-    .battle-side-price { font-size: 14px; font-weight: 900; color: var(--rub); margin-top: 8px; }
-    .battle-vs { font-size: 22px; font-weight: 900; font-style: italic; color: #ef4444; text-shadow: 0 0 15px rgba(239,68,68,0.6); animation: pulse-vs 1.5s infinite; }
+    .battle-side-name { font-size: 12px; font-weight: 800; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .battle-side-car { width: 100%; height: 56px; display: flex; align-items: center; justify-content: center; }
+    .battle-side-car svg { width: 100%; height: 100%; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6)); }
+    .battle-side-price { font-size: 12px; font-weight: 900; color: var(--legend); margin-top: 4px; }
+    .battle-side-score-label { font-size: 9px; font-weight: 900; color: var(--text-muted); letter-spacing: 1px; margin-top: 8px; text-transform: uppercase; }
+    .battle-side-score { font-size: 17px; font-weight: 900; color: var(--rub); font-variant-numeric: tabular-nums; }
+    .battle-vs { align-self: center; font-size: 22px; font-weight: 900; font-style: italic; color: #ef4444; text-shadow: 0 0 15px rgba(239,68,68,0.6); animation: pulse-vs 1.5s infinite; }
     @keyframes pulse-vs { 0%,100% { transform: scale(1); } 50% { transform: scale(1.2); } }
-    .battle-progress-wrapper { position: relative; height: 50px; background: rgba(0,0,0,0.5); border-radius: 25px; border: 1px solid var(--border); overflow: hidden; margin: 15px 0; }
-    .battle-progress-fill { position: absolute; top: 0; bottom: 0; left: 0; background: linear-gradient(90deg,rgba(52,211,153,0.5),rgba(52,211,153,0.2)); border-right: 3px solid var(--rub); z-index: 1; transition: width 0.3s; }
-    .battle-progress-marker { position: absolute; top: 0; bottom: 0; width: 4px; background: #fff; box-shadow: 0 0 10px #fff; z-index: 3; left: 0%; border-radius: 2px; }
-    .battle-progress-marker.rolling { transition: left 3.5s cubic-bezier(0.15,0.85,0.35,1); }
-    .battle-status { text-align: center; font-size: 15px; font-weight: 900; min-height: 25px; margin-bottom: 10px; }
+    .battle-tug { position: relative; height: 16px; background: rgba(239,68,68,0.55); border-radius: 8px; overflow: hidden; border: 1px solid var(--border); margin-bottom: 8px; }
+    .battle-tug-fill { position: absolute; top: 0; bottom: 0; left: 0; width: 50%; background: linear-gradient(90deg,#10b981,#34d399); transition: width .45s ease; }
+    .battle-tug-mid { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: rgba(255,255,255,.5); }
+    .battle-status { text-align: center; font-size: 15px; font-weight: 900; min-height: 25px; margin-bottom: 8px; }
+    .battle-status.big { font-size: 46px; min-height: 60px; animation: pop .5s; }
+    .battle-last-row { display: flex; gap: 10px; margin-bottom: 4px; }
+    .battle-last { flex: 1; min-height: 98px; background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 8px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-width: 0; overflow: hidden; }
+    .battle-last .bl-title { font-size: 9px; font-weight: 900; letter-spacing: 1px; color: var(--text-muted); text-transform: uppercase; }
+    .battle-last .bl-name { font-size: 11px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+    .battle-last .bl-val { font-size: 12px; font-weight: 900; color: var(--rub); }
+    .battle-last svg { width: 80px; height: 40px; }
+    .battle-last.rolling { filter: blur(2px); opacity: .7; }
+    .battle-roll-btn { flex-direction: column; gap: 2px; padding: 14px 8px !important; }
+    .battle-roll-btn small { font-size: 9px; opacity: .8; font-weight: 800; letter-spacing: .5px; }
+    .btn-roll-car { background: linear-gradient(135deg,#4f8cff,#2f5bea); color: #fff; box-shadow: 0 6px 20px rgba(59,130,246,.45); }
+    .btn-roll-plt { background: linear-gradient(135deg,#22d3ee,#0ea5e9); color: #fff; box-shadow: 0 6px 20px rgba(14,165,233,.45); }
 </style>
 </head>
 <body class="theme-default">
@@ -343,7 +368,7 @@
             <div class="menu-card" onclick="navigate('cars')"><div class="icon-box">🚗</div><div class="menu-label">Автосалон</div><div class="menu-desc">Крутить тачки</div></div>
             <div class="menu-card" onclick="navigate('plates')"><div class="icon-box">🔢</div><div class="menu-label">Госзнаки</div><div class="menu-desc">Крутить номера</div></div>
             <div class="menu-card" onclick="navigate('garage')"><div class="icon-box">🏎️</div><div class="menu-label">Гараж</div><div class="menu-desc" id="menuGarageCount">0 | 0</div></div>
-            <div class="menu-card" onclick="navigate('battle')"><div class="icon-box">⚔️</div><div class="menu-label">Батл 1x1</div><div class="menu-desc">Онлайн-дуэли</div></div>
+            <div class="menu-card" onclick="navigate('battle')"><div class="icon-box">⚔️</div><div class="menu-label">Батл 1x1</div><div class="menu-desc">Лобби · 3 минуты</div></div>
             <div class="menu-card" onclick="navigate('upgrader')"><div class="icon-box">⬆️</div><div class="menu-label">Апгрейдер</div><div class="menu-desc">Улучшить тачку</div></div>
             <div class="menu-card" id="nav-quests" onclick="navigate('quests')"><div class="icon-box">📋</div><div class="menu-label">Задания</div><div class="menu-desc" id="questsBadge">0/3</div></div>
             <div class="menu-card locked" id="nav-upgrades" onclick="checkLock('upgrades', 5000000)"><div class="icon-box">🛠️</div><div class="menu-label">Тюнинг</div><div class="menu-desc" id="menuUpgradeDesc">5 000 000 ₽</div></div>
@@ -450,38 +475,51 @@
         <div class="list-container" id="garageList"></div>
     </div>
 
-    <!-- BATTLE -->
+    <!-- BATTLE (LOBBY) -->
     <div class="view" id="view-battle">
         <div id="battleSetup">
             <div class="battle-title">⚔️ Батл 1x1</div>
-            <div class="battle-sub">Победи и забери тачку соперника!</div>
-            <div class="battle-section-title">Твоя ставка</div>
+            <div class="battle-sub">Зайди в лобби к игроку. 3 минуты крутите машины и номера — у кого сумма выбитого дороже, тот забирает ставку соперника!</div>
+            <div class="battle-section-title">Твоя ставка (машина)</div>
             <div class="battle-my-cars" id="battleMyCars"></div>
-            <div class="battle-section-title">Соперники <div class="battle-online-badge"><div class="battle-online-dot"></div><span id="battleOnlineCount">1248</span> онлайн</div></div>
+            <div class="battle-section-title"><span>Лобби игроков</span><span style="display:flex;gap:6px;align-items:center;"><button class="battle-refresh" onclick="refreshLobbies()">🔄</button><span class="battle-online-badge"><span class="battle-online-dot"></span><span id="battleOnlineCount">1248</span> онлайн</span></span></div>
             <div class="battle-opponents" id="battleOpponents"></div>
-            <button class="btn btn-primary" id="btnStartBattle" onclick="startBattle()" disabled style="margin-top: 20px;">⚔️ В БОЙ!</button>
+            <button class="btn btn-primary" id="btnStartBattle" onclick="startBattle()" disabled style="margin-top: 20px; width:100%;">🚪 ВОЙТИ В ЛОББИ</button>
         </div>
         <div id="battleArena" style="display:none;">
+            <div class="battle-bank">
+                <div class="battle-bank-label">БАНК</div>
+                <div class="battle-bank-val" id="battleBankWrap"><span id="battleBankVal">0</span> ₽</div>
+            </div>
+            <div class="battle-timer" id="battleTimer">03:00</div>
             <div class="battle-arena-top">
                 <div class="battle-side" id="arenaMySide">
                     <div class="battle-side-name">Ты</div>
                     <div class="battle-side-car" id="arenaMyCar"></div>
                     <div class="battle-side-price" id="arenaMyPrice">0 ₽</div>
+                    <div class="battle-side-score-label">Выбито</div>
+                    <div class="battle-side-score"><span id="bScoreMy">0</span> ₽</div>
                 </div>
                 <div class="battle-vs">VS</div>
                 <div class="battle-side" id="arenaEnemySide">
                     <div class="battle-side-name" id="arenaEnemyName">Соперник</div>
                     <div class="battle-side-car" id="arenaEnemyCar"></div>
-                    <div class="battle-side-price" id="arenaEnemyPrice" style="color: var(--legend);">0 ₽</div>
+                    <div class="battle-side-price" id="arenaEnemyPrice">0 ₽</div>
+                    <div class="battle-side-score-label">Выбито</div>
+                    <div class="battle-side-score"><span id="bScoreEnemy">0</span> ₽</div>
                 </div>
             </div>
-            <div class="battle-progress-wrapper">
-                <div class="battle-progress-fill" id="battleProgressFill"></div>
-                <div class="battle-progress-marker" id="battleMarker"></div>
+            <div class="battle-tug"><div class="battle-tug-fill" id="battleTug"></div><div class="battle-tug-mid"></div></div>
+            <div class="battle-status" id="battleStatus">Входим в лобби…</div>
+            <div class="battle-last-row">
+                <div class="battle-last" id="battleLastMy"><div class="bl-title">Твоя крутка</div><div class="bl-name">—</div></div>
+                <div class="battle-last" id="battleLastEnemy"><div class="bl-title">Соперник</div><div class="bl-name">—</div></div>
             </div>
-            <div class="battle-status" id="battleStatus">Готов к бою?</div>
-            <button class="btn btn-primary" id="btnDoBattle" onclick="doBattleRoll()" style="padding: 18px; font-size: 16px;">🎲 КРУТИТЬ!</button>
-            <button class="btn btn-danger" onclick="cancelBattle()" style="margin-top: 8px;">Отмена</button>
+            <div class="action-buttons">
+                <button class="btn battle-roll-btn btn-roll-car" id="btnBattleCar" onclick="battleMyRoll('car')" disabled>🚗 Машина<small>бесплатно</small></button>
+                <button class="btn battle-roll-btn btn-roll-plt" id="btnBattlePlate" onclick="battleMyRoll('plate')" disabled>🔢 Номер<small>бесплатно</small></button>
+            </div>
+            <button class="btn btn-danger" onclick="cancelBattle()" style="margin-top: 10px; width:100%;" id="btnLeaveBattle">Выйти из лобби</button>
         </div>
     </div>
 
@@ -524,7 +562,7 @@
                     <button class="upg-chance-btn" onclick="setCarUpgradeChance(75)">75%</button>
                 </div>
                 <div class="upg-wheel-wrapper">
-                    <div class="upg-wheel-pointer">▼</div>
+                    <div class="upg-wheel-pointer" id="carWheelPointer">▼</div>
                     <div class="upg-wheel-spin" id="carWheelSpin"></div>
                     <div class="upg-wheel-center"><span id="carWheelChance">50%</span></div>
                 </div>
@@ -564,7 +602,7 @@
                     <button class="upg-chance-btn" onclick="setPlateUpgradeChance(75)">75%</button>
                 </div>
                 <div class="upg-wheel-wrapper">
-                    <div class="upg-wheel-pointer">▼</div>
+                    <div class="upg-wheel-pointer" id="plateWheelPointer">▼</div>
                     <div class="upg-wheel-spin" id="plateWheelSpin"></div>
                     <div class="upg-wheel-center"><span id="plateWheelChance">50%</span></div>
                 </div>
@@ -669,7 +707,7 @@
         <div class="rules-title">📖 Правила</div>
         <div class="rules-sub">Стань королём дорог</div>
         <div class="rule-item"><div class="rule-ico">💰</div><div><div class="rule-h">Старт</div><div class="rule-p">У тебя <b>5 000 000 ₽</b> и <b>10 000 💎</b>. Каждый день бонус: <b>1 000 000 ₽</b> и <b>1 000 💎</b>.</div></div></div>
-        <div class="rule-item"><div class="rule-ico">⚔️</div><div><div class="rule-h">Батл 1x1</div><div class="rule-p">Сразись с игроком. Победитель забирает машину проигравшего. Шанс победы зависит от цен ваших ставок.</div></div></div>
+        <div class="rule-item"><div class="rule-ico">⚔️</div><div><div class="rule-h">Батл 1x1 (лобби)</div><div class="rule-p">Поставь машину и зайди в лобби к игроку. <b>3 минуты</b> вы оба крутите машины и номера (бесплатно). У кого сумма выбитого <b>дороже</b> — тот забирает ставку соперника. 1 💎 в батле = 1 000 ₽. Выйдешь посреди боя — ставка сгорит.</div></div></div>
         <div class="rule-item"><div class="rule-ico">⬆️</div><div><div class="rule-h">Апгрейдер</div><div class="rule-p">Заложи машину или номер, выбери шанс (10/25/50/75%). Колесо крутится — попадёт в зелёное = победа.</div></div></div>
         <div class="rule-item"><div class="rule-ico">✨</div><div><div class="rule-h">Перерождение</div><div class="rule-p">Первое — за <b>100 млн ₽</b>. Каждое следующее требует на <b>100 млн больше</b>.</div></div></div>
         <div class="rule-item"><div class="rule-ico">⚡</div><div><div class="rule-h">Шкала Вайба</div><div class="rule-p">Заполни на 100% — следующая машина гарантированно <b>Epic или Legend</b>.</div></div></div>
@@ -752,6 +790,9 @@ const STORY_LEVELS = [
 const BOT_NAMES = ['Neo', 'DarkRider', 'Turbo', 'Макс', 'King77', 'Shadow', 'Vitalya', 'Stylez', 'Дима', 'Ghost', 'XS1', 'Boss', 'Кекс', 'Frost'];
 const BOT_AVATARS = ['🐺','🕶️','👽','🐉','🎭','💀','🦁','🐯','🦅','🧙','🎩','🥷'];
 
+const BATTLE_TIME = 180000;   // 3 минуты
+const BATTLE_GEM_RATE = 1000; // 1 💎 = 1000 ₽ при подсчёте очков батла
+
 let state = {
     balanceRub: 5000000, balanceToken: 10000,
     currentCar: null, currentPlate: null,
@@ -767,8 +808,11 @@ let state = {
     upgraderTab: 'cars',
     carUpgIdx: -1, carUpgChance: 50, carUpgRolling: false,
     plateUpgIdx: -1, plateUpgChance: 50, plateUpgRolling: false,
-    battleMyIdx: -1, battleOppIdx: -1, battleRolling: false, battleOpponents: []
+    battleMyIdx: -1, battleOppIdx: -1, battleOpponents: [], battleEscrow: null
 };
+
+// Рантайм батла (не сохраняется)
+const B = { active: false, phase: 'idle', myCar: null, opp: null, my: 0, enemy: 0, endAt: 0, timerId: null, botId: null, introIds: [], busy: false };
 
 let carWheelRotation = 0, plateWheelRotation = 0;
 let audioCtx;
@@ -785,18 +829,6 @@ function playTone(freq, type, dur, vol = 0.05) {
     } catch(e) {}
 }
 function playChing() { if (!state.soundOn) return; playTone(880,'sine',0.15,0.08); setTimeout(()=>playTone(1320,'sine',0.2,0.06),60); }
-function playSpinTicks(duration) {
-    let elapsed = 0;
-    const tick = () => {
-        if (elapsed >= duration - 500) return;
-        playTone(700 + Math.random() * 300, 'square', 0.02, 0.015);
-        const progress = elapsed / duration;
-        const delay = 30 + Math.pow(progress, 3) * 600;
-        elapsed += delay;
-        if (elapsed < duration - 500) setTimeout(tick, delay);
-    };
-    tick();
-}
 function toggleSound() { state.soundOn = !state.soundOn; document.getElementById('soundBtn').textContent = state.soundOn ? '🔊' : '🔇'; document.getElementById('soundBtn').classList.toggle('off', !state.soundOn); saveState(); }
 function toggleAutosell(r) { if (r === 'common') { state.autosellCommon = !state.autosellCommon; document.getElementById('autosellCommonLabel').classList.toggle('on', state.autosellCommon); } else { state.autosellRare = !state.autosellRare; document.getElementById('autosellRareLabel').classList.toggle('on', state.autosellRare); } saveState(); }
 function setGarageSort(m) { state.garageSort = m; ['default','price','rarity'].forEach(x => { const el = document.getElementById('sort' + x.charAt(0).toUpperCase() + x.slice(1)); if (el) el.classList.toggle('active', x === m); }); renderGarage(); }
@@ -824,7 +856,6 @@ function loadState() {
     } catch (e) {}
     state.isSpinningCar = false; state.isSpinningPlate = false;
     state.carUpgRolling = false; state.plateUpgRolling = false;
-    state.battleRolling = false;
     applyTheme(state.bgTheme || 'default');
     applyAvatar(state.avatar || '👑');
 }
@@ -834,7 +865,7 @@ function applyTheme(t) { document.body.className = document.body.className.repla
 function setAvatar(e) { state.avatar = e; applyAvatar(e); saveState(); document.querySelectorAll('.avatar-btn').forEach(b => b.classList.toggle('active', b.dataset.avatar === e)); }
 function applyAvatar(e) { const el = document.getElementById('profileAvatar'); if (el) el.textContent = e; }
 
-function formatMoney(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
+function formatMoney(n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
 
 function getPrestigeRequirement() { return 100000000 + state.prestigeLevel * 100000000; }
 
@@ -865,6 +896,8 @@ function addTokens(a) { state.balanceToken += a; saveState(); updateUI(); }
 function navigate(id) {
     if (id === 'upgrades' && state.totalEarnedStory < 5000000) return checkLock('upgrades', 5000000);
     if (id === 'cases' && state.totalEarnedStory < 20000000) return checkLock('cases', 20000000);
+    // Выход из активного батла
+    if (B.active && id !== 'battle') { if (!cancelBattle(true)) return; }
     if (state.isSpinningCar) { state.isSpinningCar = false; document.getElementById('genCarBox').classList.remove('spinning'); }
     if (state.isSpinningPlate) { state.isSpinningPlate = false; document.getElementById('genPlateBox').classList.remove('spinning'); }
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -893,7 +926,7 @@ function doPrestige() {
     state.balanceRub = CONFIG.startBalanceRub; state.balanceToken = CONFIG.startBalanceToken;
     state.garageCars = []; state.garagePlates = []; state.upgradeLevel = 0;
     state.currentCar = null; state.currentPlate = null; state.totalEarnedStory = 0;
-    state.carUpgIdx = -1; state.plateUpgIdx = -1;
+    state.carUpgIdx = -1; state.plateUpgIdx = -1; state.battleMyIdx = -1;
     saveState(); updateUI(); renderProfile(); resetCarUI(); resetPlateUI();
     showModal('Перерождение!', `Уровень: <b>${state.prestigeLevel}</b><br>Бонус: <b>+${state.prestigeLevel * 10}%</b><br><br>Следующий: <b>${formatMoney(getPrestigeRequirement())} ₽</b>`, '✨');
     playTone(1200, 'sine', 0.6);
@@ -949,11 +982,12 @@ function rollCarX10() {
     updateUI();
 }
 
-function generateCarItem(boosted, forceHigh = false) {
+// noMult = true → «чистый» ролл без бонусов прокачки (для честных батлов)
+function generateCarItem(boosted, forceHigh = false, noMult = false) {
     let rnd = Math.random(), rarity = 'common';
     let epicChance = 0.05, legendChance = 0.01, rareChance = 0.20;
     if (boosted) { epicChance = 0.15; legendChance = 0.03; rareChance = 0.35; }
-    const pb = state.prestigeLevel * 0.05;
+    const pb = noMult ? 0 : state.prestigeLevel * 0.05;
     epicChance += pb; legendChance += pb;
     if (epicChance + legendChance > 0.80) { legendChance = 0.80 - epicChance; if (legendChance < 0.05) { legendChance = 0.05; epicChance = 0.75; } }
     if (rnd < legendChance) rarity = 'legend';
@@ -961,7 +995,12 @@ function generateCarItem(boosted, forceHigh = false) {
     else if (rnd < legendChance + epicChance + rareChance) rarity = 'rare';
     if (forceHigh && (rarity === 'common' || rarity === 'rare')) rarity = Math.random() < 0.20 ? 'legend' : 'epic';
     const pool = CONFIG.cars[rarity];
-    let sel, tries = 0;
+    let sel;
+    if (noMult) {
+        sel = pool[Math.floor(Math.random() * pool.length)];
+        return { ...sel, rarity };
+    }
+    let tries = 0;
     do { sel = pool[Math.floor(Math.random() * pool.length)]; tries++; } while (state.recentCars.includes(sel.name) && tries < 15);
     state.recentCars.push(sel.name); if (state.recentCars.length > 3) state.recentCars.shift();
     const car = { ...sel, rarity };
@@ -1093,7 +1132,7 @@ function rollPlate(boosted) {
     }, 100);
 }
 
-function generatePlateItem(boosted) {
+function generatePlateItem(boosted, noMult = false) {
     const totalW = CONFIG.regions.reduce((s, r) => s + r.weight, 0);
     let r = Math.random() * totalW, region = CONFIG.regions[0];
     for (const reg of CONFIG.regions) { if (r < reg.weight) { region = reg; break; } r -= reg.weight; }
@@ -1111,7 +1150,7 @@ function generatePlateItem(boosted) {
     else { const rn = Math.floor(Math.random() * 999) + 1; num = rn.toString().padStart(3, '0'); if (rn % 100 === 0) { base += 300; rarity = 'rare'; } else if (rn % 10 === 0) base += 100; }
     if (rarity === 'epic' && isSpecN) { rarity = 'legend'; base += 5000; mult *= 5; }
     if (boosted && rarity === 'common') { rarity = 'rare'; base += 200; }
-    const um = 1 + state.upgradeLevel * 0.10, pm = 1 + state.prestigeLevel * 0.25;
+    const um = noMult ? 1 : 1 + state.upgradeLevel * 0.10, pm = noMult ? 1 : 1 + state.prestigeLevel * 0.25;
     return { l1, l2, num, region: region.code, price: Math.floor(base * mult * um * pm), rarity };
 }
 
@@ -1175,680 +1214,4 @@ function renderGarage() {
         label = `Номера (${state.garagePlates.length}/${CONFIG.garageLimit})`;
     }
     document.getElementById('garageCapacityLabel').textContent = label;
-    if (items.length === 0) { list.innerHTML = '<div class="empty-state">Пусто. Крутите удачу!</div>'; return; }
-    items.forEach(item => {
-        const div = document.createElement('div'); div.className = 'list-item';
-        const ri = state.activeGarageTab === 'cars' ? state.garageCars.indexOf(item) : state.garagePlates.indexOf(item);
-        if (state.activeGarageTab === 'cars') {
-            div.innerHTML = `<div style="display:flex;align-items:center;"><div class="list-svg">${svgFor(item)}</div><div><div class="list-brand">${item.brand}</div><div class="list-title">${item.name}</div></div></div><div style="text-align:right;"><div class="list-price rub">${formatMoney(item.price)} ₽</div><button class="sell-btn" onclick="sellFromGarage('cars',${ri})">Продать</button></div>`;
-        } else {
-            div.innerHTML = `<div style="display:flex;align-items:center;"><div style="font-size:24px;margin-right:10px;">🔢</div><div><div class="list-title">${item.l1} ${item.num} ${item.l2}</div><div class="list-brand">${item.region} рег.</div></div></div><div style="text-align:right;"><div class="list-price token">${formatMoney(item.price)} 💎</div><button class="sell-btn" onclick="sellFromGarage('plates',${ri})">Продать</button></div>`;
-        }
-        list.appendChild(div);
-    });
-}
-
-function sellFromGarage(type, idx) {
-    const arr = type === 'cars' ? state.garageCars : state.garagePlates;
-    if (idx < 0 || idx >= arr.length) return;
-    const item = arr[idx];
-    if (type === 'cars') addRubles(item.price); else addTokens(item.price);
-    arr.splice(idx, 1); saveState(); renderGarage(); playChing();
-}
-
-function sellAllActiveGarage() {
-    const arr = state.activeGarageTab === 'cars' ? state.garageCars : state.garagePlates;
-    if (arr.length === 0) return;
-    const total = arr.reduce((s, p) => s + p.price, 0);
-    if (state.activeGarageTab === 'cars') { addRubles(total); state.garageCars = []; }
-    else { addTokens(total); state.garagePlates = []; }
-    saveState(); renderGarage(); playChing();
-    showModal('Продано', `Вы получили <b>${formatMoney(total)}</b>`, '💰');
-}
-
-function createCustomPlate() {
-    if (state.balanceToken < CONFIG.costCustomPlate) return showModal('Мало жетонов', `Нужно ${formatMoney(CONFIG.costCustomPlate)} 💎.`, '❌');
-    let input = prompt('Введи номер (например: О 777 ОО):');
-    if (!input) return;
-    input = input.trim().toUpperCase().replace(/[^А-ЯA-Z0-9 ]/g, '');
-    const parts = input.split(/\s+/);
-    if (parts.length !== 3 || parts[1].length !== 3 || isNaN(parts[1])) return showModal('Ошибка', 'Формат: [Буква] [3 цифры] [2 буквы]', '⚠️');
-    state.balanceToken -= CONFIG.costCustomPlate;
-    state.garagePlates.push({ l1: parts[0], l2: parts[2], num: parts[1], region: '77', rarity: 'epic', price: 25000 });
-    saveState(); updateUI(); renderGarage();
-    showModal('Готово!', `Номер <b>${parts[0]} ${parts[1]} ${parts[2]}</b> в гараже!`, '✨');
-}
-
-function openCase() {
-    if (state.balanceRub < CONFIG.costCase) return showModal('Ошибка', 'Аукцион 20 млн ₽!', '❌');
-    state.balanceRub -= CONFIG.costCase; state.stats.spent += CONFIG.costCase;
-    const r = Math.random() < 0.2 ? 'legend' : 'epic';
-    const pool = CONFIG.cars[r];
-    const car = { ...pool[Math.floor(Math.random() * pool.length)], rarity: r };
-    const m = (1 + state.upgradeLevel * 0.1) * (1 + state.prestigeLevel * 0.25);
-    car.price = Math.floor(car.price * m);
-    const combo = CONFIG.specialLetters[Math.floor(Math.random() * CONFIG.specialLetters.length)];
-    const num = CONFIG.specialNumbers[Math.floor(Math.random() * CONFIG.specialNumbers.length)];
-    const plate = { l1: combo[0], l2: combo.slice(1), num, region: '77', rarity: 'epic', price: 15000 };
-    plate.price = Math.floor(plate.price * m);
-    state.garageCars.push(car); state.garagePlates.push(plate);
-    saveState(); updateUI();
-    showModal('Аукцион выигран!', `🚗 <b>${car.brand} ${car.name}</b><br>🔢 <b>${plate.l1} ${plate.num} ${plate.l2}</b>`, '💎');
-}
-
-function renderCatalog() {
-    const box = document.getElementById('catalogList'); box.innerHTML = '';
-    const names = { common: 'Common', rare: 'Rare', epic: 'Epic', legend: 'Legend' };
-    Object.entries(CONFIG.cars).forEach(([rar, arr]) => {
-        const h = document.createElement('div'); h.className = 'bg-r-' + rar;
-        h.style.cssText = 'display:inline-block;font-size:12px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:999px;margin:14px 0 10px;';
-        h.textContent = `${names[rar]} · ${arr.length}`; box.appendChild(h);
-        const g = document.createElement('div'); g.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:10px;';
-        arr.forEach(car => {
-            const d = document.createElement('div');
-            d.style.cssText = 'background:linear-gradient(160deg,rgba(255,255,255,.065),rgba(255,255,255,.015));border:1px solid var(--border);border-radius:18px;padding:10px;';
-            d.innerHTML = `<div style="height:78px;border-radius:12px;background:linear-gradient(180deg,#131830,#0a0c14);display:flex;align-items:center;justify-content:center;margin-bottom:6px;padding:4px;">${svgFor(car)}</div><div class="list-brand">${car.brand}</div><div style="font-size:14px;font-weight:800;">${car.name}</div><div style="font-size:12px;font-weight:800;color:var(--rub);">${formatMoney(car.price)} ₽</div>`;
-            g.appendChild(d);
-        });
-        box.appendChild(g);
-    });
-}
-
-function renderUpgrades() {
-    const cost = 10000000 + state.upgradeLevel * 15000000;
-    document.getElementById('upgradeLevelDisplay').textContent = `Ур. ${state.upgradeLevel}`;
-    const btn = document.getElementById('btnBuyUpgrade');
-    btn.textContent = `Прокачать за ${formatMoney(cost)} ₽`;
-    btn.disabled = state.balanceRub < cost;
-}
-function buyUpgrade() { const c = 10000000 + state.upgradeLevel * 15000000; if (state.balanceRub >= c) { state.balanceRub -= c; state.stats.spent += c; state.upgradeLevel++; saveState(); renderUpgrades(); updateUI(); playTone(1000, 'sine', 0.3); } }
-
-function renderProfile() {
-    document.getElementById('profileRankTitle').textContent = document.getElementById('menuRank').textContent;
-    document.getElementById('profileTotalEarned').textContent = formatMoney(state.totalEarnedStory);
-    document.getElementById('profileBalanceRub').textContent = formatMoney(state.balanceRub) + ' ₽';
-    document.getElementById('profileBalanceToken').textContent = formatMoney(state.balanceToken) + ' 💎';
-    document.getElementById('profileSpent').textContent = formatMoney(state.stats.spent || 0) + ' ₽';
-    const brands = state.stats.carSales || {};
-    let fav = '—', fc = 0;
-    Object.entries(brands).forEach(([b, c]) => { if (c > fc) { fc = c; fav = b; } });
-    document.getElementById('profileFavBrand').textContent = fav !== '—' ? `${fav} (${fc})` : '—';
-    document.getElementById('profileCars').textContent = state.garageCars.length;
-    document.getElementById('profilePlates').textContent = state.garagePlates.length;
-    document.getElementById('profileBattleWins').textContent = state.stats.battleWins || 0;
-    document.getElementById('profileBonus').textContent = `+${state.upgradeLevel * 10}%`;
-    document.getElementById('profilePrestige').textContent = `${state.prestigeLevel} (Шанс +${state.prestigeLevel * 10}%)`;
-    checkStoryProgress();
-}
-
-// ============ UPGRADER CARS ============
-function switchUpgraderTab(t) {
-    state.upgraderTab = t;
-    document.getElementById('upgTabCars').classList.toggle('active', t === 'cars');
-    document.getElementById('upgTabPlates').classList.toggle('active', t === 'plates');
-    document.getElementById('upgCarsPanel').style.display = t === 'cars' ? 'flex' : 'none';
-    document.getElementById('upgPlatesPanel').style.display = t === 'plates' ? 'flex' : 'none';
-    renderUpgrader();
-}
-
-function renderUpgrader() {
-    if (state.upgraderTab === 'cars') renderCarUpgrader();
-    else renderPlateUpgrader();
-}
-
-function renderCarUpgrader() {
-    const list = document.getElementById('upgCarList');
-    if (state.garageCars.length === 0) {
-        list.innerHTML = '<div style="color:var(--text-muted);font-size:12px;text-align:center;padding:10px;width:100%;">Гараж пуст</div>';
-        document.getElementById('btnDoCarUpgrade').disabled = true;
-        return;
-    }
-    if (state.carUpgIdx === -1 || state.carUpgIdx >= state.garageCars.length) state.carUpgIdx = 0;
-    list.innerHTML = '';
-    state.garageCars.forEach((car, idx) => {
-        const d = document.createElement('div');
-        d.className = 'upg-select-item' + (idx === state.carUpgIdx ? ' selected' : '');
-        d.onclick = () => { state.carUpgIdx = idx; renderCarUpgrader(); };
-        d.innerHTML = `${svgFor(car)}<div class="name">${car.name}</div><div class="price-mini">${formatMoney(car.price)} ₽</div>`;
-        list.appendChild(d);
-    });
-    const stake = state.garageCars[state.carUpgIdx];
-    document.getElementById('upgCarStakeSvg').innerHTML = svgFor(stake);
-    document.getElementById('upgCarStakePrice').textContent = formatMoney(stake.price) + ' ₽';
-    const greenDeg = state.carUpgChance * 3.6;
-    const halfGreen = greenDeg / 2;
-    const wheel = document.getElementById('carWheelSpin');
-    wheel.style.background = `conic-gradient(from ${-halfGreen}deg, #10b981 0deg ${greenDeg}deg, #ef4444 ${greenDeg}deg 360deg)`;
-    document.getElementById('carWheelChance').textContent = state.carUpgChance + '%';
-    document.querySelectorAll('#upgCarsPanel .upg-chance-btn').forEach(b => b.classList.toggle('active', parseInt(b.textContent) === state.carUpgChance));
-    const mult = 100 / state.carUpgChance;
-    const targetPrice = stake.price * mult;
-    const all = Object.values(CONFIG.cars).flat();
-    let best = all[0], bestDiff = Infinity;
-    all.forEach(c => { const cp = c.price * (1 + state.upgradeLevel * 0.1) * (1 + state.prestigeLevel * 0.25); const d = Math.abs(cp - targetPrice); if (d < bestDiff) { bestDiff = d; best = c; } });
-    document.getElementById('upgCarPrizeSvg').innerHTML = svgFor(best);
-    document.getElementById('upgCarPrizePrice').textContent = formatMoney(best.price) + ' ₽';
-    document.getElementById('btnDoCarUpgrade').disabled = state.carUpgRolling;
-}
-
-function setCarUpgradeChance(c) {
-    if (state.carUpgRolling) return;
-    state.carUpgChance = c; saveState();
-    carWheelRotation = 0;
-    const w = document.getElementById('carWheelSpin');
-    w.style.transition = 'none'; w.style.transform = 'rotate(0deg)';
-    renderCarUpgrader();
-}
-
-function doCarUpgrade() {
-    if (state.carUpgRolling || state.carUpgIdx === -1 || state.garageCars.length === 0) return;
-    state.carUpgRolling = true;
-    const btn = document.getElementById('btnDoCarUpgrade');
-    btn.disabled = true; btn.textContent = 'Крутим...';
-    const chance = state.carUpgChance;
-    const win = Math.random() < chance / 100;
-    const greenDeg = chance * 3.6, halfGreen = greenDeg / 2;
-    let Rmod;
-    if (win) { if (Math.random() < 0.5) Rmod = Math.random() * halfGreen; else Rmod = 360 - halfGreen + Math.random() * halfGreen; }
-    else Rmod = halfGreen + Math.random() * (360 - 2 * halfGreen);
-    const baseMod = ((carWheelRotation % 360) + 360) % 360;
-    const deltaMod = ((Rmod - baseMod) % 360 + 360) % 360;
-    const spins = 5 + Math.floor(Math.random() * 3);
-    const finalRot = carWheelRotation + deltaMod + spins * 360;
-    const wheel = document.getElementById('carWheelSpin');
-    wheel.style.transition = 'transform 4.5s cubic-bezier(0.15,0.8,0.25,1)';
-    wheel.style.transform = `rotate(${finalRot}deg)`;
-    carWheelRotation = finalRot;
-    playSpinTicks(4000);
-    setTimeout(() => {
-        state.carUpgRolling = false;
-        const stake = state.garageCars[state.carUpgIdx];
-        if (win) {
-            const mult = 100 / chance;
-            const targetPrice = stake.price * mult;
-            const all = Object.values(CONFIG.cars).flat();
-            let best = all[0], bestDiff = Infinity;
-            all.forEach(c => { const cp = c.price * (1 + state.upgradeLevel * 0.1) * (1 + state.prestigeLevel * 0.25); const d = Math.abs(cp - targetPrice); if (d < bestDiff) { bestDiff = d; best = c; } });
-            let priR = 'common';
-            if (best.price >= 30000000) priR = 'legend'; else if (best.price >= 7000000) priR = 'epic'; else if (best.price >= 3200000) priR = 'rare';
-            const newCar = { ...best, rarity: priR };
-            newCar.price = Math.floor(best.price * (1 + state.upgradeLevel * 0.1) * (1 + state.prestigeLevel * 0.25));
-            state.garageCars.splice(state.carUpgIdx, 1);
-            state.garageCars.push(newCar);
-            state.carUpgIdx = state.garageCars.length - 1;
-            saveState(); renderCarUpgrader(); playChing(); burst('legend');
-            showModal('🎉 АПГРЕЙД!', `Ты выбил <b>${newCar.brand} ${newCar.name}</b><br>Стоимость: <b>${formatMoney(newCar.price)} ₽</b>`, '🏆');
-        } else {
-            state.garageCars.splice(state.carUpgIdx, 1);
-            state.carUpgIdx = state.garageCars.length > 0 ? 0 : -1;
-            saveState(); renderCarUpgrader();
-            playTone(150, 'sawtooth', 0.5, 0.1);
-            showModal('💥 ПРОИГРЫШ', 'Машина сгорела.', '💀');
-        }
-        btn.textContent = 'Апгрейд машины';
-        btn.disabled = state.garageCars.length === 0;
-        updateUI();
-    }, 4600);
-}
-
-// ============ UPGRADER PLATES ============
-function renderPlateUpgrader() {
-    const list = document.getElementById('upgPlateList');
-    if (state.garagePlates.length === 0) {
-        list.innerHTML = '<div style="color:var(--text-muted);font-size:12px;text-align:center;padding:10px;width:100%;">Гараж пуст</div>';
-        document.getElementById('btnDoPlateUpgrade').disabled = true;
-        return;
-    }
-    if (state.plateUpgIdx === -1 || state.plateUpgIdx >= state.garagePlates.length) state.plateUpgIdx = 0;
-    list.innerHTML = '';
-    state.garagePlates.forEach((plate, idx) => {
-        const d = document.createElement('div');
-        d.className = 'upg-select-item' + (idx === state.plateUpgIdx ? ' selected' : '');
-        d.onclick = () => { state.plateUpgIdx = idx; renderPlateUpgrader(); };
-        d.innerHTML = `<div class="upg-select-plate-mini">${plate.l1} ${plate.num} ${plate.l2}</div><div class="name">${plate.region} рег.</div><div class="price-mini">${formatMoney(plate.price)} 💎</div>`;
-        list.appendChild(d);
-    });
-    const stake = state.garagePlates[state.plateUpgIdx];
-    document.getElementById('upgPlateStakeDisplay').innerHTML = plateDisplaySmall(stake);
-    document.getElementById('upgPlateStakePrice').textContent = formatMoney(stake.price) + ' 💎';
-    const greenDeg = state.plateUpgChance * 3.6;
-    const halfGreen = greenDeg / 2;
-    const wheel = document.getElementById('plateWheelSpin');
-    wheel.style.background = `conic-gradient(from ${-halfGreen}deg, #10b981 0deg ${greenDeg}deg, #ef4444 ${greenDeg}deg 360deg)`;
-    document.getElementById('plateWheelChance').textContent = state.plateUpgChance + '%';
-    document.querySelectorAll('#upgPlatesPanel .upg-chance-btn').forEach(b => b.classList.toggle('active', parseInt(b.textContent) === state.plateUpgChance));
-    // Generate prize plate preview
-    const target = stake.price * (100 / state.plateUpgChance);
-    const prize = generatePrizePlate(target);
-    document.getElementById('upgPlatePrizeDisplay').innerHTML = plateDisplaySmall(prize);
-    document.getElementById('upgPlatePrizePrice').textContent = formatMoney(prize.price) + ' 💎';
-    document.getElementById('btnDoPlateUpgrade').disabled = state.plateUpgRolling;
-}
-
-function plateDisplaySmall(plate) {
-    return `<div class="plate-realistic r-${plate.rarity}" style="transform:scale(0.85); transform-origin:center;">
-        <div class="plate-text" style="font-size:22px; padding:2px 8px; min-width:100px;">${plate.l1} ${plate.num} ${plate.l2}</div>
-        <div class="plate-side-real" style="min-width:36px; padding:1px 4px;">
-            <div class="plate-region-real" style="font-size:14px;">${plate.region}</div>
-            <div class="plate-country-real" style="font-size:6px;">RUS</div>
-        </div>
-    </div>`;
-}
-
-function generatePrizePlate(targetPrice) {
-    let best = null, bestDiff = Infinity;
-    for (let i = 0; i < 40; i++) {
-        const p = generatePlateItem(true);
-        const d = Math.abs(p.price - targetPrice);
-        if (d < bestDiff) { bestDiff = d; best = p; }
-    }
-    return best;
-}
-
-function setPlateUpgradeChance(c) {
-    if (state.plateUpgRolling) return;
-    state.plateUpgChance = c; saveState();
-    plateWheelRotation = 0;
-    const w = document.getElementById('plateWheelSpin');
-    w.style.transition = 'none'; w.style.transform = 'rotate(0deg)';
-    renderPlateUpgrader();
-}
-
-function doPlateUpgrade() {
-    if (state.plateUpgRolling || state.plateUpgIdx === -1 || state.garagePlates.length === 0) return;
-    state.plateUpgRolling = true;
-    const btn = document.getElementById('btnDoPlateUpgrade');
-    btn.disabled = true; btn.textContent = 'Крутим...';
-    const chance = state.plateUpgChance;
-    const win = Math.random() < chance / 100;
-    const greenDeg = chance * 3.6, halfGreen = greenDeg / 2;
-    let Rmod;
-    if (win) { if (Math.random() < 0.5) Rmod = Math.random() * halfGreen; else Rmod = 360 - halfGreen + Math.random() * halfGreen; }
-    else Rmod = halfGreen + Math.random() * (360 - 2 * halfGreen);
-    const baseMod = ((plateWheelRotation % 360) + 360) % 360;
-    const deltaMod = ((Rmod - baseMod) % 360 + 360) % 360;
-    const spins = 5 + Math.floor(Math.random() * 3);
-    const finalRot = plateWheelRotation + deltaMod + spins * 360;
-    const wheel = document.getElementById('plateWheelSpin');
-    wheel.style.transition = 'transform 4.5s cubic-bezier(0.15,0.8,0.25,1)';
-    wheel.style.transform = `rotate(${finalRot}deg)`;
-    plateWheelRotation = finalRot;
-    playSpinTicks(4000);
-    setTimeout(() => {
-        state.plateUpgRolling = false;
-        const stake = state.garagePlates[state.plateUpgIdx];
-        if (win) {
-            const target = stake.price * (100 / chance);
-            const prize = generatePrizePlate(target);
-            state.garagePlates.splice(state.plateUpgIdx, 1);
-            state.garagePlates.push(prize);
-            state.plateUpgIdx = state.garagePlates.length - 1;
-            saveState(); renderPlateUpgrader(); playChing(); burst('legend');
-            showModal('🎉 АПГРЕЙД!', `Ты выбил номер <b>${prize.l1} ${prize.num} ${prize.l2}</b><br>Стоимость: <b>${formatMoney(prize.price)} 💎</b>`, '🏆');
-        } else {
-            state.garagePlates.splice(state.plateUpgIdx, 1);
-            state.plateUpgIdx = state.garagePlates.length > 0 ? 0 : -1;
-            saveState(); renderPlateUpgrader();
-            playTone(150, 'sawtooth', 0.5, 0.1);
-            showModal('💥 ПРОИГРЫШ', 'Номер сгорел.', '💀');
-        }
-        btn.textContent = 'Апгрейд номера';
-        btn.disabled = state.garagePlates.length === 0;
-        updateUI();
-    }, 4600);
-}
-
-// ============ BATTLE ============
-function renderBattle() {
-    // Render my cars
-    const myCars = document.getElementById('battleMyCars');
-    if (state.garageCars.length === 0) {
-        myCars.innerHTML = '<div style="color:var(--text-muted);font-size:12px;padding:15px;text-align:center;width:100%;">Гараж пуст. Сначала накрути машин!</div>';
-    } else {
-        if (state.battleMyIdx === -1 || state.battleMyIdx >= state.garageCars.length) state.battleMyIdx = 0;
-        myCars.innerHTML = '';
-        state.garageCars.forEach((car, i) => {
-            const d = document.createElement('div');
-            d.className = 'battle-car-item' + (i === state.battleMyIdx ? ' selected' : '');
-            d.onclick = () => { if (state.battleRolling) return; state.battleMyIdx = i; renderBattle(); updateBattleBtn(); };
-            d.innerHTML = `${svgFor(car)}<div class="battle-car-name">${car.name}</div><div class="battle-car-price">${formatMoney(car.price)} ₽</div>`;
-            myCars.appendChild(d);
-        });
-    }
-    // Opponents
-    if (!state.battleOpponents || state.battleOpponents.length === 0) generateBattleOpponents();
-    const oppList = document.getElementById('battleOpponents');
-    oppList.innerHTML = '';
-    state.battleOpponents.forEach((opp, i) => {
-        const d = document.createElement('div');
-        d.className = 'battle-opponent-card' + (i === state.battleOppIdx ? ' selected' : '');
-        d.onclick = () => { if (state.battleRolling) return; state.battleOppIdx = i; renderBattle(); updateBattleBtn(); };
-        d.innerHTML = `<div class="battle-opponent-avatar">${opp.avatar}</div><div class="battle-opponent-info"><div class="battle-opponent-name">${opp.name}</div><div class="battle-opponent-rating">${opp.rating} ⭐</div></div><div class="battle-opponent-car">${svgFor(opp.car)}<div class="battle-opponent-price">${formatMoney(opp.car.price)} ₽</div></div>`;
-        oppList.appendChild(d);
-    });
-    document.getElementById('battleOnlineCount').textContent = (1200 + Math.floor(Math.random() * 500)).toLocaleString();
-    updateBattleBtn();
-}
-
-function updateBattleBtn() {
-    const btn = document.getElementById('btnStartBattle');
-    btn.disabled = state.battleMyIdx === -1 || state.battleOppIdx === -1 || state.garageCars.length === 0;
-}
-
-function generateBattleOpponents() {
-    state.battleOpponents = [];
-    const used = new Set();
-    const myPrices = state.garageCars.length > 0 ? state.garageCars.map(c => c.price) : [5000000];
-    const avgPrice = myPrices.reduce((a, b) => a + b, 0) / myPrices.length;
-    for (let i = 0; i < 5; i++) {
-        let name;
-        do { name = BOT_NAMES[Math.floor(Math.random() * BOT_NAMES.length)] + Math.floor(Math.random() * 99); } while (used.has(name));
-        used.add(name);
-        const av = BOT_AVATARS[Math.floor(Math.random() * BOT_AVATARS.length)];
-        const target = avgPrice * (0.5 + Math.random() * 1.5);
-        const all = Object.values(CONFIG.cars).flat();
-        let best = all[0], bd = Infinity;
-        all.forEach(c => { const d = Math.abs(c.price - target); if (d < bd) { bd = d; best = c; } });
-        const rar = best.price >= 30000000 ? 'legend' : best.price >= 7000000 ? 'epic' : best.price >= 3200000 ? 'rare' : 'common';
-        const car = { ...best, rarity: rar };
-        const rating = 3 + Math.floor(Math.random() * 5);
-        state.battleOpponents.push({ name, avatar: av, car, rating });
-    }
-}
-
-function startBattle() {
-    if (state.battleMyIdx === -1 || state.battleOppIdx === -1) return;
-    const myCar = state.garageCars[state.battleMyIdx];
-    const opp = state.battleOpponents[state.battleOppIdx];
-    document.getElementById('battleSetup').style.display = 'none';
-    document.getElementById('battleArena').style.display = 'block';
-    document.getElementById('arenaMyCar').innerHTML = svgFor(myCar);
-    document.getElementById('arenaMyPrice').textContent = formatMoney(myCar.price) + ' ₽';
-    document.getElementById('arenaEnemyCar').innerHTML = svgFor(opp.car);
-    document.getElementById('arenaEnemyPrice').textContent = formatMoney(opp.car.price) + ' ₽';
-    document.getElementById('arenaEnemyName').textContent = opp.name;
-    document.getElementById('arenaMySide').classList.remove('winner', 'loser');
-    document.getElementById('arenaEnemySide').classList.remove('winner', 'loser');
-    document.getElementById('battleStatus').textContent = 'Нажми КРУТИТЬ!';
-    document.getElementById('battleStatus').style.color = '#fff';
-    document.getElementById('btnDoBattle').disabled = false;
-    document.getElementById('btnDoBattle').textContent = '🎲 КРУТИТЬ!';
-    // Show win chance
-    const winChance = (myCar.price / (myCar.price + opp.car.price)) * 100;
-    document.getElementById('battleProgressFill').style.width = winChance.toFixed(1) + '%';
-    document.getElementById('battleMarker').style.left = '0%';
-    document.getElementById('battleMarker').classList.remove('rolling');
-}
-
-function cancelBattle() {
-    if (state.battleRolling) return;
-    document.getElementById('battleSetup').style.display = 'block';
-    document.getElementById('battleArena').style.display = 'none';
-    generateBattleOpponents();
-    state.battleOppIdx = -1;
-    renderBattle();
-}
-
-function doBattleRoll() {
-    if (state.battleRolling) return;
-    state.battleRolling = true;
-    const btn = document.getElementById('btnDoBattle');
-    btn.disabled = true; btn.textContent = 'Крутим...';
-    const myCar = state.garageCars[state.battleMyIdx];
-    const opp = state.battleOpponents[state.battleOppIdx];
-    const winChance = (myCar.price / (myCar.price + opp.car.price)) * 100;
-    const win = Math.random() * 100 < winChance;
-    // Land marker on win zone (0-winChance) if win, else after
-    let stopPct;
-    if (win) stopPct = Math.random() * (winChance * 0.95);
-    else stopPct = winChance + Math.random() * ((100 - winChance) * 0.95);
-    const marker = document.getElementById('battleMarker');
-    marker.classList.remove('rolling');
-    marker.style.left = '0%';
-    void marker.offsetWidth;
-    marker.classList.add('rolling');
-    marker.style.left = stopPct + '%';
-    playSpinTicks(3400);
-    setTimeout(() => {
-        state.battleRolling = false;
-        if (win) {
-            document.getElementById('arenaMySide').classList.add('winner');
-            document.getElementById('arenaEnemySide').classList.add('loser');
-            document.getElementById('battleStatus').textContent = '🏆 ПОБЕДА! Забираешь тачку!';
-            document.getElementById('battleStatus').style.color = 'var(--legend)';
-            const wonCar = { ...opp.car };
-            state.garageCars.push(wonCar);
-            state.stats.battleWins = (state.stats.battleWins || 0) + 1;
-            saveState(); playChing(); burst('legend');
-            showModal('🏆 ПОБЕДА!', `Ты забрал <b>${wonCar.brand} ${wonCar.name}</b><br>Стоимость: <b>${formatMoney(wonCar.price)} ₽</b>`, '🏆');
-        } else {
-            document.getElementById('arenaMySide').classList.add('loser');
-            document.getElementById('arenaEnemySide').classList.add('winner');
-            document.getElementById('battleStatus').textContent = '💀 ПРОИГРЫШ. Твоя машина ушла сопернику.';
-            document.getElementById('battleStatus').style.color = '#ef4444';
-            state.garageCars.splice(state.battleMyIdx, 1);
-            state.battleMyIdx = state.garageCars.length > 0 ? 0 : -1;
-            saveState(); playTone(150, 'sawtooth', 0.5, 0.1);
-            showModal('💀 ПРОИГРЫШ', `Твоя машина ушла к <b>${opp.name}</b>.`, '💀');
-        }
-        setTimeout(() => {
-            document.getElementById('battleSetup').style.display = 'block';
-            document.getElementById('battleArena').style.display = 'none';
-            generateBattleOpponents();
-            state.battleOppIdx = -1;
-            renderBattle();
-        }, 2000);
-        updateUI();
-    }, 3500);
-}
-
-// ============ QUESTS ============
-function ensureQuestsReset() {
-    const today = new Date().setHours(0, 0, 0, 0);
-    if (!state.quests || state.quests.date !== today) {
-        state.quests = { date: today, spins: 0, earned: 0, epics: 0, claimed: {} };
-        saveState();
-    }
-}
-
-function getQuests() {
-    ensureQuestsReset();
-    return [
-        { id: 'spins10', icon: '🎲', title: 'Прокрути удачу', desc: '10 прокруток', reward: '1 000 000 ₽',
-          progress: Math.min(10, state.quests.spins), target: 10,
-          canClaim: state.quests.spins >= 10 && !state.quests.claimed.spins10,
-          claimed: !!state.quests.claimed.spins10,
-          claim: () => { addRubles(1000000); state.quests.claimed.spins10 = true; saveState(); } },
-        { id: 'epic1', icon: '💎', title: 'Редкая тачка', desc: 'Epic или Legend', reward: '2 500 💎',
-          progress: Math.min(1, state.quests.epics), target: 1,
-          canClaim: state.quests.epics >= 1 && !state.quests.claimed.epic1,
-          claimed: !!state.quests.claimed.epic1,
-          claim: () => { addTokens(2500); state.quests.claimed.epic1 = true; saveState(); } },
-        { id: 'earn50', icon: '💰', title: 'Крупный куш', desc: '50 000 000 ₽ за день', reward: '500 💎 + 5 000 000 ₽',
-          progress: Math.min(50000000, state.quests.earned), target: 50000000,
-          canClaim: state.quests.earned >= 50000000 && !state.quests.claimed.earn50,
-          claimed: !!state.quests.claimed.earn50,
-          claim: () => { addRubles(5000000); addTokens(500); state.quests.claimed.earn50 = true; saveState(); } }
-    ];
-}
-
-function trackQuest(action, value) {
-    ensureQuestsReset();
-    if (action === 'spin') state.quests.spins += value;
-    if (action === 'epic') state.quests.epics += value;
-    if (action === 'earn') state.quests.earned += value;
-    saveState();
-}
-
-function renderQuests() {
-    const list = document.getElementById('questsList');
-    if (!list) return;
-    const quests = getQuests();
-    list.innerHTML = '';
-    quests.forEach(q => {
-        const card = document.createElement('div');
-        card.className = 'quest-card' + (q.claimed ? ' claimed' : q.canClaim ? ' done' : '');
-        card.innerHTML = `<div class="quest-ico">${q.icon}</div><div class="quest-body"><div class="quest-title">${q.title}</div><div class="quest-desc">${q.desc}</div><div class="quest-reward">🎁 ${q.reward}</div><div class="quest-progress-bar"><div class="quest-progress-fill" style="width:${(q.progress/q.target)*100}%"></div></div></div><button class="quest-claim-btn" ${q.canClaim ? '' : 'disabled'}>${q.claimed ? '✓' : q.canClaim ? 'Забрать' : `${q.progress}/${q.target}`}</button>`;
-        if (q.canClaim) card.querySelector('.quest-claim-btn').onclick = () => { q.claim(); renderQuests(); updateUI(); playChing(); };
-        list.appendChild(card);
-    });
-    const claimable = quests.filter(q => q.canClaim).length;
-    const claimed = quests.filter(q => q.claimed).length;
-    const badge = document.getElementById('questsBadge');
-    if (badge) badge.textContent = claimable > 0 ? `🎁 ${claimable} готово` : `${claimed}/3`;
-}
-
-function updateQuestsCountdown() {
-    const label = document.getElementById('questsResetLabel');
-    if (!label) return;
-    const now = new Date();
-    const tom = new Date(now); tom.setDate(tom.getDate() + 1); tom.setHours(0, 0, 0, 0);
-    const ms = tom - now;
-    const h = Math.floor(ms / 3600000), m = Math.floor((ms % 3600000) / 60000), s = Math.floor((ms % 60000) / 1000);
-    const pad = n => String(n).padStart(2, '0');
-    label.textContent = `Обновятся через ${pad(h)}:${pad(m)}:${pad(s)}`;
-}
-
-// ============ HELPERS ============
-function updateVibeUI() {
-    const pct = Math.min(100, state.vibe * 10);
-    const f = document.getElementById('vibeFill'); const t = document.getElementById('vibeText');
-    if (f) f.style.width = pct + '%';
-    if (t) t.textContent = pct + '%';
-    if (f) f.classList.toggle('full', pct >= 100);
-}
-
-function svgFor(car) {
-    const c = Object.values(CONFIG.cars).flat().find(x => x.brand === car.brand && x.name === car.name);
-    return (c && c.svg) || car.svg || '';
-}
-
-function popReveal(sel) { const el = document.querySelector(sel); if (!el) return; el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); }
-
-function burst(rarity) {
-    const pal = { legend: ['#fbbf24','#f59e0b','#fde68a','#fff'], epic: ['#a855f7','#c084fc','#f472b6','#fff'], rare: ['#10b981','#34d399','#fff'] };
-    const cols = pal[rarity] || pal.rare;
-    const box = document.createElement('div'); box.className = 'confetti';
-    for (let i = 0; i < 46; i++) {
-        const c = document.createElement('i');
-        c.style.left = Math.random() * 100 + '%';
-        c.style.background = cols[Math.floor(Math.random() * cols.length)];
-        c.style.animationDuration = (1.6 + Math.random() * 1.6) + 's';
-        c.style.animationDelay = (Math.random() * 0.4) + 's';
-        box.appendChild(c);
-    }
-    document.body.appendChild(box);
-    setTimeout(() => box.remove(), 3800);
-}
-
-const numNow = {};
-function setNum(id, val) {
-    const el = document.getElementById(id); if (!el) return;
-    const from = (numNow[id] === undefined) ? val : numNow[id];
-    numNow[id + '_t'] = val;
-    if (from === val) { numNow[id] = val; el.textContent = formatMoney(val); return; }
-    const t0 = performance.now(), dur = 450;
-    const step = t => {
-        if (numNow[id + '_t'] !== val) return;
-        const k = Math.min(1, (t - t0) / dur);
-        numNow[id] = Math.round(from + (val - from) * (1 - Math.pow(1 - k, 3)));
-        el.textContent = formatMoney(numNow[id]);
-        if (k < 1) requestAnimationFrame(step);
-        else { numNow[id] = val; el.textContent = formatMoney(val); }
-    };
-    requestAnimationFrame(step);
-}
-
-function updateUI() {
-    setNum('uiBalanceRub', state.balanceRub);
-    setNum('uiBalanceToken', state.balanceToken);
-    document.getElementById('menuGarageCount').textContent = `${state.garageCars.length} | ${state.garagePlates.length}`;
-    checkStoryProgress();
-    updateAidBanner();
-    renderQuests();
-    updateVibeUI();
-    if (document.getElementById('view-profile').classList.contains('active')) renderProfile();
-}
-
-function showModal(title, text, icon = '🎉') {
-    document.getElementById('modalTitle').textContent = title;
-    document.getElementById('modalText').innerHTML = text;
-    document.getElementById('modalIcon').textContent = icon;
-    document.getElementById('modal').classList.add('active');
-}
-function closeModal() { document.getElementById('modal').classList.remove('active'); }
-
-function showRules() {
-    document.getElementById('rulesBtn').textContent = state.rulesSeen ? 'Понятно' : 'Играть';
-    document.getElementById('rulesOverlay').classList.add('active');
-}
-function closeRules() {
-    document.getElementById('rulesOverlay').classList.remove('active');
-    if (!state.rulesSeen) { state.rulesSeen = true; saveState(); }
-}
-
-const AID_AMOUNT = 500000, AID_HOUR = 3600000, AID_MAX = 12;
-function fmtTime(ms) { const t = Math.max(0, Math.ceil(ms / 1000)); const h = Math.floor(t / 3600), m = Math.floor((t % 3600) / 60), s = t % 60; const p = n => String(n).padStart(2, '0'); return (h ? h + ':' : '') + p(m) + ':' + p(s); }
-function updateAidBanner() {
-    const el = document.getElementById('aidBanner');
-    if (state.balanceRub >= CONFIG.costCarNormal) { if (state.aidReadyAt) { state.aidReadyAt = 0; saveState(); } el.style.display = 'none'; return; }
-    if (!state.aidReadyAt) { state.aidReadyAt = Date.now() + AID_HOUR; saveState(); }
-    el.innerHTML = `⚠️ <b>Деньги на нуле!</b> Пока на счёте меньше ${formatMoney(CONFIG.costCarNormal)} ₽, каждый час выдаём <b>${formatMoney(AID_AMOUNT)} ₽</b>. Через <span class="aid-timer">${fmtTime(state.aidReadyAt - Date.now())}</span>`;
-    el.style.display = 'block';
-}
-function aidTick() {
-    if (state.balanceRub < CONFIG.costCarNormal && state.aidReadyAt && Date.now() >= state.aidReadyAt) {
-        const n = Math.min(AID_MAX, 1 + Math.floor((Date.now() - state.aidReadyAt) / AID_HOUR));
-        const total = n * AID_AMOUNT;
-        state.balanceRub += total; state.aidReadyAt = 0;
-        saveState(); updateUI();
-        showModal('Помощь', `Выдали <b>${formatMoney(total)} ₽</b>`, '🆘');
-        return;
-    }
-    updateAidBanner();
-}
-
-function exportSave() {
-    const code = btoa(unescape(encodeURIComponent(JSON.stringify(state))));
-    const done = () => showModal('Скопировано', 'Сохрани код для переноса.', '💾');
-    if (navigator.clipboard) navigator.clipboard.writeText(code).then(done, () => prompt('Код:', code));
-    else prompt('Код:', code);
-}
-function importSave() {
-    const code = prompt('Вставь код сохранения:');
-    if (!code) return;
-    try {
-        const p = JSON.parse(decodeURIComponent(escape(atob(code.trim()))));
-        if (typeof p.balanceRub !== 'number') throw 'bad';
-        if (!confirm('Заменить прогресс?')) return;
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
-        location.reload();
-    } catch (e) { showModal('Ошибка', 'Код не подошёл.', '❌'); }
-}
-
-function resetGame() { if (confirm('Сбросить прогресс?')) { localStorage.removeItem(STORAGE_KEY); location.reload(); } }
-function showDailyModal() { showModal('Бонус за вход', 'Вы получили <b>1 000 000 ₽</b> и <b>1 000 💎</b>!', '⛽'); }
-function checkDailyReward() {
-    const now = new Date().setHours(0, 0, 0, 0);
-    if (state.lastDaily !== now) {
-        state.lastDaily = now; addRubles(1000000); addTokens(1000);
-        if (!state.rulesSeen) return;
-        setTimeout(() => { if (document.getElementById('view-menu').classList.contains('active')) showDailyModal(); }, 500);
-    }
-}
-
-// INIT
-loadState();
-document.getElementById('soundBtn').textContent = state.soundOn ? '🔊' : '🔇';
-document.getElementById('soundBtn').classList.toggle('off', !state.soundOn);
-document.getElementById('autosellCommonLabel').classList.toggle('on', state.autosellCommon);
-document.getElementById('autosellRareLabel').classList.toggle('on', state.autosellRare);
-document.querySelectorAll('.theme-btn').forEach(b => b.classList.toggle('active', b.dataset.theme === state.bgTheme));
-document.querySelectorAll('.avatar-btn').forEach(b => b.classList.toggle('active', b.dataset.avatar === state.avatar));
-updateUI(); checkDailyReward(); aidTick();
-setInterval(aidTick, 1000);
-setInterval(updateQuestsCountdown, 1000);
-if (!state.rulesSeen) showRules();
-</script>
-</body>
-                </html>
+    if (items.length === 0)
