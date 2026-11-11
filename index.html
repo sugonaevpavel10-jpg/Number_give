@@ -21,12 +21,28 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; user-select: none; -webkit-user-select: none; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; user-select: none; -webkit-user-select: none; transition: background 0.5s; }
     
-    .bg-container { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: radial-gradient(circle at 50% 0%, #182038 0%, #07080c 75%); }
-    .orb { position: absolute; border-radius: 50%; filter: blur(110px); opacity: 0.35; animation: float 14s infinite alternate ease-in-out; }
-    .orb-1 { width: 50vw; height: 50vw; background: #3b82f6; top: -10%; left: -10%; }
-    .orb-2 { width: 60vw; height: 60vw; background: #8b5cf6; bottom: -20%; right: -20%; animation-delay: -6s; }
+    /* ===== ФОНОВЫЕ ТЕМЫ ===== */
+    .bg-container { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; transition: background 0.8s ease; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(110px); opacity: 0.35; animation: float 14s infinite alternate ease-in-out; transition: background 0.8s; }
+    
+    body.theme-default .bg-container { background: radial-gradient(circle at 50% 0%, #182038 0%, #07080c 75%); }
+    body.theme-default .orb-1 { width: 50vw; height: 50vw; background: #3b82f6; top: -10%; left: -10%; }
+    body.theme-default .orb-2 { width: 60vw; height: 60vw; background: #8b5cf6; bottom: -20%; right: -20%; animation-delay: -6s; }
+    
+    body.theme-cyber .bg-container { background: radial-gradient(circle at 50% 0%, #2a0a3a 0%, #05060a 75%); }
+    body.theme-cyber .orb-1 { width: 50vw; height: 50vw; background: #ec4899; top: -10%; left: -10%; }
+    body.theme-cyber .orb-2 { width: 60vw; height: 60vw; background: #06b6d4; bottom: -20%; right: -20%; animation-delay: -6s; }
+    
+    body.theme-gold .bg-container { background: radial-gradient(circle at 50% 0%, #2a1f0a 0%, #05060a 75%); }
+    body.theme-gold .orb-1 { width: 50vw; height: 50vw; background: #fbbf24; top: -10%; left: -10%; }
+    body.theme-gold .orb-2 { width: 60vw; height: 60vw; background: #f59e0b; bottom: -20%; right: -20%; animation-delay: -6s; }
+    
+    body.theme-emerald .bg-container { background: radial-gradient(circle at 50% 0%, #0a2a1f 0%, #05060a 75%); }
+    body.theme-emerald .orb-1 { width: 50vw; height: 50vw; background: #10b981; top: -10%; left: -10%; }
+    body.theme-emerald .orb-2 { width: 60vw; height: 60vw; background: #06b6d4; bottom: -20%; right: -20%; animation-delay: -6s; }
+
     @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(10%, 15%) scale(1.1); } }
 
     .app-container { max-width: 600px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
@@ -55,6 +71,7 @@
     .menu-card:nth-child(4) { animation-delay: .15s; } .menu-card:nth-child(5) { animation-delay: .20s; }
     .menu-card:nth-child(6) { animation-delay: .25s; } .menu-card:nth-child(7) { animation-delay: .30s; }
     .menu-card:nth-child(8) { animation-delay: .35s; } .menu-card:nth-child(9) { animation-delay: .40s; }
+    .menu-card:nth-child(10) { animation-delay: .45s; }
     @keyframes cardin { from { transform: translateY(16px) scale(.94); } to { transform: none; } }
 
     .icon-box { width: 56px; height: 56px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 28px; background: linear-gradient(145deg, rgba(255,255,255,.13), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,0.08); box-shadow: inset 0 1px 0 rgba(255,255,255,.15); }
@@ -161,11 +178,9 @@
 
     .record-banner { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); padding: 8px 20px; border-radius: 999px; background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #000; font-weight: 900; font-size: 12px; letter-spacing: 1px; box-shadow: 0 6px 30px rgba(251,191,36,0.6); z-index: 20; white-space: nowrap; }
 
-    /* Всплывающий текст (Мемы) */
     .meme-popup { position: absolute; z-index: 25; font-size: 26px; font-weight: 900; font-style: italic; text-transform: uppercase; letter-spacing: 2px; pointer-events: none; animation: meme-float 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; text-shadow: 0 0 10px currentColor, 0 4px 10px rgba(0,0,0,0.5); -webkit-text-stroke: 1.5px #000; white-space: nowrap; }
     @keyframes meme-float { 0% { transform: scale(0.5) rotate(-10deg) translateY(0); opacity: 0; } 30% { transform: scale(1.2) rotate(5deg) translateY(-20px); opacity: 1; } 70% { opacity: 1; transform: scale(1) rotate(0deg) translateY(-40px); } 100% { transform: scale(0.9) translateY(-70px); opacity: 0; } }
 
-    /* Искры при клике */
     .click-spark { position: fixed; width: 6px; height: 6px; border-radius: 50%; pointer-events: none; z-index: 9999; animation: spark-fly 0.6s ease-out forwards; }
     @keyframes spark-fly { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; } }
 
@@ -255,6 +270,7 @@
     .menu-grid .menu-card:nth-child(5) .icon-box { box-shadow: 0 0 26px rgba(168,85,247,.5), inset 0 1px 0 rgba(255,255,255,.15); }
     .menu-grid .menu-card:nth-child(6) .icon-box { box-shadow: 0 0 26px rgba(251,191,36,.5), inset 0 1px 0 rgba(255,255,255,.15); }
     .menu-grid .menu-card:nth-child(9) .icon-box { box-shadow: 0 0 26px rgba(236,72,153,.5), inset 0 1px 0 rgba(255,255,255,.15); }
+    .menu-grid .menu-card:nth-child(10) .icon-box { box-shadow: 0 0 26px rgba(34,211,238,.5), inset 0 1px 0 rgba(255,255,255,.15); }
     .car-image-wrapper { background: radial-gradient(ellipse at 50% 90%, rgba(59,130,246,.30), transparent 65%), linear-gradient(180deg, #131830, #0a0c14); }
     .gen-screen[data-rarity="rare"] .car-image-wrapper { background: radial-gradient(ellipse at 50% 90%, rgba(16,185,129,.38), transparent 65%), linear-gradient(180deg, #0f2220, #0a0c14); }
     .gen-screen[data-rarity="epic"] .car-image-wrapper { background: radial-gradient(ellipse at 50% 90%, rgba(168,85,247,.45), transparent 65%), linear-gradient(180deg, #1c1236, #0a0c14); }
@@ -304,9 +320,43 @@
     .gen-screen.fx-legend { animation: framePulseLegend 1.4s ease-in-out infinite; }
     .gen-screen.fx-shake { animation: shakeScreen .55s ease-out; }
     .float-coin { position: fixed; z-index: 160; pointer-events: none; font-size: 24px; font-weight: 900; text-shadow: 0 0 14px currentColor; animation: floatCoinUp 1.3s ease-out forwards; }
+
+    /* Стили для настроек профиля */
+    .customize-section { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 16px; margin-top: 15px; }
+    .customize-title { font-size: 13px; font-weight: 900; color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px; }
+    .theme-grid, .avatar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 15px; }
+    .theme-btn, .avatar-btn { padding: 10px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); cursor: pointer; text-align: center; font-size: 12px; font-weight: 800; color: #fff; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+    .theme-btn.active, .avatar-btn.active { border-color: var(--accent); background: rgba(59,130,246,0.15); box-shadow: 0 0 15px rgba(59,130,246,0.3); }
+    .theme-preview { width: 100%; height: 20px; border-radius: 6px; margin-bottom: 4px; }
+    .avatar-btn { font-size: 20px; padding: 8px; }
+
+    /* ===== СТИЛИ АПГРЕЙДЕРА ===== */
+    .upgrader-container { display: flex; flex-direction: column; gap: 15px; }
+    .upg-stake-box, .upg-prize-box { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 15px; text-align: center; position: relative; }
+    .upg-label { font-size: 11px; font-weight: 900; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .upg-car-card { background: rgba(0,0,0,0.3); border-radius: 16px; padding: 10px; display: flex; flex-direction: column; align-items: center; gap: 5px; border: 1px solid var(--border); }
+    .upg-car-svg { height: 60px; width: 120px; }
+    .upg-car-svg svg { width: 100%; height: 100%; }
+    .upg-car-price { font-size: 16px; font-weight: 900; color: var(--rub); }
+    .upg-chances { display: flex; gap: 6px; width: 100%; }
+    .upg-chance-btn { flex: 1; padding: 10px 0; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); font-size: 13px; font-weight: 900; cursor: pointer; color: var(--text); transition: all 0.2s; text-align: center; }
+    .upg-chance-btn.active { background: rgba(52,211,153,0.15); border-color: var(--rub); color: var(--rub); box-shadow: 0 0 15px rgba(52,211,153,0.2); }
+    
+    /* Визуализация рулетки */
+    .upg-roulette-wrapper { position: relative; height: 40px; width: 100%; background: rgba(0,0,0,0.5); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; margin: 10px 0; }
+    .upg-roulette-win { position: absolute; top: 0; bottom: 0; left: 0; background: linear-gradient(90deg, rgba(52,211,153,0.5), rgba(52,211,153,0.2)); border-right: 2px solid var(--rub); width: 10%; z-index: 1; transition: width 0.3s; }
+    .upg-roulette-marker { position: absolute; top: 0; bottom: 0; width: 3px; background: #fff; box-shadow: 0 0 10px #fff, 0 0 20px #fff; z-index: 3; left: 0%; }
+    .upg-roulette-marker.rolling { transition: left 3s cubic-bezier(0.2, 0.8, 0.3, 1); }
+
+    .upg-select-list { display: flex; overflow-x: auto; gap: 8px; padding-bottom: 5px; scrollbar-width: none; }
+    .upg-select-list::-webkit-scrollbar { display: none; }
+    .upg-select-item { flex: 0 0 100px; padding: 8px; border-radius: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); cursor: pointer; text-align: center; transition: all 0.2s; }
+    .upg-select-item.selected { border-color: var(--accent); background: rgba(59,130,246,0.2); box-shadow: 0 0 10px rgba(59,130,246,0.3); }
+    .upg-select-item svg { width: 100%; height: 50px; margin-bottom: 4px; }
+    .upg-select-item .name { font-size: 10px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 </style>
 </head>
-<body>
+<body class="theme-default">
 
 <div class="bg-container"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
 
@@ -342,6 +392,7 @@
             <div class="menu-card" onclick="navigate('cars')"><div class="icon-box">🚗</div><div class="menu-label">Автосалон</div><div class="menu-desc">Крутить тачки</div></div>
             <div class="menu-card" onclick="navigate('plates')"><div class="icon-box">🔢</div><div class="menu-label">Госзнаки</div><div class="menu-desc">Крутить номера</div></div>
             <div class="menu-card" onclick="navigate('garage')"><div class="icon-box">🏎️</div><div class="menu-label">Гараж</div><div class="menu-desc" id="menuGarageCount">0 | 0</div></div>
+            <div class="menu-card" onclick="navigate('upgrader')"><div class="icon-box">⬆️</div><div class="menu-label">Апгрейдер</div><div class="menu-desc">Улучшить тачку</div></div>
             <div class="menu-card" id="nav-quests" onclick="navigate('quests')"><div class="icon-box">📋</div><div class="menu-label">Задания</div><div class="menu-desc" id="questsBadge">0/3</div></div>
             <div class="menu-card locked" id="nav-upgrades" onclick="checkLock('upgrades', 5000000)"><div class="icon-box">🛠️</div><div class="menu-label">Тюнинг</div><div class="menu-desc" id="menuUpgradeDesc">5 000 000 ₽</div></div>
             <div class="menu-card locked" id="nav-cases" onclick="checkLock('cases', 20000000)"><div class="icon-box">💎</div><div class="menu-label">Аукцион</div><div class="menu-desc" id="menuCaseDesc">20 000 000 ₽</div></div>
@@ -450,9 +501,53 @@
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
             <div style="font-weight: 900; font-size: 15px;" id="garageCapacityLabel">(0/50)</div>
-            <button class="btn btn-danger" style="padding: 8px 12px; font-size: 11px; width: auto; flex: none;" onclick="sellAllActiveGarage()">Продать всё</button>
+            <div style="display: flex; gap: 6px;">
+                <button class="btn btn-primary" id="btnCustomPlate" style="padding: 8px 12px; font-size: 10px; border-radius: 10px; display: none;" onclick="createCustomPlate()">✨ Создать номер</button>
+                <button class="btn btn-danger" style="padding: 8px 12px; font-size: 10px; border-radius: 10px;" onclick="sellAllActiveGarage()">Продать всё</button>
+            </div>
         </div>
         <div class="list-container" id="garageList"></div>
+    </div>
+
+    <!-- ЭКРАН АПГРЕЙДЕРА -->
+    <div class="view" id="view-upgrader">
+        <div class="upgrader-container">
+            <div class="upg-stake-box">
+                <div class="upg-label">Твоя ставка (выбери машину из гаража)</div>
+                <div class="upg-select-list" id="upgStakeList"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; gap:10px;">
+                <div class="upg-stake-box" style="flex:1;">
+                    <div class="upg-label">Твоя тачка</div>
+                    <div class="upg-car-card">
+                        <div class="upg-car-svg" id="upgStakeSvg"></div>
+                        <div class="upg-car-price" id="upgStakePrice">0 ₽</div>
+                    </div>
+                </div>
+                <div style="display:flex; align-items:center; font-size:24px; color:var(--accent);">➡️</div>
+                <div class="upg-stake-box" style="flex:1;">
+                    <div class="upg-label">Возможный приз</div>
+                    <div class="upg-car-card">
+                        <div class="upg-car-svg" id="upgPrizeSvg"></div>
+                        <div class="upg-car-price" style="color:var(--token);" id="upgPrizePrice">0 ₽</div>
+                    </div>
+                </div>
+            </div>
+            <div class="upg-stake-box">
+                <div class="upg-label">Шанс выигрыша</div>
+                <div class="upg-chances" id="upgChances">
+                    <button class="upg-chance-btn" onclick="setUpgradeChance(10)">10%</button>
+                    <button class="upg-chance-btn" onclick="setUpgradeChance(25)">25%</button>
+                    <button class="upg-chance-btn active" onclick="setUpgradeChance(50)">50%</button>
+                    <button class="upg-chance-btn" onclick="setUpgradeChance(75)">75%</button>
+                </div>
+                <div class="upg-roulette-wrapper">
+                    <div class="upg-roulette-win" id="upgWinZone"></div>
+                    <div class="upg-roulette-marker" id="upgMarker"></div>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="btnDoUpgrade" onclick="doUpgrade()" style="padding:20px; font-size:16px;">Апгрейд</button>
+        </div>
     </div>
 
     <div class="view" id="view-quests">
@@ -487,7 +582,7 @@
 
     <div class="view" id="view-profile">
         <div style="text-align: center; padding: 20px 0;">
-            <div class="icon-box" style="margin: 0 auto 12px auto; width: 90px; height: 90px; font-size: 45px; border-radius: 50%;">👑</div>
+            <div class="icon-box" id="profileAvatar" style="margin: 0 auto 12px auto; width: 90px; height: 90px; font-size: 45px; border-radius: 50%;">👑</div>
             <div style="font-size: 22px; font-weight: 900;" id="profileRankTitle">Новичок</div>
             <div style="color: var(--text-muted); font-size: 14px; margin-top: 4px;">Заработано (всего): <span id="profileTotalEarned">0</span> ₽</div>
         </div>
@@ -501,7 +596,31 @@
             <div class="stat-row"><span class="stat-name">Уровень тюнинга</span><span class="stat-value" id="profileBonus">0</span></div>
             <div class="stat-row"><span class="stat-name">Перерождения</span><span class="stat-value" style="color: var(--legend);" id="profilePrestige">0 (Шанс +0%)</span></div>
         </div>
+
         <button class="btn btn-prestige" id="btnPrestige" style="margin-top: 15px; display: none;" onclick="doPrestige()">Сделать Перерождение</button>
+        
+        <!-- Блок кастомизации -->
+        <div class="customize-section">
+            <div class="customize-title">🎨 Смена фона</div>
+            <div class="theme-grid">
+                <div class="theme-btn active" data-theme="default" onclick="setTheme('default')"><div class="theme-preview" style="background: linear-gradient(90deg, #3b82f6, #8b5cf6);"></div>Тёмный</div>
+                <div class="theme-btn" data-theme="cyber" onclick="setTheme('cyber')"><div class="theme-preview" style="background: linear-gradient(90deg, #ec4899, #06b6d4);"></div>Кибер</div>
+                <div class="theme-btn" data-theme="gold" onclick="setTheme('gold')"><div class="theme-preview" style="background: linear-gradient(90deg, #fbbf24, #f59e0b);"></div>Золото</div>
+                <div class="theme-btn" data-theme="emerald" onclick="setTheme('emerald')"><div class="theme-preview" style="background: linear-gradient(90deg, #10b981, #06b6d4);"></div>Изумруд</div>
+            </div>
+            <div class="customize-title">👤 Твой Аватар</div>
+            <div class="avatar-grid">
+                <div class="avatar-btn active" data-avatar="👑" onclick="setAvatar('👑')">👑</div>
+                <div class="avatar-btn" data-avatar="🧑‍💼" onclick="setAvatar('🧑‍💼')">🧑‍💼</div>
+                <div class="avatar-btn" data-avatar="🕶️" onclick="setAvatar('🕶️')">🕶️</div>
+                <div class="avatar-btn" data-avatar="🐺" onclick="setAvatar('🐺')">🐺</div>
+                <div class="avatar-btn" data-avatar="👽" onclick="setAvatar('👽')">👽</div>
+                <div class="avatar-btn" data-avatar="🐉" onclick="setAvatar('🐉')">🐉</div>
+                <div class="avatar-btn" data-avatar="🏎️" onclick="setAvatar('🏎️')">🏎️</div>
+                <div class="avatar-btn" data-avatar="💎" onclick="setAvatar('💎')">💎</div>
+            </div>
+        </div>
+
         <div style="margin-top: 16px; padding: 14px; border-radius: 18px; background: var(--panel); border: 1px solid var(--border);">
             <div style="font-size: 13px; font-weight: 900; margin-bottom: 4px;">💾 Сохранение</div>
             <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px;">Прогресс сохраняется автоматически в этом браузере.</div>
@@ -528,21 +647,16 @@
         <div class="rules-title">📖 Правила игры</div>
         <div class="rules-sub">Стань королём дорог: крути тачки и номера, продавай дороже</div>
         <div class="rule-item"><div class="rule-ico">💰</div><div><div class="rule-h">Старт</div><div class="rule-p">У тебя <b>5 000 000 ₽</b> и <b>10 000 💎</b>. Каждый день заходи за бонусом: <b>1 000 000 ₽</b> и <b>1 000 💎</b>.</div></div></div>
-        <div class="rule-item"><div class="rule-ico">📋</div><div><div class="rule-h">Ежедневные задания</div><div class="rule-p">Каждый день ты получаешь <b>3 задания</b>. Выполняй их и забирай награды: деньги, жетоны, редкие призы. Задания обновляются в полночь.</div></div></div>
-        <div class="rule-item"><div class="rule-ico">⚡</div><div><div class="rule-h">Шкала Вайба</div><div class="rule-p">Каждая прокрутка заполняет шкалу. Когда она достигнет 100%, следующая машина будет <b>гарантированно Epic или Legend</b>.</div></div></div>
-        <div class="rule-item"><div class="rule-ico">🎰</div><div><div class="rule-h">x10 Прокрутка</div><div class="rule-p">Крути сразу <b>10 машин</b> за раз. Лучшая останется у тебя, остальные автоматически продадутся. Используй авто-продажу, чтобы не отвлекаться на мелочь.</div></div></div>
-        <div class="rule-item"><div class="rule-ico">🚫</div><div><div class="rule-h">Авто-продажа</div><div class="rule-p">Включи авто-продажу Common или Rare — такие машины из x10 будут сразу продаваться. Экономит твоё время.</div></div></div>
-        <div class="rule-item"><div class="rule-ico">🆘</div><div><div class="rule-h">Деньги закончились?</div><div class="rule-p">Если на счёте меньше <b>2 000 000 ₽</b>, мы выдаём <b>500 000 ₽ каждый час</b>. Таймер виден вверху.</div></div></div>
-        <div class="rule-item"><div class="rule-ico">🚗</div><div><div class="rule-h">Автосалон (за ₽)</div><div class="rule-p">Прокрутка <b>2 млн ₽</b>, Boost — <b>6 млн ₽</b> (выше шанс). Редкости: Common, Rare, Epic, Legend.</div></div></div>
-        <div class="rule-item"><div class="rule-ico">🔢</div><div><div class="rule-h">Госзнаки (за 💎)</div><div class="rule-p">Прокрутка <b>500 💎</b>, Boost — <b>1 500 💎</b>. Ценятся 777, 001, ААА, МММ, 77, 99.</div></div></div>
-        <div class="rule-item"><div class="rule-ico">🏎️</div><div><div class="rule-h">Продать или в гараж</div><div class="rule-p">Можно продать сразу или сохранить в гараж (до 50). В гараже есть сортировка по цене и редкости.</div></div></div>
-        <div class="rule-item"><div class="rule-ico">📈</div><div><div class="rule-h">Ранги</div><div class="rule-p"><b>5 млн ₽</b> — Тюнинг. <b>20 млн ₽</b> — Аукцион. <b>100 млн ₽</b> — Перерождение.</div></div></div>
-        <div class="rule-item"><div class="rule-ico">✨</div><div><div class="rule-h">Перерождение</div><div class="rule-p">После 100 млн ₽ можно начать заново: прогресс обнуляется, но растёт шанс дорогих машин (<b>+10%</b>) и цены (<b>+25%</b>) за уровень.</div></div></div>
+        <div class="rule-item"><div class="rule-ico">⬆️</div><div><div class="rule-h">Апгрейдер</div><div class="rule-p">Заложи свою машину и выбери шанс (10%, 25%, 50%, 75%). Если повезет — получишь тачку дороже в <b>1/шанс</b> раз (например, при 10% — в 10 раз дороже). Если нет — ставка сгорает.</div></div></div>
+        <div class="rule-item"><div class="rule-ico">✨</div><div><div class="rule-h">Перерождение</div><div class="rule-p">Первое перерождение доступно за <b>100 млн ₽</b>. Каждое следующее требует на <b>100 млн ₽ больше</b>.</div></div></div>
+        <div class="rule-item"><div class="rule-ico">⚡</div><div><div class="rule-h">Шкала Вайба</div><div class="rule-p">Каждая прокрутка заполняет шкалу. При 100% следующая машина — <b>Epic или Legend</b>.</div></div></div>
         <button class="btn btn-primary" style="width:100%; margin-top: 18px;" onclick="closeRules()" id="rulesBtn">Играть</button>
     </div>
 </div>
 
 <script>
+    // ... (SVG_CARS, CONFIG остаются прежними, я пропущу их для краткости, но в итоговом коде они будут) ...
+    // (Вставляю полный код)
     const SVG_CARS = {
         hatch: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 70 L40 50 L80 30 L140 30 L170 50 L185 60 L185 75 L30 75 Z" fill="#cbd5e1" /><path d="M50 50 L85 35 L130 35 L155 50 Z" fill="#94a3b8" /><circle cx="60" cy="75" r="15" fill="#1e293b" /><circle cx="60" cy="75" r="8" fill="#64748b" /><circle cx="150" cy="75" r="15" fill="#1e293b" /><circle cx="150" cy="75" r="8" fill="#64748b" /></svg>`,
         sedan: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><path d="M20 70 L30 45 L70 25 L140 25 L175 45 L190 60 L190 75 L20 75 Z" fill="#60a5fa" /><path d="M45 45 L80 30 L130 30 L160 45 Z" fill="#1e3a8a" /><circle cx="50" cy="75" r="16" fill="#0f172a" /><circle cx="50" cy="75" r="8" fill="#94a3b8" /><circle cx="150" cy="75" r="16" fill="#0f172a" /><circle cx="150" cy="75" r="8" fill="#94a3b8" /></svg>`,
@@ -556,6 +670,7 @@
         costCarNormal: 2000000, costCarBoost: 6000000,
         costPlateNormal: 500, costPlateBoost: 1500,
         costCase: 20000000, garageLimit: 50,
+        costCustomPlate: 5000,
         regions: [{ code: '77', weight: 10, mult: 2.0 }, { code: '99', weight: 10, mult: 2.0 }, { code: '97', weight: 8, mult: 1.8 }, { code: '177', weight: 8, mult: 1.5 }, { code: '199', weight: 8, mult: 1.5 }, { code: '78', weight: 5, mult: 1.2 }, { code: '98', weight: 5, mult: 1.2 }, { code: '01', weight: 5, mult: 1.5 }, { code: '23', weight: 5, mult: 1.2 }, { code: '50', weight: 5, mult: 1.1 }],
         letters: ['А', 'В', 'Е', 'К', 'М', 'Н', 'О', 'Р', 'С', 'Т', 'У', 'Х'],
         specialLetters: ['АМР', 'ЕКХ', 'ООО', 'МММ', 'ААА', 'ККХ', 'ВВВ', 'ЕЕЕ', 'ХКХ'],
@@ -622,10 +737,10 @@
 
     const STORAGE_KEY = 'autogen_final_v18';
     const STORY_LEVELS = [
-        { earned: 0, rank: 'Новичок', desc: 'Ты только начинаешь свой путь.' },
-        { earned: 5000000, rank: 'Барыга', desc: 'Открыто Тюнинг-ателье!', unlock: 'upgrades' },
-        { earned: 20000000, rank: 'Дилер', desc: 'Открыт Премиум Аукцион!', unlock: 'cases' },
-        { earned: 100000000, rank: 'Магнат', desc: 'Ты - король дорог!' }
+        { earned: 0, rank: 'Новичок' },
+        { earned: 5000000, rank: 'Барыга' },
+        { earned: 20000000, rank: 'Дилер' },
+        { earned: 100000000, rank: 'Магнат' }
     ];
 
     let state = {
@@ -652,7 +767,12 @@
         recordPrice: 0,
         garageSort: 'default',
         quests: null,
-        vibe: 0
+        vibe: 0,
+        bgTheme: 'default',
+        avatar: '👑',
+        upgSelectedIdx: -1,
+        upgChance: 50,
+        upgIsRolling: false
     };
 
     let audioCtx;
@@ -697,7 +817,6 @@
     }
     document.body.addEventListener('click', initAudio, { once: true });
 
-    // Искры при клике
     document.body.addEventListener('pointerdown', function(e) {
         const colors = ['#60a5fa', '#a78bfa', '#34d399', '#fbbf24', '#ec4899'];
         for (let i = 0; i < 6; i++) {
@@ -731,9 +850,42 @@
                 if (!state.stats.carSales) state.stats.carSales = {};
                 if (typeof state.stats.spent !== 'number') state.stats.spent = 0;
                 if (typeof state.vibe !== 'number') state.vibe = 0;
+                if (!state.bgTheme) state.bgTheme = 'default';
+                if (!state.avatar) state.avatar = '👑';
+                if (typeof state.upgSelectedIdx !== 'number') state.upgSelectedIdx = -1;
+                if (typeof state.upgChance !== 'number') state.upgChance = 50;
+                if (typeof state.upgIsRolling !== 'boolean') state.upgIsRolling = false;
             } catch (e) {}
         }
         state.isSpinningCar = false; state.isSpinningPlate = false;
+        applyTheme(state.bgTheme);
+        applyAvatar(state.avatar);
+    }
+
+    function setTheme(theme) {
+        state.bgTheme = theme;
+        applyTheme(theme);
+        saveState();
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.theme === theme);
+        });
+    }
+    function applyTheme(theme) {
+        document.body.className = document.body.className.replace(/theme-\w+/g, '').trim();
+        document.body.classList.add('theme-' + theme);
+    }
+
+    function setAvatar(emoji) {
+        state.avatar = emoji;
+        applyAvatar(emoji);
+        saveState();
+        document.querySelectorAll('.avatar-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.avatar === emoji);
+        });
+    }
+    function applyAvatar(emoji) {
+        const el = document.getElementById('profileAvatar');
+        if (el) el.textContent = emoji;
     }
 
     function ensureQuestsReset() {
@@ -911,6 +1063,11 @@
         if (!state.rulesSeen) { state.rulesSeen = true; saveState(); }
         if (pendingDailyModal) { pendingDailyModal = false; showDailyModal(); }
     }
+
+    function getPrestigeRequirement() {
+        return 100000000 + state.prestigeLevel * 100000000;
+    }
+
     function checkStoryProgress() {
         let currentRank = STORY_LEVELS[0].rank;
         for (let i = STORY_LEVELS.length - 1; i >= 0; i--) {
@@ -925,6 +1082,17 @@
         document.getElementById('nav-cases').classList.toggle('locked', state.totalEarnedStory < 20000000);
         document.getElementById('menuUpgradeDesc').textContent = state.totalEarnedStory < 5000000 ? '5 000 000 ₽' : 'Доступно';
         document.getElementById('menuCaseDesc').textContent = state.totalEarnedStory < 20000000 ? '20 000 000 ₽' : 'Доступно';
+        
+        let req = getPrestigeRequirement();
+        const btn = document.getElementById('btnPrestige');
+        if (btn) {
+            if (state.totalEarnedStory >= req) {
+                btn.style.display = 'flex';
+                btn.textContent = `Сделать Перерождение (${formatMoney(req)} ₽)`;
+            } else {
+                btn.style.display = 'none';
+            }
+        }
     }
     function checkLock(viewId, req) {
         if (state.totalEarnedStory < req) { showModal('Заблокировано', `Нужно заработать <b>${formatMoney(req)} ₽</b>.`, '🔒'); return; }
@@ -949,7 +1117,7 @@
         if (state.isSpinningPlate) { state.isSpinningPlate = false; document.getElementById('genPlateBox').classList.remove('spinning'); }
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById(`view-${viewId}`).classList.add('active');
-        const titles = { menu: 'Номердай', cars: 'Автосалон', plates: 'Госзнаки', garage: 'Гараж', upgrades: 'Тюнинг', profile: 'Профиль', cases: 'Аукцион', catalog: 'Каталог', quests: 'Задания' };
+        const titles = { menu: 'Номердай', cars: 'Автосалон', plates: 'Госзнаки', garage: 'Гараж', upgrades: 'Тюнинг', profile: 'Профиль', cases: 'Аукцион', catalog: 'Каталог', quests: 'Задания', upgrader: 'Апгрейдер' };
         document.getElementById('pageTitle').textContent = titles[viewId] || 'Номердай';
         document.getElementById('backBtn').style.display = viewId === 'menu' ? 'none' : 'block';
         if (viewId === 'cars') { state.currentCar ? showCarResult(state.currentCar) : resetCarUI(); }
@@ -959,12 +1127,14 @@
         if (viewId === 'profile') renderProfile();
         if (viewId === 'upgrades') renderUpgrades();
         if (viewId === 'quests') renderQuests();
+        if (viewId === 'upgrader') renderUpgrader();
         if (viewId === 'menu') checkStoryProgress();
         updateUI();
     }
 
     function doPrestige() {
-        if (state.totalEarnedStory < 100000000) return;
+        let req = getPrestigeRequirement();
+        if (state.totalEarnedStory < req) return;
         if (!confirm("Вы уверены? Вы потеряете все деньги, машины и номера, но получите +10% к шансу выпадения дорогих машин навсегда.")) return;
         state.prestigeLevel++;
         state.balanceRub = CONFIG.startBalanceRub;
@@ -973,12 +1143,13 @@
         state.upgradeLevel = 0;
         state.currentCar = null; state.currentPlate = null;
         state.totalEarnedStory = 0;
+        state.upgSelectedIdx = -1;
         saveState(); updateUI(); renderProfile(); resetCarUI(); resetPlateUI();
-        showModal('Перерождение!', `Теперь твой шанс на дорогие тачки увеличен!<br><br>Уровень перерождения: <b>${state.prestigeLevel}</b><br>Бонус к шансу: <b>+${state.prestigeLevel * 10}%</b>`, '✨');
+        let nextReq = getPrestigeRequirement();
+        showModal('Перерождение!', `Теперь твой шанс на дорогие тачки увеличен!<br><br>Уровень перерождения: <b>${state.prestigeLevel}</b><br>Бонус к шансу: <b>+${state.prestigeLevel * 10}%</b><br><br>Следующее перерождение будет доступно за <b>${formatMoney(nextReq)} ₽</b>.`, '✨');
         playTone(1200, 'sine', 0.6);
     }
 
-    // ===== ФУНКЦИЯ ПРОКРУТКИ =====
     function rollCar(isBoosted) {
         if (state.isSpinningCar) return;
         let cost = isBoosted ? CONFIG.costCarBoost : CONFIG.costCarNormal;
@@ -989,14 +1160,8 @@
         state.stats.spent += cost;
         trackQuest('spin', 1);
         
-        // Логика Шкалы Вайба
         let isVibeGuaranteed = false;
-        if (state.vibe >= 10) {
-            isVibeGuaranteed = true;
-            state.vibe = 0;
-        } else {
-            state.vibe++;
-        }
+        if (state.vibe >= 10) { isVibeGuaranteed = true; state.vibe = 0; } else { state.vibe++; }
         updateVibeUI();
 
         state.isSpinningCar = true; state.currentCar = null;
@@ -1016,7 +1181,6 @@
         fill.style.animation = 'none'; void fill.offsetWidth;
         fill.style.animation = 'roll-fill 3s linear forwards, roll-gradient 1s linear infinite';
 
-        // Генерация с учётом Вайба
         let result = generateCarItem(isBoosted, isVibeGuaranteed);
         let ticks = 0;
         let timer = setInterval(() => {
@@ -1026,15 +1190,10 @@
             document.getElementById('carBrand').textContent = tempCar.brand;
             document.getElementById('carName').textContent = tempCar.name;
             playTone(400 + (ticks * 12), 'square', 0.04, 0.02);
-            if (++ticks > 30) {
-                clearInterval(timer);
-                progress.classList.remove('active');
-                finishCarGen(result);
-            }
+            if (++ticks > 30) { clearInterval(timer); progress.classList.remove('active'); finishCarGen(result); }
         }, 100);
     }
 
-    // ===== x10 ПРОКРУТКА =====
     function rollCarX10() {
         if (state.isSpinningCar) return;
         const cost = CONFIG.costCarNormal * 10;
@@ -1045,16 +1204,12 @@
         state.stats.spins += 10;
         trackQuest('spin', 10);
         
-        // Сброс вайба при x10, так как это уже мощный залп
         let wasVibeFull = state.vibe >= 10;
         state.vibe = 0;
         updateVibeUI();
 
         const results = [];
-        for (let i = 0; i < 10; i++) {
-            // Первая машина получает буст вайба, если шкала была полна
-            results.push(generateCarItem(false, wasVibeFull && i === 0));
-        }
+        for (let i = 0; i < 10; i++) results.push(generateCarItem(false, wasVibeFull && i === 0));
         results.sort((a, b) => b.price - a.price);
         const best = results[0];
         const others = results.slice(1);
@@ -1096,40 +1251,18 @@
         updateUI();
     }
 
-    // ===== ГЕНЕРАЦИЯ С ПОНИЖЕННЫМИ ШАНСАМИ =====
     function generateCarItem(isBoosted, forceHighRarity = false) {
         let rnd = Math.random(), rarity = 'common';
-        
-        // Пониженные базовые шансы (было 10/2, стало 5/1)
-        let epicChance = 0.05;
-        let legendChance = 0.01;
-        let rareChance = 0.20; // 20% остаётся
-
-        if (isBoosted) {
-            // Пониженные шансы для буста (было 30/8, стало 15/3)
-            epicChance = 0.15;
-            legendChance = 0.03;
-            rareChance = 0.35; 
-        }
-
-        // Бонус от перерождения
-        let prestigeBonus = state.prestigeLevel * 0.05; // Чуть уменьшили бонус перерождения
-        epicChance += prestigeBonus;
-        legendChance += prestigeBonus;
-        
-        if (epicChance + legendChance > 0.80) {
-            legendChance = 0.80 - epicChance;
-            if (legendChance < 0.05) { legendChance = 0.05; epicChance = 0.75; }
-        }
-
+        let epicChance = 0.05, legendChance = 0.01, rareChance = 0.20;
+        if (isBoosted) { epicChance = 0.15; legendChance = 0.03; rareChance = 0.35; }
+        let prestigeBonus = state.prestigeLevel * 0.05;
+        epicChance += prestigeBonus; legendChance += prestigeBonus;
+        if (epicChance + legendChance > 0.80) { legendChance = 0.80 - epicChance; if (legendChance < 0.05) { legendChance = 0.05; epicChance = 0.75; } }
         if (rnd < legendChance) rarity = 'legend';
         else if (rnd < legendChance + epicChance) rarity = 'epic';
         else if (rnd < legendChance + epicChance + rareChance) rarity = 'rare';
 
-        // Гарант от Шкалы Вайба
-        if (forceHighRarity && (rarity === 'common' || rarity === 'rare')) {
-            rarity = Math.random() < 0.20 ? 'legend' : 'epic'; // 20% шанс на легенду, 80% на эпик
-        }
+        if (forceHighRarity && (rarity === 'common' || rarity === 'rare')) rarity = Math.random() < 0.20 ? 'legend' : 'epic';
 
         let carPool = CONFIG.cars[rarity];
         let selectedCar, attempts = 0;
@@ -1142,43 +1275,29 @@
         let upgradeMult = 1 + (state.upgradeLevel * 0.10);
         let prestigePriceMult = 1 + (state.prestigeLevel * 0.25);
         car.price = Math.floor(car.price * upgradeMult * prestigePriceMult);
-        
-        if (rarity === 'epic' || rarity === 'legend') trackQuest('epic', 1);
-        
         return car;
     }
 
-    // ===== АНИМАЦИЯ ВЫПАДЕНИЯ (С МЕМАМИ) =====
     function playCarReveal(car) {
         const priceEl = document.getElementById('carPriceLabel');
         const box = document.getElementById('genCarBox');
         const price = car.price;
-        
         if (window._carRevealRAF) { cancelAnimationFrame(window._carRevealRAF); window._carRevealRAF = null; }
         priceEl.classList.remove('price-epic', 'price-legend');
         box.classList.remove('fx-epic', 'fx-legend', 'fx-shake');
 
-        // До 2 млн — ничего
         if (price < 2000000) {
             priceEl.innerHTML = `<span style="color:var(--rub)">${formatMoney(price)} ₽</span>`;
             checkRecord(car); return;
         }
 
-        // Определение тира
-        let tier;
-        if (price >= 20000000) tier = 5;
-        else if (price >= 8000000) tier = 4;
-        else if (price >= 4000000) tier = 3;
-        else tier = 2;
-
+        let tier = price >= 20000000 ? 5 : price >= 8000000 ? 4 : price >= 4000000 ? 3 : 2;
         const isGold = tier >= 4;
         priceEl.classList.add(isGold ? 'price-legend' : 'price-epic');
-        
         if (tier >= 3) box.classList.add(isGold ? 'fx-legend' : 'fx-epic');
         if (tier >= 4) { box.classList.add('fx-shake'); setTimeout(() => box.classList.remove('fx-shake'), 600); }
         if (tier >= 5) { document.body.insertAdjacentHTML('beforeend', '<div class="flash"></div>'); setTimeout(() => document.querySelector('.flash')?.remove(), 500); }
         
-        // Мемные всплывашки (стильные)
         if (tier === 2) showMemeText('НЕПЛОХО', '#60a5fa', 0);
         if (tier === 3) showMemeText('ЖИР!', '#c084fc', -30);
         if (tier === 4) { showMemeText('ОГОНЬ!', '#fbbf24', -40); setTimeout(() => showMemeText('БАБКИ!', '#fbbf24', 40), 150); }
@@ -1198,7 +1317,6 @@
         };
         requestAnimationFrame(tick);
 
-        // Монетки
         const rect = priceEl.getBoundingClientRect();
         const count = tier >= 4 ? 10 : tier >= 3 ? 6 : 4;
         const coinColor = isGold ? '#fbbf24' : '#c084fc';
@@ -1369,6 +1487,8 @@
         state.activeGarageTab = tab;
         document.getElementById('tabCarsBtn').classList.toggle('active', tab === 'cars');
         document.getElementById('tabPlatesBtn').classList.toggle('active', tab === 'plates');
+        const customBtn = document.getElementById('btnCustomPlate');
+        if (customBtn) customBtn.style.display = tab === 'plates' ? 'block' : 'none';
         renderGarage();
     }
 
@@ -1431,16 +1551,35 @@
         if (index < 0 || index >= arr.length) return;
         const item = arr[index];
         if (type === 'cars') addRubles(item.price); else addTokens(item.price);
-        arr.splice(index, 1); saveState(); renderGarage(); playChing();
+        arr.splice(index, 1); 
+        if (type === 'cars' && state.upgSelectedIdx === index) state.upgSelectedIdx = -1;
+        else if (type === 'cars' && state.upgSelectedIdx > index) state.upgSelectedIdx--;
+        saveState(); renderGarage(); playChing();
     }
     function sellAllActiveGarage() {
         let arr = state.activeGarageTab === 'cars' ? state.garageCars : state.garagePlates;
         if (arr.length === 0) return;
         let total = arr.reduce((sum, p) => sum + p.price, 0);
-        if (state.activeGarageTab === 'cars') { addRubles(total); state.garageCars = []; }
+        if (state.activeGarageTab === 'cars') { addRubles(total); state.garageCars = []; state.upgSelectedIdx = -1; }
         else { addTokens(total); state.garagePlates = []; }
         saveState(); renderGarage(); playChing();
         showModal('Продано', `Вы получили <b>${formatMoney(total)}</b>`, '💰');
+    }
+
+    function createCustomPlate() {
+        if (state.balanceToken < CONFIG.costCustomPlate) return showModal('Мало жетонов', `Нужно ${formatMoney(CONFIG.costCustomPlate)} 💎 для создания номера.`, '❌');
+        let input = prompt('Введи желаемый номер (например: О 777 ОО). Только буквы и цифры!');
+        if (!input) return;
+        input = input.trim().toUpperCase().replace(/[^А-ЯA-Z0-9 ]/g, '');
+        let parts = input.split(/\s+/);
+        if (parts.length !== 3 || parts[1].length !== 3 || isNaN(parts[1])) {
+            return showModal('Ошибка', 'Формат: [Буква] [3 цифры] [2 буквы]. Например: О 777 ОО', '⚠️');
+        }
+        state.balanceToken -= CONFIG.costCustomPlate;
+        let plate = { l1: parts[0], l2: parts[2], num: parts[1], region: '77', rarity: 'epic', price: 25000 };
+        state.garagePlates.push(plate);
+        saveState(); updateUI(); renderGarage();
+        showModal('Успех!', `Кастомный номер <b>${plate.l1} ${plate.num} ${plate.l2}</b> добавлен в гараж!`, '✨');
     }
 
     function openCase() {
@@ -1503,10 +1642,142 @@
         document.getElementById('profileBonus').textContent = `+${state.upgradeLevel * 10}%`;
         let prestigePct = state.prestigeLevel * 10;
         document.getElementById('profilePrestige').textContent = `${state.prestigeLevel} (Шанс +${prestigePct}%)`;
-        let btn = document.getElementById('btnPrestige');
-        if (state.totalEarnedStory >= 100000000) { btn.style.display = 'flex'; btn.textContent = `Сделать Перерождение (Уровень ${state.prestigeLevel + 1})`; }
-        else btn.style.display = 'none';
+        checkStoryProgress();
     }
+
+    // ===== АПГРЕЙДЕР =====
+    function renderUpgrader() {
+        if (state.garageCars.length === 0) {
+            document.getElementById('upgStakeList').innerHTML = '<div style="color:var(--text-muted); font-size:12px; width:100%; text-align:center; padding:10px;">Гараж пуст. Сначала накрути тачек!</div>';
+            document.getElementById('btnDoUpgrade').disabled = true;
+            return;
+        }
+        if (state.upgSelectedIdx === -1 || state.upgSelectedIdx >= state.garageCars.length) {
+            state.upgSelectedIdx = 0;
+        }
+        const stakeList = document.getElementById('upgStakeList');
+        stakeList.innerHTML = '';
+        state.garageCars.forEach((car, idx) => {
+            const div = document.createElement('div');
+            div.className = 'upg-select-item' + (idx === state.upgSelectedIdx ? ' selected' : '');
+            div.onclick = () => { state.upgSelectedIdx = idx; renderUpgrader(); };
+            div.innerHTML = `${svgFor(car)}<div class="name">${car.name}</div>`;
+            stakeList.appendChild(div);
+        });
+
+        const stake = state.garageCars[state.upgSelectedIdx];
+        document.getElementById('upgStakeSvg').innerHTML = svgFor(stake);
+        document.getElementById('upgStakePrice').textContent = formatMoney(stake.price) + ' ₽';
+
+        const winZone = document.getElementById('upgWinZone');
+        winZone.style.width = state.upgChance + '%';
+
+        document.querySelectorAll('.upg-chance-btn').forEach(btn => {
+            btn.classList.toggle('active', parseInt(btn.textContent) === state.upgChance);
+        });
+
+        // Расчет приза
+        const mult = 100 / state.upgChance;
+        const targetPrice = stake.price * mult;
+        const allCars = Object.values(CONFIG.cars).flat();
+        let bestCar = allCars[0];
+        let bestDiff = Infinity;
+        allCars.forEach(c => {
+            let cPrice = c.price * (1 + state.upgradeLevel * 0.1) * (1 + state.prestigeLevel * 0.25);
+            let diff = Math.abs(cPrice - targetPrice);
+            if (diff < bestDiff) { bestDiff = diff; bestCar = c; }
+        });
+        
+        document.getElementById('upgPrizeSvg').innerHTML = svgFor(bestCar);
+        document.getElementById('upgPrizePrice').textContent = formatMoney(bestCar.price) + ' ₽';
+        
+        document.getElementById('btnDoUpgrade').disabled = state.upgIsRolling;
+    }
+
+    function setUpgradeChance(chance) {
+        if (state.upgIsRolling) return;
+        state.upgChance = chance;
+        saveState();
+        renderUpgrader();
+    }
+
+    function doUpgrade() {
+        if (state.upgIsRolling) return;
+        if (state.upgSelectedIdx === -1 || state.garageCars.length === 0) return;
+        
+        state.upgIsRolling = true;
+        const btn = document.getElementById('btnDoUpgrade');
+        btn.disabled = true;
+        btn.textContent = 'Крутим...';
+        
+        const marker = document.getElementById('upgMarker');
+        marker.classList.remove('rolling');
+        marker.style.left = '0%';
+        void marker.offsetWidth;
+        marker.classList.add('rolling');
+        
+        // Анимация: ползунок едет до случайного значения от 0 до 100
+        const targetStop = 5 + Math.random() * 90; // Оставляем края, чтобы было интересно
+        marker.style.left = targetStop + '%';
+        
+        playTone(300, 'sawtooth', 0.5, 0.05);
+        setTimeout(() => playTone(600, 'sawtooth', 0.5, 0.05), 1500);
+        
+        setTimeout(() => {
+            state.upgIsRolling = false;
+            const win = targetStop <= state.upgChance;
+            const stake = state.garageCars[state.upgSelectedIdx];
+            
+            if (win) {
+                // Победа - выдаем приз
+                const mult = 100 / state.upgChance;
+                const targetPrice = stake.price * mult;
+                const allCars = Object.values(CONFIG.cars).flat();
+                let bestCar = allCars[0];
+                let bestDiff = Infinity;
+                allCars.forEach(c => {
+                    let cPrice = c.price * (1 + state.upgradeLevel * 0.1) * (1 + state.prestigeLevel * 0.25);
+                    let diff = Math.abs(cPrice - targetPrice);
+                    if (diff < bestDiff) { bestDiff = diff; bestCar = c; }
+                });
+                
+                // Определяем редкость приза
+                let prizeRarity = 'common';
+                if (bestCar.price >= 30000000) prizeRarity = 'legend';
+                else if (bestCar.price >= 7000000) prizeRarity = 'epic';
+                else if (bestCar.price >= 3200000) prizeRarity = 'rare';
+                
+                const newCar = { ...bestCar, rarity: prizeRarity };
+                newCar.price = Math.floor(bestCar.price * (1 + state.upgradeLevel * 0.1) * (1 + state.prestigeLevel * 0.25));
+                
+                // Удаляем ставку, добавляем приз
+                state.garageCars.splice(state.upgSelectedIdx, 1);
+                state.garageCars.push(newCar);
+                state.upgSelectedIdx = state.garageCars.length - 1;
+                
+                saveState();
+                renderUpgrader();
+                playChing();
+                burst('legend');
+                showModal('🎉 АПГРЕЙД УСПЕШЕН!', `Ты выбил <b>${newCar.brand} ${newCar.name}</b><br>Стоимостью <b>${formatMoney(newCar.price)} ₽</b>!`, '🏆');
+            } else {
+                // Проигрыш - сгорает
+                state.garageCars.splice(state.upgSelectedIdx, 1);
+                state.upgSelectedIdx = state.garageCars.length > 0 ? 0 : -1;
+                saveState();
+                renderUpgrader();
+                playTone(150, 'sawtooth', 0.5, 0.1);
+                showModal('💥 ПРОИГРЫШ', `Твоя машина сгорела. Попробуй ещё раз!`, '💀');
+            }
+            
+            btn.textContent = 'Апгрейд';
+            btn.disabled = state.garageCars.length === 0;
+            marker.classList.remove('rolling');
+            marker.style.left = '0%';
+            updateUI();
+        }, 3100);
+    }
+
 
     const AID_AMOUNT = 500000, AID_HOUR = 60 * 60 * 1000, AID_MAX_CATCHUP = 12;
     function fmtTime(ms) { const t = Math.max(0, Math.ceil(ms / 1000)); const h = Math.floor(t / 3600), m = Math.floor((t % 3600) / 60), sec = t % 60; const pad = n => String(n).padStart(2, '0'); return (h ? h + ':' : '') + pad(m) + ':' + pad(sec); }
