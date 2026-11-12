@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -1776,6 +1778,22 @@ function generateBattleRooms(){
     return rooms;
 }
 function renderBattleLobby(){
+    <button class="btn btn-p" style="margin-bottom: 15px;" onclick="findMatch()">🌐 Найти живого игрока</button>
+<div id="pvpScreen" style="display:none; background:var(--panel); padding:15px; border-radius:20px; border:1px solid var(--border);">
+    <div style="text-align:center;font-size:18px;font-weight:900;margin-bottom:15px;color:#ef4444;">⚔️ LIVE PVP</div>
+    <div style="display:flex;justify-content:space-between;margin:20px 0;">
+        <div style="text-align:center;flex:1;">
+            <div style="font-size:12px;color:var(--muted);">Ты</div>
+            <div id="pvpMyScore" style="font-size:20px;font-weight:900;color:var(--rub);">0 ₽</div>
+        </div>
+        <div style="font-size:20px;font-weight:900;color:#ef4444;padding-top:15px;">VS</div>
+        <div style="text-align:center;flex:1;">
+            <div style="font-size:12px;color:var(--muted);" id="pvpOpponentName">Соперник</div>
+            <div id="pvpOppScore" style="font-size:20px;font-weight:900;color:#f87171;">0 ₽</div>
+        </div>
+    </div>
+    <button class="btn btn-p" onclick="pvpAddScore(2000000)">🚗 Крутить на 2 млн ₽</button>
+</div>
     const myCars=document.getElementById('battleMyCars');
     if(state.garageCars.length===0){myCars.innerHTML='<div style="color:var(--text-muted);font-size:12px;padding:15px;text-align:center;width:100%;">Гараж пуст. Накрути машин!</div>';}
     else{
@@ -2119,6 +2137,179 @@ let _splashHidden=false;
 function hideSplash(){if(_splashHidden)return;_splashHidden=true;const splash=document.getElementById('splashScreen');if(splash)splash.classList.add('hide');}
 window.addEventListener('load',()=>setTimeout(hideSplash,2200));
 setTimeout(hideSplash,3500);
+</script>
+    <!-- ==================== FIREBASE (ОНЛАЙН) ==================== -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+// Твой конфиг Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyBL9sJnUk6AL-OKUlFV9TR_Wd3aPGfHcqA",
+  authDomain: "nombergive-462e5.firebaseapp.com",
+  databaseURL: "https://nombergive-462e5-default-rtdb.firebaseio.com",
+  projectId: "nombergive-462e5",
+  storageBucket: "nombergive-462e5.firebasestorage.app",
+  messagingSenderId: "363158478201",
+  appId: "1:363158478201:web:76b564f1b79f619183e3a8"
+};
+
+// Инициализация
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// ID и имя игрока
+let myPlayerId = localStorage.getItem('onlinePlayerId');
+if (!myPlayerId) {
+    myPlayerId = 'p_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('onlinePlayerId', myPlayerId);
+}
+let myPlayerName = localStorage.getItem('onlinePlayerName');
+if (!myPlayerName) {
+    myPlayerName = prompt("Введи своё имя для онлайна:", "Игрок" + Math.floor(Math.random()*999)) || "Игрок" + Math.floor(Math.random()*999);
+    localStorage.setItem('onlinePlayerName', myPlayerName);
+}
+
+// ===== 1. ЛИДЕРБОРД =====
+function pushToLeaderboard() {
+    if (!state || !db) return;
+    db.ref('leaderboard/' + myPlayerId).set({
+        name: myPlayerName,
+        balance: state.balanceRub || 0,
+        mmr: state.mmr || 0,
+        updatedAt: Date.now()
+    });
+}
+
+function startLeaderboardListener() {
+    db.ref('leaderboard').on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+        const players = Object.values(data).sort((a, b) => (b.balance || 0) - (a.balance || 0));
+        const list = document.getElementById('onlineLbList');
+        if (!list) return;
+        list.innerHTML = '';
+        players.slice(0, 30).forEach((p, i) => {
+            const d = document.createElement('div');
+            d.className = 'lb';
+            d.innerHTML = `<div class="lb-rank">${i+1}</div><div class="lb-av">👤</div><div class="lb-info"><div class="lb-name">${p.name || 'Игрок'}</div><div class="lb-sub">MMR: ${p.mmr || 0}</div></div><div class="lb-val">${formatMoney(p.balance || 0)} ₽</div>`;
+            list.appendChild(d);
+        });
+    });
+}
+
+// ===== 2. ОНЛАЙН-СТАТУС =====
+function setOnlineStatus(isOnline) {
+    const ref = db.ref('online/' + myPlayerId);
+    if (isOnline) {
+        ref.set({ name: myPlayerName, timestamp: Date.now() });
+        ref.onDisconnect().remove();
+    } else {
+        ref.remove();
+    }
+}
+
+function countOnlinePlayers() {
+    db.ref('online').on('value', (snapshot) => {
+        const count = snapshot.numChildren();
+        const el = document.getElementById('onlineCount');
+        if (el) el.textContent = count;
+    });
+}
+
+// ===== 3. PVP БАТЛ =====
+let currentRoomId = null;
+
+function findMatch() {
+    showToast('🔍 Поиск соперника...');
+    const queueRef = db.ref('matchmaking');
+    queueRef.once('value', (snapshot) => {
+        const queue = snapshot.val() || {};
+        const opponentId = Object.keys(queue).find(id => id !== myPlayerId);
+        if (opponentId) {
+            const roomId = 'room_' + Date.now();
+            const roomRef = db.ref('rooms/' + roomId);
+            roomRef.set({
+                player1: opponentId, player2: myPlayerId,
+                player1Score: 0, player2Score: 0,
+                startedAt: Date.now(), finished: false, winner: null
+            });
+            queueRef.child(opponentId).remove();
+            queueRef.child(myPlayerId).remove();
+            enterBattleRoom(roomId, opponentId);
+        } else {
+            queueRef.child(myPlayerId).set({ name: myPlayerName, timestamp: Date.now() });
+            queueRef.child(myPlayerId).onDisconnect().remove();
+            showToast('⏳ Ждём соперника...');
+            queueRef.on('child_removed', (snap) => {
+                if (snap.key === myPlayerId) {
+                    queueRef.off();
+                    db.ref('rooms').orderByChild('player2').equalTo(myPlayerId).limitToLast(1).once('value', (s) => {
+                        const rooms = s.val();
+                        if (rooms) {
+                            const rid = Object.keys(rooms)[0];
+                            enterBattleRoom(rid, rooms[rid].player1);
+                        }
+                    });
+                }
+            });
+        }
+    });
+}
+
+function enterBattleRoom(roomId, opponentId) {
+    currentRoomId = roomId;
+    showToast('⚔️ Соперник найден!');
+    document.getElementById('pvpScreen').style.display = 'block';
+    document.getElementById('battleLobby').style.display = 'none';
+    
+    db.ref('online/' + opponentId).once('value', (s) => {
+        const oppName = (s.val() && s.val().name) || 'Соперник';
+        document.getElementById('pvpOpponentName').textContent = oppName;
+    });
+    
+    db.ref('rooms/' + roomId).on('value', (snapshot) => {
+        const room = snapshot.val();
+        if (!room) return;
+        const myScore = room.player1 === myPlayerId ? room.player1Score : room.player2Score;
+        const oppScore = room.player1 === myPlayerId ? room.player2Score : room.player1Score;
+        const myEl = document.getElementById('pvpMyScore');
+        const oppEl = document.getElementById('pvpOppScore');
+        if (myEl) myEl.textContent = formatMoney(myScore || 0) + ' ₽';
+        if (oppEl) oppEl.textContent = formatMoney(oppScore || 0) + ' ₽';
+        
+        if (room.finished) {
+            const iWin = room.winner === myPlayerId;
+            showModal(iWin ? '🏆 ПОБЕДА!' : '💀 ПРОИГРЫШ', `Ты: ${formatMoney(myScore)} ₽<br>Соперник: ${formatMoney(oppScore)} ₽`, iWin ? '🏆' : '💀');
+            db.ref('rooms/' + roomId).off();
+            currentRoomId = null;
+            document.getElementById('pvpScreen').style.display = 'none';
+            document.getElementById('battleLobby').style.display = 'block';
+        }
+    });
+}
+
+function pvpAddScore(points) {
+    if (!currentRoomId) return;
+    const roomRef = db.ref('rooms/' + currentRoomId);
+    roomRef.once('value', (snapshot) => {
+        const room = snapshot.val();
+        if (!room || room.finished) return;
+        const field = room.player1 === myPlayerId ? 'player1Score' : 'player2Score';
+        roomRef.child(field).set((room[field] || 0) + points);
+    });
+}
+
+// Запуск при загрузке
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        pushToLeaderboard();
+        setOnlineStatus(true);
+        startLeaderboardListener();
+        countOnlinePlayers();
+        setInterval(pushToLeaderboard, 30000);
+    }, 2000);
+});
 </script>
 </body>
                                                              </html>
