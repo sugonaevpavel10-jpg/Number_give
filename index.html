@@ -707,23 +707,30 @@ body.t-emerald{--bg:#051f14;--text:#fff;--muted:#6ee7b7;--panel:#0a2e1f;--border
         <div id="tradeInList" style="display:flex;flex-direction:column;gap:10px;text-align:left;"></div>
         <button class="btn btn-s" style="margin-top:16px;width:100%;" onclick="closeTradeIn()">Закрыть</button>
     </div>
-    </div>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+        </div>
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
-/* ===== ИНИЦИАЛИЗАЦИЯ FIREBASE ===== */
-const firebaseConfig = {
-  apiKey: "AIzaSyBL9sJnUk6AL-OKUlFV9TR_Wd3aPGfHcqA",
-  authDomain: "nombergive-462e5.firebaseapp.com",
-  databaseURL: "https://nombergive-462e5-default-rtdb.firebaseio.com",
-  projectId: "nombergive-462e5",
-  storageBucket: "nombergive-462e5.firebasestorage.app",
-  messagingSenderId: "363158478201",
-  appId: "1:363158478201:web:76b564f1b79f619183e3a8"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+/* ===== БЕЗОПАСНАЯ ИНИЦИАЛИЗАЦИЯ FIREBASE ===== */
+let db = null;
+try {
+    if (typeof firebase !== 'undefined') {
+        const firebaseConfig = {
+            apiKey: "AIzaSyBL9sJnUk6AL-OKUlFV9TR_Wd3aPGfHcqA",
+            authDomain: "nombergive-462e5.firebaseapp.com",
+            databaseURL: "https://nombergive-462e5-default-rtdb.firebaseio.com",
+            projectId: "nombergive-462e5",
+            storageBucket: "nombergive-462e5.firebasestorage.app",
+            messagingSenderId: "363158478201",
+            appId: "1:363158478201:web:76b564f1b79f619183e3a8"
+        };
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.database();
+    }
+} catch (e) {
+    console.warn("Firebase не загрузился, играем офлайн", e);
+}
 
 let myPlayerId = localStorage.getItem('onlinePlayerId');
 if (!myPlayerId) {
@@ -732,11 +739,14 @@ if (!myPlayerId) {
 }
 let myPlayerName = localStorage.getItem('onlinePlayerName');
 if (!myPlayerName) {
-    myPlayerName = prompt("Введи своё имя для онлайна:", "Игрок" + Math.floor(Math.random()*999)) || "Игрок" + Math.floor(Math.random()*999);
+    try {
+        myPlayerName = prompt("Введи своё имя для онлайна:", "Игрок" + Math.floor(Math.random()*999));
+    } catch(e) {}
+    if (!myPlayerName) myPlayerName = "Игрок" + Math.floor(Math.random()*999);
     localStorage.setItem('onlinePlayerName', myPlayerName);
 }
 
-/* ===== ОСНОВНОЙ ДВИЖОК ===== */
+/* ===== ОСНОВНОЙ ДВИЖОК ИГРЫ ===== */
 const SVG_CARS={hatch:'<svg viewBox="0 0 200 100"><path d="M30 70 L40 50 L80 30 L140 30 L170 50 L185 60 L185 75 L30 75 Z" fill="#cbd5e1"/><path d="M50 50 L85 35 L130 35 L155 50 Z" fill="#94a3b8"/><circle cx="60" cy="75" r="15" fill="#1e293b"/><circle cx="150" cy="75" r="15" fill="#1e293b"/></svg>',sedan:'<svg viewBox="0 0 200 100"><path d="M20 70 L30 45 L70 25 L140 25 L175 45 L190 60 L190 75 L20 75 Z" fill="#60a5fa"/><path d="M45 45 L80 30 L130 30 L160 45 Z" fill="#1e3a8a"/><circle cx="50" cy="75" r="16" fill="#0f172a"/><circle cx="150" cy="75" r="16" fill="#0f172a"/></svg>',suv:'<svg viewBox="0 0 200 100"><path d="M15 75 L25 40 L60 20 L150 20 L180 40 L195 55 L195 75 Z" fill="#f87171"/><path d="M40 40 L65 25 L140 25 L165 40 Z" fill="#7f1d1d"/><circle cx="50" cy="75" r="18" fill="#0f172a"/><circle cx="155" cy="75" r="18" fill="#0f172a"/></svg>',sport:'<svg viewBox="0 0 200 100"><path d="M10 75 L30 50 L80 35 L140 35 L180 55 L195 65 L195 75 Z" fill="#fbbf24"/><path d="M50 50 L85 40 L125 40 L155 50 Z" fill="#78350f"/><circle cx="55" cy="75" r="15" fill="#0f172a"/><circle cx="150" cy="75" r="15" fill="#0f172a"/></svg>',luxury:'<svg viewBox="0 0 200 100"><path d="M15 75 L25 45 L70 20 L140 20 L180 45 L195 60 L195 75 Z" fill="#e2e8f0"/><path d="M45 45 L80 28 L130 28 L160 45 Z" fill="#334155"/><circle cx="55" cy="75" r="16" fill="#0f172a"/><circle cx="150" cy="75" r="16" fill="#0f172a"/></svg>'};
 
 const CONFIG={
@@ -1971,15 +1981,18 @@ function updatePity(){const el=document.getElementById('pityBox');if(!el)return;
 /* ===== FIREBASE ОНЛАЙН ЛОГИКА ===== */
 function pushToLeaderboard() {
     if (!state || !db) return;
-    db.ref('leaderboard/' + myPlayerId).set({
-        name: myPlayerName,
-        balance: state.balanceRub || 0,
-        mmr: state.mmr || 0,
-        updatedAt: Date.now()
-    });
+    try {
+        db.ref('leaderboard/' + myPlayerId).set({
+            name: myPlayerName,
+            balance: state.balanceRub || 0,
+            mmr: state.mmr || 0,
+            updatedAt: Date.now()
+        });
+    } catch(e) {}
 }
 
 function startLeaderboardListener() {
+    if (!db) return;
     db.ref('leaderboard').on('value', (snapshot) => {
         const data = snapshot.val();
         if (!data) return;
@@ -1993,30 +2006,35 @@ function startLeaderboardListener() {
             d.innerHTML = `<div class="lb-rank">${i+1}</div><div class="lb-av">👤</div><div class="lb-info"><div class="lb-name">${p.name || 'Игрок'}</div><div class="lb-sub">MMR: ${p.mmr || 0}</div></div><div class="lb-val">${formatMoney(p.balance || 0)} ₽</div>`;
             list.appendChild(d);
         });
-    });
+    }, (err) => { console.warn(err); });
 }
 
 function setOnlineStatus(isOnline) {
-    const ref = db.ref('online/' + myPlayerId);
-    if (isOnline) {
-        ref.set({ name: myPlayerName, timestamp: Date.now() });
-        ref.onDisconnect().remove();
-    } else {
-        ref.remove();
-    }
+    if (!db) return;
+    try {
+        const ref = db.ref('online/' + myPlayerId);
+        if (isOnline) {
+            ref.set({ name: myPlayerName, timestamp: Date.now() });
+            ref.onDisconnect().remove();
+        } else {
+            ref.remove();
+        }
+    } catch(e) {}
 }
 
 function countOnlinePlayers() {
+    if (!db) return;
     db.ref('online').on('value', (snapshot) => {
         const count = snapshot.numChildren();
         const el = document.getElementById('onlineCount');
         if (el) el.textContent = count;
-    });
+    }, (err) => { console.warn(err); });
 }
 
 let currentRoomId = null;
 
 function findMatch() {
+    if (!db) return showModal('Ошибка', 'Нет интернета для онлайна', '📡');
     showToast('🔍 Поиск соперника...');
     const queueRef = db.ref('matchmaking');
     queueRef.once('value', (snapshot) => {
@@ -2046,7 +2064,7 @@ function findMatch() {
                 }
             });
         }
-    });
+    }, (err) => { showModal('Ошибка', 'Не удалось подключиться', '📡'); });
 }
 
 function enterBattleRoom(roomId, opponentId) {
@@ -2082,7 +2100,7 @@ function enterBattleRoom(roomId, opponentId) {
 }
 
 function pvpAddScore(points) {
-    if (!currentRoomId) return;
+    if (!currentRoomId || !db) return;
     const roomRef = db.ref('rooms/' + currentRoomId);
     roomRef.once('value', (snapshot) => {
         const room = snapshot.val();
