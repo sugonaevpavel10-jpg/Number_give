@@ -2171,35 +2171,33 @@ function hideSplash(){if(_splashHidden)return;_splashHidden=true;const s=documen
 window.addEventListener('load',()=>setTimeout(hideSplash,2200));
 setTimeout(hideSplash,3500);
 </script>
-    <!-- Кнопка для открытия окна пополнения -->
+<!-- Кнопка для открытия окна пополнения -->
 <div style="position: absolute; top: 10px; right: 10px; z-index: 100;">
   <button onclick="document.getElementById('promoModal').style.display='flex'" 
           style="background: #FFD700; border: 2px solid #B8860B; border-radius: 8px; padding: 10px 15px; font-weight: bold; cursor: pointer; font-size: 16px; color: #000;">
     💰 Пополнить
   </button>
 </div>
-    <!-- Всплывающее окно с вводом промокода -->
+
+<!-- Всплывающее окно -->
 <div id="promoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
   <div style="background: #fff; padding: 25px; border-radius: 15px; text-align: center; max-width: 320px; width: 90%;">
     <h2 style="margin-top: 0; color: #333;">Пополнение</h2>
     
-    <!-- Поле для ника -->
     <p style="color: #333; font-weight: bold; margin-bottom: 5px; text-align: left;">Ваш ник в игре:</p>
     <input type="text" id="nickInput" placeholder="Например: SuperVasya" 
            style="width: 90%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px;">
            
-    <!-- Инструкция -->
     <p style="color: #666; font-size: 14px; margin-bottom: 10px; text-align: left;">
       1. Нажмите "Оплатить" и переведите нужную сумму.<br>
       2. Напишите боту ваш ник, чтобы получить промокод.
     </p>
 
-    <!-- Кнопка ЮMoney -->
+    <!-- ВСТАВЬ СЮДА СВОЙ КОД ОТ ЮМАНИ -->
     <div style="margin-bottom: 15px;">
-       <!-- ВСТАВЬ СЮДА СВОЙ КОД ОТ ЮМАНИ (который ты получил в личном кабинете) -->
+       
     </div>
 
-    <!-- Кнопка перехода в бота -->
     <a href="https://t.me/ТВОЙ_БОТ_ЮЗЕРНЕЙМ" target="_blank" 
        style="display: block; background: #0088cc; color: white; padding: 10px; text-decoration: none; border-radius: 5px; margin-bottom: 15px; font-weight: bold;">
       ✈️ Написать боту
@@ -2221,14 +2219,13 @@ setTimeout(hideSplash,3500);
     </button>
   </div>
 </div>
-<!-- Конец блока, который нужно удалить -->
-  // Импорт функций Firebase
+
+<script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  // Твой конфиг
   const firebaseConfig = {
-    apiKey: "AIzaSyA7-dF4SjU6NN2DLY4b2t5meDA0aGV05_Y",
+    apiKey: "AIzaSyA7-dF4SjU6NN2DLY4b2t5meDA0aGV05_Y", 
     authDomain: "numbergive-1.firebaseapp.com",
     projectId: "numbergive-1",
     storageBucket: "numbergive-1.firebasestorage.app",
@@ -2237,42 +2234,35 @@ setTimeout(hideSplash,3500);
     measurementId: "G-XFQHD057S2"
   };
 
-  // Инициализация
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // Глобальная функция для кнопки в HTML
   window.activatePromo = async function() {
     const codeInput = document.getElementById('promoInput').value.trim().toUpperCase();
     if (!codeInput) return alert("Пожалуйста, введите промокод!");
 
     try {
-      // Ищем промокод в базе данных
       const docRef = doc(db, "promocodes", codeInput);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        const amount = Number(docSnap.data().amount); // Получаем количество жетонов
-        if (isNaN(amount)) return alert("Ошибка в базе данных: неверный формат суммы.");
+        const amount = Number(docSnap.data().amount);
+        if (isNaN(amount)) return alert("Ошибка в базе данных.");
 
-        // Начисляем жетоны в localStorage (или в твоей переменной игры)
         let currentCoins = parseInt(localStorage.getItem('playerCoins') || '0');
         localStorage.setItem('playerCoins', currentCoins + amount);
         
-        // Если в твоей игре есть функция обновления баланса на экране, вызови её здесь.
-        // Например: updateBalanceUI(); 
-        // Если нет, просто перезагрузи страницу:
-        alert(`Успех! Вы получили ${amount} жетонов. Страница будет перезагружена для обновления баланса.`);
+        alert(`Успех! Вы получили ${amount} жетонов. Страница перезагрузится.`);
         location.reload(); 
 
       } else {
-        alert("Такого промокода не существует. Проверьте правильность ввода.");
+        alert("Такого промокода не существует.");
       }
     } catch (error) {
       console.error("Ошибка Firebase:", error);
       alert("Ошибка при активации. Попробуйте позже.");
     }
   };
-            </script>
+</script>
 </body>
 </html>
