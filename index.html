@@ -2171,5 +2171,92 @@ function hideSplash(){if(_splashHidden)return;_splashHidden=true;const s=documen
 window.addEventListener('load',()=>setTimeout(hideSplash,2200));
 setTimeout(hideSplash,3500);
 </script>
+    <!-- Кнопка для открытия окна пополнения -->
+<div style="position: absolute; top: 10px; right: 10px; z-index: 100;">
+  <button onclick="document.getElementById('promoModal').style.display='flex'" 
+          style="background: #FFD700; border: 2px solid #B8860B; border-radius: 8px; padding: 10px 15px; font-weight: bold; cursor: pointer; font-size: 16px; color: #000;">
+    💰 Пополнить
+  </button>
+</div>
+
+<!-- Всплывающее окно с вводом промокода -->
+<div id="promoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
+  <div style="background: #fff; padding: 25px; border-radius: 15px; text-align: center; max-width: 300px; width: 90%;">
+    <h2 style="margin-top: 0; color: #333;">Пополнение</h2>
+    <p style="color: #666; font-size: 14px;">Оплатите донат по ссылке ниже и получите промокод.</p>
+    
+    <!-- Сюда потом вставим твою кнопку ЮMoney -->
+    <a href="https://yoomoney.ru/transfer/quickpay?receiver=ВАШ_НОМЕР_КОШЕЛЬКА&sum=100" target="_blank" 
+       style="display: block; background: #7B68EE; color: white; padding: 10px; text-decoration: none; border-radius: 5px; margin-bottom: 15px; font-weight: bold;">
+      💳 Оплатить 100 руб.
+    </a>
+
+    <p style="color: #333; font-weight: bold; margin-bottom: 5px;">Введите промокод:</p>
+    <input type="text" id="promoInput" placeholder="Например: BONUS1000000" 
+           style="width: 90%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; text-transform: uppercase;">
+    
+    <button onclick="activatePromo()" 
+            style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; margin-bottom: 10px;">
+      Активировать
+    </button>
+    <button onclick="document.getElementById('promoModal').style.display='none'" 
+            style="background: #dc3545; color: white; border: none; padding: 8px; border-radius: 5px; cursor: pointer; width: 100%;">
+      Закрыть
+    </button>
+  </div>
+</div>
+    <script type="module">
+  // Импорт функций Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  // Твой конфиг
+  const firebaseConfig = {
+    apiKey: "AIzaSyA7-dF4SjU6NN2DLY4b2t5meDA0aGV05_Y",
+    authDomain: "numbergive-1.firebaseapp.com",
+    projectId: "numbergive-1",
+    storageBucket: "numbergive-1.firebasestorage.app",
+    messagingSenderId: "900026442225",
+    appId: "1:900026442225:web:513ad61f84b5b09ecfa450",
+    measurementId: "G-XFQHD057S2"
+  };
+
+  // Инициализация
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Глобальная функция для кнопки в HTML
+  window.activatePromo = async function() {
+    const codeInput = document.getElementById('promoInput').value.trim().toUpperCase();
+    if (!codeInput) return alert("Пожалуйста, введите промокод!");
+
+    try {
+      // Ищем промокод в базе данных
+      const docRef = doc(db, "promocodes", codeInput);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const amount = Number(docSnap.data().amount); // Получаем количество жетонов
+        if (isNaN(amount)) return alert("Ошибка в базе данных: неверный формат суммы.");
+
+        // Начисляем жетоны в localStorage (или в твоей переменной игры)
+        let currentCoins = parseInt(localStorage.getItem('playerCoins') || '0');
+        localStorage.setItem('playerCoins', currentCoins + amount);
+        
+        // Если в твоей игре есть функция обновления баланса на экране, вызови её здесь.
+        // Например: updateBalanceUI(); 
+        // Если нет, просто перезагрузи страницу:
+        alert(`Успех! Вы получили ${amount} жетонов. Страница будет перезагружена для обновления баланса.`);
+        location.reload(); 
+
+      } else {
+        alert("Такого промокода не существует. Проверьте правильность ввода.");
+      }
+    } catch (error) {
+      console.error("Ошибка Firebase:", error);
+      alert("Ошибка при активации. Попробуйте позже.");
+    }
+  };
+            </script>
 </body>
 </html>
