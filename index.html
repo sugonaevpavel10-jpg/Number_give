@@ -2178,7 +2178,6 @@ setTimeout(hideSplash,3500);
     💰 Пополнить
   </button>
 </div>
-
 <!-- Всплывающее окно пополнения -->
 <div id="promoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
   <div style="background: #fff; padding: 25px; border-radius: 15px; text-align: center; max-width: 320px; width: 90%;">
@@ -2198,7 +2197,7 @@ setTimeout(hideSplash,3500);
        <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=1LIT3NTOLV3.261116&" width="330" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
     </div>
 
-    <!-- Ссылка на твоего бота -->
+    <!-- Ссылка на бота -->
     <a href="https://t.me/NumberGiveSupportBot" target="_blank" 
        style="display: block; background: #0088cc; color: white; padding: 10px; text-decoration: none; border-radius: 5px; margin-bottom: 15px; font-weight: bold;">
       ✈️ Написать боту
@@ -2220,20 +2219,54 @@ setTimeout(hideSplash,3500);
     </button>
   </div>
 </div>
+
 <!-- Скрипт Firebase -->
 <script type="module">
-<script>
-  window.activatePromo = function() {
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, doc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA7-dF4SjU6NN2DLY4b2t5meDA0aGV05_Y", 
+    authDomain: "numbergive-1.firebaseapp.com",
+    projectId: "numbergive-1",
+    storageBucket: "numbergive-1.firebasestorage.app",
+    messagingSenderId: "900026442225",
+    appId: "1:900026442225:web:513ad61f84b5b09ecfa450",
+    measurementId: "G-XFQHD057S2"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.activatePromo = async function() {
     const codeInput = document.getElementById('promoInput').value.trim().toUpperCase();
-    if (codeInput === 'BONUS100') {
-      let currentCoins = parseInt(localStorage.getItem('playerCoins') || '0');
-      localStorage.setItem('playerCoins', currentCoins + 500);
-      alert("Промокод сработал! Вы получили 500 жетонов.");
-      location.reload();
-    } else {
-      alert("Неправильный код. Попробуйте BONUS100");
+    if (!codeInput) return alert("Пожалуйста, введите промокод!");
+
+    try {
+      const docRef = doc(db, "promocodes", codeInput);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const amount = Number(docSnap.data().amount);
+        if (isNaN(amount)) return alert("Ошибка в базе данных.");
+
+        let currentCoins = parseInt(localStorage.getItem('playerCoins') || '0');
+        localStorage.setItem('playerCoins', currentCoins + amount);
+        
+        await deleteDoc(docRef);
+        
+        alert(`Успех! Вы получили ${amount} жетонов. Страница перезагрузится.`);
+        location.reload(); 
+
+      } else {
+        alert("Такого промокода не существует.");
+      }
+    } catch (error) {
+      console.error("Ошибка Firebase:", error);
+      alert("Ошибка: " + error.message);
     }
   };
 </script>
+
 </body>
 </html>
