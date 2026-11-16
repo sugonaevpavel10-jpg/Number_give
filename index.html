@@ -2222,49 +2222,16 @@ setTimeout(hideSplash,3500);
 </div>
 <!-- Скрипт Firebase -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, doc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyA7-dF4SjU6NN2DLY4b2t5meDA0aGV05_Y", 
-    authDomain: "numbergive-1.firebaseapp.com",
-    projectId: "numbergive-1",
-    storageBucket: "numbergive-1.firebasestorage.app",
-    messagingSenderId: "900026442225",
-    appId: "1:900026442225:web:513ad61f84b5b09ecfa450",
-    measurementId: "G-XFQHD057S2"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  window.activatePromo = async function() {
+<script>
+  window.activatePromo = function() {
     const codeInput = document.getElementById('promoInput').value.trim().toUpperCase();
-    if (!codeInput) return alert("Пожалуйста, введите промокод!");
-
-    try {
-      // ВНИМАНИЕ: Теперь мы ищем документ прямо в корне, без папки "promocodes"
-      const docRef = doc(db, "promocodes", codeInput);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        const amount = Number(docSnap.data().amount);
-        if (isNaN(amount)) return alert("Ошибка в базе данных.");
-
-        let currentCoins = parseInt(localStorage.getItem('playerCoins') || '0');
-        localStorage.setItem('playerCoins', currentCoins + amount);
-        
-        await deleteDoc(docRef);
-        
-        alert(`Успех! Вы получили ${amount} жетонов. Страница перезагрузится.`);
-        location.reload(); 
-
-      } else {
-        alert("Такого промокода не существует.");
-      }
-    } catch (error) {
-      console.error("Ошибка Firebase:", error);
-      alert("Ошибка при активации: " + error.message);
+    if (codeInput === 'BONUS100') {
+      let currentCoins = parseInt(localStorage.getItem('playerCoins') || '0');
+      localStorage.setItem('playerCoins', currentCoins + 500);
+      alert("Промокод сработал! Вы получили 500 жетонов.");
+      location.reload();
+    } else {
+      alert("Неправильный код. Попробуйте BONUS100");
     }
   };
 </script>
