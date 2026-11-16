@@ -2219,20 +2219,20 @@ setTimeout(hideSplash,3500);
     </button>
   </div>
 </div>
-
 <!-- Скрипт Firebase -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getFirestore, doc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+  // Твои НОВЫЕ ключи
   const firebaseConfig = {
-    apiKey: "AIzaSyA7-dF4SjU6NN2DLY4b2t5meDA0aGV05_Y", 
-    authDomain: "numbergive-1.firebaseapp.com",
-    projectId: "numbergive-1",
-    storageBucket: "numbergive-1.firebasestorage.app",
-    messagingSenderId: "900026442225",
-    appId: "1:900026442225:web:513ad61f84b5b09ecfa450",
-    measurementId: "G-XFQHD057S2"
+    apiKey: "AIzaSyBJSUhv_kGhpTn67UrvhACSMDplhMrP5W0",
+    authDomain: "numbergive-1-83eb6.firebaseapp.com",
+    projectId: "numbergive-1-83eb6",
+    storageBucket: "numbergive-1-83eb6.firebasestorage.app",
+    messagingSenderId: "1049511282476",
+    appId: "1:1049511282476:web:db7f9e4b752478d98d8e89",
+    measurementId: "G-9F6X3E7W0V"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -2243,16 +2243,17 @@ setTimeout(hideSplash,3500);
     if (!codeInput) return alert("Пожалуйста, введите промокод!");
 
     try {
+      // Ищем код в правильной папке promocodes
       const docRef = doc(db, "promocodes", codeInput);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
         const amount = Number(docSnap.data().amount);
-        if (isNaN(amount)) return alert("Ошибка в базе данных.");
-
+        
         let currentCoins = parseInt(localStorage.getItem('playerCoins') || '0');
         localStorage.setItem('playerCoins', currentCoins + amount);
         
+        // Удаляем код после использования
         await deleteDoc(docRef);
         
         alert(`Успех! Вы получили ${amount} жетонов. Страница перезагрузится.`);
@@ -2267,6 +2268,5 @@ setTimeout(hideSplash,3500);
     }
   };
 </script>
-
 </body>
 </html>
