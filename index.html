@@ -2220,11 +2220,11 @@ setTimeout(hideSplash,3500);
     </button>
   </div>
 </div>
-
 <!-- Скрипт Firebase -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getFirestore, doc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
   const firebaseConfig = {
     apiKey: "AIzaSyA7-dF4SjU6NN2DLY4b2t5meDA0aGV05_Y", 
     authDomain: "numbergive-1.firebaseapp.com",
@@ -2240,38 +2240,33 @@ setTimeout(hideSplash,3500);
 
   window.activatePromo = async function() {
     const codeInput = document.getElementById('promoInput').value.trim().toUpperCase();
+    if (!codeInput) return alert("Пожалуйста, введите промокод!");
 
-window.activatePromo = async function() {
-  const codeInput = document.getElementById('promoInput').value.trim().toUpperCase();
-  if (!codeInput) return alert("Пожалуйста, введите промокод!");
+    try {
+      const docRef = doc(db, "promocodes", codeInput);
+      const docSnap = await getDoc(docRef);
 
-  try {
-    const docRef = doc(db, "promocodes", codeInput);
-    const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const amount = Number(docSnap.data().amount);
+        if (isNaN(amount)) return alert("Ошибка в базе данных.");
 
-    if (docSnap.exists()) {
-      const amount = Number(docSnap.data().amount);
-      if (isNaN(amount)) return alert("Ошибка в базе данных.");
+        let currentCoins = parseInt(localStorage.getItem('playerCoins') || '0');
+        localStorage.setItem('playerCoins', currentCoins + amount);
+        
+        // Удаляем промокод, чтобы его нельзя было использовать дважды
+        await deleteDoc(docRef);
+        
+        alert(`Успех! Вы получили ${amount} жетонов. Страница перезагрузится.`);
+        location.reload(); 
 
-      let currentCoins = parseInt(localStorage.getItem('playerCoins') || '0');
-      localStorage.setItem('playerCoins', currentCoins + amount);
-      
-      // Удаляем промокод
-      await deleteDoc(docRef);
-      
-      alert(`Успех! Вы получили ${amount} жетонов. Страница перезагрузится.`);
-      location.reload(); 
-
-    } else {
-      alert("Такого промокода не существует.");
+      } else {
+        alert("Такого промокода не существует.");
+      }
+    } catch (error) {
+      console.error("Ошибка Firebase:", error);
+      alert("Ошибка при активации. Попробуйте позже.");
     }
-  } catch (error) {
-    console.error("Ошибка Firebase:", error);
-    alert("Ошибка при активации. Попробуйте позже.");
-  }
-};
-      
+  };
 </script>
-
 </body>
 </html>
