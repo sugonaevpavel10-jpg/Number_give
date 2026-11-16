@@ -2243,7 +2243,8 @@ setTimeout(hideSplash,3500);
     if (!codeInput) return alert("Пожалуйста, введите промокод!");
 
     try {
-      const docRef = doc(db, "const docRef = doc(db, codeInput);", codeInput);
+      // ВНИМАНИЕ: Теперь мы ищем документ прямо в корне, без папки "promocodes"
+      const docRef = doc(db, codeInput);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
@@ -2263,7 +2264,7 @@ setTimeout(hideSplash,3500);
       }
     } catch (error) {
       console.error("Ошибка Firebase:", error);
-      alert("ОШИБКА: " + error.message);
+      alert("Ошибка при активации: " + error.message);
     }
   };
 </script>
