@@ -2219,12 +2219,10 @@ setTimeout(hideSplash,3500);
     </button>
   </div>
 </div>
-<!-- Скрипт Firebase -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getFirestore, doc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  // Твои НОВЫЕ ключи
   const firebaseConfig = {
     apiKey: "AIzaSyBJSUhv_kGhpTn67UrvhACSMDplhMrP5W0",
     authDomain: "numbergive-1-83eb6.firebaseapp.com",
@@ -2243,20 +2241,33 @@ setTimeout(hideSplash,3500);
     if (!codeInput) return alert("Пожалуйста, введите промокод!");
 
     try {
-      // Ищем код в правильной папке promocodes
       const docRef = doc(db, "promocodes", codeInput);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
         const amount = Number(docSnap.data().amount);
         
-        let currentCoins = parseInt(localStorage.getItem('playerCoins') || '0');
-        localStorage.setItem('playerCoins', currentCoins + amount);
+        // Пытаемся понять, как игра хранит баланс
+        let gameState = JSON.parse(localStorage.getItem('state') || localStorage.getItem('gameState') || '{}');
         
-        // Удаляем код после использования
+        // Пробуем разные варианты названий рублей
+        if (gameState.money !== undefined) {
+            gameState.money += amount;
+        } else if (gameState.rub !== undefined) {
+            gameState.rub += amount;
+        } else if (gameState.balance !== undefined) {
+            gameState.balance += amount;
+        } else {
+            // Если ничего не нашли, сохраняем как money
+            gameState.money = (gameState.money || 0) + amount;
+        }
+
+        // Сохраняем обратно
+        localStorage.setItem('state', JSON.stringify(gameState));
+        
         await deleteDoc(docRef);
         
-        alert(`Успех! Вы получили ${amount} жетонов. Страница перезагрузится.`);
+        alert(`Успех! Вы получили ${amount} рублей. Страница перезагрузится.`);
         location.reload(); 
 
       } else {
