@@ -2253,7 +2253,6 @@ setTimeout(hideSplash,3500);
         let currentCoins = parseInt(localStorage.getItem('playerCoins') || '0');
         localStorage.setItem('playerCoins', currentCoins + amount);
         
-        // Удаляем промокод, чтобы его нельзя было использовать дважды
         await deleteDoc(docRef);
         
         alert(`Успех! Вы получили ${amount} жетонов. Страница перезагрузится.`);
