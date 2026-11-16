@@ -2236,6 +2236,9 @@ setTimeout(hideSplash,3500);
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
+  // Твой ключ сохранения, который я увидел на скрине
+  const STORAGE_KEY = 'numberGiveSave'; // Если игра сохраняет под другим именем, поменяй тут
+
   window.activatePromo = async function() {
     const codeInput = document.getElementById('promoInput').value.trim().toUpperCase();
     if (!codeInput) return alert("Пожалуйста, введите промокод!");
@@ -2247,29 +2250,34 @@ setTimeout(hideSplash,3500);
       if (docSnap.exists()) {
         const amount = Number(docSnap.data().amount);
         
-        // Пытаемся понять, как игра хранит баланс
-        let gameState = JSON.parse(localStorage.getItem('state') || localStorage.getItem('gameState') || '{}');
+        // 1. Достаем текущее сохранение игры
+        let saveData = localStorage.getItem(STORAGE_KEY);
         
-        // Пробуем разные варианты названий рублей
-        if (gameState.money !== undefined) {
-            gameState.money += amount;
-        } else if (gameState.rub !== undefined) {
-            gameState.rub += amount;
-        } else if (gameState.balance !== undefined) {
-            gameState.balance += amount;
+        if (saveData) {
+          let state = JSON.parse(saveData);
+          
+          // 2. Ищем, где лежат деньги, и добавляем
+          // Пробуем разные популярные названия
+          if (state.money !== undefined) state.money += amount;
+          else if (state.rub !== undefined) state.rub += amount;
+          else if (state.cash !== undefined) state.cash += amount;
+          else if (state.balance !== undefined) state.balance += amount;
+          else {
+             // Если не нашли, создаем поле money
+             state.money = (state.money || 0) + amount;
+          }
+
+          // 3. Сохраняем обратно
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          
+          // 4. Удаляем промокод из базы
+          await deleteDoc(docRef);
+          
+          alert(`Успех! Вам начислено ${amount} рублей. Игра перезагрузится.`);
+          location.reload(); 
         } else {
-            // Если ничего не нашли, сохраняем как money
-            gameState.money = (gameState.money || 0) + amount;
+          alert("Ошибка: сохранение игры не найдено. Начните игру заново.");
         }
-
-        // Сохраняем обратно
-        localStorage.setItem('state', JSON.stringify(gameState));
-        
-        await deleteDoc(docRef);
-        
-        alert(`Успех! Вы получили ${amount} рублей. Страница перезагрузится.`);
-        location.reload(); 
-
       } else {
         alert("Такого промокода не существует.");
       }
