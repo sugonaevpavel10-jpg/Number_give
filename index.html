@@ -2244,7 +2244,7 @@ setTimeout(hideSplash,3500);
 
     try {
       // ВНИМАНИЕ: Теперь мы ищем документ прямо в корне, без папки "promocodes"
-      const docRef = doc(db, codeInput);
+      const docRef = doc(db, "promocodes", codeInput);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
