@@ -2219,10 +2219,12 @@ setTimeout(hideSplash,3500);
     </button>
   </div>
 </div>
+<!-- Скрипт Firebase -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getFirestore, doc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+  // Твои ключи из Firebase (новый проект Numbergive-1-83eb6)
   const firebaseConfig = {
     apiKey: "AIzaSyBJSUhv_kGhpTn67UrvhACSMDplhMrP5W0",
     authDomain: "numbergive-1-83eb6.firebaseapp.com",
@@ -2236,41 +2238,45 @@ setTimeout(hideSplash,3500);
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // Твой ключ сохранения, который я увидел на скрине
-  const STORAGE_KEY = 'numberGiveSave'; // Если игра сохраняет под другим именем, поменяй тут
+  // Ключ, под которым игра сохраняет прогресс (я взял его с твоего скриншота)
+  const STORAGE_KEY = 'numberGiveSave'; 
 
   window.activatePromo = async function() {
     const codeInput = document.getElementById('promoInput').value.trim().toUpperCase();
     if (!codeInput) return alert("Пожалуйста, введите промокод!");
 
     try {
+      // Ищем код в папке promocodes
       const docRef = doc(db, "promocodes", codeInput);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
         const amount = Number(docSnap.data().amount);
         
-        // 1. Достаем текущее сохранение игры
+        // Достаем текущее сохранение игры из памяти браузера
         let saveData = localStorage.getItem(STORAGE_KEY);
         
         if (saveData) {
           let state = JSON.parse(saveData);
           
-          // 2. Ищем, где лежат деньги, и добавляем
-          // Пробуем разные популярные названия
-          if (state.money !== undefined) state.money += amount;
-          else if (state.rub !== undefined) state.rub += amount;
-          else if (state.cash !== undefined) state.cash += amount;
-          else if (state.balance !== undefined) state.balance += amount;
-          else {
-             // Если не нашли, создаем поле money
-             state.money = (state.money || 0) + amount;
+          // Умный поиск поля с деньгами (пробуем разные варианты)
+          if (state.money !== undefined) {
+              state.money += amount;
+          } else if (state.rub !== undefined) {
+              state.rub += amount;
+          } else if (state.cash !== undefined) {
+              state.cash += amount;
+          } else if (state.balance !== undefined) {
+              state.balance += amount;
+          } else {
+              // Если ничего не нашли, создаем поле money
+              state.money = (state.money || 0) + amount;
           }
 
-          // 3. Сохраняем обратно
+          // Сохраняем обновленный прогресс обратно в браузер
           localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
           
-          // 4. Удаляем промокод из базы
+          // Удаляем использованный промокод из Firebase
           await deleteDoc(docRef);
           
           alert(`Успех! Вам начислено ${amount} рублей. Игра перезагрузится.`);
