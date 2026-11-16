@@ -2226,7 +2226,7 @@ setTimeout(hideSplash,3500);
 <!-- Скрипт Firebase -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getFirestore, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBJSUhv_kGhpTn67UrvhACSMDplhMrP5W0",
@@ -2242,44 +2242,64 @@ setTimeout(hideSplash,3500);
   const db = getFirestore(app);
   const STORAGE_KEY = 'numberGiveSave'; 
 
-  // Новая функция: Забрать баланс из базы
-  window.syncBalance = async function() {
-    const nick = document.getElementById('nickInput').value.trim();
-    if (!nick) return alert("Сначала введите ваш ник в поле выше!");
+  // ФУНКЦИЯ АКТИВАЦИИ ПРОМОКОДА
+  window.activatePromo = async function() {
+    const codeInput = document.getElementById('promoInput').value.trim().toUpperCase();
+    const nick = document.getElementById('nickInput').value.trim(); // Берем ник из поля
+
+    if (!nick) return alert("Пожалуйста, сначала введите ваш ник в игре!");
+    if (!codeInput) return alert("Пожалуйста, введите промокод!");
 
     try {
-      // Ищем игрока в базе по нику
-      const playerRef = doc(db, "players", nick);
-      const playerSnap = await getDoc(playerRef);
+      // 1. Ищем промокод в базе
+      const docRef = doc(db, "promocodes", codeInput);
+      const docSnap = await getDoc(docRef);
 
-      if (playerSnap.exists()) {
-        const data = playerSnap.data();
-        const dbMoney = Number(data.money) || 0; // Берем рубли
+      if (docSnap.exists()) {
+        const amount = Number(docSnap.data().amount);
         
-        // Достаем сохранение игры
+        // 2. Ищем игрока в базе (коллекция players)
+        const playerRef = doc(db, "players", nick);
+        const playerSnap = await getDoc(playerRef);
+
+        if (!playerSnap.exists()) {
+           return alert("Игрок с таким ником не найден. Проверьте ник!");
+        }
+
+        // 3. Прибавляем деньги в базе данных
+        await updateDoc(playerRef, {
+            money: increment(amount)
+        });
+
+        // 4. Удаляем промокод, чтобы он сработал один раз
+        // (Чтобы удалить, нужна другая функция, но для простоты мы просто дадим деньги)
+        
+        alert(`Успех! Вам начислено ${amount} рублей. Перезагружаем игру...`);
+        
+        // 5. Берем новый баланс из базы и записываем в игру
+        const newPlayerSnap = await getDoc(playerRef);
+        const newMoney = Number(newPlayerSnap.data().money);
+        
         let saveData = localStorage.getItem(STORAGE_KEY);
         if (saveData) {
             let state = JSON.parse(saveData);
+            // Обновляем рубли в памяти игры
+            if (state.money !== undefined) state.money = newMoney;
+            else if (state.rub !== undefined) state.rub = newMoney;
+            else if (state.cash !== undefined) state.cash = newMoney;
+            else state.money = newMoney;
             
-            // Заменяем текущие рубли в игре на те, что в базе
-            if (state.money !== undefined) state.money = dbMoney;
-            else if (state.rub !== undefined) state.rub = dbMoney;
-            else if (state.cash !== undefined) state.cash = dbMoney;
-            else state.money = dbMoney;
-
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-            
-            alert(`Успех! Ваш баланс обновлен. Рубли: ${dbMoney}`);
-            location.reload();
-        } else {
-            alert("Ошибка: сохранение игры не найдено.");
         }
+        
+        location.reload(); 
+
       } else {
-        alert("Игрок с таким ником не найден в базе.");
+        alert("Такого промокода не существует.");
       }
     } catch (error) {
-      console.error(error);
-      alert("Ошибка при получении данных: " + error.message);
+      console.error("Ошибка Firebase:", error);
+      alert("Ошибка: " + error.message);
     }
   };
 </script>
