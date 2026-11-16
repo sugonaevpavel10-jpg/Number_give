@@ -2243,7 +2243,7 @@ setTimeout(hideSplash,3500);
     if (!codeInput) return alert("Пожалуйста, введите промокод!");
 
     try {
-      const docRef = doc(db, "promocodes", codeInput);
+      const docRef = doc(db, "const docRef = doc(db, codeInput);", codeInput);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
