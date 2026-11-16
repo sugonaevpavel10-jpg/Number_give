@@ -2224,8 +2224,7 @@ setTimeout(hideSplash,3500);
 <!-- Скрипт Firebase -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
+  import { getFirestore, doc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
   const firebaseConfig = {
     apiKey: "AIzaSyA7-dF4SjU6NN2DLY4b2t5meDA0aGV05_Y", 
     authDomain: "numbergive-1.firebaseapp.com",
@@ -2250,12 +2249,15 @@ setTimeout(hideSplash,3500);
       if (docSnap.exists()) {
         const amount = Number(docSnap.data().amount);
         if (isNaN(amount)) return alert("Ошибка в базе данных.");
+          
+let currentCoins = parseInt(localStorage.getItem('playerCoins') || '0');
+localStorage.setItem('playerCoins', currentCoins + amount);
 
-        let currentCoins = parseInt(localStorage.getItem('playerCoins') || '0');
-        localStorage.setItem('playerCoins', currentCoins + amount);
-        
-        alert(`Успех! Вы получили ${amount} жетонов. Страница перезагрузится.`);
-        location.reload(); 
+// Эта строчка удаляет промокод из базы, чтобы его нельзя было ввести дважды
+await deleteDoc(docRef);
+
+alert(`Успех! Вы получили ${amount} жетонов. Страница перезагрузится.`);
+location.reload(); 
 
       } else {
         alert("Такого промокода не существует.");
