@@ -684,7 +684,7 @@ function exportSave(){ const str = btoa(unescape(encodeURIComponent(JSON.stringi
 function importSave(){ const str = prompt('Код сохранения:'); if(!str) return; try{ S = Object.assign(JSON.parse(JSON.stringify(DEFAULT_STATE)), JSON.parse(decodeURIComponent(escape(atob(str))))); save(); location.reload(); }catch(e){ toast('Неверный код'); } }
 
 /* ============ УТИЛИТЫ ============ */
-function fmt(n){ n=Math.floor(n); if(n>=1e9) return (n/1e9).toFixed(2)+' млрд'; if(n>=1e6) return (n/1e6).toFixed(2)+' млн'; if(n>=1e3) return (n/1e3).toFixed(1)+' тыс'; return n.toString(); }
+function fmt(n){ n = Math.floor(n); return n.toLocaleString('ru-RU').replace(/,/g, ' '); }
 function fmtRub(n){ return fmt(n)+' ₽'; }
 function fmtTok(n){ return fmt(n)+' 💎'; }
 function rand(a,b){ return Math.random()*(b-a)+a; }
@@ -927,12 +927,12 @@ function renderBattleLobby(){
     <div class="battle-r">
       <div class="battle-rav">${r.av}</div>
       <div class="battle-ri"><div class="battle-rn">${r.name}</div><div class="battle-rr">MMR ${r.mmr}</div></div>
-      <div class="battle-rc"><div class="battle-rp">20 млн ₽</div></div>
+      <div class="battle-rc"><div class="battle-rp">20 000 000₽</div></div>
       <button class="battle-rj" onclick="startBattle(${i})">В бой</button>
     </div>`).join('');
 }
 function startBattle(i){
-  if(S.rub < 20000000){ toast('Нужно 20 млн ₽'); return; }
+    <div class="battle-rp">20 000 000 ₽</div>
   const avatars=['🐺','🕶️','👽','🐉'];
   const names=['Новичок','Гонщик','Профи','Король'];
   const lobby = document.getElementById('lobbyTransition');
