@@ -3,12 +3,9 @@
 <head>
 <script>window.yaContextCb=window.yaContextCb||[]</script>
 <script src="https://yandex.ru/ads/system/context.js" async></script>
-<script defer src="https://revionapp.ru/v.js" data-site="numbergive-online-e19711"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#05060a">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
 <title>Номердай</title>
 <style>
 :root{--panel:rgba(22,25,35,.9);--border:rgba(255,255,255,.08);--text:#fff;--muted:#8892b0;--rub:#34d399;--token:#60a5fa;--acc:#3b82f6;--com:#94a3b8;--rar:#10b981;--epi:#a855f7;--leg:#fbbf24;--myth:#ff0080}
@@ -54,10 +51,6 @@ body.t-emerald{--bg:#051f14;--text:#fff;--muted:#6ee7b7;--panel:#0a2e1f;--border
 .ico{width:56px;height:56px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:28px;background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.02));border:1px solid var(--border)}
 .ml{font-size:15px;font-weight:800;text-align:center}
 .md{font-size:11px;color:var(--muted);text-align:center;font-weight:600}
-.vibe{width:100%;margin-top:10px;display:flex;flex-direction:column;gap:4px}
-.vibe-lbl{font-size:10px;font-weight:900;color:var(--muted);text-transform:uppercase;display:flex;justify-content:space-between}
-.vibe-bar{height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden}
-.vibe-f{height:100%;width:0%;background:linear-gradient(90deg,#3b82f6,#a855f7,#ec4899);border-radius:4px;transition:width .4s}
 .gen{background:linear-gradient(170deg,rgba(255,255,255,.07),rgba(255,255,255,.015));border:1px solid var(--border);border-radius:30px;padding:20px;display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden;min-height:340px;justify-content:center}
 .gen[data-rarity="rare"]{border-color:var(--rar)}
 .gen[data-rarity="epic"]{border-color:var(--epi);box-shadow:0 0 30px rgba(168,85,247,.3)}
@@ -74,7 +67,6 @@ body.t-emerald{--bg:#051f14;--text:#fff;--muted:#6ee7b7;--panel:#0a2e1f;--border
 .spinning .car-title,.spinning .car-brand{filter:blur(3px);opacity:.5}
 .price{font-size:30px;font-weight:900;color:var(--text);opacity:0;transform:translateY(15px);transition:all .3s}
 .price.show{opacity:1;transform:translateY(0)}
-.rec{position:absolute;top:15px;left:50%;transform:translateX(-50%);padding:8px 20px;border-radius:999px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000;font-weight:900;font-size:12px;z-index:20}
 .prog{height:6px;width:100%;border-radius:3px;background:rgba(255,255,255,.06);margin-top:15px;overflow:hidden;display:none}
 .prog.on{display:block}
 .prog-f{height:100%;width:0%;background:linear-gradient(90deg,#3b82f6,#8b5cf6,#fbbf24);border-radius:3px;animation:rf 1s linear forwards}
@@ -106,16 +98,9 @@ body.t-emerald{--bg:#051f14;--text:#fff;--muted:#6ee7b7;--panel:#0a2e1f;--border
 .btn-x10{width:100%;margin-top:10px;padding:14px;background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;border-radius:16px;border:none;font-size:13px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;text-transform:uppercase;font-family:inherit}
 .btn-x10:active{transform:scale(.95)}
 .btn-x10 .xp{font-size:10px;opacity:.85;margin-left:4px;font-weight:800}
-.auto-row{display:flex;gap:8px;margin-top:10px;width:100%}
-.auto-t{flex:1;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid var(--border);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:5px;cursor:pointer;color:var(--muted);text-transform:uppercase}
-.auto-t.on{background:rgba(52,211,153,.15);border-color:rgba(52,211,153,.5);color:var(--rub)}
-.auto-t input{display:none}
 .tabs{display:flex;gap:8px;margin-bottom:16px;background:var(--panel);padding:5px;border-radius:16px;border:1px solid var(--border)}
 .tab{flex:1;padding:12px;border:none;background:transparent;color:var(--muted);font-weight:800;font-size:13px;border-radius:10px;cursor:pointer;font-family:inherit}
 .tab.active{background:linear-gradient(135deg,rgba(79,140,255,.35),rgba(139,92,246,.3));color:var(--text)}
-.sort{display:flex;gap:6px;margin-bottom:12px}
-.sort-b{flex:1;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted);font-size:11px;font-weight:800;cursor:pointer;font-family:inherit}
-.sort-b.active{background:linear-gradient(135deg,rgba(79,140,255,.3),rgba(139,92,246,.25));color:var(--text)}
 .list{display:flex;flex-direction:column;gap:10px}
 .li{background:linear-gradient(160deg,rgba(255,255,255,.065),rgba(255,255,255,.015));border:1px solid var(--border);border-radius:20px;padding:14px;display:flex;justify-content:space-between;align-items:center;position:relative}
 .li.r-legend{border-color:rgba(251,191,36,.6);box-shadow:0 0 20px rgba(251,191,36,.2)}
@@ -129,38 +114,18 @@ body.t-emerald{--bg:#051f14;--text:#fff;--muted:#6ee7b7;--panel:#0a2e1f;--border
 .li-price.rub{color:var(--rub)}.li-price.token{color:var(--token)}
 .sell-b{background:none;border:none;color:#ef4444;font-size:11px;font-weight:900;cursor:pointer;margin-top:4px;text-transform:uppercase;font-family:inherit}
 .empty{text-align:center;color:var(--muted);padding:50px 20px;font-size:14px;border:2px dashed var(--border);border-radius:20px}
-.qc,.si,.lb,.ac{background:linear-gradient(160deg,rgba(255,255,255,.065),rgba(255,255,255,.015));border:1px solid var(--border);border-radius:16px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:12px}
+.qc{background:linear-gradient(160deg,rgba(255,255,255,.065),rgba(255,255,255,.015));border:1px solid var(--border);border-radius:16px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:12px}
 .qc.done{border-color:rgba(52,211,153,.5);background:linear-gradient(160deg,rgba(52,211,153,.15),rgba(52,211,153,.03))}
-.qc.claimed,.ac:not(.unlocked){opacity:.55}
-.q-ico,.a-ico,.s-ico{width:44px;height:44px;border-radius:12px;background:linear-gradient(145deg,rgba(96,165,250,.3),rgba(139,92,246,.2));display:flex;align-items:center;justify-content:center;font-size:20px;flex:none}
-.ac.unlocked .a-ico{background:linear-gradient(145deg,rgba(251,191,36,.5),rgba(245,158,11,.3))}
-.q-body,.a-body,.s-info,.lb-info{flex:1}
-.q-title,.a-title,.s-name,.lb-name{font-size:13px;font-weight:800}
-.q-desc,.a-desc,.s-desc,.lb-sub{font-size:11px;color:var(--muted);margin-top:2px}
-.q-rw,.s-price{font-size:12px;font-weight:900;color:var(--leg);margin-top:3px}
+.qc.claimed{opacity:.55}
+.q-ico{width:44px;height:44px;border-radius:12px;background:linear-gradient(145deg,rgba(96,165,250,.3),rgba(139,92,246,.2));display:flex;align-items:center;justify-content:center;font-size:20px;flex:none}
+.q-body{flex:1}
+.q-title{font-size:13px;font-weight:800}
+.q-desc{font-size:11px;color:var(--muted);margin-top:2px}
+.q-rw{font-size:12px;font-weight:900;color:var(--leg);margin-top:3px}
 .q-bar{height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:6px;overflow:hidden}
 .q-f{height:100%;background:linear-gradient(90deg,#34d399,#60a5fa);transition:width .5s}
 .q-claim{padding:8px 14px;border-radius:10px;background:linear-gradient(135deg,#34d399,#10b981);color:#000;font-weight:900;font-size:11px;border:none;cursor:pointer;font-family:inherit}
 .q-claim:disabled{background:rgba(255,255,255,.1);color:var(--muted);cursor:not-allowed}
-.s-buy{padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,#4f8cff,#2f5bea);color:#fff;font-weight:900;font-size:11px;border:none;cursor:pointer;text-transform:uppercase;font-family:inherit}
-.lb-rank{width:36px;height:36px;border-radius:50%;background:linear-gradient(145deg,#1e293b,#0f172a);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex:none}
-.lb:nth-child(1) .lb-rank{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000}
-.lb:nth-child(2) .lb-rank{background:linear-gradient(135deg,#94a3b8,#64748b);color:#000}
-.lb:nth-child(3) .lb-rank{background:linear-gradient(135deg,#a16207,#78350f);color:#fff}
-.lb-av{width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;font-size:20px;flex:none}
-.lb-val{font-size:14px;font-weight:900;color:var(--rub)}
-.fort-w{position:relative;width:260px;height:260px;margin:20px auto}
-.fort-wh{width:100%;height:100%;border-radius:50%;border:6px solid #1e293b;position:relative;transition:transform 5s cubic-bezier(.15,.7,.2,1)}
-.fort-p{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:36px;color:#fff;z-index:10}
-.fort-c{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;border-radius:50%;background:linear-gradient(145deg,#1e293b,#0f172a);border:3px solid #334155;display:flex;align-items:center;justify-content:center;z-index:5;font-size:24px}
-.chest-ov{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:250;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
-.chest-ov.active{opacity:1;pointer-events:all}
-.chest{width:180px;height:180px;cursor:pointer}
-.chest.opening{animation:co .8s ease-out forwards}
-@keyframes co{0%{transform:scale(1) rotate(0)}100%{transform:scale(0) rotate(180deg);opacity:0}}
-.chest-svg{width:100%;height:100%}
-.chest-lbl{font-size:16px;font-weight:900;color:#fff;margin-top:20px;text-align:center;letter-spacing:2px;text-transform:uppercase}
-.chest-day{font-size:13px;color:#fbbf24;margin-top:8px;font-weight:800}
 .modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;z-index:100;opacity:0;pointer-events:none;transition:opacity .3s;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
 .modal-ov.active{opacity:1;pointer-events:all}
 .modal{background:var(--bg);border:1px solid var(--border);border-radius:28px;padding:32px 24px;width:90%;max-width:340px;text-align:center;transform:scale(.7);transition:transform .3s}
@@ -176,20 +141,12 @@ body.t-emerald{--bg:#051f14;--text:#fff;--muted:#6ee7b7;--panel:#0a2e1f;--border
 .rule-ic{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,rgba(59,130,246,.35),rgba(139,92,246,.22));font-size:21px;flex:none}
 .rule-h{font-size:14px;font-weight:900;margin-bottom:2px}
 .rule-p{font-size:13px;color:var(--muted);line-height:1.45}
-.flash{position:fixed;inset:0;background:#fff;z-index:999;pointer-events:none;animation:fa .5s ease-out}
-@keyframes fa{0%{opacity:.8}100%{opacity:0}}
-.confetti{position:fixed;inset:0;pointer-events:none;z-index:150;overflow:hidden}
-.confetti i{position:absolute;top:-20px;width:8px;height:14px;border-radius:2px;animation:fall linear forwards}
-@keyframes fall{to{transform:translateY(108vh) rotate(720deg)}}
-.pop{animation:pop .65s cubic-bezier(.2,1.4,.4,1)}
-@keyframes pop{0%{transform:scale(.55);opacity:0}60%{transform:scale(1.08);opacity:1}100%{transform:none}}
 .hero{text-align:center;margin-bottom:6px}
 .hero-t{font-size:34px;font-weight:900;letter-spacing:4px;background:linear-gradient(90deg,#60a5fa,#a78bfa,#f472b6,#fbbf24,#60a5fa);background-size:300% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:hue 6s linear infinite}
 .hero-sub{font-size:11px;color:var(--muted);letter-spacing:3px;text-transform:uppercase}
 .prog-c{width:100%;height:7px;background:rgba(255,255,255,.1);border-radius:4px;margin-top:8px;overflow:hidden}
 .prog-b{height:100%;background:linear-gradient(90deg,var(--acc),#8b5cf6);width:0%;transition:width .5s}
 #menuRank{display:inline-block;padding:4px 16px;border-radius:999px;background:linear-gradient(135deg,rgba(59,130,246,.25),rgba(139,92,246,.25));border:1px solid rgba(139,92,246,.4);margin-top:6px;font-size:18px !important}
-.aid{margin:10px 14px 0;padding:10px 14px;border-radius:16px;background:linear-gradient(135deg,rgba(245,158,11,.22),rgba(239,68,68,.14));border:1px solid rgba(245,158,11,.5);color:#fde68a;font-size:12.5px;font-weight:700}
 .stat-r{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border)}
 .stat-r:last-child{border-bottom:none}
 .stat-n{color:var(--muted);font-size:14px}
@@ -203,11 +160,6 @@ body.t-emerald{--bg:#051f14;--text:#fff;--muted:#6ee7b7;--panel:#0a2e1f;--border
 .av-g{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:15px}
 .av-b{padding:8px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--border);cursor:pointer;text-align:center;font-size:20px;color:var(--text)}
 .av-b.active{border-color:var(--acc);background:rgba(59,130,246,.15)}
-.streak-d{width:32px;height:44px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;color:var(--muted)}
-.streak-d.done{background:rgba(251,191,36,.15);border-color:rgba(251,191,36,.5);color:#fbbf24}
-.streak-d.today{border-color:var(--acc);background:rgba(59,130,246,.2);color:var(--acc)}
-.streak-d .d{font-size:8px;opacity:.7}
-.streak-d .n{font-size:14px}
 .upg-tabs{display:flex;gap:8px;margin-bottom:15px;background:var(--panel);padding:5px;border-radius:16px;border:1px solid var(--border)}
 .upg-tab{flex:1;padding:12px;border:none;background:transparent;color:var(--muted);font-weight:800;font-size:13px;border-radius:10px;cursor:pointer;font-family:inherit}
 .upg-tab.active{background:linear-gradient(135deg,rgba(79,140,255,.35),rgba(139,92,246,.3));color:var(--text)}
@@ -228,26 +180,18 @@ body.t-emerald{--bg:#051f14;--text:#fff;--muted:#6ee7b7;--panel:#0a2e1f;--border
 .upg-item .name{font-size:10px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .upg-item .price-mini{font-size:10px;font-weight:900;color:var(--rub)}
 .upg-wh-w{position:relative;width:220px;height:220px;margin:20px auto 5px}
-.upg-wh{width:100%;height:100%;border-radius:50%;border:4px solid #1e293b;position:relative}
+.upg-wh{width:100%;height:100%;border-radius:50%;border:4px solid #1e293b;position:relative;transition:transform 3s cubic-bezier(.15,.7,.2,1)}
 .upg-wh-c{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80px;height:80px;border-radius:50%;background:linear-gradient(145deg,#1e293b,#0f172a);border:3px solid #334155;display:flex;align-items:center;justify-content:center;z-index:5}
 .upg-wh-c span{font-size:20px;font-weight:900;color:#fff}
 .wh-p-w{position:absolute;inset:0;pointer-events:none;z-index:8}
 .wh-p{position:absolute;top:-20px;left:50%;margin-left:-14px;width:28px;font-size:28px;color:#fff;text-align:center}
-.battle-mc{display:flex;overflow-x:auto;gap:10px;padding-bottom:8px}
-.battle-ci{flex:0 0 110px;padding:10px;border-radius:16px;background:rgba(0,0,0,.3);border:1px solid var(--border);cursor:pointer;text-align:center}
-.battle-ci.selected{border-color:var(--acc);background:rgba(59,130,246,.2)}
-.battle-ci svg,.battle-ci img{width:100%;height:50px;margin-bottom:4px;object-fit:contain}
-.battle-cn{font-size:10px;font-weight:800}
-.battle-cp{font-size:11px;font-weight:900;color:var(--rub)}
 .battle-rooms{display:flex;flex-direction:column;gap:10px}
 .battle-r{display:flex;align-items:center;gap:12px;padding:14px;border-radius:18px;background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02));border:1px solid var(--border);cursor:pointer}
 .battle-rav{width:52px;height:52px;border-radius:50%;background:linear-gradient(145deg,#1e293b,#0f172a);display:flex;align-items:center;justify-content:center;font-size:26px;flex:none;border:2px solid rgba(96,165,250,.4)}
 .battle-ri{flex:1}
 .battle-rn{font-size:14px;font-weight:900}
 .battle-rr{font-size:10px;color:var(--muted);font-weight:700;margin-top:2px}
-.battle-rc{flex:0 0 90px;text-align:center}
-.battle-rc svg,.battle-rc img{width:100%;height:35px;object-fit:contain}
-.battle-rp{font-size:12px;font-weight:900;color:var(--leg);margin-top:2px}
+.battle-rp{font-size:12px;font-weight:900;color:var(--leg);margin-top:2px;text-align:center}
 .battle-rj{padding:8px 16px;border-radius:12px;background:linear-gradient(135deg,#4f8cff,#2f5bea);color:#fff;font-weight:900;font-size:11px;border:none;cursor:pointer;text-transform:uppercase;flex:none;font-family:inherit}
 .lobby{position:fixed;inset:0;z-index:300;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;opacity:0;pointer-events:none;transition:opacity .4s}
 .lobby.active{opacity:1;pointer-events:all}
@@ -256,371 +200,273 @@ body.t-emerald{--bg:#051f14;--text:#fff;--muted:#6ee7b7;--panel:#0a2e1f;--border
 .bres-ov.active{opacity:1;pointer-events:all}
 .bres{background:var(--bg);border:2px solid var(--leg);border-radius:30px;padding:32px 24px;width:90%;max-width:380px;text-align:center;transform:scale(.7);transition:transform .5s}
 .bres-ov.active .bres{transform:scale(1)}
-.winning{box-shadow:0 0 20px rgba(52,211,153,.6) !important;border-color:var(--rub) !important}
-.jack-ov{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:200;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;opacity:0;pointer-events:none;transition:opacity .4s;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.jack-ov{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:200;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;opacity:0;pointer-events:none;transition:opacity .4s}
 .jack-ov.active{opacity:1;pointer-events:all}
 .jack-t{font-size:60px;font-weight:900;background:linear-gradient(90deg,#fbbf24,#f59e0b,#fbbf24);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:hue 1.5s infinite}
 .jack-a{font-size:24px;font-weight:900;color:#fde68a;text-align:center;padding:0 20px}
-.bank-c{aspect-ratio:1.6;max-width:380px;margin:0 auto;border-radius:22px;background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 50%,#581c87 100%);padding:22px 24px;position:relative;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.6);color:#fff;display:flex;flex-direction:column;justify-content:space-between}
-.bank-ct{display:flex;justify-content:space-between;align-items:flex-start;z-index:1;position:relative}
-.bank-logo{font-size:13px;font-weight:900;letter-spacing:2px;line-height:1}
-.bank-logo span{display:block;font-size:8px;letter-spacing:4px;opacity:.6;margin-top:2px}
-.bank-cl{font-size:16px;opacity:.7;transform:rotate(90deg);letter-spacing:-2px}
-.bank-ch{width:42px;height:32px;border-radius:6px;background:linear-gradient(135deg,#fbbf24,#d97706);position:relative;z-index:1}
-.bank-num{font-family:"Courier New",monospace;font-size:18px;font-weight:900;letter-spacing:2px;z-index:1;position:relative;text-shadow:0 1px 2px rgba(0,0,0,.5);white-space:nowrap}
-.bank-cb{display:flex;justify-content:space-between;z-index:1;position:relative;gap:12px}
-.bank-l{font-size:8px;letter-spacing:1.5px;opacity:.55;text-transform:uppercase;font-weight:700}
-.bank-v{font-size:12px;font-weight:900;letter-spacing:1px;margin-top:2px;text-transform:uppercase}
-.bank-curs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:15px}
-.bank-cb2{padding:10px 4px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid var(--border);cursor:pointer;text-align:center;color:var(--text);font-weight:900;font-size:10.5px;display:flex;flex-direction:column;align-items:center;gap:2px}
-.bank-cb2.active{background:linear-gradient(135deg,rgba(96,165,250,.3),rgba(139,92,246,.3));border-color:var(--acc)}
-.bank-rr{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
-.bank-rr:last-child{border-bottom:none}
-.bank-rc{font-weight:800}
-.bank-rv{color:var(--rub);font-weight:900}
-.exch-row{display:flex;gap:8px;margin-bottom:8px}
-.exch-f{flex:1;background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:12px;padding:10px 12px}
-.exch-f label{font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:800;display:block;margin-bottom:4px}
-.exch-f input,.exch-f select{background:none;border:none;color:var(--text);font-size:15px;font-weight:900;width:100%;outline:none;font-family:inherit}
-.exch-f select option{background:#1a1f35;color:#fff}
-.exch-res{background:linear-gradient(135deg,rgba(52,211,153,.15),rgba(96,165,250,.1));border:1px solid rgba(52,211,153,.4);border-radius:12px;padding:10px 12px;text-align:left}
-.exch-res .exch-label{font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:800}
-.exch-res .exch-value{font-size:18px;font-weight:900;color:var(--rub);margin-top:4px;word-break:break-all}
-.exch-fee{font-size:11px;color:var(--muted);text-align:center;margin:4px 0 8px}
-.trend{margin:10px 14px 0;padding:10px 14px;border-radius:16px;background:linear-gradient(135deg,rgba(251,191,36,.28),rgba(245,158,11,.15));border:1px solid rgba(251,191,36,.55);color:#fde68a;font-size:12.5px;font-weight:800;text-align:center;display:none}
-.trade-r{display:flex;align-items:center;gap:10px;padding:12px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--border)}
-.trade-l{display:flex;align-items:center;gap:6px;flex-shrink:0}
-.trade-ra{padding:3px 8px;border-radius:8px;font-size:10px;font-weight:900;text-transform:uppercase}
-.trade-ar{color:var(--acc);font-weight:900}
-.trade-m{flex:1;text-align:center}
-.trade-c{font-size:14px;font-weight:900;color:var(--text)}
-.trade-d{font-size:10px;color:var(--muted);margin-top:2px}
-.trade-b{padding:8px 14px;border-radius:10px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#000;font-weight:900;font-size:11px;border:none;cursor:pointer;text-transform:uppercase;flex-shrink:0;font-family:inherit}
-.trade-b.disabled{opacity:.35;pointer-events:none;filter:grayscale(1)}
-.mmr-c{margin:12px 0 16px;padding:14px;border-radius:18px;background:linear-gradient(135deg,rgba(96,165,250,.15),rgba(139,92,246,.1));border:1px solid rgba(96,165,250,.4)}
-.mmr-h{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;gap:10px}
-.mmr-t{font-size:10px;font-weight:900;text-transform:uppercase;color:var(--muted);letter-spacing:1.5px}
-.mmr-v{font-size:22px;font-weight:900;color:var(--acc);line-height:1}
-.mmr-ti{display:inline-block;padding:3px 10px;border-radius:999px;font-size:10px;font-weight:900;text-transform:uppercase;margin-left:6px;vertical-align:middle}
-.mmr-pb{height:8px;background:rgba(0,0,0,.3);border-radius:4px;overflow:hidden;margin:8px 0}
-.mmr-pf{height:100%;background:linear-gradient(90deg,#4f8cff,#8b5cf6,#ec4899);border-radius:4px;transition:width .4s}
-.mmr-pf.ready{background:linear-gradient(90deg,#34d399,#10b981)}
-.mmr-i{font-size:11px;color:var(--muted);display:flex;justify-content:space-between;font-weight:700;gap:8px}
-.mmr-cl{width:100%;margin-top:10px;padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000;font-weight:900;font-size:12px;text-transform:uppercase;cursor:pointer;font-family:inherit}
 .toast{position:fixed;bottom:calc(30px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:rgba(52,211,153,.95);color:#000;padding:12px 22px;border-radius:999px;font-weight:900;font-size:13px;z-index:9999;box-shadow:0 6px 22px rgba(52,211,153,.5);max-width:90%;text-align:center;animation:ti .35s cubic-bezier(.2,1.4,.4,1)}
 @keyframes ti{from{opacity:0;transform:translateX(-50%) translateY(20px) scale(.8)}to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}}
 </style>
 </head>
-
-    <body class="t-black">
+<body class="t-black">
 
 <div class="splash" id="splash">
-    <div class="splash-logo">НОМЕРДАЙ</div>
-    <div class="splash-sub">бизнес на колесах</div>
-    <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+  <div class="splash-logo">НОМЕРДАЙ</div>
+  <div class="splash-sub">бизнес на колесах</div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
 </div>
 
 <div class="bg"></div>
 
-<div id="jackpotOv" class="jack-ov">
-    <div class="jack-t">💰 JACKPOT 💰</div>
-    <div style="font-size:80px;">🎉</div>
-    <div class="jack-a" id="jackpotAmount"></div>
-    <button class="btn btn-p" onclick="closeJackpot()" style="padding:14px 40px;">Забрать</button>
-</div>
-
-<div class="chest-ov" id="chestOv">
-    <div class="chest" id="chest" onclick="openChest()">
-        <svg class="chest-svg" viewBox="0 0 100 100">
-            <rect x="15" y="40" width="70" height="45" rx="5" fill="#8b5a2b"/>
-            <rect x="15" y="40" width="70" height="8" rx="2" fill="#a0522d"/>
-            <rect x="15" y="35" width="70" height="10" rx="3" fill="#d4a76a"/>
-            <rect x="43" y="35" width="14" height="25" rx="2" fill="#fbbf24"/>
-            <circle cx="50" cy="50" r="4" fill="#78350f"/>
-        </svg>
-    </div>
-    <div class="chest-lbl">Твой бонус за вход</div>
-    <div class="chest-day" id="chestDay">День 1</div>
-</div>
-
 <div class="app">
-    <div class="top">
-        <div style="display:flex;align-items:center;">
-            <button class="back" id="backBtn" onclick="navigate('menu')">←</button>
-            <div class="title" id="pageTitle">Номердай</div>
-        </div>
-        <div class="bal">
-            <div class="wal rub"><span id="uiRub">0</span> ₽</div>
-            <div class="wal token">💎 <span id="uiTok">0</span></div>
-            <button class="snd" id="sndBtn" onclick="toggleSound()">🔊</button>
-        </div>
+  <div class="top">
+    <div style="display:flex;align-items:center;">
+      <button class="back" id="backBtn" onclick="navigate('menu')">←</button>
+      <div class="title" id="pageTitle">Номердай</div>
     </div>
-    <div class="aid" id="aidBanner" style="display:none;"></div>
-
-    <div class="view active" id="v-menu">
-        <div class="hero">
-            <div class="hero-t">НОМЕРДАЙ</div>
-            <div class="plate-w" style="display:inline-block;margin:4px 0;">
-                <div class="plate r-leg"><div class="plate-t">О 777 ОО</div><div class="plate-s"><div class="plate-r">77</div><div class="plate-c">RUS</div><div class="plate-f"><div class="fw"></div><div class="fb"></div><div class="fr"></div></div></div></div>
-            </div>
-            <div class="hero-sub">бизнес на колесах</div>
-        </div>
-        <div style="text-align:center;margin-bottom:20px;">
-            <div style="font-size:12px;color:var(--muted);text-transform:uppercase;">Твой статус</div>
-            <div style="font-size:22px;font-weight:900;color:var(--acc);" id="menuRank">Новичок</div>
-            <div class="prog-c"><div class="prog-b" id="menuProg"></div></div>
-        </div>
-        <div class="menu-grid">
-            <div class="mc" onclick="navigate('cars')"><div class="ico">🚗</div><div class="ml">Автосалон</div><div class="md">Крутить тачки</div></div>
-            <div class="mc" onclick="navigate('plates')"><div class="ico">🔢</div><div class="ml">Госзнаки</div><div class="md">Крутить номера</div></div>
-            <div class="mc" onclick="navigate('garage')"><div class="ico">🏎️</div><div class="ml">Гараж</div><div class="md" id="menuGarage">0 | 0</div></div>
-            <div class="mc" onclick="navigate('battle')"><div class="ico">⚔️</div><div class="ml">Батл 1x1</div><div class="md" id="menuBattle">MMR: 0 · Бронза</div></div>
-            <div class="mc" onclick="navigate('upgrader')"><div class="ico">⬆️</div><div class="ml">Апгрейдер</div><div class="md">Улучшить</div></div>
-            <div class="mc" onclick="navigate('achievements')"><div class="ico">🏆</div><div class="ml">Достижения</div><div class="md" id="menuAch">0/12</div></div>
-            <div class="mc" onclick="navigate('season')"><div class="ico">🏆</div><div class="ml">Сезон</div><div class="md">Сезон 1</div></div>
-            <div class="mc" onclick="navigate('contracts')"><div class="ico">📝</div><div class="ml">Контракты</div><div class="md">Заказы на тачки</div></div>
-            <div class="mc" onclick="navigate('collections')"><div class="ico">🗂️</div><div class="ml">Коллекции</div><div class="md">Бонусы за бренды</div></div>
-            <div class="mc" onclick="navigate('fortune')"><div class="ico">🎡</div><div class="ml">Фортуна</div><div class="md">Рулетка</div></div>
-            <div class="mc" onclick="navigate('shop')"><div class="ico">🛒</div><div class="ml">Магазин дня</div><div class="md">Скидки</div></div>
-            <div class="mc" onclick="navigate('leaderboard')"><div class="ico">📊</div><div class="ml">Топ</div><div class="md">Рейтинг</div></div>
-            <div class="mc" onclick="navigate('quests')"><div class="ico">📋</div><div class="ml">Задания</div><div class="md" id="questsBadge">0/3</div></div>
-            <div class="mc locked" id="navUpg" onclick="checkLock('upgrades',5000000)"><div class="ico">🛠️</div><div class="ml">Тюнинг</div><div class="md">5 000 000 ₽</div></div>
-            <div class="mc locked" id="navCases" onclick="checkLock('cases',20000000)"><div class="ico">💎</div><div class="ml">Аукцион</div><div class="md">20 000 000 ₽</div></div>
-            <div class="mc" onclick="navigate('bank')"><div class="ico">💳</div><div class="ml">Банк</div><div class="md">Карта и валюта</div></div>
-            <div class="mc" onclick="navigate('profile')"><div class="ico">👑</div><div class="ml">Профиль</div><div class="md">Статистика</div></div>
-            <div class="mc" onclick="navigate('catalog')"><div class="ico">📚</div><div class="ml">Каталог</div><div class="md">Машины</div></div>
-            <div class="mc" onclick="showRules()"><div class="ico">📖</div><div class="ml">Правила</div><div class="md">Как играть</div></div>
-        </div>
+    <div class="bal">
+      <div class="wal rub"><span id="uiRub">0</span> ₽</div>
+      <div class="wal token">💎 <span id="uiTok">0</span></div>
+      <button class="snd" id="sndBtn" onclick="toggleSound()">🔊</button>
     </div>
+  </div>
 
-    <div class="view" id="v-cars">
-        <div class="vibe">
-            <div class="vibe-lbl">Шкала вайба <span id="vibeText">0%</span></div>
-            <div class="vibe-bar"><div class="vibe-f" id="vibeFill"></div></div>
-        </div>
-        <div class="gen" id="genCarBox" data-rarity="common" style="margin-top:10px;">
-            <div class="rec" id="recBanner" style="display:none;">🏆 НОВЫЙ РЕКОРД!</div>
-            <div class="showcase">
-                <div class="img-wrap"><div class="svg-box" id="carSvgBox"></div></div>
-                <div class="car-brand" id="carBrand">ВАЗ</div>
-                <div class="car-title" id="carName">2107</div>
-                <div class="badge" id="carBadge">Common</div>
-            </div>
-            <div class="price" id="carPrice">0 ₽</div>
-        </div>
-        <div class="prog" id="rollProg"><div class="prog-f" id="rollProgF"></div></div>
-        <div class="btns" id="actCarStart">
-            <button class="btn btn-roll" onclick="rollCar(false)"><div class="rt"><span>🎲</span><span>Крутить</span></div><div class="rp">2 000 000 ₽</div></button>
-            <button class="btn btn-roll-b" onclick="rollCar(true)"><div class="rt"><span>⚡</span><span>Boost</span></div><div class="rp">6 000 000 ₽</div></button>
-        </div>
-        <div id="pityBox" style="text-align:center;font-size:11px;color:var(--muted);font-weight:800;margin-top:8px;text-transform:uppercase;">🎯 До гаранта Legend: <span style="color:var(--leg);" id="pityLegend">50</span></div>
-        <div class="btns" id="actCarRes" style="display:none;">
-            <button class="btn btn-s" onclick="sellCurrentCar()" id="btnSellCar">Продать</button>
-            <button class="btn btn-v" onclick="saveCurrentCar()">В гараж</button>
-        </div>
-        <button class="btn-x10" onclick="rollCarX10()"><span>🎰 x10 Крутить</span><span class="xp">100 000 000 ₽</span></button>
-        <div class="auto-row">
-            <label class="auto-t" id="asComLbl"><input type="checkbox" id="asComChk" onchange="toggleAuto('common')"><span>🚫 Авто Common</span></label>
-            <label class="auto-t" id="asRarLbl"><input type="checkbox" id="asRarChk" onchange="toggleAuto('rare')"><span>🚫 Авто Rare</span></label>
-        </div>
+  <div class="view active" id="v-menu">
+    <div class="hero">
+      <div class="hero-t">НОМЕРДАЙ</div>
+      <div class="hero-sub">бизнес на колесах</div>
     </div>
-
-    <div class="view" id="v-plates">
-        <div class="gen" id="genPlateBox" data-rarity="common">
-            <div class="showcase" style="height:50px;margin-bottom:0;"><div class="car-title" style="font-size:13px;color:var(--muted);">Генератор номеров</div></div>
-            <div class="plate-w">
-                <div class="plate r-com" id="standalonePlate">
-                    <div class="plate-t" id="plateText">А 000 АА</div>
-                    <div class="plate-s">
-                        <div class="plate-r" id="plateRegion">77</div>
-                        <div class="plate-c">RUS</div>
-                        <div class="plate-f"><div class="fw"></div><div class="fb"></div><div class="fr"></div></div>
-                    </div>
-                </div>
-            </div>
-            <div class="price" id="platePrice">0 💎</div>
-        </div>
-        <div class="btns" id="actPlateStart">
-            <button class="btn btn-roll btn-roll-p" onclick="rollPlate(false)"><div class="rt"><span>🎲</span><span>Крутить</span></div><div class="rp">500 💎</div></button>
-            <button class="btn btn-roll-b" onclick="rollPlate(true)"><div class="rt"><span>⚡</span><span>Boost</span></div><div class="rp">1 500 💎</div></button>
-        </div>
-        <div class="btns" id="actPlateRes" style="display:none;">
-            <button class="btn btn-s" onclick="sellCurrentPlate()" id="btnSellPlate">Продать</button>
-            <button class="btn btn-v" onclick="saveCurrentPlate()">В гараж</button>
-        </div>
-        <button class="btn-x10" onclick="rollPlateX10()"><span>🎰 x10 Крутить</span><span class="xp">5 000 💎</span></button>
+    <div style="text-align:center;margin:20px 0;">
+      <div style="font-size:12px;color:var(--muted);text-transform:uppercase;">Твой статус</div>
+      <div id="menuRank">Новичок</div>
+      <div class="prog-c"><div class="prog-b" id="menuProg"></div></div>
     </div>
-
-    <div class="view" id="v-garage">
-        <div class="tabs">
-            <button class="tab active" id="tabCarsBtn" onclick="switchGarageTab('cars')">🚗 Машины</button>
-            <button class="tab" id="tabPlatesBtn" onclick="switchGarageTab('plates')">🔢 Номера</button>
-        </div>
-        <div class="sort">
-            <button class="sort-b active" id="sortDefault" onclick="setGarageSort('default')">Все</button>
-            <button class="sort-b" id="sortPrice" onclick="setGarageSort('price')">💰 Дорогие</button>
-            <button class="sort-b" id="sortRarity" onclick="setGarageSort('rarity')">⭐ Редкие</button>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;gap:8px;flex-wrap:wrap;">
-            <div>
-                <div style="font-weight:900;font-size:15px;" id="garageCap">(0/50)</div>
-            </div>
-            <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;">
-                <button class="btn btn-d" style="padding:8px 12px;font-size:10px;border-radius:10px;" onclick="sellAllGarage()">Продать всё</button>
-            </div>
-        </div>
-        <div class="list" id="garageList"></div>
+    <div class="menu-grid">
+      <div class="mc" onclick="navigate('cars')"><div class="ico">🚗</div><div class="ml">Автосалон</div><div class="md">Крутить тачки</div></div>
+      <div class="mc" onclick="navigate('plates')"><div class="ico">🔢</div><div class="ml">Госзнаки</div><div class="md">Крутить номера</div></div>
+      <div class="mc" onclick="navigate('garage')"><div class="ico">🏎️</div><div class="ml">Гараж</div><div class="md" id="menuGarage">0 | 0</div></div>
+      <div class="mc" onclick="navigate('battle')"><div class="ico">⚔️</div><div class="ml">Батл 1x1</div><div class="md" id="menuBattle">MMR: 0</div></div>
+      <div class="mc" onclick="navigate('upgrader')"><div class="ico">⬆️</div><div class="ml">Апгрейдер</div><div class="md">Улучшить</div></div>
+      <div class="mc" onclick="navigate('fortune')"><div class="ico">🎡</div><div class="ml">Фортуна</div><div class="md">Рулетка</div></div>
+      <div class="mc" onclick="navigate('quests')"><div class="ico">📋</div><div class="ml">Задания</div><div class="md" id="questsBadge">0/3</div></div>
+      <div class="mc" onclick="navigate('bank')"><div class="ico">💳</div><div class="ml">Банк</div><div class="md">Обмен валют</div></div>
+      <div class="mc" onclick="navigate('profile')"><div class="ico">👑</div><div class="ml">Профиль</div><div class="md">Статистика</div></div>
+      <div class="mc" onclick="showRules()"><div class="ico">📖</div><div class="ml">Правила</div><div class="md">Как играть</div></div>
     </div>
+  </div>
 
-    <div class="view" id="v-battle">
-        <div id="battleLobby">
-            <div style="font-size:26px;font-weight:900;text-align:center;margin-bottom:4px;background:linear-gradient(90deg,#ef4444,#f97316,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">⚔️ Батл 1x1</div>
-            <div style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:8px;">1 минута, 20 млн у каждого</div>
-            <div style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.4);border-radius:12px;padding:10px;text-align:center;font-size:12px;color:var(--rub);font-weight:800;margin-bottom:14px;">💰 Банк батла: 20 000 000 ₽</div>
-            <div style="font-size:12px;font-weight:900;color:var(--muted);text-transform:uppercase;margin:15px 0 8px 4px;">Лобби</div>
-            <div class="battle-rooms" id="battleRooms"></div>
-        </div>
-        <div id="battleActive" style="display:none;">
-            <div style="display:flex;flex-direction:column;gap:12px;">
-                <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-radius:16px;background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(249,115,22,.15));border:1px solid rgba(239,68,68,.5);">
-                    <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:20px;">⏱️</span><span id="battleTimerVal" style="font-size:24px;font-weight:900;color:var(--text);font-variant-numeric:tabular-nums;">1:00</span></div>
-                    <div style="font-size:11px;font-weight:900;text-transform:uppercase;color:var(--leg);">Батл идёт!</div>
-                </div>
-                <div style="display:flex;gap:12px;align-items:center;justify-content:center;">
-                    <div id="battleScoreMy" style="flex:1;text-align:center;padding:10px;border-radius:14px;background:rgba(0,0,0,.4);border:1px solid var(--border);transition:all .3s;"><div style="font-size:10px;color:var(--muted);font-weight:800;text-transform:uppercase;margin-bottom:4px;">Ты</div><div id="battleScoreMyVal" style="font-size:18px;font-weight:900;color:var(--rub);">0 ₽</div><div style="font-size:10px;margin-top:4px;color:var(--muted);">Банк: <span id="battleBankMy">20 000 000</span> ₽</div></div>
-                    <div style="font-size:14px;font-weight:900;color:#ef4444;">VS</div>
-                    <div id="battleScoreEnemy" style="flex:1;text-align:center;padding:10px;border-radius:14px;background:rgba(0,0,0,.4);border:1px solid var(--border);transition:all .3s;"><div style="font-size:10px;color:var(--muted);font-weight:800;text-transform:uppercase;margin-bottom:4px;" id="battleEnemyName">Соперник</div><div id="battleScoreEnemyVal" style="font-size:18px;font-weight:900;color:#f87171;">0 ₽</div><div style="font-size:10px;margin-top:4px;color:var(--muted);">Банк: <span id="battleBankEnemy">20 000 000</span> ₽</div></div>
-                </div>
-                <div id="battleLastDrop" style="margin-top:12px;min-height:100px;background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.01));border:1px solid var(--border);border-radius:16px;padding:10px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;"><div style="font-size:10px;color:var(--muted);font-weight:800;text-transform:uppercase;">Последний дроп</div><div style="color:var(--muted);font-size:12px;">Крути машины!</div></div>
-                <div style="display:flex;gap:8px;width:100%;">
-                    <button onclick="battleRollCar()" style="flex:1;padding:14px 8px;border-radius:14px;border:none;font-size:12px;font-weight:900;cursor:pointer;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:linear-gradient(135deg,#4f8cff,#2f5bea);color:#fff;font-family:inherit;">🚗 Крутить машину<small style="font-size:9px;opacity:.85;">2 000 000 ₽</small></button>
-                </div>
-            </div>
-        </div>
+  <div class="view" id="v-cars">
+    <div class="gen" id="genCarBox" data-rarity="common">
+      <div class="showcase">
+        <div class="img-wrap"><div class="svg-box" id="carSvgBox"></div></div>
+        <div class="car-brand" id="carBrand">ВАЗ</div>
+        <div class="car-title" id="carName">2107</div>
+        <div class="badge" id="carBadge">Common</div>
+      </div>
+      <div class="price" id="carPrice">0 ₽</div>
     </div>
-
-    <div class="view" id="v-upgrader">
-        <div class="upg-tabs">
-            <button class="upg-tab active" id="upgTabCars" onclick="switchUpgTab('cars')">🚗 Машины</button>
-            <button class="upg-tab" id="upgTabPlates" onclick="switchUpgTab('plates')">🔢 Номера</button>
-        </div>
-        <div id="upgCarsPanel" class="upg-cont">
-            <div class="upg-box"><div class="upg-lbl">Выбери машину для апгрейда</div><div class="upg-list" id="upgCarList"></div></div>
-            <div style="text-align:center;font-size:11px;color:var(--rub);font-weight:800;margin:0 0 10px;">💰 Кэшбэк 10% при проигрыше</div>
-            <button class="btn btn-p" id="btnDoCarUpg" onclick="doCarUpgrade()" style="padding:20px;font-size:16px;">Апгрейд машины</button>
-        </div>
-        <div id="upgPlatesPanel" class="upg-cont" style="display:none;">
-            <div class="upg-box"><div class="upg-lbl">Выбери номер для апгрейда</div><div class="upg-list" id="upgPlateList"></div></div>
-            <div style="text-align:center;font-size:11px;color:var(--token);font-weight:800;margin:0 0 10px;">💎 Кэшбэк 10% при проигрыше</div>
-            <button class="btn btn-p" id="btnDoPlateUpg" onclick="doPlateUpgrade()" style="padding:20px;font-size:16px;">Апгрейд номера</button>
-        </div>
+    <div class="prog" id="rollProg"><div class="prog-f" id="rollProgF"></div></div>
+    <div class="btns" id="actCarStart">
+      <button class="btn btn-roll" onclick="rollCar(false)"><div class="rt"><span>🎲</span><span>Крутить</span></div><div class="rp">2 000 000 ₽</div></button>
+      <button class="btn btn-roll-b" onclick="rollCar(true)"><div class="rt"><span>⚡</span><span>Boost</span></div><div class="rp">6 000 000 ₽</div></button>
     </div>
-
-    <div class="view" id="v-contracts"><h2 style="font-size:20px;font-weight:900;text-align:center;margin-bottom:20px;">📝 Контракты</h2><div id="contractsList"></div></div>
-    <div class="view" id="v-collections"><h2 style="font-size:20px;font-weight:900;text-align:center;margin-bottom:20px;">🗂️ Коллекции</h2><div id="collectionsList"></div></div>
-    <div class="view" id="v-season"><h2 style="font-size:20px;font-weight:900;text-align:center;margin-bottom:20px;">🏆 Сезон 1</h2><div style="background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:16px;text-align:center;margin-bottom:15px;"><div style="font-size:14px;font-weight:900;margin-bottom:8px;">Очки: <span id="seasonPoints" style="color:var(--acc);">0</span></div><div class="prog-c"><div class="prog-b" id="seasonProg" style="width:0%;"></div></div></div><div id="seasonRewardsList"></div></div>
-    <div class="view" id="v-achievements"><h2 style="font-size:20px;font-weight:900;text-align:center;margin-bottom:20px;">🏆 Достижения</h2><div id="achList"></div></div>
-    <div class="view" id="v-fortune"><h2 style="font-size:20px;font-weight:900;text-align:center;margin-bottom:20px;">🎡 Рулетка</h2><div style="text-align:center;font-size:60px;margin:40px 0;" id="fortuneDisplay">🎁</div><button class="btn btn-p" id="btnFortune" onclick="spinFortune()" style="padding:18px;font-size:16px;">🎰 Крутить</button></div>
-    <div class="view" id="v-shop"><h2 style="font-size:20px;font-weight:900;text-align:center;margin-bottom:20px;">🛒 Магазин дня</h2><div id="shopList"></div></div>
-    <div class="view" id="v-leaderboard"><h2 style="font-size:20px;font-weight:900;text-align:center;margin-bottom:20px;">📊 Топ игроков</h2><div id="lbList"></div></div>
-    <div class="view" id="v-quests"><h2 style="font-size:20px;font-weight:900;text-align:center;margin-bottom:20px;">📋 Задания</h2><div id="questsList"></div></div>
-    <div class="view" id="v-catalog"><h2 style="font-size:20px;font-weight:900;text-align:center;margin-bottom:20px;">📚 Каталог</h2><div id="catalogList"></div></div>
-
-    <div class="view" id="v-bank">
-        <h2 style="font-size:20px;font-weight:900;text-align:center;margin-bottom:20px;">💳 Банк</h2>
-        <div class="bank-c">
-            <div class="bank-ct"><div class="bank-logo">NOMERDAY<span>BANK</span></div></div>
-            <div class="bank-ch"></div>
-            <div class="bank-num">7777 0000 0000 0000</div>
-            <div class="bank-cb"><div><div class="bank-l">Держатель</div><div class="bank-v">NOMERDAY PLAYER</div></div><div style="text-align:right;"><div class="bank-l">Срок</div><div class="bank-v">12/29</div></div></div>
-        </div>
-        <div style="text-align:center;margin:20px 0 12px;"><div style="font-size:32px;font-weight:900;" id="bankBalanceDisplay">0 ₽</div></div>
-        <div class="btns" style="margin-top:15px;"><button class="btn btn-p" onclick="openExchange()">💱 Обменять валюту</button></div>
+    <div class="btns" id="actCarRes" style="display:none;">
+      <button class="btn btn-s" onclick="sellCurrentCar()">Продать</button>
+      <button class="btn btn-v" onclick="saveCurrentCar()">В гараж</button>
     </div>
+  </div>
 
-    <div class="view" id="v-upgrades"><div style="background:var(--panel);border:1px solid var(--border);border-radius:28px;padding:30px 20px;display:flex;flex-direction:column;gap:16px;text-align:center;"><div class="ico" style="margin:0 auto;width:80px;height:80px;font-size:40px;">🛠️</div><div style="font-size:22px;font-weight:900;">Тюнинг</div><div id="upgLevelDisp" style="font-size:38px;font-weight:900;color:var(--acc);">Ур. 0</div><button class="btn btn-p" onclick="buyUpgrade()">Прокачать</button></div><div style="background:var(--panel);border:1px solid var(--border);border-radius:28px;padding:30px 20px;display:flex;flex-direction:column;gap:16px;text-align:center;margin-top:15px;"><div class="ico" style="margin:0 auto;width:80px;height:80px;font-size:40px;">🏢</div><div style="font-size:22px;font-weight:900;">Гараж</div><div id="garageLevelDisp" style="font-size:38px;font-weight:900;color:var(--acc);">Ур. 0 (50 мест)</div><button class="btn btn-p" onclick="buyGarageUpg()" style="background:linear-gradient(135deg,#10b981,#059669);">Расширить</button></div></div>
-    <div class="view" id="v-cases"><div style="background:var(--panel);border:1px solid var(--border);border-radius:28px;padding:30px 20px;display:flex;flex-direction:column;gap:16px;text-align:center;"><div class="ico" style="margin:0 auto;width:80px;height:80px;font-size:40px;">💎</div><div style="font-size:22px;font-weight:900;">Премиум Аукцион</div><div style="font-weight:900;font-size:22px;">20 000 000 ₽</div><button class="btn btn-p" onclick="openCase()">Купить</button></div></div>
-
-    <div class="view" id="v-profile">
-        <div style="text-align:center;padding:20px 0;">
-            <div class="ico" id="profileAvatar" style="margin:0 auto 12px auto;width:90px;height:90px;font-size:45px;border-radius:50%;">👑</div>
-            <div style="font-size:22px;font-weight:900;" id="profileRank">Новичок</div>
+  <div class="view" id="v-plates">
+    <div class="gen" id="genPlateBox">
+      <div class="plate-w">
+        <div class="plate r-com" id="standalonePlate">
+          <div class="plate-t" id="plateText">А 000 АА</div>
+          <div class="plate-s">
+            <div class="plate-r" id="plateRegion">77</div>
+            <div class="plate-c">RUS</div>
+            <div class="plate-f"><div class="fw"></div><div class="fb"></div><div class="fr"></div></div>
+          </div>
         </div>
-        <div style="background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:18px;">
-            <div class="stat-r"><span class="stat-n">Баланс ₽</span><span class="stat-v" style="color:var(--rub);" id="profRub">0 ₽</span></div>
-            <div class="stat-r"><span class="stat-n">Баланс 💎</span><span class="stat-v" style="color:var(--token);" id="profTok">0 💎</span></div>
-            <div class="stat-r"><span class="stat-n">Машины</span><span class="stat-v" id="profCars">0</span></div>
-            <div class="stat-r"><span class="stat-n">Номера</span><span class="stat-v" id="profPlates">0</span></div>
-            <div class="stat-r"><span class="stat-n">Побед</span><span class="stat-v" style="color:var(--rub);" id="profWins">0</span></div>
-            <div class="stat-r"><span class="stat-n">MMR</span><span class="stat-v" style="color:var(--acc);" id="profMMR">0</span></div>
-        </div>
-        <div class="custom">
-            <div class="custom-t">🎨 Цвет фона</div>
-            <div class="theme-g" id="themeGrid"></div>
-            <div class="custom-t">👤 Аватар</div>
-            <div class="av-g" id="avatarGrid"></div>
-        </div>
-        <div style="margin-top:16px;padding:14px;border-radius:18px;background:var(--panel);border:1px solid var(--border);">
-            <div class="btns" style="margin-top:0;">
-                <button class="btn btn-v" style="font-size:11px;padding:12px;" onclick="exportSave()">Скопировать</button>
-                <button class="btn btn-s" style="font-size:11px;padding:12px;" onclick="importSave()">Загрузить</button>
-            </div>
-        </div>
-        <button class="btn btn-d" style="margin-top:10px;" onclick="resetGame()">Сбросить прогресс</button>
+      </div>
+      <div class="price" id="platePrice">0 💎</div>
     </div>
-</div>
-
-<div class="lobby" id="lobbyTransition">
-    <div style="display:flex;align-items:center;gap:20px;">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div id="lobbyMyAvatar" class="lobby-av">👑</div><div style="font-size:14px;font-weight:900;">Ты</div></div>
-        <div style="font-size:36px;font-weight:900;font-style:italic;color:#ef4444;">VS</div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div id="lobbyEnemyAvatar" class="lobby-av">🐺</div><div id="lobbyEnemyName" style="font-size:14px;font-weight:900;">Соперник</div></div>
+    <div class="btns" id="actPlateStart">
+      <button class="btn btn-roll" onclick="rollPlate(false)"><div class="rt"><span>🎲</span><span>Крутить</span></div><div class="rp">500 💎</div></button>
+      <button class="btn btn-roll-b" onclick="rollPlate(true)"><div class="rt"><span>⚡</span><span>Boost</span></div><div class="rp">1 500 💎</div></button>
     </div>
-    <div id="lobbyText" style="color:var(--muted);font-size:14px;font-weight:800;text-transform:uppercase;">Подключение...</div>
-</div>
-
-<div class="bres-ov" id="bresOv">
-    <div class="bres">
-        <div id="bresIcon" style="font-size:80px;margin-bottom:10px;">🏆</div>
-        <div id="bresTitle" style="font-size:28px;font-weight:900;margin-bottom:8px;">Победа!</div>
-        <div id="bresScore" style="font-size:14px;color:var(--muted);margin-bottom:16px;font-weight:800;"></div>
-        <div id="bresPrize" style="font-size:15px;color:var(--text);font-weight:900;margin-bottom:20px;line-height:1.6;"></div>
-        <button class="btn btn-p" onclick="closeBattleResult()">Продолжить</button>
+    <div class="btns" id="actPlateRes" style="display:none;">
+      <button class="btn btn-s" onclick="sellCurrentPlate()">Продать</button>
+      <button class="btn btn-v" onclick="saveCurrentPlate()">В гараж</button>
     </div>
+  </div>
+
+  <div class="view" id="v-garage">
+    <div class="tabs">
+      <button class="tab active" id="tabCarsBtn" onclick="switchGarageTab('cars')">🚗 Машины</button>
+      <button class="tab" id="tabPlatesBtn" onclick="switchGarageTab('plates')">🔢 Номера</button>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+      <div id="garageCap" style="font-weight:900;font-size:15px;">(0/50)</div>
+      <button class="btn btn-d" style="padding:8px 12px;font-size:10px;border-radius:10px;flex:none;" onclick="sellAllGarage()">Продать всё</button>
+    </div>
+    <div class="list" id="garageList"></div>
+  </div>
+
+  <div class="view" id="v-upgrader">
+    <div class="upg-tabs">
+      <button class="upg-tab active" id="upgTabCars" onclick="switchUpgTab('cars')">🚗 Машины</button>
+      <button class="upg-tab" id="upgTabPlates" onclick="switchUpgTab('plates')">🔢 Номера</button>
+    </div>
+    <div id="upgCarsPanel" class="upg-cont">
+      <div class="upg-box"><div class="upg-lbl">Выбери машину</div><div class="upg-list" id="upgCarList"></div></div>
+      <div style="display:flex;justify-content:space-between;gap:10px;">
+        <div class="upg-box" style="flex:1;"><div class="upg-lbl">Твоя</div><div class="upg-card"><div class="upg-svg" id="upgCarStakeSvg"></div><div class="upg-price" id="upgCarStakePrice">0 ₽</div></div></div>
+        <div style="display:flex;align-items:center;font-size:24px;color:var(--acc);">➡️</div>
+        <div class="upg-box" style="flex:1;"><div class="upg-lbl">Приз</div><div class="upg-card"><div class="upg-svg" id="upgCarPrizeSvg"></div><div class="upg-price" style="color:var(--token);" id="upgCarPrizePrice">0 ₽</div></div></div>
+      </div>
+      <div class="upg-box">
+        <div class="upg-lbl">Шанс</div>
+        <div class="upg-ch">
+          <button class="upg-ch-b" onclick="setCarChance(10)">10%</button>
+          <button class="upg-ch-b" onclick="setCarChance(25)">25%</button>
+          <button class="upg-ch-b active" onclick="setCarChance(50)">50%</button>
+          <button class="upg-ch-b" onclick="setCarChance(75)">75%</button>
+        </div>
+        <div class="upg-wh-w">
+          <div class="upg-wh" id="carWheelSpin"></div>
+          <div class="upg-wh-c"><span id="carWheelChance">50%</span></div>
+          <div class="wh-p-w"><div class="wh-p">▼</div></div>
+        </div>
+      </div>
+      <div style="text-align:center;font-size:11px;color:var(--rub);font-weight:800;">💰 Кэшбэк 10% при проигрыше</div>
+      <button class="btn btn-p" onclick="doCarUpgrade()" style="padding:20px;font-size:16px;">Апгрейд машины</button>
+    </div>
+    <div id="upgPlatesPanel" class="upg-cont" style="display:none;">
+      <div class="upg-box"><div class="upg-lbl">Выбери номер</div><div class="upg-list" id="upgPlateList"></div></div>
+      <div style="display:flex;justify-content:space-between;gap:10px;">
+        <div class="upg-box" style="flex:1;"><div class="upg-lbl">Твой</div><div class="upg-card"><div id="upgPlateStakeDisplay" style="transform:scale(.7);"></div><div class="upg-price" id="upgPlateStakePrice">0 💎</div></div></div>
+        <div style="display:flex;align-items:center;font-size:24px;color:var(--acc);">➡️</div>
+        <div class="upg-box" style="flex:1;"><div class="upg-lbl">Приз</div><div class="upg-card"><div id="upgPlatePrizeDisplay" style="transform:scale(.7);"></div><div class="upg-price" style="color:var(--token);" id="upgPlatePrizePrice">0 💎</div></div></div>
+      </div>
+      <div class="upg-box">
+        <div class="upg-lbl">Шанс</div>
+        <div class="upg-ch">
+          <button class="upg-ch-b" onclick="setPlateChance(10)">10%</button>
+          <button class="upg-ch-b" onclick="setPlateChance(25)">25%</button>
+          <button class="upg-ch-b active" onclick="setPlateChance(50)">50%</button>
+          <button class="upg-ch-b" onclick="setPlateChance(75)">75%</button>
+        </div>
+        <div class="upg-wh-w">
+          <div class="upg-wh" id="plateWheelSpin"></div>
+          <div class="upg-wh-c"><span id="plateWheelChance">50%</span></div>
+          <div class="wh-p-w"><div class="wh-p">▼</div></div>
+        </div>
+      </div>
+      <div style="text-align:center;font-size:11px;color:var(--token);font-weight:800;">💎 Кэшбэк 10% при проигрыше</div>
+      <button class="btn btn-p" onclick="doPlateUpgrade()" style="padding:20px;font-size:16px;">Апгрейд номера</button>
+    </div>
+  </div>
+
+  <div class="view" id="v-battle">
+    <div id="battleLobby">
+      <div style="font-size:26px;font-weight:900;text-align:center;margin-bottom:8px;">⚔️ Батл 1x1</div>
+      <div style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:14px;">1 минута, 20 000 000 ₽ у каждого</div>
+      <div style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.4);border-radius:12px;padding:10px;text-align:center;font-size:12px;color:var(--rub);font-weight:800;margin-bottom:14px;">💰 Банк батла: 20 000 000 ₽</div>
+      <div class="battle-rooms" id="battleRooms"></div>
+    </div>
+    <div id="battleActive" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-radius:16px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.5);margin-bottom:12px;">
+        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:20px;">⏱️</span><span id="battleTimerVal" style="font-size:24px;font-weight:900;">1:00</span></div>
+        <div style="font-size:11px;font-weight:900;color:var(--leg);">БАТЛ ИДЁТ</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+        <div style="flex:1;text-align:center;padding:10px;border-radius:14px;background:rgba(0,0,0,.4);border:1px solid var(--border);"><div style="font-size:10px;color:var(--muted);font-weight:800;">ТЫ</div><div id="battleScoreMyVal" style="font-size:18px;font-weight:900;color:var(--rub);">0 ₽</div><div style="font-size:10px;color:var(--muted);">Банк: <span id="battleBankMy">20 000 000</span> ₽</div></div>
+        <div style="font-size:14px;font-weight:900;color:#ef4444;">VS</div>
+        <div style="flex:1;text-align:center;padding:10px;border-radius:14px;background:rgba(0,0,0,.4);border:1px solid var(--border);"><div id="battleEnemyName" style="font-size:10px;color:var(--muted);font-weight:800;">СОПЕРНИК</div><div id="battleScoreEnemyVal" style="font-size:18px;font-weight:900;color:#f87171;">0 ₽</div><div style="font-size:10px;color:var(--muted);">Банк: <span id="battleBankEnemy">20 000 000</span> ₽</div></div>
+      </div>
+      <button onclick="battleRollCar()" style="width:100%;padding:16px;border-radius:14px;border:none;font-size:14px;font-weight:900;cursor:pointer;background:linear-gradient(135deg,#4f8cff,#2f5bea);color:#fff;font-family:inherit;">🚗 Крутить машину (2 000 000 ₽)</button>
+    </div>
+  </div>
+
+  <div class="view" id="v-fortune">
+    <h2 style="font-size:20px;font-weight:900;text-align:center;margin-bottom:20px;">🎡 Фортуна</h2>
+    <div style="text-align:center;font-size:80px;margin:40px 0;" id="fortuneDisplay">🎁</div>
+    <button class="btn btn-p" onclick="spinFortune()" style="padding:18px;font-size:16px;">🎰 Крутить</button>
+  </div>
+
+  <div class="view" id="v-quests">
+    <h2 style="font-size:20px;font-weight:900;text-align:center;margin-bottom:20px;">📋 Задания</h2>
+    <div id="questsList"></div>
+  </div>
+
+  <div class="view" id="v-bank">
+    <h2 style="font-size:20px;font-weight:900;text-align:center;margin-bottom:20px;">💳 Банк</h2>
+    <div style="text-align:center;margin:20px 0;">
+      <div style="font-size:32px;font-weight:900;" id="bankBalanceDisplay">0 ₽</div>
+    </div>
+    <button class="btn btn-p" onclick="openExchange()" style="width:100%;">💱 Обменять валюту</button>
+  </div>
+
+  <div class="view" id="v-profile">
+    <div style="text-align:center;padding:20px 0;">
+      <div class="ico" id="profileAvatar" style="margin:0 auto 12px auto;width:90px;height:90px;font-size:45px;border-radius:50%;">👑</div>
+      <div id="profileRank" style="font-size:22px;font-weight:900;">Новичок</div>
+    </div>
+    <div style="background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:18px;">
+      <div class="stat-r"><span class="stat-n">Баланс ₽</span><span class="stat-v" style="color:var(--rub);" id="profRub">0 ₽</span></div>
+      <div class="stat-r"><span class="stat-n">Баланс 💎</span><span class="stat-v" style="color:var(--token);" id="profTok">0 💎</span></div>
+      <div class="stat-r"><span class="stat-n">Машины</span><span class="stat-v" id="profCars">0</span></div>
+      <div class="stat-r"><span class="stat-n">Номера</span><span class="stat-v" id="profPlates">0</span></div>
+      <div class="stat-r"><span class="stat-n">Побед</span><span class="stat-v" id="profWins">0</span></div>
+      <div class="stat-r"><span class="stat-n">MMR</span><span class="stat-v" id="profMMR">0</span></div>
+    </div>
+    <div class="custom">
+      <div class="custom-t">🎨 Цвет фона</div>
+      <div class="theme-g" id="themeGrid"></div>
+      <div class="custom-t">👤 Аватар</div>
+      <div class="av-g" id="avatarGrid"></div>
+    </div>
+    <div class="btns" style="margin-top:16px;">
+      <button class="btn btn-v" onclick="exportSave()">Скопировать</button>
+      <button class="btn btn-s" onclick="importSave()">Загрузить</button>
+    </div>
+    <button class="btn btn-d" style="margin-top:10px;width:100%;" onclick="resetGame()">Сбросить прогресс</button>
+  </div>
 </div>
 
 <div class="modal-ov" id="modal"><div class="modal"><div class="m-ico" id="mIcon">🎉</div><div class="m-title" id="mTitle">Заголовок</div><div class="m-text" id="mText">Текст</div><button class="btn btn-p" onclick="closeModal()">Продолжить</button></div></div>
+
 <div class="modal-ov" id="rulesOv"><div class="rules-c"><div class="rules-t">📖 Правила</div><div class="rules-s">Стань королём дорог</div>
 <div class="rule-i"><div class="rule-ic">💰</div><div><div class="rule-h">Старт</div><div class="rule-p">5 000 000 ₽ и 10 000 💎.</div></div></div>
-<div class="rule-i"><div class="rule-ic">⚔️</div><div><div class="rule-h">Батл 1x1</div><div class="rule-p">1 минута, 20 млн у каждого.</div></div></div>
+<div class="rule-i"><div class="rule-ic">⚔️</div><div><div class="rule-h">Батл 1x1</div><div class="rule-p">1 минута, 20 000 000 ₽ у каждого.</div></div></div>
 <div class="rule-i"><div class="rule-ic">⬆️</div><div><div class="rule-h">Апгрейдер</div><div class="rule-p">При проигрыше — кэшбэк 10%.</div></div></div>
-<div class="rule-i"><div class="rule-ic">🔥</div><div><div class="rule-h">Mythic</div><div class="rule-p">Машины за миллиард. Шанс 1 к 2000.</div></div></div>
+<div class="rule-i"><div class="rule-ic">🔥</div><div><div class="rule-h">Mythic</div><div class="rule-p">Шанс 1 к 2000.</div></div></div>
 <button class="btn btn-p" style="width:100%;margin-top:18px;" onclick="closeRules()">Играть</button></div></div>
 
 <div class="modal-ov" id="exchangeModal">
-    <div class="modal" style="max-width:380px;">
-        <div class="m-ico">💱</div>
-        <div class="m-title">Обмен валюты</div>
-        <div class="exch-row">
-            <div class="exch-f" style="flex:2;"><label>Отдаю</label><input type="number" id="exchAmount" placeholder="0" inputmode="decimal" oninput="updateExchPreview()"></div>
-            <div class="exch-f" style="flex:1;"><label>Валюта</label><select id="exchFromCur" onchange="updateExchPreview()"><option value="rub">₽</option><option value="tok">💎</option></select></div>
-        </div>
-        <div style="text-align:center;color:var(--acc);font-size:20px;margin:4px 0;">↓</div>
-        <div class="exch-row">
-            <div class="exch-res" style="flex:2;"><div class="exch-label">Получаю</div><div class="exch-value" id="exchResult">0</div></div>
-            <div class="exch-f" style="flex:1;"><label>Валюта</label><select id="exchToCur" onchange="updateExchPreview()"><option value="tok">💎</option><option value="rub">₽</option></select></div>
-        </div>
-        <div class="exch-fee">Комиссия 2%</div>
-        <div class="btns" style="margin-top:12px;">
-            <button class="btn btn-s" onclick="closeExchange()">Отмена</button>
-            <button class="btn btn-p" onclick="doExchange()">Обменять</button>
-        </div>
+  <div class="modal" style="max-width:380px;">
+    <div class="m-ico">💱</div>
+    <div class="m-title">Обмен валюты</div>
+    <div class="exch-row">
+      <div class="exch-f" style="flex:2;"><label>Отдаю</label><input type="number" id="exchAmount" placeholder="0" oninput="updateExchPreview()"></div>
+      <div class="exch-f" style="flex:1;"><label>Валюта</label><select id="exchFromCur" onchange="updateExchPreview()"><option value="rub">₽</option><option value="tok">💎</option></select></div>
     </div>
+    <div style="text-align:center;font-size:20px;margin:4px 0;">↓</div>
+    <div class="exch-row">
+      <div class="exch-res" style="flex:2;"><div class="exch-label">Получаю</div><div class="exch-value" id="exchResult">0</div></div>
+      <div class="exch-f" style="flex:1;"><label>Валюта</label><select id="exchToCur" onchange="updateExchPreview()"><option value="tok">💎</option><option value="rub">₽</option></select></div>
+    </div>
+    <div style="font-size:11px;color:var(--muted);text-align:center;margin:4px 0 8px;">Комиссия 2%</div>
+    <div class="btns">
+      <button class="btn btn-s" onclick="closeExchange()">Отмена</button>
+      <button class="btn btn-p" onclick="doExchange()">Обменять</button>
+    </div>
+  </div>
     </div>
     <script>
-/* ============ SVG МАШИНЫ (сокращённо, 12 машин) ============ */
+/* ===== SVG МАШИН ===== */
 const SVG_CARS = {
-  'ВАЗ_2107':'<svg viewBox="0 0 200 100"><ellipse cx="100" cy="87" rx="94" ry="5" fill="rgba(0,0,0,.45)"/><path d="M14 72 L19 50 L41 40 L71 29 L137 29 L165 40 L185 50 L185 72 Z" fill="#b8bcc4"/><path d="M14 64 L185 64 L185 72 L14 72 Z" fill="#65676b"/><path d="M45 38 L73 32 L135 32 L160 40 Z" fill="#0d1526"/><line x1="104" y1="34" x2="104" y2="40" stroke="#b8bcc4" stroke-width="3"/><circle cx="54" cy="72" r="15" fill="#141922"/><circle cx="54" cy="72" r="8" fill="#cdd5e1"/><circle cx="148" cy="72" r="15" fill="#141922"/><circle cx="148" cy="72" r="8" fill="#cdd5e1"/></svg>',
+  'ВАЗ_2107':'<svg viewBox="0 0 200 100"><ellipse cx="100" cy="87" rx="94" ry="5" fill="rgba(0,0,0,.45)"/><path d="M14 72 L19 50 L41 40 L71 29 L137 29 L165 40 L185 50 L185 72 Z" fill="#b8bcc4"/><path d="M14 64 L185 64 L185 72 L14 72 Z" fill="#65676b"/><path d="M45 38 L73 32 L135 32 L160 40 Z" fill="#0d1526"/><circle cx="54" cy="72" r="15" fill="#141922"/><circle cx="54" cy="72" r="8" fill="#cdd5e1"/><circle cx="148" cy="72" r="15" fill="#141922"/><circle cx="148" cy="72" r="8" fill="#cdd5e1"/></svg>',
   'ВАЗ_2110':'<svg viewBox="0 0 200 100"><ellipse cx="100" cy="87" rx="94" ry="5" fill="rgba(0,0,0,.45)"/><path d="M14 72 L19 50 L41 40 L71 29 L137 29 L165 40 L185 50 L185 72 Z" fill="#c8cdd4"/><path d="M14 64 L185 64 L185 72 L14 72 Z" fill="#6e7074"/><path d="M45 38 L73 32 L135 32 L160 40 Z" fill="#0d1526"/><circle cx="54" cy="72" r="15" fill="#141922"/><circle cx="54" cy="72" r="8" fill="#cdd5e1"/><circle cx="148" cy="72" r="15" fill="#141922"/><circle cx="148" cy="72" r="8" fill="#cdd5e1"/></svg>',
   'ZAZ_Sens':'<svg viewBox="0 0 200 100"><ellipse cx="100" cy="87" rx="94" ry="5" fill="rgba(0,0,0,.45)"/><path d="M14 72 L19 50 L41 40 L71 29 L137 29 L165 40 L185 50 L185 72 Z" fill="#a8b0b8"/><path d="M14 64 L185 64 L185 72 L14 72 Z" fill="#5c6065"/><path d="M45 38 L73 32 L135 32 L160 40 Z" fill="#0d1526"/><circle cx="54" cy="72" r="15" fill="#141922"/><circle cx="54" cy="72" r="8" fill="#cdd5e1"/><circle cx="148" cy="72" r="15" fill="#141922"/><circle cx="148" cy="72" r="8" fill="#cdd5e1"/></svg>',
   'DAEWOO_Matiz':'<svg viewBox="0 0 200 100"><ellipse cx="100" cy="87" rx="94" ry="5" fill="rgba(0,0,0,.45)"/><path d="M20 72 L25 48 L47 34 L79 27 L133 27 L161 39 L179 51 L179 72 Z" fill="#7dd3fc"/><path d="M20 64 L179 64 L179 72 L20 72 Z" fill="#44748a"/><path d="M50 36 L81 30 L131 30 L155 39 Z" fill="#0d1526"/><circle cx="56" cy="72" r="15" fill="#141922"/><circle cx="56" cy="72" r="8" fill="#cdd5e1"/><circle cx="146" cy="72" r="15" fill="#141922"/><circle cx="146" cy="72" r="8" fill="#cdd5e1"/></svg>',
@@ -634,43 +480,45 @@ const SVG_CARS = {
   'FORD_Focus':'<svg viewBox="0 0 200 100"><ellipse cx="100" cy="87" rx="94" ry="5" fill="rgba(0,0,0,.45)"/><path d="M20 72 L25 48 L47 34 L79 27 L133 27 L161 39 L179 51 L179 72 Z" fill="#3b82f6"/><path d="M20 64 L179 64 L179 72 L20 72 Z" fill="#204787"/><path d="M50 36 L81 30 L131 30 L155 39 Z" fill="#0d1526"/><circle cx="56" cy="72" r="15" fill="#141922"/><circle cx="56" cy="72" r="8" fill="#cdd5e1"/><circle cx="146" cy="72" r="15" fill="#141922"/><circle cx="146" cy="72" r="8" fill="#cdd5e1"/></svg>'
 };
 
-/* ============ БАЗА МАШИН ============ */
 const CARS_DB = [
-  {id:'vaz2107', brand:'ВАЗ', name:'2107', price:50000, rarity:'common', svg:'ВАЗ_2107'},
-  {id:'vaz2110', brand:'ВАЗ', name:'2110', price:120000, rarity:'common', svg:'ВАЗ_2110'},
-  {id:'zaz', brand:'ZAZ', name:'Sens', price:90000, rarity:'common', svg:'ZAZ_Sens'},
-  {id:'matiz', brand:'Daewoo', name:'Matiz', price:80000, rarity:'common', svg:'DAEWOO_Matiz'},
-  {id:'qq', brand:'Chery', name:'QQ', price:100000, rarity:'common', svg:'CHERY_QQ'},
-  {id:'solano', brand:'Lifan', name:'Solano', price:150000, rarity:'common', svg:'LIFAN_Solano'},
-  {id:'ondo', brand:'Datsun', name:'on-DO', price:180000, rarity:'common', svg:'DATSUN_on-DO'},
-  {id:'logan', brand:'Renault', name:'Logan', price:200000, rarity:'rare', svg:'RENAULT_Logan'},
-  {id:'vesta', brand:'Lada', name:'Vesta', price:400000, rarity:'rare', svg:'LADA_Vesta'},
-  {id:'xray', brand:'Lada', name:'XRAY', price:350000, rarity:'rare', svg:'LADA_XRAY'},
-  {id:'granta', brand:'Lada', name:'Granta', price:300000, rarity:'rare', svg:'LADA_Granta'},
-  {id:'focus', brand:'Ford', name:'Focus', price:600000, rarity:'rare', svg:'FORD_Focus'}
+  {brand:'ВАЗ', name:'2107', price:50000, rarity:'common', svg:'ВАЗ_2107'},
+  {brand:'ВАЗ', name:'2110', price:120000, rarity:'common', svg:'ВАЗ_2110'},
+  {brand:'ZAZ', name:'Sens', price:90000, rarity:'common', svg:'ZAZ_Sens'},
+  {brand:'Daewoo', name:'Matiz', price:80000, rarity:'common', svg:'DAEWOO_Matiz'},
+  {brand:'Chery', name:'QQ', price:100000, rarity:'common', svg:'CHERY_QQ'},
+  {brand:'Lifan', name:'Solano', price:150000, rarity:'common', svg:'LIFAN_Solano'},
+  {brand:'Datsun', name:'on-DO', price:180000, rarity:'common', svg:'DATSUN_on-DO'},
+  {brand:'Renault', name:'Logan', price:200000, rarity:'rare', svg:'RENAULT_Logan'},
+  {brand:'Lada', name:'Vesta', price:400000, rarity:'rare', svg:'LADA_Vesta'},
+  {brand:'Lada', name:'XRAY', price:350000, rarity:'rare', svg:'LADA_XRAY'},
+  {brand:'Lada', name:'Granta', price:300000, rarity:'rare', svg:'LADA_Granta'},
+  {brand:'Ford', name:'Focus', price:600000, rarity:'rare', svg:'FORD_Focus'}
 ];
+
 const RARITY_WEIGHTS = {common:70, rare:22, epic:6, legend:1.8, mythic:0.2};
 const RARITY_NAMES = {common:'Common', rare:'Rare', epic:'Epic', legend:'Legend', mythic:'Mythic'};
 const RARITY_CLASS = {common:'bg-com', rare:'bg-rar', epic:'bg-epi', legend:'bg-leg', mythic:'bg-myt'};
 
-/* ============ СОСТОЯНИЕ ============ */
+/* ===== СОСТОЯНИЕ ===== */
 const DEFAULT_STATE = {
   rub:5000000, tok:10000, cars:[], plates:[],
-  garageLevel:0, upgLevel:0, totalEarned:0,
-  wins:0, mmr:0, pityLegend:0, streak:0,
-  lastLogin:null, theme:'black', avatar:'👑',
-  seasonPoints:0, sound:true,
-  autoCommon:false, autoRare:false,
-  fortuneLast:0, contractsLast:0, shopLast:0,
-  quests:{rolls:0, sells:0, battles:0, questsClaimed:{}},
-  achievements:{}
+  totalEarned:0, wins:0, mmr:0,
+  theme:'black', avatar:'👑', sound:true,
+  quests:{rolls:0, sells:0, battles:0, claimed:{}}
 };
 let S = loadState();
 let curCar = null, curPlate = null;
-let garageTab = 'cars', garageSort = 'default';
-let battleState = null, battleTimer = null;
+let garageTab = 'cars';
 
-/* ============ СОХРАНЕНИЕ ============ */
+/* ===== ФОРМАТИРОВАНИЕ ДЕНЕГ (ПОЛНЫЕ СУММЫ) ===== */
+function fmt(n){
+  n = Math.floor(n);
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+function fmtRub(n){ return fmt(n) + ' ₽'; }
+function fmtTok(n){ return fmt(n) + ' 💎'; }
+
+/* ===== СОХРАНЕНИЕ ===== */
 function loadState(){
   try{
     const raw = localStorage.getItem('nomerday_save');
@@ -679,14 +527,11 @@ function loadState(){
   }catch(e){ return JSON.parse(JSON.stringify(DEFAULT_STATE)); }
 }
 function save(){ try{ localStorage.setItem('nomerday_save', JSON.stringify(S)); }catch(e){} }
-function resetGame(){ if(!confirm('Сбросить весь прогресс?')) return; localStorage.removeItem('nomerday_save'); location.reload(); }
+function resetGame(){ if(!confirm('Сбросить прогресс?')) return; localStorage.removeItem('nomerday_save'); location.reload(); }
 function exportSave(){ const str = btoa(unescape(encodeURIComponent(JSON.stringify(S)))); navigator.clipboard?.writeText(str).then(()=>toast('Скопировано')); }
 function importSave(){ const str = prompt('Код сохранения:'); if(!str) return; try{ S = Object.assign(JSON.parse(JSON.stringify(DEFAULT_STATE)), JSON.parse(decodeURIComponent(escape(atob(str))))); save(); location.reload(); }catch(e){ toast('Неверный код'); } }
 
-/* ============ УТИЛИТЫ ============ */
-function fmt(n){ n = Math.floor(n); return n.toLocaleString('ru-RU').replace(/,/g, ' '); }
-function fmtRub(n){ return fmt(n)+' ₽'; }
-function fmtTok(n){ return fmt(n)+' 💎'; }
+/* ===== УТИЛИТЫ ===== */
 function rand(a,b){ return Math.random()*(b-a)+a; }
 function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 function toast(msg){ const d=document.createElement('div'); d.className='toast'; d.textContent=msg; document.body.appendChild(d); setTimeout(()=>d.remove(),2200); }
@@ -694,79 +539,57 @@ function showModal(icon,title,text){ document.getElementById('mIcon').textConten
 function closeModal(){ document.getElementById('modal').classList.remove('active'); }
 function showRules(){ document.getElementById('rulesOv').classList.add('active'); }
 function closeRules(){ document.getElementById('rulesOv').classList.remove('active'); }
-function closeJackpot(){ document.getElementById('jackpotOv').classList.remove('active'); }
-function checkLock(page, cost){ if(S.rub >= cost){ navigate(page); } else toast('Нужно '+fmtRub(cost)); }
 function toggleSound(){ S.sound=!S.sound; save(); const b=document.getElementById('sndBtn'); b.textContent=S.sound?'🔊':'🔇'; b.classList.toggle('off',!S.sound); }
-function toggleAuto(r){ if(r==='common'){ S.autoCommon=!S.autoCommon; document.getElementById('asComLbl').classList.toggle('on',S.autoCommon); } else { S.autoRare=!S.autoRare; document.getElementById('asRarLbl').classList.toggle('on',S.autoRare); } save(); }
 
-/* ============ UI ============ */
+/* ===== UI ===== */
 function updateUI(){
   document.getElementById('uiRub').textContent = fmt(S.rub);
   document.getElementById('uiTok').textContent = fmt(S.tok);
   document.getElementById('menuGarage').textContent = S.cars.length+' | '+S.plates.length;
-  const rank = S.mmr<100?'Бронза':S.mmr<300?'Серебро':S.mmr<600?'Золото':'Платина';
-  document.getElementById('menuBattle').textContent = 'MMR: '+S.mmr+' · '+rank;
-  document.getElementById('menuAch').textContent = Object.keys(S.achievements).length+'/12';
+  document.getElementById('menuBattle').textContent = 'MMR: '+S.mmr;
   document.getElementById('menuProg').style.width = Math.min(100, (S.totalEarned/1e9)*100)+'%';
-  const ranks=['Новичок','Любитель','Профи','Мастер','Магнат','Король дорог'];
+  const ranks=['Новичок','Любитель','Профи','Мастер','Магнат','Король'];
   const ri=Math.min(ranks.length-1, Math.floor(S.totalEarned/2e8));
   document.getElementById('menuRank').textContent = ranks[ri];
+  document.getElementById('profileRank').textContent = ranks[ri];
   document.getElementById('profRub').textContent = fmtRub(S.rub);
   document.getElementById('profTok').textContent = fmtTok(S.tok);
   document.getElementById('profCars').textContent = S.cars.length;
   document.getElementById('profPlates').textContent = S.plates.length;
   document.getElementById('profWins').textContent = S.wins;
   document.getElementById('profMMR').textContent = S.mmr;
-  document.getElementById('profileRank').textContent = ranks[ri];
-  document.getElementById('pityLegend').textContent = 50 - S.pityLegend;
-  document.getElementById('vibeFill').style.width = Math.min(100,(S.pityLegend/50)*100)+'%';
-  document.getElementById('vibeText').textContent = Math.min(100,Math.floor((S.pityLegend/50)*100))+'%';
-  const qClaimed = Object.keys(S.quests.questsClaimed||{}).length;
-  document.getElementById('questsBadge').textContent = qClaimed+'/3';
-  document.getElementById('menuBattle').textContent = 'MMR: '+S.mmr+' · '+rank;
   document.getElementById('bankBalanceDisplay').textContent = fmtRub(S.rub);
-  document.getElementById('upgLevelDisp').textContent = 'Ур. '+S.upgLevel;
-  document.getElementById('garageLevelDisp').textContent = 'Ур. '+S.garageLevel+' ('+(50+S.garageLevel*10)+' мест)';
+  document.getElementById('questsBadge').textContent = Object.keys(S.quests.claimed||{}).length+'/3';
   save();
 }
 
-/* ============ НАВИГАЦИЯ ============ */
+/* ===== НАВИГАЦИЯ ===== */
 function navigate(view){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   const v=document.getElementById('v-'+view);
   if(v) v.classList.add('active');
   document.getElementById('backBtn').style.display = view==='menu'?'none':'block';
-  const titles={menu:'Номердай',cars:'Автосалон',plates:'Госзнаки',garage:'Гараж',battle:'Батл 1x1',upgrader:'Апгрейдер',achievements:'Достижения',season:'Сезон',contracts:'Контракты',collections:'Коллекции',fortune:'Фортуна',shop:'Магазин дня',leaderboard:'Топ',quests:'Задания',upgrades:'Тюнинг',cases:'Аукцион',bank:'Банк',profile:'Профиль',catalog:'Каталог'};
+  const titles={menu:'Номердай',cars:'Автосалон',plates:'Госзнаки',garage:'Гараж',battle:'Батл 1x1',upgrader:'Апгрейдер',fortune:'Фортуна',quests:'Задания',bank:'Банк',profile:'Профиль'};
   document.getElementById('pageTitle').textContent = titles[view]||'Номердай';
   if(view==='garage') renderGarage();
-  if(view==='catalog') renderCatalog();
   if(view==='battle') renderBattleLobby();
   if(view==='upgrader') renderUpgrader();
   if(view==='quests') renderQuests();
-  if(view==='achievements') renderAchievements();
-  if(view==='season') renderSeason();
-  if(view==='contracts') renderContracts();
-  if(view==='collections') renderCollections();
-  if(view==='shop') renderShop();
-  if(view==='leaderboard') renderLeaderboard();
   if(view==='profile') renderProfile();
   window.scrollTo(0,0);
 }
 
-/* ============ КРУТКА МАШИН ============ */
+/* ===== КРУТКА МАШИН ===== */
 function rollRarity(){
   const r=Math.random()*100; let acc=0;
   for(const [k,w] of Object.entries(RARITY_WEIGHTS)){ acc+=w; if(r<acc) return k; }
   return 'common';
 }
-function generateCar(boost){
-  let rarity = rollRarity();
-  if(boost && Math.random()<0.15 && rarity==='common') rarity='rare';
-  if(S.pityLegend >= 50){ rarity='legend'; S.pityLegend=0; } else S.pityLegend++;
+function generateCar(){
+  const rarity = rollRarity();
   let pool = CARS_DB.filter(c=>c.rarity===rarity);
   if(!pool.length) pool = CARS_DB.filter(c=>c.rarity==='common');
-  const base = pick(pool);
-  return Object.assign({}, base, {uid:Date.now()+Math.random()});
+  return Object.assign({}, pick(pool), {uid:Date.now()+Math.random()});
 }
 function rollCar(boost){
   const cost = boost?6000000:2000000;
@@ -776,19 +599,16 @@ function rollCar(boost){
   document.getElementById('actCarRes').style.display='none';
   const box = document.getElementById('genCarBox');
   box.classList.add('spinning');
-  document.getElementById('rollProg').classList.add('on');
   let ticks=0;
   const spin=setInterval(()=>{
     const tmp=pick(CARS_DB);
     document.getElementById('carSvgBox').innerHTML=SVG_CARS[tmp.svg]||'';
     document.getElementById('carBrand').textContent=tmp.brand;
     document.getElementById('carName').textContent=tmp.name;
-    ticks++;
-    if(ticks>14){
+    if(++ticks>14){
       clearInterval(spin);
       box.classList.remove('spinning');
-      document.getElementById('rollProg').classList.remove('on');
-      curCar = generateCar(boost);
+      curCar = generateCar();
       document.getElementById('carSvgBox').innerHTML=SVG_CARS[curCar.svg]||'';
       document.getElementById('carBrand').textContent=curCar.brand;
       document.getElementById('carName').textContent=curCar.name;
@@ -798,8 +618,7 @@ function rollCar(boost){
       b.className='badge '+RARITY_CLASS[curCar.rarity];
       b.textContent=RARITY_NAMES[curCar.rarity];
       const p=document.getElementById('carPrice');
-      p.textContent=fmtRub(curCar.price);
-      p.classList.add('show');
+      p.textContent=fmtRub(curCar.price); p.classList.add('show');
       document.getElementById('actCarRes').style.display='flex';
       S.quests.rolls = (S.quests.rolls||0)+1;
       updateUI();
@@ -808,8 +627,7 @@ function rollCar(boost){
 }
 function sellCurrentCar(){
   if(!curCar) return;
-  S.rub+=curCar.price; S.totalEarned+=curCar.price;
-  S.quests.sells=(S.quests.sells||0)+1;
+  S.rub+=curCar.price; S.totalEarned+=curCar.price; S.quests.sells++;
   curCar=null;
   document.getElementById('actCarRes').style.display='none';
   document.getElementById('actCarStart').style.display='flex';
@@ -819,8 +637,6 @@ function sellCurrentCar(){
 }
 function saveCurrentCar(){
   if(!curCar) return;
-  const cap=50+S.garageLevel*10;
-  if(S.cars.length>=cap){ toast('Гараж полон'); return; }
   S.cars.push(curCar); curCar=null;
   document.getElementById('actCarRes').style.display='none';
   document.getElementById('actCarStart').style.display='flex';
@@ -828,17 +644,8 @@ function saveCurrentCar(){
   document.getElementById('carBadge').style.display='none';
   updateUI(); toast('В гараже');
 }
-function rollCarX10(){
-  const cost=100000000;
-  if(S.rub<cost){ toast('Мало ₽'); return; }
-  S.rub-=cost;
-  const cap=50+S.garageLevel*10;
-  let added=0;
-  for(let i=0;i<10;i++){ if(S.cars.length>=cap) break; S.cars.push(generateCar(true)); added++; }
-  updateUI(); showModal('🎰','x10','Добавлено: '+added);
-}
 
-/* ============ НОМЕРА ============ */
+/* ===== НОМЕРА ===== */
 const PLATE_LETTERS='АВЕКМНОРСТУХ';
 function generatePlate(){
   let code=pick(PLATE_LETTERS)+String(Math.floor(rand(1,999))).padStart(3,'0')+pick(PLATE_LETTERS)+pick(PLATE_LETTERS);
@@ -847,7 +654,6 @@ function generatePlate(){
   let rarity='common';
   if(/^\D(\d)\1\1\D\D$/.test(code)){ rarity='legend'; price*=20; }
   else if(/^\D(\d)\1\D\D$/.test(code)){ rarity='epic'; price*=6; }
-  else if(/^\D(\d)\1\D\D$/.test(code)){ rarity='rare'; price*=3; }
   return {code, region, price, rarity, uid:Date.now()+Math.random()};
 }
 function rollPlate(boost){
@@ -880,24 +686,14 @@ function saveCurrentPlate(){
   document.getElementById('platePrice').classList.remove('show');
   updateUI(); toast('В гараже');
 }
-function rollPlateX10(){
-  const cost=5000;
-  if(S.tok<cost){ toast('Мало 💎'); return; }
-  S.tok-=cost;
-  for(let i=0;i<10;i++) S.plates.push(generatePlate());
-  updateUI(); toast('+10 номеров');
-}
 
-/* ============ ГАРАЖ ============ */
+/* ===== ГАРАЖ ===== */
 function switchGarageTab(t){ garageTab=t; document.getElementById('tabCarsBtn').classList.toggle('active',t==='cars'); document.getElementById('tabPlatesBtn').classList.toggle('active',t==='plates'); renderGarage(); }
-function setGarageSort(s){ garageSort=s; ['default','price','rarity'].forEach(k=>document.getElementById('sort'+k.charAt(0).toUpperCase()+k.slice(1)).classList.toggle('active',k===s)); renderGarage(); }
 function renderGarage(){
   const list=document.getElementById('garageList');
-  const cap=50+S.garageLevel*10;
+  const cap=50;
   document.getElementById('garageCap').textContent='('+S.cars.length+'/'+cap+')';
   let items = garageTab==='cars'?[...S.cars]:[...S.plates];
-  if(garageSort==='price') items.sort((a,b)=>b.price-a.price);
-  if(garageSort==='rarity'){ const o={mythic:5,legend:4,epic:3,rare:2,common:1}; items.sort((a,b)=>(o[b.rarity]||0)-(o[a.rarity]||0)); }
   if(!items.length){ list.innerHTML='<div class="empty">Пусто</div>'; return; }
   list.innerHTML = items.map((it,i)=>{
     if(garageTab==='cars'){
@@ -909,70 +705,151 @@ function renderGarage(){
 function sellGarageCar(i){ const c=S.cars[i]; if(!c) return; S.rub+=c.price; S.totalEarned+=c.price; S.cars.splice(i,1); updateUI(); renderGarage(); toast('+'+fmtRub(c.price)); }
 function sellGaragePlate(i){ const p=S.plates[i]; if(!p) return; S.tok+=p.price; S.plates.splice(i,1); updateUI(); renderGarage(); toast('+'+fmtTok(p.price)); }
 function sellAllGarage(){ if(!confirm('Продать всё?')) return; if(garageTab==='cars'){ S.cars.forEach(c=>{S.rub+=c.price;S.totalEarned+=c.price;}); S.cars=[]; } else { S.plates.forEach(p=>S.tok+=p.price); S.plates=[]; } updateUI(); renderGarage(); }
+    </script>
+    <script>
+/* ===== АПГРЕЙДЕР С КОЛЕСОМ ===== */
+let selectedUpgCar = null, selectedUpgPlate = null;
+let carChance = 50, plateChance = 50;
 
-/* ============ КАТАЛОГ ============ */
-function renderCatalog(){
-  document.getElementById('catalogList').innerHTML = CARS_DB.map(c=>`<div class="li r-${c.rarity}"><div style="display:flex;align-items:center;"><div class="li-svg">${SVG_CARS[c.svg]||''}</div><div><div class="li-title">${c.brand} ${c.name}</div><div class="li-brand">${RARITY_NAMES[c.rarity]}</div></div></div><div class="li-price rub">${fmtRub(c.price)}</div></div>`).join('');
+function switchUpgTab(t){
+  document.getElementById('upgTabCars').classList.toggle('active',t==='cars');
+  document.getElementById('upgTabPlates').classList.toggle('active',t==='plates');
+  document.getElementById('upgCarsPanel').style.display = t==='cars'?'flex':'none';
+  document.getElementById('upgPlatesPanel').style.display = t==='plates'?'flex':'none';
 }
 
-/* ============ БАТЛ 1x1 ============ */
+function renderUpgrader(){ renderUpgCars(); renderUpgPlates(); }
+
+function renderUpgCars(){
+  const list = document.getElementById('upgCarList');
+  if(!S.cars.length){ list.innerHTML='<div class="empty" style="padding:20px;">Нет машин</div>'; return; }
+  list.innerHTML = S.cars.map((c,i)=>`<div class="upg-item ${selectedUpgCar===i?'selected':''}" onclick="selectUpgCar(${i})"><div style="height:40px;">${SVG_CARS[c.svg]||''}</div><div class="name">${c.brand} ${c.name}</div><div class="price-mini">${fmtRub(c.price)}</div></div>`).join('');
+}
+function selectUpgCar(i){
+  selectedUpgCar = i;
+  const c = S.cars[i];
+  document.getElementById('upgCarStakeSvg').innerHTML = SVG_CARS[c.svg]||'';
+  document.getElementById('upgCarStakePrice').textContent = fmtRub(c.price);
+  document.getElementById('upgCarPrizeSvg').innerHTML = SVG_CARS[c.svg]||'';
+  document.getElementById('upgCarPrizePrice').textContent = fmtRub(Math.floor(c.price*2));
+  renderUpgCars();
+}
+function setCarChance(p){
+  carChance = p;
+  document.getElementById('carWheelChance').textContent = p+'%';
+  document.querySelectorAll('#upgCarsPanel .upg-ch-b').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+function doCarUpgrade(){
+  if(selectedUpgCar===null || !S.cars[selectedUpgCar]){ toast('Выбери машину'); return; }
+  const car = S.cars[selectedUpgCar];
+  const wheel = document.getElementById('carWheelSpin');
+  // визуальный поворот колеса
+  const angle = (Math.random()<carChance/100 ? 0 : 180) + Math.floor(Math.random()*360);
+  wheel.style.transform = `rotate(${angle+720}deg)`;
+  setTimeout(()=>{
+    if(Math.random() < carChance/100){
+      S.cars[selectedUpgCar].price = Math.floor(car.price*2);
+      toast('Успех! '+fmtRub(S.cars[selectedUpgCar].price));
+    } else {
+      const cashback = Math.floor(car.price*0.1);
+      S.cars.splice(selectedUpgCar,1);
+      S.rub += cashback;
+      toast('Провал. Кэшбэк '+fmtRub(cashback));
+    }
+    selectedUpgCar = null;
+    document.getElementById('upgCarStakeSvg').innerHTML='';
+    document.getElementById('upgCarPrizeSvg').innerHTML='';
+    document.getElementById('upgCarStakePrice').textContent='0 ₽';
+    document.getElementById('upgCarPrizePrice').textContent='0 ₽';
+    updateUI(); renderUpgrader();
+  }, 3100);
+}
+
+function renderUpgPlates(){
+  const list = document.getElementById('upgPlateList');
+  if(!S.plates.length){ list.innerHTML='<div class="empty" style="padding:20px;">Нет номеров</div>'; return; }
+  list.innerHTML = S.plates.map((p,i)=>`<div class="upg-item ${selectedUpgPlate===i?'selected':''}" onclick="selectUpgPlate(${i})"><div style="font-size:16px;font-weight:900;">${p.code}</div><div class="price-mini">${fmtTok(p.price)}</div></div>`).join('');
+}
+function selectUpgPlate(i){
+  selectedUpgPlate = i;
+  const p = S.plates[i];
+  document.getElementById('upgPlateStakePrice').textContent = fmtTok(p.price);
+  document.getElementById('upgPlatePrizePrice').textContent = fmtTok(Math.floor(p.price*2));
+  document.getElementById('upgPlateStakeDisplay').innerHTML = `<div class="plate r-${p.rarity.slice(0,3)}"><div class="plate-t" style="font-size:20px;padding:2px 8px;min-width:100px;">${p.code}</div><div class="plate-s"><div class="plate-r" style="font-size:14px;">${p.region}</div></div></div>`;
+  document.getElementById('upgPlatePrizeDisplay').innerHTML = document.getElementById('upgPlateStakeDisplay').innerHTML;
+  renderUpgPlates();
+}
+function setPlateChance(p){
+  plateChance = p;
+  document.getElementById('plateWheelChance').textContent = p+'%';
+  document.querySelectorAll('#upgPlatesPanel .upg-ch-b').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+function doPlateUpgrade(){
+  if(selectedUpgPlate===null || !S.plates[selectedUpgPlate]){ toast('Выбери номер'); return; }
+  const plate = S.plates[selectedUpgPlate];
+  const wheel = document.getElementById('plateWheelSpin');
+  const angle = (Math.random()<plateChance/100 ? 0 : 180) + Math.floor(Math.random()*360);
+  wheel.style.transform = `rotate(${angle+720}deg)`;
+  setTimeout(()=>{
+    if(Math.random() < plateChance/100){
+      S.plates[selectedUpgPlate].price = Math.floor(plate.price*2);
+      toast('Успех! '+fmtTok(S.plates[selectedUpgPlate].price));
+    } else {
+      const cashback = Math.floor(plate.price*0.1);
+      S.plates.splice(selectedUpgPlate,1);
+      S.tok += cashback;
+      toast('Провал. Кэшбэк '+fmtTok(cashback));
+    }
+    selectedUpgPlate = null;
+    updateUI(); renderUpgrader();
+  }, 3100);
+}
+
+/* ===== БАТЛ ===== */
+let battleState = null, battleTimer = null;
+
 function renderBattleLobby(){
   const rooms = [
-    {name:'Новичок', mmr:50, av:'🐺'},
-    {name:'Гонщик', mmr:150, av:'🕶️'},
-    {name:'Профи', mmr:400, av:'👽'},
-    {name:'Король', mmr:800, av:'🐉'}
+    {name:'Новичок', av:'🐺'},
+    {name:'Гонщик', av:'🕶️'},
+    {name:'Профи', av:'👽'},
+    {name:'Король', av:'🐉'}
   ];
   document.getElementById('battleRooms').innerHTML = rooms.map((r,i)=>`
     <div class="battle-r">
       <div class="battle-rav">${r.av}</div>
-      <div class="battle-ri"><div class="battle-rn">${r.name}</div><div class="battle-rr">MMR ${r.mmr}</div></div>
-      <div class="battle-rc"><div class="battle-rp">20 000 000₽</div></div>
+      <div class="battle-ri"><div class="battle-rn">${r.name}</div><div class="battle-rr">1x1 · 60 сек</div><div class="battle-rp">20 000 000 ₽</div></div>
       <button class="battle-rj" onclick="startBattle(${i})">В бой</button>
     </div>`).join('');
 }
 function startBattle(i){
-    <div class="battle-rp">20 000 000 ₽</div>
-  const avatars=['🐺','🕶️','👽','🐉'];
-  const names=['Новичок','Гонщик','Профи','Король'];
-  const lobby = document.getElementById('lobbyTransition');
-  document.getElementById('lobbyMyAvatar').textContent = S.avatar;
-  document.getElementById('lobbyEnemyAvatar').textContent = avatars[i];
-  document.getElementById('lobbyEnemyName').textContent = names[i];
-  lobby.classList.add('active');
-  setTimeout(()=>{
-    lobby.classList.remove('active');
-    beginBattle(names[i], avatars[i]);
-  }, 1500);
+  if(S.rub < 20000000){ toast('Нужно 20 000 000 ₽'); return; }
+  beginBattle(['Новичок','Гонщик','Профи','Король'][i]);
 }
-function beginBattle(enemyName, enemyAv){
+function beginBattle(enemyName){
   S.rub -= 20000000;
-  battleState = {
-    myBank: 20000000, enemyBank: 20000000,
-    myScore: 0, enemyScore: 0,
-    timeLeft: 60, enemyName, enemyAv
-  };
+  battleState = { myBank:20000000, enemyBank:20000000, myScore:0, enemyScore:0, timeLeft:60, enemyName };
   document.getElementById('battleLobby').style.display='none';
   document.getElementById('battleActive').style.display='block';
   document.getElementById('battleEnemyName').textContent = enemyName;
-  document.getElementById('battleBankMy').textContent = '20 000 000';
-  document.getElementById('battleBankEnemy').textContent = '20 000 000';
+  document.getElementById('battleTimerVal').textContent = '1:00';
   document.getElementById('battleScoreMyVal').textContent = '0 ₽';
   document.getElementById('battleScoreEnemyVal').textContent = '0 ₽';
+  document.getElementById('battleBankMy').textContent = fmt(20000000);
+  document.getElementById('battleBankEnemy').textContent = fmt(20000000);
   updateUI();
   clearInterval(battleTimer);
   battleTimer = setInterval(()=>{
     if(!battleState) return;
     battleState.timeLeft--;
-    const m = Math.floor(battleState.timeLeft/60);
-    const s = String(battleState.timeLeft%60).padStart(2,'0');
-    document.getElementById('battleTimerVal').textContent = m+':'+s;
-    // AI соперника
+    document.getElementById('battleTimerVal').textContent = Math.floor(battleState.timeLeft/60)+':'+String(battleState.timeLeft%60).padStart(2,'0');
     if(battleState.enemyBank >= 2000000 && Math.random()<0.4){
       battleState.enemyBank -= 2000000;
-      const gain = Math.floor(rand(50000, 800000));
+      const gain = Math.floor(rand(50000,800000));
       battleState.enemyScore += gain;
-      document.getElementById('battleScoreEnemyVal').textContent = fmtRub(battleState.enemyScore);
+      document.getElementById('battleScoreEnemyVal').textContent = fmt(battleState.enemyScore)+' ₽';
       document.getElementById('battleBankEnemy').textContent = fmt(battleState.enemyBank);
     }
     if(battleState.timeLeft<=0) endBattle();
@@ -982,133 +859,36 @@ function battleRollCar(){
   if(!battleState) return;
   if(battleState.myBank < 2000000){ toast('Банк пуст'); return; }
   battleState.myBank -= 2000000;
-  const car = generateCar(false);
-  const gain = Math.floor(car.price * (0.5 + Math.random()*1.5));
+  const car = generateCar();
+  const gain = Math.floor(car.price*(0.5+Math.random()*1.5));
   battleState.myScore += gain;
-  document.getElementById('battleScoreMyVal').textContent = fmtRub(battleState.myScore);
+  document.getElementById('battleScoreMyVal').textContent = fmt(battleState.myScore)+' ₽';
   document.getElementById('battleBankMy').textContent = fmt(battleState.myBank);
-  const last = document.getElementById('battleLastDrop');
-  last.innerHTML = `<div style="font-size:10px;color:var(--muted);font-weight:800;text-transform:uppercase;">Последний дроп</div><div class="li-svg" style="margin:4px auto;">${SVG_CARS[car.svg]||''}</div><div style="font-size:13px;font-weight:900;color:var(--rub);">+${fmtRub(gain)}</div>`;
+  document.getElementById('battleLastDrop').innerHTML = `<div class="li-svg" style="margin:auto;">${SVG_CARS[car.svg]||''}</div><div style="text-align:center;font-weight:900;color:var(--rub);">+${fmtRub(gain)}</div>`;
 }
 function endBattle(){
   clearInterval(battleTimer);
   const win = battleState.myScore >= battleState.enemyScore;
   let prize = 0;
-  if(win){ prize = 20000000 + battleState.myScore + battleState.enemyScore; S.wins++; S.mmr += 25; S.rub += prize; }
-  else { S.mmr = Math.max(0, S.mmr - 10); }
-  S.totalEarned += prize;
-  document.getElementById('bresIcon').textContent = win?'🏆':'😞';
-  document.getElementById('bresTitle').textContent = win?'Победа!':'Поражение';
-  document.getElementById('bresScore').textContent = 'Ты: '+fmtRub(battleState.myScore)+' | Враг: '+fmtRub(battleState.enemyScore);
-  document.getElementById('bresPrize').innerHTML = win?('Приз: <span style="color:var(--rub);">'+fmtRub(prize)+'</span><br>MMR +25'):'MMR -10';
-  document.getElementById('bresOv').classList.add('active');
+  if(win){ prize = 20000000 + battleState.myScore + battleState.enemyScore; S.wins++; S.mmr+=25; S.rub+=prize; S.quests.battles=(S.quests.battles||0)+1; }
+  showModal(win?'🏆':'😞', win?'Победа!':'Поражение', win?('Приз: '+fmtRub(prize)):'MMR -10');
   battleState = null;
-  updateUI();
-}
-function closeBattleResult(){
-  document.getElementById('bresOv').classList.remove('active');
   document.getElementById('battleLobby').style.display='block';
   document.getElementById('battleActive').style.display='none';
-  renderBattleLobby();
+  updateUI(); renderBattleLobby();
 }
 
-/* ============ АПГРЕЙДЕР ============ */
-function renderUpgrader(){
-  renderUpgCars();
-  renderUpgPlates();
-}
-function renderUpgCars(){
-  const list = document.getElementById('upgCarList');
-  if(!S.cars.length){ list.innerHTML='<div class="empty" style="padding:20px;">Нет машин</div>'; return; }
-  list.innerHTML = S.cars.map((c,i)=>`<div class="upg-item" onclick="selectUpgCar(${i})"><div style="height:40px;">${SVG_CARS[c.svg]||''}</div><div class="name">${c.brand} ${c.name}</div><div class="price-mini">${fmtRub(c.price)}</div></div>`).join('');
-}
-let selectedUpgCar = null;
-function selectUpgCar(i){ selectedUpgCar = i; }
-function doCarUpgrade(){
-  if(selectedUpgCar === null || !S.cars[selectedUpgCar]){ toast('Выбери машину'); return; }
-  const car = S.cars[selectedUpgCar];
-  const chance = 0.5;
-  if(Math.random() < chance){
-    const newPrice = Math.floor(car.price * 2);
-    S.cars[selectedUpgCar].price = newPrice;
-    toast('Успех! Теперь '+fmtRub(newPrice));
-  } else {
-    const cashback = Math.floor(car.price * 0.1);
-    S.cars.splice(selectedUpgCar,1);
-    S.rub += cashback;
-    toast('Провал. Кэшбэк '+fmtRub(cashback));
-  }
-  selectedUpgCar = null;
-  updateUI(); renderUpgrader();
-}
-function renderUpgPlates(){
-  const list = document.getElementById('upgPlateList');
-  if(!S.plates.length){ list.innerHTML='<div class="empty" style="padding:20px;">Нет номеров</div>'; return; }
-  list.innerHTML = S.plates.map((p,i)=>`<div class="upg-item" onclick="selectUpgPlate(${i})"><div style="font-size:16px;font-weight:900;">${p.code}</div><div class="price-mini">${fmtTok(p.price)}</div></div>`).join('');
-}
-let selectedUpgPlate = null;
-function selectUpgPlate(i){ selectedUpgPlate = i; }
-function doPlateUpgrade(){
-  if(selectedUpgPlate === null || !S.plates[selectedUpgPlate]){ toast('Выбери номер'); return; }
-  const plate = S.plates[selectedUpgPlate];
-  if(Math.random() < 0.5){
-    S.plates[selectedUpgPlate].price *= 2;
-    toast('Успех!');
-  } else {
-    const cashback = Math.floor(plate.price * 0.1);
-    S.plates.splice(selectedUpgPlate,1);
-    S.tok += cashback;
-    toast('Провал. Кэшбэк '+fmtTok(cashback));
-  }
-  selectedUpgPlate = null;
-  updateUI(); renderUpgrader();
-}
-function switchUpgTab(t){
-  document.getElementById('upgTabCars').classList.toggle('active',t==='cars');
-  document.getElementById('upgTabPlates').classList.toggle('active',t==='plates');
-  document.getElementById('upgCarsPanel').style.display = t==='cars'?'flex':'none';
-  document.getElementById('upgPlatesPanel').style.display = t==='plates'?'flex':'none';
-}
-
-/* ============ БАНК / ОБМЕН ============ */
-function openExchange(){ document.getElementById('exchangeModal').classList.add('active'); }
-function closeExchange(){ document.getElementById('exchangeModal').classList.remove('active'); }
-function updateExchPreview(){
-  const amt = parseFloat(document.getElementById('exchAmount').value)||0;
-  const from = document.getElementById('exchFromCur').value;
-  const to = document.getElementById('exchToCur').value;
-  if(from===to){ document.getElementById('exchResult').textContent = amt; return; }
-  const rate = from==='rub'?0.002:500;
-  const res = amt * rate * 0.98;
-  document.getElementById('exchResult').textContent = Math.floor(res);
-}
-function doExchange(){
-  const amt = parseFloat(document.getElementById('exchAmount').value)||0;
-  const from = document.getElementById('exchFromCur').value;
-  const to = document.getElementById('exchToCur').value;
-  if(amt<=0){ toast('Введи сумму'); return; }
-  if(from===to){ toast('Одинаковые валюты'); return; }
-  const rate = from==='rub'?0.002:500;
-  const res = Math.floor(amt*rate*0.98);
-  if(from==='rub'){ if(S.rub<amt){ toast('Мало ₽'); return; } S.rub-=amt; S.tok+=res; }
-  else { if(S.tok<amt){ toast('Мало 💎'); return; } S.tok-=amt; S.rub+=res; }
-  closeExchange(); updateUI(); toast('Обменяно');
-}
-
-/* ============ ФОРТУНА ============ */
+/* ===== ФОРТУНА ===== */
 function spinFortune(){
-  if(Date.now() - S.fortuneLast < 3600000){ toast('Через час'); return; }
-  S.fortuneLast = Date.now();
   const prizes = [
     {name:'100 000 ₽', fn:()=>S.rub+=100000},
     {name:'500 000 ₽', fn:()=>S.rub+=500000},
     {name:'1 000 000 ₽', fn:()=>S.rub+=1000000},
     {name:'500 💎', fn:()=>S.tok+=500},
-    {name:'2000 💎', fn:()=>S.tok+=2000},
+    {name:'2 000 💎', fn:()=>S.tok+=2000},
     {name:'Пусто', fn:()=>{}}
   ];
   const p = pick(prizes);
-  document.getElementById('fortuneDisplay').textContent = '🎁';
   let i=0;
   const spin = setInterval(()=>{
     document.getElementById('fortuneDisplay').textContent = pick(['🎁','💰','💎','🎰','⭐']);
@@ -1116,7 +896,7 @@ function spinFortune(){
   }, 80);
 }
 
-/* ============ КВЕСТЫ ============ */
+/* ===== КВЕСТЫ ===== */
 function renderQuests(){
   const q = S.quests;
   const items = [
@@ -1125,7 +905,7 @@ function renderQuests(){
     {id:'battle1', title:'Победить в батле', cur:q.battles||0, max:1, reward:2000000}
   ];
   document.getElementById('questsList').innerHTML = items.map(it=>{
-    const claimed = q.questsClaimed && q.questsClaimed[it.id];
+    const claimed = q.claimed && q.claimed[it.id];
     const done = it.cur >= it.max;
     return `<div class="qc ${done?'done':''} ${claimed?'claimed':''}">
       <div class="q-ico">📋</div>
@@ -1135,74 +915,37 @@ function renderQuests(){
   }).join('');
 }
 function claimQuest(id, reward){
-  if(!S.quests.questsClaimed) S.quests.questsClaimed={};
-  if(S.quests.questsClaimed[id]) return;
-  S.quests.questsClaimed[id]=true;
+  if(!S.quests.claimed) S.quests.claimed={};
+  if(S.quests.claimed[id]) return;
+  S.quests.claimed[id]=true;
   S.rub += reward; S.totalEarned += reward;
   updateUI(); renderQuests(); toast('+'+fmtRub(reward));
 }
-/* ============ ДОСТИЖЕНИЯ ============ */
-function renderAchievements(){
-  const list = [
-    {id:'first_roll', title:'Первая крутка', cond:()=>S.quests.rolls>=1},
-    {id:'roll10', title:'10 круток', cond:()=>S.quests.rolls>=10},
-    {id:'sell5', title:'5 продаж', cond:()=>S.quests.sells>=5},
-    {id:'win1', title:'Первая победа', cond:()=>S.wins>=1},
-    {id:'mmr100', title:'MMR 100', cond:()=>S.mmr>=100},
-    {id:'rich', title:'Миллион', cond:()=>S.totalEarned>=1e6},
-    {id:'veryrich', title:'10 миллионов', cond:()=>S.totalEarned>=1e7},
-    {id:'garage10', title:'10 машин', cond:()=>S.cars.length>=10},
-    {id:'plate5', title:'5 номеров', cond:()=>S.plates.length>=5},
-    {id:'legend', title:'Legend машина', cond:()=>S.cars.some(c=>c.rarity==='legend')}
-  ];
-  document.getElementById('achList').innerHTML = list.map(a=>{
-    const unlocked = a.cond();
-    return `<div class="ac ${unlocked?'unlocked':''}"><div class="a-ico">🏆</div><div class="a-body"><div class="a-title">${a.title}</div><div class="a-desc">${unlocked?'✓ Получено':'Не открыто'}</div></div></div>`;
-  }).join('');
+
+/* ===== ОБМЕН ===== */
+function openExchange(){ document.getElementById('exchangeModal').classList.add('active'); }
+function closeExchange(){ document.getElementById('exchangeModal').classList.remove('active'); }
+function updateExchPreview(){
+  const amt = parseFloat(document.getElementById('exchAmount').value)||0;
+  const from = document.getElementById('exchFromCur').value;
+  const to = document.getElementById('exchToCur').value;
+  if(from===to){ document.getElementById('exchResult').textContent = fmt(amt); return; }
+  const rate = from==='rub'?0.002:500;
+  document.getElementById('exchResult').textContent = fmt(Math.floor(amt*rate*0.98));
+}
+function doExchange(){
+  const amt = parseFloat(document.getElementById('exchAmount').value)||0;
+  const from = document.getElementById('exchFromCur').value;
+  const to = document.getElementById('exchToCur').value;
+  if(amt<=0 || from===to){ toast('Проверь данные'); return; }
+  const rate = from==='rub'?0.002:500;
+  const res = Math.floor(amt*rate*0.98);
+  if(from==='rub'){ if(S.rub<amt){ toast('Мало ₽'); return; } S.rub-=amt; S.tok+=res; }
+  else { if(S.tok<amt){ toast('Мало 💎'); return; } S.tok-=amt; S.rub+=res; }
+  closeExchange(); updateUI(); toast('Обменяно');
 }
 
-/* ============ СЕЗОН / КОНТРАКТЫ / КОЛЛЕКЦИИ / МАГАЗИН / ТОП ============ */
-function renderSeason(){
-  document.getElementById('seasonPoints').textContent = S.seasonPoints;
-  document.getElementById('seasonProg').style.width = Math.min(100,(S.seasonPoints/1000)*100)+'%';
-  document.getElementById('seasonRewardsList').innerHTML = [100,300,600,1000].map((p,i)=>{
-    const claimed = S.seasonPoints >= p;
-    return `<div class="qc ${claimed?'done':''}"><div class="q-ico">🏆</div><div class="q-body"><div class="q-title">${p} очков</div><div class="q-rw">${fmtRub(p*10000)}</div></div></div>`;
-  }).join('');
-}
-function renderContracts(){
-  const contracts = [
-    {brand:'Lada', model:'Vesta', reward:500000, rarity:'rare'},
-    {brand:'Ford', model:'Focus', reward:800000, rarity:'rare'},
-    {brand:'ВАЗ', model:'2107', reward:100000, rarity:'common'}
-  ];
-  document.getElementById('contractsList').innerHTML = contracts.map(c=>`
-    <div class="li"><div><div class="li-title">${c.brand} ${c.model}</div><div class="li-brand">${RARITY_NAMES[c.rarity]}</div></div><div><div class="li-price rub">${fmtRub(c.reward)}</div></div></div>
-  `).join('');
-}
-function renderCollections(){
-  const brands = ['Lada','Ford','ВАЗ','Renault','Daewoo'];
-  document.getElementById('collectionsList').innerHTML = brands.map(b=>{
-    const total = CARS_DB.filter(c=>c.brand===b).length;
-    const have = S.cars.filter(c=>c.brand===b).length;
-    return `<div class="li"><div><div class="li-title">${b}</div><div class="li-brand">${have}/${total}</div></div><div class="li-price rub">+${total*2}%</div></div>`;
-  }).join('');
-}
-function renderShop(){
-  const items = [
-    {name:'Скидка 50% на крутку', price:1000000},
-    {name:'+1000 💎', price:500000},
-    {name:'Буст Legend', price:5000000}
-  ];
-  document.getElementById('shopList').innerHTML = items.map(it=>`<div class="li"><div><div class="li-title">${it.name}</div></div><div><div class="li-price rub">${fmtRub(it.price)}</div></div></div>`).join('');
-}
-function renderLeaderboard(){
-  const players = [{name:'Ты', val:S.totalEarned, av:S.avatar},{name:'Игрок1', val:5e8, av:'🐺'},{name:'Игрок2', val:2e8, av:'👽'},{name:'Игрок3', val:1e8, av:'🕶️'}];
-  players.sort((a,b)=>b.val-a.val);
-  document.getElementById('lbList').innerHTML = players.map((p,i)=>`<div class="lb"><div class="lb-rank">${i+1}</div><div class="lb-av">${p.av}</div><div class="lb-info"><div class="lb-name">${p.name}</div><div class="lb-sub">${fmtRub(p.val)}</div></div></div>`).join('');
-}
-
-/* ============ ПРОФИЛЬ ============ */
+/* ===== ПРОФИЛЬ ===== */
 function renderProfile(){
   const themes = [['black','🌑 Чёрный','#1a1a1a'],['white','⚪ Белый','#fff'],['pink','🌸 Розовый','#ec4899'],['gray','🩶 Серый','#6b7280'],['blue','🌊 Голубой','#06b6d4'],['cyber','🟣 Кибер','#a855f7'],['gold','🟡 Золото','#fbbf24'],['emerald','🟢 Изумруд','#10b981']];
   document.getElementById('themeGrid').innerHTML = themes.map(t=>`<div class="theme-b ${S.theme===t[0]?'active':''}" onclick="setTheme('${t[0]}')"><div class="theme-p" style="background:${t[2]};"></div>${t[1]}</div>`).join('');
@@ -1213,55 +956,11 @@ function renderProfile(){
 function setTheme(t){ S.theme=t; document.body.className='t-'+t; save(); renderProfile(); }
 function setAvatar(a){ S.avatar=a; save(); renderProfile(); }
 
-/* ============ СУНДУК / ТЮНИНГ / АУКЦИОН ============ */
-function openChest(){
-  document.getElementById('chest').classList.add('opening');
-  setTimeout(()=>{
-    const prize = Math.floor(rand(100000,1000000));
-    S.rub += prize; S.streak++;
-    updateUI();
-    document.getElementById('chestOv').classList.remove('active');
-    showModal('🎁','Бонус',fmtRub(prize)+'\nСтрик: '+S.streak);
-  }, 900);
-}
-function buyUpgrade(){
-  const cost = 5000000 * Math.pow(2, S.upgLevel);
-  if(S.rub < cost){ toast('Нужно '+fmtRub(cost)); return; }
-  S.rub -= cost; S.upgLevel++;
-  updateUI(); toast('Тюнинг ур. '+S.upgLevel);
-}
-function buyGarageUpg(){
-  const cost = 3000000 * Math.pow(2, S.garageLevel);
-  if(S.rub < cost){ toast('Нужно '+fmtRub(cost)); return; }
-  S.rub -= cost; S.garageLevel++;
-  updateUI(); toast('Гараж ур. '+S.garageLevel);
-}
-function openCase(){
-  if(S.rub < 20000000){ toast('Нужно 20 млн'); return; }
-  S.rub -= 20000000;
-  const car = generateCar(true);
-  if(car.rarity==='common') car.rarity='epic';
-  S.cars.push(car);
-  updateUI(); showModal('💎','Аукцион',car.brand+' '+car.name);
-}
-
-/* ============ СТАРТ ============ */
+/* ===== СТАРТ ===== */
 document.body.className = 't-'+(S.theme||'black');
 document.getElementById('sndBtn').textContent = S.sound?'🔊':'🔇';
-if(S.autoCommon) document.getElementById('asComLbl').classList.add('on');
-if(S.autoRare) document.getElementById('asRarLbl').classList.add('on');
 setTimeout(()=>{ document.getElementById('splash').classList.add('hide'); }, 2000);
-
-// Показ сундука при входе
-const today = new Date().toDateString();
-if(S.lastLogin !== today){
-  S.lastLogin = today;
-  document.getElementById('chestDay').textContent = 'День '+(S.streak+1);
-  setTimeout(()=>document.getElementById('chestOv').classList.add('active'), 2500);
-}
-
 updateUI();
 </script>
 </body>
 </html>
-        
