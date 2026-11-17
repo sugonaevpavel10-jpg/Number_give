@@ -578,7 +578,6 @@ window.yaContextCb.push(() => {
     <div class="view" id="v-quests"><div style="text-align:center;margin-bottom:20px;"><div style="font-size:12px;color:var(--muted);text-transform:uppercase;">Ежедневные задания</div><div style="font-size:16px;font-weight:900;color:var(--acc);margin-top:4px;" id="questsResetLabel">Обновятся через 24:00:00</div></div><div id="questsList"></div></div>
     <div class="view" id="v-catalog"><div id="catalogList"></div></div>
 
-    <!-- БАНК, ПРОФИЛЬ, ТЮНИНГ, АУКЦИОН (остались без изменений) -->
     <div class="view" id="v-bank">
         <h2 style="font-size:20px;font-weight:900;text-align:center;margin-bottom:8px;">💳 Банк</h2>
         <p style="text-align:center;color:var(--muted);font-size:12px;margin-bottom:20px;">Виртуальная карта и валютный счёт</p>
@@ -721,9 +720,9 @@ window.yaContextCb.push(() => {
         <div id="tradeInList" style="display:flex;flex-direction:column;gap:10px;text-align:left;"></div>
         <button class="btn btn-s" style="margin-top:16px;width:100%;" onclick="closeTradeIn()">Закрыть</button>
     </div>
-    </div>
-    <script>
-// Генератор SVG для машин (нужен для новых тачек)
+</div>
+
+<script>
 function makeCarSVG(body, color, glass, accent){
   const c = color, g = glass, a = accent;
   if(body==='sedan'){ return `<svg viewBox="0 0 200 100"><path d="M12 72 L18 48 L42 34 L76 24 L142 24 L174 38 L190 52 L190 72 Z" fill="${c}"/><path d="M46 34 L78 26 L140 26 L168 38 Z" fill="${g}"/><rect x="16" y="48" width="14" height="8" fill="#fef3c7"/><rect x="176" y="52" width="14" height="8" fill="#ef4444"/><path d="M30 58 L170 58 L160 68 L40 68 Z" fill="${a}"/><circle cx="54" cy="72" r="16" fill="#1f2937"/><circle cx="54" cy="72" r="7" fill="#9ca3af"/><circle cx="150" cy="72" r="16" fill="#1f2937"/><circle cx="150" cy="72" r="7" fill="#9ca3af"/></svg>`; }
@@ -766,7 +765,17 @@ const SVG_CARS = {
   'HYUNDAI_Santa Fe': '<svg viewBox="0 0 200 100"><path d="M10 76 L16 46 L42 32 L78 22 L142 22 L176 38 L194 54 L194 76 Z" fill="#475569"/><path d="M46 32 L80 24 L140 24 L170 38 Z" fill="#0f172a"/><rect x="14" y="46" width="14" height="9" fill="#fef3c7"/><rect x="180" y="54" width="14" height="9" fill="#ef4444"/><rect x="26" y="62" width="162" height="6" fill="#1e293b"/><circle cx="54" cy="76" r="17" fill="#1f2937"/><circle cx="54" cy="76" r="8" fill="#9ca3af"/><circle cx="154" cy="76" r="17" fill="#1f2937"/><circle cx="154" cy="76" r="8" fill="#9ca3af"/></svg>',
   'VW_Tiguan': '<svg viewBox="0 0 200 100"><path d="M12 74 L18 46 L44 34 L78 24 L142 24 L174 40 L192 54 L192 74 Z" fill="#64748b"/><path d="M48 34 L80 26 L140 26 L168 40 Z" fill="#1e293b"/><rect x="16" y="46" width="14" height="8" fill="#fef3c7"/><rect x="176" y="54" width="14" height="8" fill="#ef4444"/><rect x="28" y="60" width="158" height="5" fill="#334155"/><circle cx="54" cy="74" r="16" fill="#1f2937"/><circle cx="54" cy="74" r="7" fill="#9ca3af"/><circle cx="152" cy="74" r="16" fill="#1f2937"/><circle cx="152" cy="74" r="7" fill="#9ca3af"/></svg>',
   'KIA_K5': '<svg viewBox="0 0 200 100"><path d="M12 72 L18 48 L42 34 L76 24 L142 24 L174 38 L190 52 L190 72 Z" fill="#0ea5e9"/><path d="M46 34 L78 26 L140 26 L168 38 Z" fill="#082f49"/><rect x="16" y="48" width="14" height="8" fill="#fef3c7"/><rect x="176" y="52" width="14" height="8" fill="#ef4444"/><path d="M30 58 L170 58 L160 68 L40 68 Z" fill="#0284c7"/><circle cx="54" cy="72" r="16" fill="#1f2937"/><circle cx="54" cy="72" r="7" fill="#9ca3af"/><circle cx="150" cy="72" r="16" fill="#1f2937"/><circle cx="150" cy="72" r="7" fill="#9ca3af"/></svg>',
-  'HONDA_CR-V': '<svg viewBox="0 0 200 100"><path d="M12 74 L18 46 L44 34 L78 24 L142 24 L174 40 L192 54 L192 74 Z" fill="#e5e7eb"/><path d="M48 34 L80 26 L140 26 L168 40 Z" fill="#374151"/><rect x="16" y="46" width="14" height="8" fill="#fef3c7"/><rect x="176" y="54" width="14" height="8" fill="#ef4444"/><rect x="28" y="60" width="158" height="5" fill="#1f2937"/><circle cx="54" cy="74" r="16" fill="#1f2937"/><circle cx="54" cy="74" r="7" fill="#9ca3af"/><circle cx="152" cy="74" r="16" fill="#1f2937"/><circle cx="152" cy="74" r="7" fill="#9ca3af"/></svg>'
+  'HONDA_CR-V': '<svg viewBox="0 0 200 100"><path d="M12 74 L18 46 L44 34 L78 24 L142 24 L174 40 L192 54 L192 74 Z" fill="#e5e7eb"/><path d="M48 34 L80 26 L140 26 L168 40 Z" fill="#374151"/><rect x="16" y="46" width="14" height="8" fill="#fef3c7"/><rect x="176" y="54" width="14" height="8" fill="#ef4444"/><rect x="28" y="60" width="158" height="5" fill="#1f2937"/><circle cx="54" cy="74" r="16" fill="#1f2937"/><circle cx="54" cy="74" r="7" fill="#9ca3af"/><circle cx="152" cy="74" r="16" fill="#1f2937"/><circle cx="152" cy="74" r="7" fill="#9ca3af"/></svg>',
+  'BMW_5 Series': makeCarSVG('sedan','#1e3a8a','#0f172a','#1e40af'),
+  'Mercedes_E-Class': makeCarSVG('sedan','#cbd5e1','#1e293b','#94a3b8'),
+  'Audi_A6': makeCarSVG('sedan','#111827','#020617','#1f2937'),
+  'Toyota_Camry': makeCarSVG('sedan','#f8fafc','#334155','#e2e8f0'),
+  'Lexus_ES': makeCarSVG('sedan','#475569','#0f172a','#334155'),
+  'BMW_X5': makeCarSVG('suv','#1e3a8a','#0f172a','#1e40af'),
+  'Mercedes_GLE': makeCarSVG('suv','#cbd5e1','#1e293b','#94a3b8'),
+  'Porsche_Cayenne': makeCarSVG('suv','#111827','#020617','#1f2937'),
+  'Range Rover_Sport': makeCarSVG('suv','#065f46','#022c22','#064e3b'),
+  'Tesla_Model S': makeCarSVG('sedan','#dc2626','#7f1d1d','#b91c1c')
 };
 
 const CONFIG = {
@@ -776,1573 +785,360 @@ const CONFIG = {
     letters: ['A','B','E','K','M','H','O','P','C','T','Y','X'],
     cars: {
         common: [
-            {brand:'ВАЗ', name:'2107', svg:SVG_CARS['ВАЗ_2107']},
-            {brand:'ВАЗ', name:'2110', svg:SVG_CARS['ВАЗ_2110']},
-            {brand:'ZAZ', name:'Sens', svg:SVG_CARS['ZAZ_Sens']},
-            {brand:'DAEWOO', name:'Matiz', svg:SVG_CARS['DAEWOO_Matiz']},
-            {brand:'CHERY', name:'QQ', svg:SVG_CARS['CHERY_QQ']},
-            {brand:'LIFAN', name:'Solano', svg:SVG_CARS['LIFAN_Solano']},
-            {brand:'DATSUN', name:'on-DO', svg:SVG_CARS['DATSUN_on-DO']},
-            {brand:'RENAULT', name:'Logan', svg:SVG_CARS['RENAULT_Logan']},
-            {brand:'LADA', name:'Vesta', svg:SVG_CARS['LADA_Vesta']},
-            {brand:'LADA', name:'XRAY', svg:SVG_CARS['LADA_XRAY']},
-            {brand:'LADA', name:'Granta', svg:makeCarSVG('sedan','#ffffff','#334155','#6b7280')},
-            {brand:'FORD', name:'Focus', svg:SVG_CARS['FORD_Focus']},
-            {brand:'KIA', name:'Rio', svg:SVG_CARS['KIA_Rio']},
-            {brand:'VW', name:'Polo', svg:SVG_CARS['VW_Polo']},
-            {brand:'HYUNDAI', name:'Solaris', svg:SVG_CARS['HYUNDAI_Solaris']},
-            {brand:'TOYOTA', name:'Corolla', svg:SVG_CARS['TOYOTA_Corolla']},
-            {brand:'Skoda', name:'Octavia', svg:makeCarSVG('sedan','#0ea5e9','#082f49','#0284c7')},
-            {brand:'Mazda', name:'3', svg:makeCarSVG('hatch','#dc2626','#7f1d1d','#b91c1c')},
-            {brand:'Nissan', name:'Almera', svg:makeCarSVG('sedan','#94a3b8','#334155','#64748b')},
-            {brand:'Chevrolet', name:'Cruze', svg:makeCarSVG('sedan','#fbbf24','#78350f','#d97706')}
+            {brand:'ВАЗ', name:'2107', price:2000000, svg:SVG_CARS['ВАЗ_2107']},
+            {brand:'ВАЗ', name:'2110', price:2500000, svg:SVG_CARS['ВАЗ_2110']},
+            {brand:'ZAZ', name:'Sens', price:2200000, svg:SVG_CARS['ZAZ_Sens']},
+            {brand:'DAEWOO', name:'Matiz', price:1800000, svg:SVG_CARS['DAEWOO_Matiz']},
+            {brand:'CHERY', name:'QQ', price:2000000, svg:SVG_CARS['CHERY_QQ']},
+            {brand:'LIFAN', name:'Solano', price:2800000, svg:SVG_CARS['LIFAN_Solano']},
+            {brand:'DATSUN', name:'on-DO', price:3000000, svg:SVG_CARS['DATSUN_on-DO']},
+            {brand:'RENAULT', name:'Logan', price:3200000, svg:SVG_CARS['RENAULT_Logan']},
+            {brand:'LADA', name:'Vesta', price:4000000, svg:SVG_CARS['LADA_Vesta']},
+            {brand:'LADA', name:'XRAY', price:4500000, svg:SVG_CARS['LADA_XRAY']},
+            {brand:'LADA', name:'Granta', price:3500000, svg:makeCarSVG('sedan','#ffffff','#334155','#6b7280')},
+            {brand:'FORD', name:'Focus', price:6000000, svg:SVG_CARS['FORD_Focus']},
+            {brand:'KIA', name:'Rio', price:5000000, svg:SVG_CARS['KIA_Rio']},
+            {brand:'VW', name:'Polo', price:5500000, svg:SVG_CARS['VW_Polo']},
+            {brand:'HYUNDAI', name:'Solaris', price:5200000, svg:SVG_CARS['HYUNDAI_Solaris']},
+            {brand:'TOYOTA', name:'Corolla', price:6500000, svg:SVG_CARS['TOYOTA_Corolla']},
+            {brand:'Skoda', name:'Octavia', price:7000000, svg:makeCarSVG('sedan','#0ea5e9','#082f49','#0284c7')},
+            {brand:'Mazda', name:'3', price:7500000, svg:makeCarSVG('hatch','#dc2626','#7f1d1d','#b91c1c')},
+            {brand:'Nissan', name:'Almera', price:6800000, svg:makeCarSVG('sedan','#94a3b8','#334155','#64748b')},
+            {brand:'Chevrolet', name:'Cruze', price:7200000, svg:makeCarSVG('sedan','#fbbf24','#78350f','#d97706')}
         ],
         rare: [
-            {brand:'HAVAL', name:'Jolion', svg:SVG_CARS['HAVAL_Jolion']},
-            {brand:'CHERY', name:'Tiggo 7', svg:SVG_CARS['CHERY_Tiggo 7']},
-            {brand:'GEELY', name:'Coolray', svg:SVG_CARS['GEELY_Coolray']},
-            {brand:'EXEED', name:'TXL', svg:SVG_CARS['EXEED_TXL']},
-            {brand:'NISSAN', name:'Teana', svg:SVG_CARS['NISSAN_Teana']},
-            {brand:'KIA', name:'Sportage', svg:SVG_CARS['KIA_Sportage']},
-            {brand:'HYUNDAI', name:'Tucson', svg:SVG_CARS['HYUNDAI_Tucson']},
-            {brand:'TOYOTA', name:'RAV4', svg:SVG_CARS['TOYOTA_RAV4']},
-            {brand:'KIA', name:'Sorento', svg:SVG_CARS['KIA_Sorento']},
-            {brand:'TOYOTA', name:'Camry', svg:makeCarSVG('sedan','#f8fafc','#334155','#e2e8f0')},
-            {brand:'KIA', name:'K5', svg:SVG_CARS['KIA_K5']},
-            {brand:'Hyundai', name:'Sonata', svg:makeCarSVG('sedan','#e2e8f0','#1e293b','#64748b')},
-            {brand:'Honda', name:'Accord', svg:makeCarSVG('sedan','#f1f5f9','#334155','#475569')},
-            {brand:'Mazda', name:'6', svg:SVG_CARS['MAZDA_Mazda 6']},
-            {brand:'VW', name:'Passat', svg:makeCarSVG('sedan','#60a5fa','#1e3a8a','#1e40af')},
-            {brand:'Skoda', name:'Superb', svg:makeCarSVG('sedan','#065f46','#022c22','#064e3b')},
-            {brand:'Ford', name:'Mondeo', svg:makeCarSVG('sedan','#3b82f6','#1e3a8a','#1d4ed8')},
-            {brand:'Renault', name:'Arkana', svg:makeCarSVG('coupe','#f97316','#7c2d12','#ea580c')},
-            {brand:'Subaru', name:'Forester', svg:makeCarSVG('suv','#0ea5e9','#082f49','#075985')},
-            {brand:'Suzuki', name:'Vitara', svg:makeCarSVG('suv','#10b981','#022c22','#059669')},
-            {brand:'VW', name:'Tiguan', svg:SVG_CARS['VW_Tiguan']},
-            {brand:'Mazda', name:'CX-5', svg:SVG_CARS['MAZDA_CX-5']},
-            {brand:'Nissan', name:'X-Trail', svg:SVG_CARS['NISSAN_X-Trail']},
-            {brand:'Mitsubishi', name:'Outlander', svg:SVG_CARS['MITSUBISHI_Outlander']},
-            {brand:'Honda', name:'CR-V', svg:SVG_CARS['HONDA_CR-V']}
+            {brand:'HAVAL', name:'Jolion', price:23000000, svg:SVG_CARS['HAVAL_Jolion']},
+            {brand:'CHERY', name:'Tiggo 7', price:22500000, svg:SVG_CARS['CHERY_Tiggo 7']},
+            {brand:'GEELY', name:'Coolray', price:23500000, svg:SVG_CARS['GEELY_Coolray']},
+            {brand:'EXEED', name:'TXL', price:24000000, svg:SVG_CARS['EXEED_TXL']},
+            {brand:'NISSAN', name:'Teana', price:14000000, svg:SVG_CARS['NISSAN_Teana']},
+            {brand:'KIA', name:'Sportage', price:17500000, svg:SVG_CARS['KIA_Sportage']},
+            {brand:'HYUNDAI', name:'Tucson', price:18000000, svg:SVG_CARS['HYUNDAI_Tucson']},
+            {brand:'TOYOTA', name:'RAV4', price:18500000, svg:SVG_CARS['TOYOTA_RAV4']},
+            {brand:'KIA', name:'Sorento', price:26000000, svg:SVG_CARS['KIA_Sorento']},
+            {brand:'TOYOTA', name:'Camry', price:11000000, svg:makeCarSVG('sedan','#f8fafc','#334155','#e2e8f0')},
+            {brand:'KIA', name:'K5', price:12000000, svg:SVG_CARS['KIA_K5']},
+            {brand:'Hyundai', name:'Sonata', price:12500000, svg:makeCarSVG('sedan','#e2e8f0','#1e293b','#64748b')},
+            {brand:'Honda', name:'Accord', price:13000000, svg:makeCarSVG('sedan','#f1f5f9','#334155','#475569')},
+            {brand:'Mazda', name:'6', price:13500000, svg:SVG_CARS['MAZDA_Mazda 6']},
+            {brand:'VW', name:'Passat', price:14500000, svg:makeCarSVG('sedan','#60a5fa','#1e3a8a','#1e40af')},
+            {brand:'Skoda', name:'Superb', price:15000000, svg:makeCarSVG('sedan','#065f46','#022c22','#064e3b')},
+            {brand:'Ford', name:'Mondeo', price:15500000, svg:makeCarSVG('sedan','#3b82f6','#1e3a8a','#1d4ed8')},
+            {brand:'Renault', name:'Arkana', price:17000000, svg:makeCarSVG('coupe','#f97316','#7c2d12','#ea580c')},
+            {brand:'Subaru', name:'Forester', price:21500000, svg:makeCarSVG('suv','#0ea5e9','#082f49','#075985')},
+            {brand:'Suzuki', name:'Vitara', price:22000000, svg:makeCarSVG('suv','#10b981','#022c22','#059669')},
+            {brand:'VW', name:'Tiguan', price:19000000, svg:SVG_CARS['VW_Tiguan']},
+            {brand:'Mazda', name:'CX-5', price:19500000, svg:SVG_CARS['MAZDA_CX-5']},
+            {brand:'Nissan', name:'X-Trail', price:20000000, svg:SVG_CARS['NISSAN_X-Trail']},
+            {brand:'Mitsubishi', name:'Outlander', price:20500000, svg:SVG_CARS['MITSUBISHI_Outlander']},
+            {brand:'Honda', name:'CR-V', price:21000000, svg:SVG_CARS['HONDA_CR-V']}
         ],
         epic: [
-            {brand:'BMW', name:'3 Series', svg:makeCarSVG('sedan','#1e3a8a','#0f172a','#1e40af')},
-            {brand:'BMW', name:'5 Series', svg:makeCarSVG('sedan','#1e3a8a','#0f172a','#1e40af')},
-            {brand:'Mercedes', name:'C-Class', svg:makeCarSVG('sedan','#cbd5e1','#1e293b','#94a3b8')},
-            {brand:'Mercedes', name:'E-Class', svg:makeCarSVG('sedan','#cbd5e1','#1e293b','#94a3b8')},
-            {brand:'Audi', name:'A4', svg:makeCarSVG('sedan','#111827','#020617','#1f2937')},
-            {brand:'Audi', name:'A6', svg:makeCarSVG('sedan','#111827','#020617','#1f2937')},
-            {brand:'Lexus', name:'ES', svg:makeCarSVG('sedan','#475569','#0f172a','#334155')},
-            {brand:'Lexus', name:'IS', svg:makeCarSVG('sedan','#475569','#0f172a','#334155')},
-            {brand:'Jaguar', name:'XE', svg:makeCarSVG('sedan','#065f46','#022c22','#064e3b')},
-            {brand:'Volvo', name:'S60', svg:makeCarSVG('sedan','#334155','#0f172a','#1e293b')},
-            {brand:'Infiniti', name:'Q50', svg:makeCarSVG('sedan','#1e293b','#020617','#0f172a')},
-            {brand:'Cadillac', name:'CT5', svg:makeCarSVG('sedan','#111827','#020617','#1f2937')},
-            {brand:'BMW', name:'X3', svg:makeCarSVG('suv','#1e3a8a','#0f172a','#1e40af')},
-            {brand:'Mercedes', name:'GLC', svg:makeCarSVG('suv','#cbd5e1','#1e293b','#94a3b8')},
-            {brand:'Audi', name:'Q5', svg:makeCarSVG('suv','#111827','#020617','#1f2937')},
-            {brand:'Lexus', name:'NX', svg:makeCarSVG('suv','#475569','#0f172a','#334155')},
-            {brand:'Volvo', name:'XC60', svg:makeCarSVG('suv','#334155','#0f172a','#1e293b')},
-            {brand:'Jaguar', name:'F-Pace', svg:makeCarSVG('suv','#065f46','#022c22','#064e3b')},
-            {brand:'Infiniti', name:'QX50', svg:makeCarSVG('suv','#1e293b','#020617','#0f172a')},
-            {brand:'Cadillac', name:'XT5', svg:makeCarSVG('suv','#111827','#020617','#1f2937')},
-            {brand:'Tesla', name:'Model 3', svg:makeCarSVG('sedan','#dc2626','#7f1d1d','#b91c1c')},
-            {brand:'Ford', name:'Mustang', svg:makeCarSVG('coupe','#dc2626','#7f1d1d','#b91c1c')},
-            {brand:'Chevrolet', name:'Camaro', svg:makeCarSVG('coupe','#fbbf24','#78350f','#d97706')},
-            {brand:'Dodge', name:'Charger', svg:makeCarSVG('sedan','#111827','#020617','#1f2937')}
+            {brand:'BMW', name:'3 Series', price:30000000, svg:makeCarSVG('sedan','#1e3a8a','#0f172a','#1e40af')},
+            {brand:'BMW', name:'5 Series', price:35000000, svg:makeCarSVG('sedan','#1e3a8a','#0f172a','#1e40af')},
+            {brand:'Mercedes', name:'C-Class', price:32000000, svg:makeCarSVG('sedan','#cbd5e1','#1e293b','#94a3b8')},
+            {brand:'Mercedes', name:'E-Class', price:38000000, svg:makeCarSVG('sedan','#cbd5e1','#1e293b','#94a3b8')},
+            {brand:'Audi', name:'A4', price:33000000, svg:makeCarSVG('sedan','#111827','#020617','#1f2937')},
+            {brand:'Audi', name:'A6', price:40000000, svg:makeCarSVG('sedan','#111827','#020617','#1f2937')},
+            {brand:'Lexus', name:'ES', price:36000000, svg:makeCarSVG('sedan','#475569','#0f172a','#334155')},
+            {brand:'Lexus', name:'IS', price:34000000, svg:makeCarSVG('sedan','#475569','#0f172a','#334155')},
+            {brand:'Jaguar', name:'XE', price:42000000, svg:makeCarSVG('sedan','#065f46','#022c22','#064e3b')},
+            {brand:'Volvo', name:'S60', price:39000000, svg:makeCarSVG('sedan','#334155','#0f172a','#1e293b')},
+            {brand:'Infiniti', name:'Q50', price:41000000, svg:makeCarSVG('sedan','#1e293b','#020617','#0f172a')},
+            {brand:'Cadillac', name:'CT5', price:43000000, svg:makeCarSVG('sedan','#111827','#020617','#1f2937')},
+            {brand:'BMW', name:'X3', price:45000000, svg:makeCarSVG('suv','#1e3a8a','#0f172a','#1e40af')},
+            {brand:'Mercedes', name:'GLC', price:47000000, svg:makeCarSVG('suv','#cbd5e1','#1e293b','#94a3b8')},
+            {brand:'Audi', name:'Q5', price:46000000, svg:makeCarSVG('suv','#111827','#020617','#1f2937')},
+            {brand:'Lexus', name:'NX', price:48000000, svg:makeCarSVG('suv','#475569','#0f172a','#334155')},
+            {brand:'Volvo', name:'XC60', price:49000000, svg:makeCarSVG('suv','#334155','#0f172a','#1e293b')},
+            {brand:'Jaguar', name:'F-Pace', price:50000000, svg:makeCarSVG('suv','#065f46','#022c22','#064e3b')},
+            {brand:'Infiniti', name:'QX50', price:51000000, svg:makeCarSVG('suv','#1e293b','#020617','#0f172a')},
+            {brand:'Cadillac', name:'XT5', price:52000000, svg:makeCarSVG('suv','#111827','#020617','#1f2937')},
+            {brand:'Tesla', name:'Model 3', price:53000000, svg:makeCarSVG('sedan','#dc2626','#7f1d1d','#b91c1c')},
+            {brand:'Ford', name:'Mustang', price:54000000, svg:makeCarSVG('coupe','#dc2626','#7f1d1d','#b91c1c')},
+            {brand:'Chevrolet', name:'Camaro', price:55000000, svg:makeCarSVG('coupe','#fbbf24','#78350f','#d97706')},
+            {brand:'Dodge', name:'Charger', price:56000000, svg:makeCarSVG('sedan','#111827','#020617','#1f2937')}
         ],
         legend: [
-            {brand:'BMW', name:'X5', svg:makeCarSVG('suv','#1e3a8a','#0f172a','#1e40af')},
-            {brand:'BMW', name:'7 Series', svg:makeCarSVG('sedan','#1e3a8a','#0f172a','#1e40af')},
-            {brand:'BMW', name:'M5', svg:makeCarSVG('sedan','#1e3a8a','#0f172a','#1e40af')},
-            {brand:'Mercedes', name:'GLE', svg:makeCarSVG('suv','#cbd5e1','#1e293b','#94a3b8')},
-            {brand:'Mercedes', name:'S-Class', svg:makeCarSVG('sedan','#cbd5e1','#1e293b','#94a3b8')},
-            {brand:'Mercedes', name:'AMG GT', svg:makeCarSVG('coupe','#cbd5e1','#1e293b','#94a3b8')},
-            {brand:'Audi', name:'Q7', svg:makeCarSVG('suv','#111827','#020617','#1f2937')},
-            {brand:'Audi', name:'A8', svg:makeCarSVG('sedan','#111827','#020617','#1f2937')},
-            {brand:'Audi', name:'R8', svg:makeCarSVG('coupe','#111827','#020617','#1f2937')},
-            {brand:'Porsche', name:'Cayenne', svg:makeCarSVG('suv','#111827','#020617','#1f2937')},
-            {brand:'Porsche', name:'Panamera', svg:makeCarSVG('sedan','#111827','#020617','#1f2937')},
-            {brand:'Porsche', name:'911', svg:makeCarSVG('coupe','#111827','#020617','#1f2937')},
-            {brand:'Range Rover', name:'Sport', svg:makeCarSVG('suv','#065f46','#022c22','#064e3b')},
-            {brand:'Range Rover', name:'Vogue', svg:makeCarSVG('suv','#065f46','#022c22','#064e3b')},
-            {brand:'Lexus', name:'LX', svg:makeCarSVG('suv','#475569','#0f172a','#334155')},
-            {brand:'Lexus', name:'LS', svg:makeCarSVG('sedan','#475569','#0f172a','#334155')},
-            {brand:'Tesla', name:'Model S', svg:makeCarSVG('sedan','#dc2626','#7f1d1d','#b91c1c')},
-            {brand:'Tesla', name:'Model X', svg:makeCarSVG('suv','#dc2626','#7f1d1d','#b91c1c')},
-            {brand:'Maserati', name:'Ghibli', svg:makeCarSVG('sedan','#1e40af','#0f172a','#1e3a8a')},
-            {brand:'Maserati', name:'Levante', svg:makeCarSVG('suv','#1e40af','#0f172a','#1e3a8a')},
-            {brand:'Bentley', name:'Continental', svg:makeCarSVG('coupe','#0f172a','#020617','#1e293b')},
-            {brand:'Ferrari', name:'Roma', svg:makeCarSVG('coupe','#dc2626','#7f1d1d','#b91c1c')},
-            {brand:'Lamborghini', name:'Huracan', svg:makeCarSVG('coupe','#fbbf24','#78350f','#d97706')},
-            {brand:'McLaren', name:'720S', svg:makeCarSVG('coupe','#f97316','#7c2d12','#ea580c')}
+            {brand:'BMW', name:'X5', price:60000000, svg:makeCarSVG('suv','#1e3a8a','#0f172a','#1e40af')},
+            {brand:'BMW', name:'7 Series', price:75000000, svg:makeCarSVG('sedan','#1e3a8a','#0f172a','#1e40af')},
+            {brand:'BMW', name:'M5', price:85000000, svg:makeCarSVG('sedan','#1e3a8a','#0f172a','#1e40af')},
+            {brand:'Mercedes', name:'GLE', price:70000000, svg:makeCarSVG('suv','#cbd5e1','#1e293b','#94a3b8')},
+            {brand:'Mercedes', name:'S-Class', price:80000000, svg:makeCarSVG('sedan','#cbd5e1','#1e293b','#94a3b8')},
+            {brand:'Mercedes', name:'AMG GT', price:95000000, svg:makeCarSVG('coupe','#cbd5e1','#1e293b','#94a3b8')},
+            {brand:'Audi', name:'Q7', price:65000000, svg:makeCarSVG('suv','#111827','#020617','#1f2937')},
+            {brand:'Audi', name:'A8', price:78000000, svg:makeCarSVG('sedan','#111827','#020617','#1f2937')},
+            {brand:'Audi', name:'R8', price:98000000, svg:makeCarSVG('coupe','#111827','#020617','#1f2937')},
+            {brand:'Porsche', name:'Cayenne', price:90000000, svg:makeCarSVG('suv','#111827','#020617','#1f2937')},
+            {brand:'Porsche', name:'Panamera', price:100000000, svg:makeCarSVG('sedan','#111827','#020617','#1f2937')},
+            {brand:'Porsche', name:'911', price:120000000, svg:makeCarSVG('coupe','#111827','#020617','#1f2937')},
+            {brand:'Range Rover', name:'Sport', price:88000000, svg:makeCarSVG('suv','#065f46','#022c22','#064e3b')},
+            {brand:'Range Rover', name:'Vogue', price:105000000, svg:makeCarSVG('suv','#065f46','#022c22','#064e3b')},
+            {brand:'Lexus', name:'LX', price:92000000, svg:makeCarSVG('suv','#475569','#0f172a','#334155')},
+            {brand:'Lexus', name:'LS', price:96000000, svg:makeCarSVG('sedan','#475569','#0f172a','#334155')},
+            {brand:'Tesla', name:'Model S', price:110000000, svg:makeCarSVG('sedan','#dc2626','#7f1d1d','#b91c1c')},
+            {brand:'Tesla', name:'Model X', price:115000000, svg:makeCarSVG('suv','#dc2626','#7f1d1d','#b91c1c')},
+            {brand:'Maserati', name:'Ghibli', price:105000000, svg:makeCarSVG('sedan','#1e40af','#0f172a','#1e3a8a')},
+            {brand:'Maserati', name:'Levante', price:118000000, svg:makeCarSVG('suv','#1e40af','#0f172a','#1e3a8a')},
+            {brand:'Bentley', name:'Continental', price:130000000, svg:makeCarSVG('coupe','#0f172a','#020617','#1e293b')},
+            {brand:'Ferrari', name:'Roma', price:140000000, svg:makeCarSVG('coupe','#dc2626','#7f1d1d','#b91c1c')},
+            {brand:'Lamborghini', name:'Huracan', price:150000000, svg:makeCarSVG('coupe','#fbbf24','#78350f','#d97706')},
+            {brand:'McLaren', name:'720S', price:160000000, svg:makeCarSVG('coupe','#f97316','#7c2d12','#ea580c')}
         ],
         mythic: [
-            {brand:'Bugatti', name:'Chiron', svg:makeCarSVG('coupe','#0f172a','#020617','#1e293b')},
-            {brand:'Bugatti', name:'Veyron', svg:makeCarSVG('coupe','#1e40af','#0f172a','#1e3a8a')},
-            {brand:'Koenigsegg', name:'Jesko', svg:makeCarSVG('coupe','#cbd5e1','#1e293b','#94a3b8')},
-            {brand:'Pagani', name:'Huayra', svg:makeCarSVG('coupe','#475569','#0f172a','#334155')},
-            {brand:'Ferrari', name:'LaFerrari', svg:makeCarSVG('coupe','#dc2626','#7f1d1d','#b91c1c')},
-            {brand:'Lamborghini', name:'Aventador', svg:makeCarSVG('coupe','#fbbf24','#78350f','#d97706')},
-            {brand:'McLaren', name:'P1', svg:makeCarSVG('coupe','#f97316','#7c2d12','#ea580c')},
-            {brand:'Aston Martin', name:'Valkyrie', svg:makeCarSVG('coupe','#065f46','#022c22','#064e3b')},
-            {brand:'Rolls-Royce', name:'Phantom', svg:makeCarSVG('sedan','#0f172a','#020617','#1e293b')},
-            {brand:'Rolls-Royce', name:'Cullinan', svg:makeCarSVG('suv','#0f172a','#020617','#1e293b')}
+            {brand:'Bugatti', name:'Chiron', price:500000000, svg:makeCarSVG('coupe','#0f172a','#020617','#1e293b')},
+            {brand:'Bugatti', name:'Veyron', price:480000000, svg:makeCarSVG('coupe','#1e40af','#0f172a','#1e3a8a')},
+            {brand:'Koenigsegg', name:'Jesko', price:520000000, svg:makeCarSVG('coupe','#cbd5e1','#1e293b','#94a3b8')},
+            {brand:'Pagani', name:'Huayra', price:510000000, svg:makeCarSVG('coupe','#475569','#0f172a','#334155')},
+            {brand:'Ferrari', name:'LaFerrari', price:550000000, svg:makeCarSVG('coupe','#dc2626','#7f1d1d','#b91c1c')},
+            {brand:'Lamborghini', name:'Aventador', price:530000000, svg:makeCarSVG('coupe','#fbbf24','#78350f','#d97706')},
+            {brand:'McLaren', name:'P1', price:540000000, svg:makeCarSVG('coupe','#f97316','#7c2d12','#ea580c')},
+            {brand:'Aston Martin', name:'Valkyrie', price:560000000, svg:makeCarSVG('coupe','#065f46','#022c22','#064e3b')},
+            {brand:'Rolls-Royce', name:'Phantom', price:600000000, svg:makeCarSVG('sedan','#0f172a','#020617','#1e293b')},
+            {brand:'Rolls-Royce', name:'Cullinan', price:620000000, svg:makeCarSVG('suv','#0f172a','#020617','#1e293b')}
         ]
     }
 };
-const STORAGE_KEY='autogen_v39_final';
-const STORY=[{earned:0,rank:'Новичок'},{earned:5000000,rank:'Барыга'},{earned:20000000,rank:'Дилер'},{earned:100000000,rank:'Магнат'}];
-const BOT_NAMES=['Neo','DarkRider','Turbo','Макс','King77','Shadow','Vitalya','Stylez','Дима','Ghost','XS1','Boss','Кекс','Frost','Kolya','Sigma','N1ght','Zohan'];
-const BOT_AVATARS=['🐺','🕶️','👽','🐉','🎭','💀','🦁','🐯','🦅','🧙','🎩','🥷','🐲','👹','🧛','🤖'];
-const ACHS=[
-    {id:'fc',icon:'🚗',title:'Первая тачка',desc:'Выбей машину',check:s=>s.stats.spins>=1,reward:{rub:500000}},
-    {id:'col',icon:'🏎️',title:'Коллекционер',desc:'10 машин',check:s=>s.garageCars.length>=10,reward:{tok:1000}},
-    {id:'leg',icon:'👑',title:'Легенда',desc:'Legend-машину',check:s=>s.stats.bestPrice>=30000000,reward:{rub:5000000,tok:2000}},
-    {id:'myth',icon:'💎',title:'Нереальный',desc:'Mythic-машину',check:s=>s.stats.bestPrice>=800000000,reward:{rub:50000000,tok:20000}},
-    {id:'mil',icon:'💰',title:'Миллионер',desc:'100 млн ₽',check:s=>s.totalEarned>=100000000,reward:{tok:5000}},
-    {id:'bil',icon:'🏦',title:'Миллиардер',desc:'1 млрд ₽',check:s=>s.totalEarned>=1000000000,reward:{tok:20000}},
-    {id:'bat',icon:'⚔️',title:'Батл-мастер',desc:'10 батлов',check:s=>s.stats.battleWins>=10,reward:{rub:10000000}},
-    {id:'gam',icon:'🎲',title:'Азартный',desc:'100 круток',check:s=>s.stats.spins>=100,reward:{tok:3000}},
-    {id:'pro',icon:'💼',title:'Профессионал',desc:'50 машин',check:s=>s.garageCars.length>=50,reward:{tok:10000}},
-    {id:'str',icon:'🔥',title:'7 дней',desc:'Стрик 7',check:s=>s.streak>=7,reward:{tok:5000}},
-    {id:'pre',icon:'✨',title:'Перерожденец',desc:'1 перерождение',check:s=>s.prestigeLevel>=1,reward:{tok:10000}},
-    {id:'upg',icon:'⬆️',title:'Апгрейдер',desc:'5 апгрейдов',check:s=>(s.stats.upgradeWins||0)>=5,reward:{tok:2000}}
-];
-const RENTAL={common:50000,rare:200000,epic:1000000,legend:5000000,mythic:50000000};
-const PITY=50;
-const MMR_TIERS=[{min:0,name:'Бронза',c:'#a16207',b:'rgba(161,98,7,.3)'},{min:1000,name:'Серебро',c:'#94a3b8',b:'rgba(148,163,184,.3)'},{min:2500,name:'Золото',c:'#fbbf24',b:'rgba(251,191,36,.3)'},{min:5000,name:'Платина',c:'#22d3ee',b:'rgba(34,211,238,.3)'},{min:8000,name:'Алмаз',c:'#60a5fa',b:'rgba(96,165,250,.3)'},{min:12000,name:'Легенда',c:'#ec4899',b:'rgba(236,72,153,.3)'}];
-const MMR_WIN=100,MMR_LOSS=50,MMR_TARGET=3000,MMR_CYCLE=3*24*3600*1000;
-const CURR={RUB:{s:'₽',r:1,f:'🇷🇺',d:0},USD:{s:'$',r:92.5,f:'🇺🇸',d:2},EUR:{s:'€',r:100.2,f:'🇪🇺',d:2},CNY:{s:'¥',r:12.8,f:'🇨🇳',d:2},BTC:{s:'₿',r:6450000,f:'🟠',d:6}};
-const EXCH_FEE=0.02;
-const BATTLE_BANK=20000000;
 
-let state={balanceRub:5000000,balanceToken:10000,currentCar:null,currentPlate:null,isSpinningCar:false,isSpinningPlate:false,garageCars:[],garagePlates:[],activeGarageTab:'cars',upgradeLevel:0,prestigeLevel:0,lastDaily:0,lastChest:0,lastOnline:0,aidReadyAt:0,rulesSeen:false,stats:{spins:0,earned:0,spent:0,battleWins:0,upgradeWins:0,fortuneSpins:0,bestPrice:0},totalEarned:0,recentCars:[],soundOn:true,autoCom:false,autoRar:false,recordPrice:0,garageSort:'default',quests:null,vibe:0,bgTheme:'black',avatar:'👑',upgTab:'cars',carUpgIdx:-1,carUpgChance:50,carUpgRolling:false,plateUpgIdx:-1,plateUpgChance:50,plateUpgRolling:false,battleMyIdx:-1,battleState:null,achievements:{},streak:0,lastStreak:0,shopDate:0,shopItems:[],combo:0,comboLast:0,leaderboard:[],fortuneLast:0,bank:{USD:0,EUR:0,CNY:0,BTC:0},displayCur:'RUB',card:null,pityLegend:0,trendDate:0,trendBrand:'',mmr:0,mmrSession:0,mmrCycleStart:0,mmrTitle:'',
-    // НОВЫЕ ПОЛЯ
-    collections:{}, contract:null, contractDate:0, seasonPoints:0, seasonClaimed:{}
+let player = {
+    rub: CONFIG.startRub, tok: CONFIG.startTok,
+    garage: { cars: [], plates: [] }, ach: {}, quests: {}, battle: { mmr: 0, wins: 0 },
+    curCar: null, curPlate: null,
+    stats: { earned: 0, rolls: 0, legendRolls: 0, totalSold: 0 },
+    prestige: 0, theme: 'black', avatar: '👑', sound: true,
+    lastLogin: 0, streak: 0, pity: 0,
+    autoSell: { common: false, rare: false }, buyCount: 0
 };
-let carPointerRot=0,platePointerRot=0,audioCtx=null,bgMusic=null;
 
-function showToast(msg){
-    const el=document.createElement('div');
-    el.className='toast';el.textContent=msg;
-    document.body.appendChild(el);
-    setTimeout(()=>{el.style.transition='opacity .35s,transform .35s';el.style.opacity='0';el.style.transform='translateX(-50%) translateY(20px) scale(.85)';setTimeout(()=>el.remove(),400);},1800);
+function fmt(n) {
+    if(n === undefined || n === null || isNaN(n)) return '0';
+    return Math.floor(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 }
 
-function setupPWA(){
-    try{
-        const c=document.createElement('canvas');c.width=512;c.height=512;
-        const ctx=c.getContext('2d');
-        ctx.fillStyle='#05060a';ctx.fillRect(0,0,512,512);
-        const g=ctx.createLinearGradient(0,0,512,512);g.addColorStop(0,'#60a5fa');g.addColorStop(.5,'#a855f7');g.addColorStop(1,'#f472b6');
-        ctx.fillStyle=g;ctx.beginPath();ctx.arc(256,256,215,0,Math.PI*2);ctx.fill();
-        ctx.fillStyle='#05060a';ctx.beginPath();ctx.arc(256,256,195,0,Math.PI*2);ctx.fill();
-        ctx.textAlign='center';ctx.textBaseline='middle';
-        ctx.fillStyle='#fff';ctx.font='900 110px Arial,sans-serif';ctx.fillText('НД',256,215);
-        ctx.fillStyle='#fbbf24';ctx.font='900 70px Arial,sans-serif';ctx.fillText('777',256,320);
-        const icon=c.toDataURL('image/png');
-        let ico=document.querySelector('link[rel="icon"]');if(!ico){ico=document.createElement('link');ico.rel='icon';document.head.appendChild(ico);}ico.type='image/png';ico.href=icon;
-        let ap=document.querySelector('link[rel="apple-touch-icon"]');if(!ap){ap=document.createElement('link');ap.rel='apple-touch-icon';document.head.appendChild(ap);}ap.href=icon;
-        const manifest={name:'Номердай',short_name:'Номердай',display:'standalone',orientation:'portrait',background_color:'#05060a',theme_color:'#05060a',icons:[{src:icon,sizes:'512x512',type:'image/png',purpose:'any maskable'}]};
-        const m=document.getElementById('pwaManifest');if(m)m.href=URL.createObjectURL(new Blob([JSON.stringify(manifest)],{type:'application/json'}));
-    }catch(e){}
+function toast(msg) {
+    const t = document.createElement('div');
+    t.className = 'toast'; t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => { t.style.animation = 'ti .35s reverse forwards'; setTimeout(() => t.remove(), 350); }, 2000);
 }
 
-function initAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();}
-function playTone(f,t,d,v=0.05){if(!audioCtx||!state.soundOn)return;try{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=t;o.frequency.setValueAtTime(f,audioCtx.currentTime);g.gain.setValueAtTime(v,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+d);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+d);}catch(e){}}
-function playChing(){if(!state.soundOn)return;playTone(880,'sine',.15,.08);setTimeout(()=>playTone(1320,'sine',.2,.06),60);}
-function playSpinTicks(dur){let el=0;const tick=()=>{if(el>=dur-500)return;playTone(700+Math.random()*300,'square',.02,.015);const p=el/dur;const d=30+Math.pow(p,3)*600;el+=d;if(el<dur-500)setTimeout(tick,d);};tick();}
-function startBgMusic(){if(bgMusic||!audioCtx||!state.soundOn)return;try{const master=audioCtx.createGain();master.gain.value=0;master.connect(audioCtx.destination);master.gain.linearRampToValueAtTime(.02,audioCtx.currentTime+3);const oscs=[];[130.81,164.81,196,261.63].forEach((f,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=i%2?'sine':'triangle';o.frequency.value=f;g.gain.value=.25;o.connect(g);g.connect(master);o.start();oscs.push(o);});bgMusic={master,oscs};}catch(e){}}
-function stopBgMusic(){if(!bgMusic)return;const n=bgMusic;bgMusic=null;try{n.master.gain.linearRampToValueAtTime(0,audioCtx.currentTime+1.5);setTimeout(()=>{n.oscs.forEach(o=>{try{o.stop();}catch(e){}})},1800);}catch(e){}}
-function toggleSound(){state.soundOn=!state.soundOn;document.getElementById('sndBtn').textContent=state.soundOn?'🔊':'🔇';document.getElementById('sndBtn').classList.toggle('off',!state.soundOn);if(state.soundOn)startBgMusic();else stopBgMusic();saveState();}
-function toggleAuto(r){if(r==='common'){state.autoCom=!state.autoCom;document.getElementById('asComLbl').classList.toggle('on',state.autoCom);document.getElementById('asComChk').checked=state.autoCom;}else{state.autoRar=!state.autoRar;document.getElementById('asRarLbl').classList.toggle('on',state.autoRar);document.getElementById('asRarChk').checked=state.autoRar;}saveState();}
-function setGarageSort(m){state.garageSort=m;['default','price','rarity'].forEach(x=>{const el=document.getElementById('sort'+x.charAt(0).toUpperCase()+x.slice(1));if(el)el.classList.toggle('active',x===m);});renderGarage();}
-document.body.addEventListener('click',()=>{initAudio();startBgMusic();},{once:true});
-
-function saveState(){try{state.lastOnline=Date.now();const s={...state};delete s.battleState;localStorage.setItem(STORAGE_KEY,JSON.stringify(s));}catch(e){}}
-function loadState(){
-    try{const s=localStorage.getItem(STORAGE_KEY);if(s){const p=JSON.parse(s);state={...state,...p,stats:{...state.stats,...(p.stats||{})}};}}catch(e){}
-    state.isSpinningCar=false;state.isSpinningPlate=false;state.carUpgRolling=false;state.plateUpgRolling=false;
-    if(!state.bgTheme||state.bgTheme==='default')state.bgTheme='black';
-    applyTheme(state.bgTheme);applyAvatar(state.avatar||'👑');
-    if(!state.achievements)state.achievements={};
-    if(!state.bank)state.bank={USD:0,EUR:0,CNY:0,BTC:0};
-    if(!state.card){const p=['7777'];for(let i=0;i<3;i++)p.push(String(Math.floor(1000+Math.random()*9000)));state.card={number:p.join(' '),holder:'NOMERDAY PLAYER',expiry:'12/29'};}
-    if(!state.collections)state.collections={};
-    if(!state.seasonClaimed)state.seasonClaimed={};
-}
-document.addEventListener('visibilitychange',()=>{if(document.hidden)saveState();});
-window.addEventListener('beforeunload',saveState);
-
-function calcRentalPerHour(){
-    let brandBonus=1;
-    if(state.collections) Object.keys(state.collections).forEach(b=>{if(state.collections[b]) brandBonus+=0.10;});
-    const mult=(1+state.upgradeLevel*.10)*(1+state.prestigeLevel*.25)*brandBonus;
-    let s=0;state.garageCars.forEach(c=>s+=(RENTAL[c.rarity]||0));return Math.floor(s*mult);
-}
-function calcOffline(sec){const h=Math.min(sec/3600,24);if(h<.05)return 0;return Math.floor(calcRentalPerHour()*h);}
-function applyOffline(){
-    if(!state.lastOnline||state.lastOnline<=0)return;
-    const sec=(Date.now()-state.lastOnline)/1000;
-    if(sec<60)return;
-    const bonus=calcOffline(sec);
-    if(bonus<=0)return;
-    state.balanceRub+=bonus;state.totalEarned+=bonus;state.stats.earned+=bonus;saveState();
-    setTimeout(()=>{const mins=Math.floor(sec/60),hrs=Math.floor(mins/60);const ts=hrs>0?`${hrs}ч ${mins%60}м`:`${mins}м`;showModal('💤 Оффлайн доход',`За ${ts}:<br><b>+${formatMoney(bonus)} ₽</b>`,'💰');updateUI();},2200);
-}
-function rentalTick(){const perMin=Math.floor(calcRentalPerHour()/60);if(perMin<=0)return;state.balanceRub+=perMin;state.totalEarned+=perMin;state.stats.earned+=perMin;updateUI();}
-function setTheme(t){state.bgTheme=t;applyTheme(t);saveState();document.querySelectorAll('.theme-b').forEach(b=>b.classList.toggle('active',b.dataset.theme===t));}
-function applyTheme(t){document.body.className=document.body.className.replace(/t-\w+/g,'').trim();document.body.classList.add('t-'+t);}
-function setAvatar(e){state.avatar=e;applyAvatar(e);saveState();document.querySelectorAll('.av-b').forEach(b=>b.classList.toggle('active',b.dataset.avatar===e));}
-function applyAvatar(e){const el=document.getElementById('profileAvatar');if(el)el.textContent=e;}
-function formatMoney(n){return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ');}
-function getPrestigeReq(){return 100000000+state.prestigeLevel*100000000;}
-
-// НОВАЯ ЛОГИКА ДЛЯ СЕЗОНОВ, КОЛЛЕКЦИЙ И КОНТРАКТОВ
-function addSeasonPoints(pts) {
-    state.seasonPoints = (state.seasonPoints || 0) + pts;
-    if (state.seasonPoints > 1000) state.seasonPoints = 1000;
-    saveState();
-}
-function renderSeason() {
-    if (document.getElementById('seasonPoints')) {
-        document.getElementById('seasonPoints').textContent = state.seasonPoints || 0;
-        document.getElementById('seasonProg').style.width = ((state.seasonPoints || 0) / 1000 * 100) + '%';
-    }
-    const list = document.getElementById('seasonRewardsList');
-    if (!list) return;
-    list.innerHTML = '';
-    const rewards = [
-        { pts: 100, title: '1 000 000 ₽', id: 'r1', action: () => addRubles(1000000) },
-        { pts: 300, title: '5 000 💎', id: 'r2', action: () => addTokens(5000) },
-        { pts: 500, title: 'Epic машина', id: 'r3', action: () => { const p = CONFIG.cars.epic; state.garageCars.push({ ...p[Math.floor(Math.random() * p.length)], rarity: 'epic' }); } },
-        { pts: 1000, title: 'Legend машина', id: 'r4', action: () => { const p = CONFIG.cars.legend; state.garageCars.push({ ...p[Math.floor(Math.random() * p.length)], rarity: 'legend' }); } }
-    ];
-    rewards.forEach(rw => {
-        const claimed = state.seasonClaimed && state.seasonClaimed[rw.id];
-        const canClaim = (state.seasonPoints || 0) >= rw.pts;
-        const div = document.createElement('div');
-        div.className = 'qc' + (canClaim && !claimed ? ' done' : '') + (claimed ? ' claimed' : '');
-        div.innerHTML = `<div class="q-ico">🎁</div><div class="q-body"><div class="q-title">${rw.title}</div><div class="q-desc">Нужно ${rw.pts} очков</div></div><button class="q-claim" ${(canClaim && !claimed) ? '' : 'disabled'}>${claimed ? '✓' : 'Забрать'}</button>`;
-        if (canClaim && !claimed) {
-            div.querySelector('.q-claim').onclick = () => {
-                rw.action();
-                if (!state.seasonClaimed) state.seasonClaimed = {};
-                state.seasonClaimed[rw.id] = true;
-                saveState(); renderSeason(); updateUI();
-            };
-        }
-        list.appendChild(div);
-    });
-}
-function renderCollections() {
-    const list = document.getElementById('collectionsList');
-    if (!list) return;
-    list.innerHTML = '';
-    const brands = {};
-    Object.values(CONFIG.cars).flat().forEach(c => {
-        if (!brands[c.brand]) brands[c.brand] = 0;
-        brands[c.brand]++;
-    });
-    Object.keys(brands).forEach(brand => {
-        const myCars = state.garageCars.filter(c => c.brand === brand);
-        const unique = new Set(myCars.map(c => c.name)).size;
-        const total = brands[brand];
-        const isDone = unique >= total;
-        if (isDone && !state.collections[brand]) {
-            state.collections[brand] = true;
-            saveState();
-            setTimeout(() => showToast(`🏆 Коллекция ${brand} собрана! +10% к аренде`), 1000);
-        }
-        const div = document.createElement('div');
-        div.className = 'qc' + (isDone ? ' done' : '');
-        div.innerHTML = `<div class="q-ico">🚗</div><div class="q-body"><div class="q-title">${brand}</div><div class="q-desc">Собрано: ${unique} / ${total}</div><div class="q-bar"><div class="q-f" style="width:${(unique / total) * 100}%"></div></div></div><div style="font-size:18px;">${isDone ? '✅' : '🔒'}</div>`;
-        list.appendChild(div);
-    });
-}
-function checkContracts() {
-    const today = new Date().setHours(0, 0, 0, 0);
-    if (state.contractDate !== today || !state.contract) {
-        const allBrands = ['LADA', 'KIA', 'BMW', 'TOYOTA', 'MERCEDES', 'AUDI', 'FERRARI'];
-        const targetBrand = allBrands[Math.floor(Math.random() * allBrands.length)];
-        state.contract = { brand: targetBrand, need: 3, progress: 0, reward: 5000000, claimed: false };
-        state.contractDate = today;
-        saveState();
-    }
-}
-function renderContracts() {
-    checkContracts();
-    const list = document.getElementById('contractsList');
-    if (!list) return;
-    const c = state.contract;
-    list.innerHTML = '';
-    const div = document.createElement('div');
-    div.className = 'qc' + (c.progress >= c.need ? ' done' : '');
-    div.innerHTML = `<div class="q-ico">📝</div><div class="q-body"><div class="q-title">Найди 3 машины ${c.brand}</div><div class="q-desc">Награда: ${formatMoney(c.reward)} ₽</div><div class="q-bar"><div class="q-f" style="width:${(c.progress / c.need) * 100}%"></div></div></div><button class="q-claim" ${c.progress >= c.need && !c.claimed ? '' : 'disabled'}>${c.claimed ? '✓' : c.progress >= c.need ? 'Забрать' : `${c.progress}/${c.need}`}</button>`;
-    if (c.progress >= c.need && !c.claimed) {
-        div.querySelector('.q-claim').onclick = () => {
-            addRubles(c.reward);
-            c.claimed = true;
-            saveState(); renderContracts(); updateUI();
-        };
-    }
-    list.appendChild(div);
-}
-function progressContract(car) {
-    checkContracts();
-    if (state.contract && !state.contract.claimed && car.brand === state.contract.brand) {
-        state.contract.progress++;
-        saveState();
-    }
+function saveGame() {
+    try { localStorage.setItem('nomerdaySave', JSON.stringify(player)); } catch(e){}
 }
 
-function checkAch(){
-    let nu=false;
-    ACHS.forEach(a=>{if(!state.achievements[a.id]&&a.check(state)){state.achievements[a.id]=true;nu=true;setTimeout(()=>{if(a.reward.rub)addRubles(a.reward.rub);if(a.reward.tok)addTokens(a.reward.tok);const rt=[];if(a.reward.rub)rt.push(`<b>${formatMoney(a.reward.rub)} ₽</b>`);if(a.reward.tok)rt.push(`<b>${a.reward.tok} 💎</b>`);showModal(`🏆 ${a.title}`,rt.join(' + '),a.icon);},500);}});
-    if(nu)saveState();
-}
-function checkStory(){
-    let r=STORY[0].rank;
-    for(let i=STORY.length-1;i>=0;i--)if(state.totalEarned>=STORY[i].earned){r=STORY[i].rank;break;}
-    const mr=document.getElementById('menuRank');if(mr)mr.textContent=r;
-    const nl=STORY.find(l=>state.totalEarned<l.earned);
-    const pe=nl?(STORY[STORY.indexOf(nl)-1]?.earned||0):100000000;
-    const prog=nl?((state.totalEarned-pe)/(nl.earned-pe))*100:100;
-    const mp=document.getElementById('menuProg');if(mp)mp.style.width=Math.min(prog,100)+'%';
-    const nu=document.getElementById('navUpg');if(nu)nu.classList.toggle('locked',state.totalEarned<5000000);
-    const nc=document.getElementById('navCases');if(nc)nc.classList.toggle('locked',state.totalEarned<20000000);
-    const mud=document.getElementById('menuUpgDesc');if(mud)mud.textContent=state.totalEarned<5000000?'5 000 000 ₽':'Доступно';
-    const mcd=document.getElementById('menuCaseDesc');if(mcd)mcd.textContent=state.totalEarned<20000000?'20 000 000 ₽':'Доступно';
-    const btn=document.getElementById('btnPrestige');const req=getPrestigeReq();
-    if(btn){if(state.totalEarned>=req){btn.style.display='flex';btn.textContent=`Перерождение (${formatMoney(req)} ₽)`;}else btn.style.display='none';}
-    const unlocked=Object.keys(state.achievements).filter(k=>state.achievements[k]).length;
-    const ae=document.getElementById('menuAch');if(ae)ae.textContent=`${unlocked}/${ACHS.length}`;
-}
-function checkLock(v,req){if(state.totalEarned<req){showModal('Заблокировано',`Нужно ${formatMoney(req)} ₽`,'🔒');return;}navigate(v);}
-function addRubles(a){state.balanceRub+=a;state.stats.earned+=a;state.totalEarned+=a;trackQuest('earn',a);saveState();updateUI();checkStory();checkAch();}
-function addTokens(a){state.balanceToken+=a;saveState();updateUI();checkAch();}
-
-function navigate(id){
-    if(id!=='cars'&&state.currentCar){
-        if(state.garageCars.length<CONFIG.garageLimit){state.garageCars.push(state.currentCar);showToast('🚗 В гараж');}
-        else{state.balanceRub+=state.currentCar.price;state.stats.earned+=state.currentCar.price;state.totalEarned+=state.currentCar.price;showToast('💰 Продано');}
-        state.currentCar=null;saveState();
-    }
-    if(id!=='plates'&&state.currentPlate){
-        if(state.garagePlates.length<CONFIG.garageLimit){state.garagePlates.push(state.currentPlate);showToast('🔢 В гараж');}
-        else{state.balanceToken+=state.currentPlate.price;showToast('💎 Продано');}
-        state.currentPlate=null;saveState();
-    }
-    if(id==='upgrades'&&state.totalEarned<5000000)return checkLock('upgrades',5000000);
-    if(id==='cases'&&state.totalEarned<20000000)return checkLock('cases',20000000);
-    if(state.isSpinningCar){state.isSpinningCar=false;document.getElementById('genCarBox').classList.remove('spinning');}
-    if(state.isSpinningPlate){state.isSpinningPlate=false;document.getElementById('genPlateBox').classList.remove('spinning');}
-    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-    document.getElementById('v-'+id).classList.add('active');
-    const t={menu:'Номердай',cars:'Автосалон',plates:'Госзнаки',garage:'Гараж',upgrades:'Тюнинг',profile:'Профиль',cases:'Аукцион',catalog:'Каталог',quests:'Задания',upgrader:'Апгрейдер',battle:'Батл 1x1',achievements:'Достижения',fortune:'Фортуна',shop:'Магазин дня',leaderboard:'Топ',bank:'Банк',contracts:'Контракты',collections:'Коллекции',season:'Сезон'};
-    document.getElementById('pageTitle').textContent=t[id]||'Номердай';
-    document.getElementById('backBtn').style.display=id==='menu'?'none':'block';
-    if(id==='cars'){state.currentCar?showCarResult(state.currentCar):resetCarUI();}
-    if(id==='plates'){state.currentPlate?showPlateResult(state.currentPlate):resetPlateUI();}
-    if(id==='garage')renderGarage();
-    if(id==='catalog')renderCatalog();
-    if(id==='profile')renderProfile();
-    if(id==='upgrades')renderUpgrades();
-    if(id==='quests')renderQuests();
-    if(id==='upgrader')renderUpgrader();
-    if(id==='battle')renderBattleLobby();
-    if(id==='achievements')renderAchs();
-    if(id==='fortune')renderFortune();
-    if(id==='shop')renderShop();
-    if(id==='leaderboard')renderLeaderboard();
-    if(id==='bank')renderBank();
-    if(id==='season')renderSeason();
-    if(id==='collections')renderCollections();
-    if(id==='contracts')renderContracts();
-    if(id==='menu'){
-        checkStory();
-        const btn=document.getElementById('menuSeasonBtn');
-        if(btn) btn.textContent = `Очки: ${state.seasonPoints||0}/1000`;
-    }
-    updateUI();
-}
-
-function renderAchs(){
-    const list=document.getElementById('achList');if(!list)return;list.innerHTML='';
-    ACHS.forEach(a=>{const u=!!state.achievements[a.id];const d=document.createElement('div');d.className='ac'+(u?' unlocked':'');d.innerHTML=`<div class="a-ico">${a.icon}</div><div class="a-body"><div class="a-title">${a.title}</div><div class="a-desc">${a.desc}</div></div><div style="font-size:20px;">${u?'✅':'🔒'}</div>`;list.appendChild(d);});
-    const u=Object.keys(state.achievements).filter(k=>state.achievements[k]).length;
-    list.insertAdjacentHTML('afterbegin',`<div style="text-align:center;color:var(--muted);font-size:13px;margin-bottom:15px;">Открыто: <b>${u} / ${ACHS.length}</b></div>`);
-}
-
-function renderFortune(){
-    const w=document.getElementById('fortuneWheel');if(!w)return;
-    const colors=['#10b981','#3b82f6','#a855f7','#fbbf24','#ec4899','#06b6d4','#f59e0b','#ef4444'];
-    let g='conic-gradient(';colors.forEach((c,i)=>{const s=i*45,e=(i+1)*45;g+=`${c} ${s}deg ${e}deg, `;});
-    w.style.background=g.slice(0,-2)+')';
-    const last=state.fortuneLast||0;const next=last+4*3600*1000;const left=Math.max(0,next-Date.now());
-    const t=document.getElementById('fortuneTimer'),b=document.getElementById('btnFortune');
-    if(left>0){const h=Math.floor(left/3600000),m=Math.floor((left%3600000)/60000);t.textContent=`Следующий через ${h}ч ${m}м`;b.textContent=`🎰 Крутить за 500 💎`;}
-    else{t.textContent='Бесплатный спин доступен!';b.textContent='🎰 Крутить БЕСПЛАТНО';}
-}
-function spinFortune(){
-    const last=state.fortuneLast||0;const next=last+4*3600*1000;const isFree=Date.now()>=next;const cost=isFree?0:500;
-    if(cost>0&&state.balanceToken<cost)return showModal('Мало жетонов','500 💎','❌');
-    if(cost>0)state.balanceToken-=cost;else state.fortuneLast=Date.now();
-    state.stats.fortuneSpins=(state.stats.fortuneSpins||0)+1;saveState();
-    const w=document.getElementById('fortuneWheel');
-    w.style.transform=`rotate(${360*5+Math.random()*360}deg)`;playSpinTicks(4500);
-    const prizes=[
-        {n:'💰 5 млн',a:()=>addRubles(5000000)},{n:'💰 10 млн',a:()=>addRubles(10000000)},
-        {n:'💎 1000',a:()=>addTokens(1000)},{n:'💎 5000',a:()=>addTokens(5000)},
-        {n:'🚗 Epic',a:()=>{const p=CONFIG.cars.epic;state.garageCars.push({...p[Math.floor(Math.random()*p.length)],rarity:'epic'});saveState();}},
-        {n:'⚡ x2',a:()=>{}},
-        {n:'💰 20 млн',a:()=>addRubles(20000000)},
-        {n:'🚗 Legend',a:()=>{const p=CONFIG.cars.legend;state.garageCars.push({...p[Math.floor(Math.random()*p.length)],rarity:'legend'});saveState();}}
-    ];
-    setTimeout(()=>{const p=prizes[Math.floor(Math.random()*prizes.length)];p.a();updateUI();burst('legend');showModal(`🎡 ${p.n}!`,'Приз получен','🎁');renderFortune();},5100);
-}
-function renderShop(){
-    const today=new Date().setHours(0,0,0,0);
-    if(state.shopDate!==today){
-        state.shopDate=today;state.shopItems=[];
-        const all=Object.values(CONFIG.cars).flat();
-        const dc=all[Math.floor(Math.random()*all.length)];
-        const disc=[30,40,50][Math.floor(Math.random()*3)];
-        state.shopItems=[
-            {t:'car',i:'🚗',n:dc.brand+' '+dc.name,d:`Скидка ${disc}%`,p:Math.floor(dc.price*(1-disc/100)),c:dc},
-            {t:'tok',i:'💎',n:'5000 жетонов',d:'Для круток',p:3000000,a:5000},
-            {t:'boost',i:'⚡',n:'x2 бустер',d:'24 часа',p:10000000}
-        ];
-        saveState();
-    }
-    const list=document.getElementById('shopList');if(!list)return;list.innerHTML='';
-    state.shopItems.forEach((it,i)=>{const d=document.createElement('div');d.className='si';d.innerHTML=`<div class="s-ico">${it.i}</div><div class="s-info"><div class="s-name">${it.n}</div><div class="s-desc">${it.d}</div><div class="s-price">${formatMoney(it.p)} ₽</div></div><button class="s-buy" onclick="buyShopItem(${i})">Купить</button>`;list.appendChild(d);});
-    const now=new Date();const tom=new Date(now);tom.setDate(tom.getDate()+1);tom.setHours(0,0,0,0);
-    const ms=tom-now;const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000),s=Math.floor((ms%60000)/1000);
-    const pad=n=>String(n).padStart(2,'0');
-    const t=document.getElementById('shopTimer');if(t)t.textContent=`Обновится через ${pad(h)}:${pad(m)}:${pad(s)}`;
-}
-function buyShopItem(i){
-    const it=state.shopItems[i];if(!it)return;
-    if(state.balanceRub<it.p)return showModal('Мало денег',`${formatMoney(it.p)} ₽`,'❌');
-    state.balanceRub-=it.p;state.stats.spent+=it.p;
-    if(it.t==='car'){state.garageCars.push({...it.c,rarity:'epic',price:it.c.price});showModal('Куплено',it.c.brand+' '+it.c.name,'🚗');}
-    else if(it.t==='tok'){addTokens(it.a);showModal('Куплено',`+${it.a} 💎`,'💎');}
-    else showModal('Куплено','Бустер активен','⚡');
-    saveState();updateUI();renderShop();
-}
-function renderLeaderboard(){
-    const list=document.getElementById('lbList');if(!list)return;
-    if(!state.leaderboard||!state.leaderboard.length){
-        const lb=[];const av=['🐺','🕶️','👽','🐉','🎭','💀','🦁','🐯','🦅','🧙','🎩','🥷'];
-        for(let i=0;i<15;i++)lb.push({n:BOT_NAMES[Math.floor(Math.random()*BOT_NAMES.length)]+Math.floor(Math.random()*99),a:av[Math.floor(Math.random()*av.length)],b:Math.floor(50000000+Math.random()*950000000)});
-        lb.push({n:'Ты',a:state.avatar,b:state.balanceRub,isYou:true});
-        lb.sort((a,b)=>b.b-a.b);state.leaderboard=lb;saveState();
-    }
-    const me=state.leaderboard.find(e=>e.isYou);
-    if(me){me.b=state.balanceRub;me.a=state.avatar;}
-    state.leaderboard.sort((a,b)=>b.b-a.b);list.innerHTML='';
-    state.leaderboard.forEach((e,i)=>{const d=document.createElement('div');d.className='lb';if(e.isYou)d.style.borderColor='var(--acc)';d.innerHTML=`<div class="lb-rank">${i+1}</div><div class="lb-av">${e.a}</div><div class="lb-info"><div class="lb-name">${e.n} ${e.isYou?'👈':''}</div><div class="lb-sub">${e.isYou?'Это ты':'Топ'}</div></div><div class="lb-val">${formatMoney(e.b)} ₽</div>`;list.appendChild(d);});
-}
-function checkStreak(){
-    const today=new Date().setHours(0,0,0,0);const yes=today-86400000;
-    if(state.lastStreak===today)return;
-    if(state.lastStreak===yes)state.streak++;else if(state.lastStreak<yes)state.streak=1;
-    state.lastStreak=today;
-    const rw=[500000,1000000,2000000,3000000,5000000,7500000,15000000];
-    const idx=Math.min(state.streak-1,6);
-    addRubles(Math.floor(rw[idx]*(1+state.prestigeLevel*.5)));
-    if(state.streak===7){addTokens(5000);setTimeout(()=>showModal('🔥 Стрик 7 дней!','+5000 💎','🔥'),500);}
-    saveState();renderStreak();
-}
-function renderStreak(){
-    const days=document.getElementById('streakDays');if(!days)return;days.innerHTML='';
-    for(let i=1;i<=7;i++){const d=state.streak>=i,t=i===state.streak;days.innerHTML+=`<div class="streak-d ${d?'done':''} ${t?'today':''}"><div class="d">Д${i}</div><div class="n">${d?'✓':i}</div></div>`;}
-    const sc=document.getElementById('streakCount');if(sc)sc.textContent=state.streak;
-}
-function checkJackpot(){
-    if(Math.random()<0.01){
-        const amt=Math.floor(state.balanceRub*.1);
-        const c=CONFIG.cars.legend[Math.floor(Math.random()*CONFIG.cars.legend.length)];
-        state.garageCars.push({...c,rarity:'legend'});
-        state.balanceRub+=amt;state.totalEarned+=amt;saveState();updateUI();
-        document.getElementById('jackpotAmount').textContent=`+${formatMoney(amt)} ₽ и ${c.brand} ${c.name}`;
-        document.getElementById('jackpotOv').classList.add('active');
-        burst('legend');return true;
-    }
-    return false;
-}
-function closeJackpot(){document.getElementById('jackpotOv').classList.remove('active');}
-function svgFor(car){
-    const c=Object.values(CONFIG.cars).flat().find(x=>x.brand===car.brand&&x.name===car.name);
-    const data=c||car;const key=`${data.brand}_${data.name}`;
-    const fb=SVG_CARS[key]||data.svg||SVG_CARS['LADA_Granta'];
-    if(data.img&&data.img.length>0){
-        window._svgCache=window._svgCache||{};
-        window._svgCache[key]=fb;
-        return `<img src="${data.img}" data-fb="${key}" alt="${data.brand} ${data.name}" style="width:100%;height:100%;object-fit:contain;display:block;" onerror="var f=window._svgCache&&window._svgCache[this.dataset.fb];if(f)this.outerHTML=f;else this.style.display='none';">`;
-    }
-    return fb;
-}
-function burst(r){
-    const pal={legend:['#fbbf24','#f59e0b','#fde68a','#fff'],mythic:['#ff0080','#8b5cf6','#06b6d4','#fff'],epic:['#a855f7','#c084fc','#f472b6','#fff'],rare:['#10b981','#34d399','#fff']};
-    const cols=pal[r]||pal.rare;
-    const box=document.createElement('div');box.className='confetti';
-    for(let i=0;i<30;i++){const c=document.createElement('i');c.style.left=Math.random()*100+'%';c.style.background=cols[Math.floor(Math.random()*cols.length)];c.style.animationDuration=(1.6+Math.random()*1.6)+'s';c.style.animationDelay=(Math.random()*.4)+'s';box.appendChild(c);}
-    document.body.appendChild(box);setTimeout(()=>box.remove(),3800);
-}
-const numCache={};
-function setNum(id,v){const el=document.getElementById(id);if(!el)return;const from=(numCache[id]===undefined)?v:numCache[id];numCache[id+'_t']=v;if(from===v){numCache[id]=v;el.textContent=formatMoney(v);return;}const t0=performance.now(),dur=450;const step=t=>{if(numCache[id+'_t']!==v)return;const k=Math.min(1,(t-t0)/dur);numCache[id]=Math.round(from+(v-from)*(1-Math.pow(1-k,3)));el.textContent=formatMoney(numCache[id]);if(k<1)requestAnimationFrame(step);else{numCache[id]=v;el.textContent=formatMoney(v);}};requestAnimationFrame(step);}
-function updateUI(){
-    setNum('uiRub',state.balanceRub);setNum('uiTok',state.balanceToken);
-    const mg=document.getElementById('menuGarage');if(mg)mg.textContent=`${state.garageCars.length} | ${state.garagePlates.length}`;
-    checkStory();updateAidBanner();renderQuests();updateVibe();
-    if(document.getElementById('v-profile').classList.contains('active'))renderProfile();
-    const mb=document.getElementById('menuBattle');
-    if(mb){const t=getTier(state.mmr||0);const ready=(state.mmrSession||0)>=MMR_TARGET;mb.textContent=`MMR: ${state.mmr||0} · ${t.name}`+(ready?' 🎁':'');}
-}
-function showModal(t,x,i='🎉'){document.getElementById('mTitle').textContent=t;document.getElementById('mText').innerHTML=x;document.getElementById('mIcon').textContent=i;document.getElementById('modal').classList.add('active');}
-function closeModal(){document.getElementById('modal').classList.remove('active');}
-function showRules(){document.getElementById('rulesBtn').textContent=state.rulesSeen?'Понятно':'Играть';document.getElementById('rulesOv').classList.add('active');}
-function closeRules(){document.getElementById('rulesOv').classList.remove('active');if(!state.rulesSeen){state.rulesSeen=true;saveState();}}
-function checkChest(){
-    const today=new Date().setHours(0,0,0,0);
-    if(state.lastChest===today)return;
-    const d=document.getElementById('chestDay');if(d)d.textContent=`День ${Math.min((state.streak||1),7)}`;
-    document.getElementById('chestOv').classList.add('active');
-}
-function openChest(){
-    const today=new Date().setHours(0,0,0,0);
-    if(state.lastChest===today){showModal('Уже открыт','Приходи завтра','📅');document.getElementById('chestOv').classList.remove('active');return;}
-    state.lastChest=today;
-    const day=Math.min((state.streak||1),7);
-    const rw=[{r:2000000,t:500},{r:4000000,t:1000},{r:6000000,t:1500},{r:8000000,t:2000},{r:12000000,t:3000},{r:16000000,t:4000},{r:25000000,t:6000}];
-    const r=rw[day-1];addRubles(r.r);addTokens(r.t);saveState();
-    const ch=document.getElementById('chest');if(ch)ch.classList.add('opening');playChing();
-    setTimeout(()=>{document.getElementById('chestOv').classList.remove('active');if(ch)ch.classList.remove('opening');showModal('🎁 Сундук',`+${formatMoney(r.r)} ₽<br>+${r.t} 💎`,'🎁');},900);
-}
-const AID_AMT=500000,AID_HR=3600000,AID_MAX=12;
-function fmtTime(ms){const t=Math.max(0,Math.ceil(ms/1000)),h=Math.floor(t/3600),m=Math.floor((t%3600)/60),s=t%60;const p=n=>String(n).padStart(2,'0');return(h?h+':':'')+p(m)+':'+p(s);}
-function updateAidBanner(){const el=document.getElementById('aidBanner');if(!el)return;if(state.balanceRub>=CONFIG.costCar){if(state.aidReadyAt){state.aidReadyAt=0;saveState();}el.style.display='none';return;}if(!state.aidReadyAt){state.aidReadyAt=Date.now()+AID_HR;saveState();}el.innerHTML=`⚠️ Мало денег! Каждый час +${formatMoney(AID_AMT)} ₽. Через <b>${fmtTime(state.aidReadyAt-Date.now())}</b>`;el.style.display='block';}
-function aidTick(){if(state.balanceRub<CONFIG.costCar&&state.aidReadyAt&&Date.now()>=state.aidReadyAt){const n=Math.min(AID_MAX,1+Math.floor((Date.now()-state.aidReadyAt)/AID_HR));const tot=n*AID_AMT;state.balanceRub+=tot;state.aidReadyAt=0;saveState();updateUI();showModal('Помощь',`+${formatMoney(tot)} ₽`,'🆘');return;}updateAidBanner();}
-function exportSave(){const code=btoa(unescape(encodeURIComponent(JSON.stringify(state))));const d=()=>showModal('Скопировано','Сохрани код','💾');if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(code).then(d,()=>prompt('Код:',code));else prompt('Код:',code);}
-function importSave(){const c=prompt('Вставь код:');if(!c)return;try{const p=JSON.parse(decodeURIComponent(escape(atob(c.trim()))));if(typeof p.balanceRub!=='number')throw 'bad';if(!confirm('Заменить прогресс?'))return;localStorage.setItem(STORAGE_KEY,JSON.stringify(p));location.reload();}catch(e){showModal('Ошибка','Код не подошёл','❌');}}
-function resetGame(){if(confirm('Сбросить прогресс?')){localStorage.removeItem(STORAGE_KEY);location.reload();}}
-function checkDaily(){const now=new Date().setHours(0,0,0,0);if(state.lastDaily!==now){state.lastDaily=now;addRubles(1000000);addTokens(1000);checkStreak();}}
-function updateVibe(){const pct=Math.min(100,state.vibe*10);const f=document.getElementById('vibeFill'),t=document.getElementById('vibeText');if(f)f.style.width=pct+'%';if(t)t.textContent=pct+'%';}
-function renderProfile(){
-    document.getElementById('profileRank').textContent=document.getElementById('menuRank').textContent;
-    document.getElementById('profileEarned').textContent=formatMoney(state.totalEarned);
-    document.getElementById('profRub').textContent=formatMoney(state.balanceRub)+' ₽';
-    document.getElementById('profTok').textContent=formatMoney(state.balanceToken)+' 💎';
-    document.getElementById('profCars').textContent=state.garageCars.length;
-    document.getElementById('profPlates').textContent=state.garagePlates.length;
-    document.getElementById('profWins').textContent=state.stats.battleWins||0;
-    document.getElementById('profPrestige').textContent=`${state.prestigeLevel} (Шанс +${state.prestigeLevel*2}%)`;
-    const mmrEl=document.getElementById('profMMR');if(mmrEl)mmrEl.textContent=state.mmr||0;
-    const titleEl=document.getElementById('profTitle');if(titleEl)titleEl.textContent=state.mmrTitle||getTier(state.mmr||0).name;
-    checkStory();renderStreak();
-}
-
-/* МАШИНЫ */
-function rollCar(boosted){
-    if(state.isSpinningCar)return;
-    const cost=boosted?CONFIG.costCarB:CONFIG.costCar;
-    if(state.balanceRub<cost)return showModal('Мало рублей','Каждый час +500 000 ₽','❌');
-    if(state.currentCar){
-        if(state.garageCars.length<CONFIG.garageLimit)state.garageCars.push(state.currentCar);
-        else{state.balanceRub+=state.currentCar.price;state.stats.earned+=state.currentCar.price;state.totalEarned+=state.currentCar.price;}
-        state.currentCar=null;
-    }
-    state.balanceRub-=cost;state.stats.spent+=cost;trackQuest('spin',1);
-    if (boosted) addSeasonPoints(2); else addSeasonPoints(1);
-    let vf=false;if(state.vibe>=10){vf=true;state.vibe=0;}else state.vibe++;
-    updateVibe();updateCombo();
-    state.isSpinningCar=true;updateUI();saveState();
-    document.getElementById('actCarStart').style.display='none';
-    document.getElementById('actCarRes').style.display='none';
-    document.getElementById('carPrice').classList.remove('show');
-    document.getElementById('genCarBox').classList.add('spinning');
-    document.getElementById('carBadge').style.display='none';
-    document.getElementById('recBanner').style.display='none';
-    document.getElementById('rollProg').classList.add('on');
-    const result=genCar(boosted,vf);
-    let ticks=0;
-    const timer=setInterval(()=>{
-        const all=Object.values(CONFIG.cars).flat();
-        const tmp=all[Math.floor(Math.random()*all.length)];
-        setCarImage(tmp);
-        document.getElementById('carBrand').textContent=tmp.brand;
-        document.getElementById('carName').textContent=tmp.name;
-        playTone(400+ticks*12,'square',.04,.02);
-        if(++ticks>25){clearInterval(timer);document.getElementById('rollProg').classList.remove('on');finishCarGen(result);}
-    },30);
-}
-function genCar(boosted,forceHigh=false){
-    let rnd=Math.random(),rarity='common',ec=0.04,lc=0.008,mc=0.0005,rc=0.18;
-    const pity=(state.pityLegend||0)>=PITY;
-    if(boosted){ec=0.15;lc=0.03;mc=0.002;rc=0.35;}
-    const pb=state.prestigeLevel*0.02;ec+=pb;lc+=pb;
-    if(rnd<mc)rarity='mythic';
-    else if(rnd<mc+lc)rarity='legend';
-    else if(rnd<mc+lc+ec)rarity='epic';
-    else if(rnd<mc+lc+ec+rc)rarity='rare';
-    if(pity&&rarity!=='mythic')rarity='legend';
-    if(forceHigh&&(rarity==='common'||rarity==='rare'))rarity=Math.random()<.15?'legend':'epic';
-    const pool=CONFIG.cars[rarity];let sel,tries=0;
-    do{sel=pool[Math.floor(Math.random()*pool.length)];tries++;}while(state.recentCars.includes(sel.name)&&tries<15);
-    state.recentCars.push(sel.name);if(state.recentCars.length>3)state.recentCars.shift();
-    const car={...sel,rarity};
-    const um=1+state.upgradeLevel*.10,pm=1+state.prestigeLevel*.25;
-    car.price=Math.floor(car.price*um*pm);
-    if(state.trendBrand&&car.brand===state.trendBrand)car.price=Math.floor(car.price*2);
-    if(rarity==='mythic'||rarity==='legend')state.pityLegend=0;
-    else state.pityLegend=(state.pityLegend||0)+1;
-    return car;
-}
-function finishCarGen(car){
-    state.isSpinningCar=false;state.stats.spins++;
-    if(car.price>state.stats.bestPrice)state.stats.bestPrice=car.price;
-    document.getElementById('genCarBox').classList.remove('spinning');
-    progressContract(car); // ВЫЗОВ КОНТРАКТА
-    
-    const auto=(state.autoCom&&car.rarity==='common')||(state.autoRar&&(car.rarity==='common'||car.rarity==='rare'));
-    if(auto){
-        state.balanceRub+=car.price;state.stats.earned+=car.price;state.totalEarned+=car.price;
-        trackQuest('earn',car.price);saveState();
-        setCarImage(car);document.getElementById('carBrand').textContent=car.brand;document.getElementById('carName').textContent=car.name;
-        document.getElementById('carBadge').textContent=car.rarity;document.getElementById('carBadge').className='badge bg-'+car.rarity.slice(0,3);
-        document.getElementById('carBadge').style.display='inline-block';
-        document.getElementById('genCarBox').setAttribute('data-rarity',car.rarity);
-        document.getElementById('carPrice').innerHTML=`<span style="color:var(--rub)">${formatMoney(car.price)} ₽</span>`;
-        document.getElementById('carPrice').classList.add('show');
-        document.getElementById('actCarStart').style.display='flex';
-        document.getElementById('actCarRes').style.display='none';
-        playChing();showToast(`💰 ${car.brand} ${car.name}: +${formatMoney(car.price)} ₽`);updateUI();return;
-    }
-    state.currentCar=car;saveState();showCarResult(car);
-    playTone(car.rarity==='mythic'||car.rarity==='legend'?800:500,'sine',.2);
-    playReveal(car);updateUI();
-    if(car.rarity==='mythic'){document.body.insertAdjacentHTML('beforeend','<div class="flash"></div>');setTimeout(()=>document.querySelector('.flash')?.remove(),500);burst('mythic');}
-    try{checkJackpot();}catch(e){}
-}
-function playReveal(car){
-    const pEl=document.getElementById('carPrice');const price=car.price;
-    if(price<2000000){pEl.innerHTML=`<span style="color:var(--rub)">${formatMoney(price)} ₽</span>`;checkRecord(car);return;}
-    let tier=price>=100000000?5:price>=20000000?4:price>=8000000?3:2;
-    if(tier>=5){document.body.insertAdjacentHTML('beforeend','<div class="flash"></div>');setTimeout(()=>document.querySelector('.flash')?.remove(),500);}
-    if(tier>=4)burst('legend');
-    const dur=tier>=5?900:tier>=4?750:600;const t0=performance.now();
-    const tick=t=>{const k=Math.min(1,(t-t0)/dur);const ease=1-Math.pow(1-k,2.2);pEl.innerHTML=`<span>${formatMoney(Math.round(price*ease))} ₽</span>`;if(k<1)requestAnimationFrame(tick);else{pEl.innerHTML=`<span>${formatMoney(price)} ₽</span>`;checkRecord(car);}};
-    requestAnimationFrame(tick);
-}
-function checkRecord(car){if(car.price>state.recordPrice&&car.price>=2000000){state.recordPrice=car.price;saveState();const b=document.getElementById('recBanner');if(b){b.style.display='block';setTimeout(()=>b.style.display='none',2500);}}}
-function setCarImage(car){document.getElementById('carSvgBox').innerHTML=svgFor(car);}
-function showCarResult(car){
-    setCarImage(car);
-    document.getElementById('carBrand').textContent=car.brand;
-    document.getElementById('carName').textContent=car.name;
-    const b=document.getElementById('carBadge');b.textContent=car.rarity;b.className='badge bg-'+car.rarity.slice(0,3);b.style.display='inline-block';
-    document.getElementById('genCarBox').setAttribute('data-rarity',car.rarity);
-    document.getElementById('carPrice').innerHTML=`<span style="color:var(--rub)">${formatMoney(car.price)} ₽</span>`;
-    document.getElementById('carPrice').classList.add('show');
-    document.getElementById('btnSellCar').textContent=`Продать за ${formatMoney(car.price)} ₽`;
-    document.getElementById('actCarStart').style.display='none';
-    document.getElementById('actCarRes').style.display='flex';
-}
-function resetCarUI(){
-    document.getElementById('actCarRes').style.display='none';
-    document.getElementById('actCarStart').style.display='flex';
-    document.getElementById('carPrice').classList.remove('show');
-    document.getElementById('recBanner').style.display='none';
-    const def=CONFIG.cars.common[0];
-    setCarImage(def);
-    document.getElementById('carBrand').textContent=def.brand;
-    document.getElementById('carName').textContent=def.name;
-    document.getElementById('carBadge').style.display='none';
-    document.getElementById('genCarBox').setAttribute('data-rarity','common');
-}
-function rollCarX10(){
-    if(state.isSpinningCar)return;
-    const cost=CONFIG.costCarX10;
-    if(state.balanceRub<cost)return showModal('Мало рублей',`${formatMoney(cost)} ₽`,'❌');
-    if(state.currentCar){
-        if(state.garageCars.length<CONFIG.garageLimit)state.garageCars.push(state.currentCar);
-        else{state.balanceRub+=state.currentCar.price;state.stats.earned+=state.currentCar.price;state.totalEarned+=state.currentCar.price;}
-        state.currentCar=null;
-    }
-    state.balanceRub-=cost;state.stats.spent+=cost;trackQuest('spin',10);updateCombo();
-    addSeasonPoints(10);
-    const vf=state.vibe>=10;state.vibe=0;updateVibe();
-    const res=[];for(let i=0;i<10;i++)res.push(genCar(false,vf&&i===0));
-    res.forEach(c => progressContract(c));
-    const isAuto=c=>(state.autoCom&&c.rarity==='common')||(state.autoRar&&(c.rarity==='common'||c.rarity==='rare'));
-    const sell=res.filter(isAuto);const keep=res.filter(c=>!isAuto(c));
-    keep.sort((a,b)=>b.price-a.price);
-    const best=keep[0]||null;const extra=keep.slice(1);
-    let sum=0;[...sell,...extra].forEach(c=>sum+=c.price);
-    state.balanceRub+=sum;state.stats.earned+=sum;state.totalEarned+=sum;trackQuest('earn',sum);
-    if(best){
-        state.currentCar=best;saveState();showCarResult(best);playReveal(best);playChing();
-        const totalSold=sell.length+extra.length;
-        let msg=`Лучшая: ${best.brand} ${best.name} (${formatMoney(best.price)} ₽)`;
-        if(totalSold>0)msg+=` | +${formatMoney(sum)} ₽`;
-        showToast(msg);
-    }else{
-        state.currentCar=null;saveState();resetCarUI();playChing();
-        showToast(`Все 10 проданы: +${formatMoney(sum)} ₽`);
-    }
-    updateUI();
-}
-
-/* НОМЕРА */
-function rollPlate(boosted){
-    if(state.isSpinningPlate)return;
-    const cost=boosted?CONFIG.costPlateB:CONFIG.costPlate;
-    if(state.balanceToken<cost)return showModal('Мало жетонов','Не хватает','❌');
-    if(state.currentPlate){
-        if(state.garagePlates.length<CONFIG.garageLimit)state.garagePlates.push(state.currentPlate);
-        else state.balanceToken+=state.currentPlate.price;
-        state.currentPlate=null;
-    }
-    state.balanceToken-=cost;state.isSpinningPlate=true;trackQuest('spin',1);updateCombo();
-    updateUI();saveState();
-    document.getElementById('actPlateStart').style.display='none';
-    document.getElementById('actPlateRes').style.display='none';
-    document.getElementById('platePrice').classList.remove('show');
-    document.getElementById('genPlateBox').classList.add('spinning');
-    document.getElementById('genPlateBox').setAttribute('data-rarity','common');
-    const result=genPlate(boosted);let ticks=0;
-    const timer=setInterval(()=>{
-        const t1=CONFIG.letters[Math.floor(Math.random()*CONFIG.letters.length)];
-        const t2=CONFIG.letters[Math.floor(Math.random()*CONFIG.letters.length)]+CONFIG.letters[Math.floor(Math.random()*CONFIG.letters.length)];
-        const tn=Math.floor(Math.random()*999).toString().padStart(3,'0');
-        const tr=CONFIG.regions[Math.floor(Math.random()*CONFIG.regions.length)].code;
-        document.getElementById('plateText').textContent=`${t1} ${tn} ${t2}`;
-        document.getElementById('plateRegion').textContent=tr;
-        playTone(400+ticks*12,'square',.04,.02);
-        if(++ticks>15){clearInterval(timer);finishPlateGen(result);}
-    },20);
-}
-function rollPlateX10(){
-    if(state.isSpinningPlate)return;
-    const cost=CONFIG.costPlateX10;
-    if(state.balanceToken<cost)return showModal('Мало жетонов',`${cost} 💎`,'❌');
-    if(state.currentPlate){
-        if(state.garagePlates.length<CONFIG.garageLimit)state.garagePlates.push(state.currentPlate);
-        else state.balanceToken+=state.currentPlate.price;
-        state.currentPlate=null;
-    }
-    state.balanceToken-=cost;state.isSpinningPlate=true;trackQuest('spin',10);updateCombo();
-    updateUI();saveState();
-    document.getElementById('actPlateStart').style.display='none';
-    document.getElementById('actPlateRes').style.display='none';
-    document.getElementById('platePrice').classList.remove('show');
-    document.getElementById('genPlateBox').classList.add('spinning');
-    const res=[];for(let i=0;i<10;i++)res.push(genPlate(false));
-    res.sort((a,b)=>b.price-a.price);
-    const best=res[0];const rest=res.slice(1);
-    let sum=0;rest.forEach(p=>sum+=p.price);
-    state.balanceToken+=sum;saveState();
-    state.currentPlate=best;state.isSpinningPlate=false;
-    document.getElementById('genPlateBox').classList.remove('spinning');
-    showPlateResult(best);playChing();
-    showToast(`Лучший: ${best.l1} ${best.num} ${best.l2} (${formatMoney(best.price)} 💎) | +${formatMoney(sum)} 💎`);
-    updateUI();
-}
-function genPlate(boosted){
-    const tw=CONFIG.regions.reduce((s,r)=>s+r.w,0);let r=Math.random()*tw,region=CONFIG.regions[0];
-    for(const reg of CONFIG.regions){if(r<reg.w){region=reg;break;}r-=reg.w;}
-    let base=100,mult=region.m,rarity='common';
-    const isSL=Math.random()<(boosted?.15:.03);const isSN=Math.random()<(boosted?.20:.05);
-    let l1,l2,num;
-    if(isSL){const c=CONFIG.specLetters[Math.floor(Math.random()*CONFIG.specLetters.length)];l1=c[0];l2=c.slice(1);base+=1500;rarity='epic';mult*=3;}
-    else{l1=CONFIG.letters[Math.floor(Math.random()*CONFIG.letters.length)];l2=CONFIG.letters[Math.floor(Math.random()*CONFIG.letters.length)]+CONFIG.letters[Math.floor(Math.random()*CONFIG.letters.length)];if(l1===l2[0]&&l2[0]===l2[1]){base+=500;rarity='rare';}}
-    if(isSN){num=CONFIG.specNumbers[Math.floor(Math.random()*CONFIG.specNumbers.length)];base+=1000;if(rarity!=='epic')rarity='rare';}
-    else{const rn=Math.floor(Math.random()*999)+1;num=rn.toString().padStart(3,'0');if(rn%100===0){base+=300;rarity='rare';}else if(rn%10===0)base+=100;}
-    if(rarity==='epic'&&isSN){rarity='legend';base+=5000;mult*=5;}
-    if(boosted&&rarity==='common'){rarity='rare';base+=200;}
-    const um=1+state.upgradeLevel*.10,pm=1+state.prestigeLevel*.25;
-    return{l1,l2,num,region:region.code,price:Math.floor(base*mult*um*pm),rarity};
-}
-function finishPlateGen(p){
-    state.currentPlate=p;state.isSpinningPlate=false;state.stats.spins++;saveState();
-    document.getElementById('genPlateBox').classList.remove('spinning');
-    showPlateResult(p);
-    if(p.rarity==='epic'||p.rarity==='legend')burst(p.rarity);
-    playTone(500,'sine',.1);updateUI();
-}
-function showPlateResult(p){
-    document.getElementById('plateText').textContent=`${p.l1} ${p.num} ${p.l2}`;
-    document.getElementById('plateRegion').textContent=p.region;
-    document.getElementById('standalonePlate').className=`plate r-${p.rarity.slice(0,3)}`;
-    document.getElementById('genPlateBox').setAttribute('data-rarity',p.rarity);
-    document.getElementById('platePrice').innerHTML=`<span style="color:var(--token)">${formatMoney(p.price)} 💎</span>`;
-    document.getElementById('platePrice').classList.add('show');
-    document.getElementById('btnSellPlate').textContent=`Продать за ${formatMoney(p.price)} 💎`;
-    document.getElementById('actPlateStart').style.display='none';
-    document.getElementById('actPlateRes').style.display='flex';
-}
-function resetPlateUI(){
-    document.getElementById('actPlateRes').style.display='none';
-    document.getElementById('actPlateStart').style.display='flex';
-    document.getElementById('platePrice').classList.remove('show');
-    document.getElementById('standalonePlate').className='plate r-com';
-    document.getElementById('plateText').textContent='А 000 АА';
-    document.getElementById('plateRegion').textContent='77';
-    document.getElementById('genPlateBox').setAttribute('data-rarity','common');
-}
-function sellCurrentCar(){if(!state.currentCar)return;addRubles(state.currentCar.price);state.currentCar=null;resetCarUI();playChing();}
-function saveCurrentCar(){if(!state.currentCar)return;if(state.garageCars.length>=CONFIG.garageLimit)return showModal('Ошибка','Гараж полон','⚠️');state.garageCars.push(state.currentCar);state.currentCar=null;resetCarUI();saveState();updateUI();}
-function sellCurrentPlate(){if(!state.currentPlate)return;addTokens(state.currentPlate.price);state.currentPlate=null;resetPlateUI();playChing();}
-function saveCurrentPlate(){if(!state.currentPlate)return;if(state.garagePlates.length>=CONFIG.garageLimit)return showModal('Ошибка','Гараж полон','⚠️');state.garagePlates.push(state.currentPlate);state.currentPlate=null;resetPlateUI();saveState();updateUI();}
-
-/* ГАРАЖ */
-function switchGarageTab(t){state.activeGarageTab=t;document.getElementById('tabCarsBtn').classList.toggle('active',t==='cars');document.getElementById('tabPlatesBtn').classList.toggle('active',t==='plates');document.getElementById('btnCustomPlate').style.display=t==='plates'?'block':'none';renderGarage();}
-function renderGarage(){
-    const list=document.getElementById('garageList');list.innerHTML='';
-    const ord={mythic:5,legend:4,epic:3,rare:2,common:1};
-    let items,label;
-    if(state.activeGarageTab==='cars'){
-        items=[...state.garageCars];
-        if(state.garageSort==='rarity')items.sort((a,b)=>(ord[b.rarity]||0)-(ord[a.rarity]||0)||b.price-a.price);
-        else items.sort((a,b)=>b.price-a.price);
-        label=`Машины (${state.garageCars.length}/${CONFIG.garageLimit})`;
-    }else{
-        items=[...state.garagePlates];
-        if(state.garageSort==='rarity')items.sort((a,b)=>(ord[b.rarity]||0)-(ord[a.rarity]||0)||b.price-a.price);
-        else items.sort((a,b)=>b.price-a.price);
-        label=`Номера (${state.garagePlates.length}/${CONFIG.garageLimit})`;
-    }
-    document.getElementById('garageCap').textContent=label;
-    const rl=document.getElementById('garageRent');if(rl)rl.textContent=`💰 Аренда: ${formatMoney(calcRentalPerHour())} ₽/час`;
-    if(items.length===0){list.innerHTML='<div class="empty">Пусто. Крутите удачу!</div>';return;}
-    items.forEach(it=>{
-        const d=document.createElement('div');d.className='li';
-        const ri=state.activeGarageTab==='cars'?state.garageCars.indexOf(it):state.garagePlates.indexOf(it);
-        if(state.activeGarageTab==='cars'){
-            d.classList.add('r-'+it.rarity);
-            d.innerHTML=`<div style="display:flex;align-items:center;min-width:0;flex:1;"><div class="li-svg">${svgFor(it)}</div><div style="min-width:0;"><div class="li-brand">${it.brand}</div><div class="li-title">${it.name}</div></div></div><div style="text-align:right;flex-shrink:0;"><div class="li-price rub">${formatMoney(it.price)} ₽</div><button class="sell-b" onclick="sellFromGarage('cars',${ri})">Продать</button></div>`;
-        }else{
-            d.innerHTML=`<div style="display:flex;align-items:center;min-width:0;flex:1;"><div style="font-size:24px;margin-right:10px;">🔢</div><div style="min-width:0;"><div class="li-title">${it.l1} ${it.num} ${it.l2}</div><div class="li-brand">${it.region} рег.</div></div></div><div style="text-align:right;flex-shrink:0;"><div class="li-price token">${formatMoney(it.price)} 💎</div><button class="sell-b" onclick="sellFromGarage('plates',${ri})">Продать</button></div>`;
-        }
-        list.appendChild(d);
-    });
-}
-function sellFromGarage(t,i){const arr=t==='cars'?state.garageCars:state.garagePlates;if(i<0||i>=arr.length)return;const it=arr[i];if(t==='cars')addRubles(it.price);else addTokens(it.price);arr.splice(i,1);saveState();renderGarage();playChing();}
-function sellAllGarage(){const arr=state.activeGarageTab==='cars'?state.garageCars:state.garagePlates;if(!arr.length)return;const tot=arr.reduce((s,p)=>s+p.price,0);if(state.activeGarageTab==='cars'){addRubles(tot);state.garageCars=[];}else{addTokens(tot);state.garagePlates=[];}saveState();renderGarage();playChing();showModal('Продано',`+${formatMoney(tot)}`,'💰');}
-function createCustomPlate(){
-    if(state.balanceToken<CONFIG.costCustom)return showModal('Мало жетонов',`${formatMoney(CONFIG.costCustom)} 💎`,'❌');
-    let input=prompt('Введи номер (например: О 777 ОО):');if(!input)return;
-    input=input.trim().toUpperCase().replace(/[^А-ЯA-Z0-9 ]/g,'');
-    const parts=input.split(/\s+/);
-    if(parts.length!==3||parts[1].length!==3||isNaN(parts[1]))return showModal('Ошибка','Формат: [Буква] [3 цифры] [2 буквы]','⚠️');
-    state.balanceToken-=CONFIG.costCustom;
-    state.garagePlates.push({l1:parts[0],l2:parts[2],num:parts[1],region:'77',rarity:'epic',price:25000});
-    saveState();updateUI();renderGarage();
-    showModal('Готово',`${parts[0]} ${parts[1]} ${parts[2]}`,'✨');
-}
-function openTradeIn(){document.getElementById('tradeInModal').classList.add('active');renderTradeIn();}
-function closeTradeIn(){document.getElementById('tradeInModal').classList.remove('active');}
-function renderTradeIn(){
-    const box=document.getElementById('tradeInList');if(!box)return;box.innerHTML='';
-    [{from:'common',to:'rare',need:5},{from:'rare',to:'epic',need:5},{from:'epic',to:'legend',need:3}].forEach(cfg=>{
-        const have=state.garageCars.filter(c=>c.rarity===cfg.from).length;
-        const can=have>=cfg.need;
-        const r=document.createElement('div');r.className='trade-r';
-        r.innerHTML=`<div class="trade-l"><div class="trade-ra bg-${cfg.from.slice(0,3)}">${cfg.from}</div><div class="trade-ar">→</div><div class="trade-ra bg-${cfg.to.slice(0,3)}">${cfg.to}</div></div><div class="trade-m"><div class="trade-c">${have} / ${cfg.need}</div><div class="trade-d">${cfg.need} = 1</div></div><button class="trade-b ${can?'':'disabled'}" ${can?'':'disabled'} onclick="doTradeIn('${cfg.from}','${cfg.to}',${cfg.need})">Сдать</button>`;
-        box.appendChild(r);
-    });
-}
-function doTradeIn(from,to,need){
-    const pool=state.garageCars.filter(c=>c.rarity===from);
-    if(pool.length<need)return;
-    pool.slice().sort(()=>Math.random()-.5).slice(0,need).forEach(c=>{const i=state.garageCars.indexOf(c);if(i>=0)state.garageCars.splice(i,1);});
-    const p2=CONFIG.cars[to];const sel=p2[Math.floor(Math.random()*p2.length)];
-    const mult=(1+state.upgradeLevel*.1)*(1+state.prestigeLevel*.25);
-    let price=Math.floor(sel.price*mult);
-    if(state.trendBrand&&sel.brand===state.trendBrand)price*=2;
-    state.garageCars.push({...sel,rarity:to,price});
-    saveState();renderTradeIn();renderGarage();updateUI();burst(to);playChing();
-}
-function openCase(){
-    if(state.balanceRub<CONFIG.costCase)return showModal('Ошибка','Нужно 20 млн ₽','❌');
-    state.balanceRub-=CONFIG.costCase;state.stats.spent+=CONFIG.costCase;
-    const r=Math.random()<.2?'legend':'epic';
-    const pool=CONFIG.cars[r];const car={...pool[Math.floor(Math.random()*pool.length)],rarity:r};
-    const m=(1+state.upgradeLevel*.1)*(1+state.prestigeLevel*.25);car.price=Math.floor(car.price*m);
-    const cb=CONFIG.specLetters[Math.floor(Math.random()*CONFIG.specLetters.length)];
-    const n=CONFIG.specNumbers[Math.floor(Math.random()*CONFIG.specNumbers.length)];
-    const pl={l1:cb[0],l2:cb.slice(1),num:n,region:'77',rarity:'epic',price:15000};
-    pl.price=Math.floor(pl.price*m);
-    state.garageCars.push(car);state.garagePlates.push(pl);saveState();updateUI();
-    showModal('Аукцион',`🚗 ${car.brand} ${car.name}<br>🔢 ${pl.l1} ${pl.num} ${pl.l2}`,'💎');
-}
-function renderCatalog(){
-    const box=document.getElementById('catalogList');box.innerHTML='';
-    const names={common:'Common',rare:'Rare',epic:'Epic',legend:'Legend',mythic:'Mythic'};
-    Object.entries(CONFIG.cars).forEach(([rar,arr])=>{
-        const h=document.createElement('div');
-        h.className='bg-'+rar.slice(0,3);
-        h.style.cssText='display:inline-block;font-size:12px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:999px;margin:14px 0 10px;';
-        h.textContent=`${names[rar]} · ${arr.length}`;
-        box.appendChild(h);
-        const g=document.createElement('div');g.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:10px;';
-        arr.forEach(car=>{
-            const d=document.createElement('div');
-            d.style.cssText='background:linear-gradient(160deg,rgba(255,255,255,.065),rgba(255,255,255,.015));border:1px solid var(--border);border-radius:18px;padding:10px;';
-            d.innerHTML=`<div style="height:78px;border-radius:12px;background:linear-gradient(180deg,#131830,#0a0c14);display:flex;align-items:center;justify-content:center;margin-bottom:6px;padding:4px;">${svgFor(car)}</div><div class="li-brand">${car.brand}</div><div style="font-size:14px;font-weight:800;">${car.name}</div><div style="font-size:12px;font-weight:800;color:var(--rub);">${formatMoney(car.price)} ₽</div>`;
-            g.appendChild(d);
-        });
-        box.appendChild(g);
-    });
-}
-function renderUpgrades(){
-    const c=10000000+state.upgradeLevel*15000000;
-    document.getElementById('upgLevelDisp').textContent=`Ур. ${state.upgradeLevel}`;
-    const b=document.getElementById('btnBuyUpg');
-    b.textContent=`Прокачать за ${formatMoney(c)} ₽`;b.disabled=state.balanceRub<c;
-}
-function buyUpgrade(){const c=10000000+state.upgradeLevel*15000000;if(state.balanceRub>=c){state.balanceRub-=c;state.stats.spent+=c;state.upgradeLevel++;saveState();renderUpgrades();updateUI();playTone(1000,'sine',.3);}}
-function doPrestige(){
-    const req=getPrestigeReq();if(state.totalEarned<req)return;
-    if(!confirm('Вы уверены?'))return;
-    state.prestigeLevel++;state.balanceRub=CONFIG.startRub;state.balanceToken=CONFIG.startTok;
-    state.garageCars=[];state.garagePlates=[];state.upgradeLevel=0;
-    state.currentCar=null;state.currentPlate=null;state.totalEarned=0;
-    state.carUpgIdx=-1;state.plateUpgIdx=-1;
-    saveState();updateUI();renderProfile();resetCarUI();resetPlateUI();
-    showModal('Перерождение',`Ур. ${state.prestigeLevel}<br>Следующий: ${formatMoney(getPrestigeReq())} ₽`,'✨');
-    playTone(1200,'sine',.6);
-}
-function switchUpgTab(t){state.upgTab=t;document.getElementById('upgTabCars').classList.toggle('active',t==='cars');document.getElementById('upgTabPlates').classList.toggle('active',t==='plates');document.getElementById('upgCarsPanel').style.display=t==='cars'?'flex':'none';document.getElementById('upgPlatesPanel').style.display=t==='plates'?'flex':'none';renderUpgrader();}
-function renderUpgrader(){if(state.upgTab==='cars')renderCarUpg();else renderPlateUpg();}
-function renderCarUpg(){
-    const list=document.getElementById('upgCarList');
-    if(!state.garageCars.length){list.innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:10px;width:100%;">Гараж пуст</div>';document.getElementById('btnDoCarUpg').disabled=true;return;}
-    if(state.carUpgIdx===-1||state.carUpgIdx>=state.garageCars.length)state.carUpgIdx=0;
-    list.innerHTML='';
-    state.garageCars.forEach((c,i)=>{
-        const d=document.createElement('div');
-        d.className='upg-item'+(i===state.carUpgIdx?' selected':'');
-        d.onclick=()=>{state.carUpgIdx=i;renderCarUpg();};
-        d.innerHTML=`${svgFor(c)}<div class="name">${c.name}</div><div class="price-mini">${formatMoney(c.price)} ₽</div>`;
-        list.appendChild(d);
-    });
-    const st=state.garageCars[state.carUpgIdx];
-    document.getElementById('upgCarStakeSvg').innerHTML=svgFor(st);
-    document.getElementById('upgCarStakePrice').textContent=formatMoney(st.price)+' ₽';
-    const gd=state.carUpgChance*3.6,hg=gd/2;
-    const wheel=document.getElementById('carWheelSpin');
-    wheel.style.background=`conic-gradient(from ${-hg}deg, #10b981 0deg ${gd}deg, #ef4444 ${gd}deg 360deg)`;
-    document.getElementById('carWheelChance').textContent=state.carUpgChance+'%';
-    document.querySelectorAll('#upgCarsPanel .upg-ch-b').forEach(b=>b.classList.toggle('active',parseInt(b.textContent)===state.carUpgChance));
-    const mult=100/state.carUpgChance;const target=st.price*mult;
-    const all=Object.values(CONFIG.cars).flat();
-    let best=all[0],bd=Infinity;
-    all.forEach(c=>{const cp=c.price*(1+state.upgradeLevel*.1)*(1+state.prestigeLevel*.25);const d=Math.abs(cp-target);if(d<bd){bd=d;best=c;}});
-    document.getElementById('upgCarPrizeSvg').innerHTML=svgFor(best);
-    document.getElementById('upgCarPrizePrice').textContent=formatMoney(best.price)+' ₽';
-    document.getElementById('btnDoCarUpg').disabled=state.carUpgRolling;
-}
-function setCarChance(c){if(state.carUpgRolling)return;state.carUpgChance=c;saveState();carPointerRot=0;document.getElementById('carPointerWrap').style.transition='none';document.getElementById('carPointerWrap').style.transform='rotate(0deg)';renderCarUpg();}
-function doCarUpgrade(){
-    if(state.carUpgRolling||state.carUpgIdx===-1||!state.garageCars.length)return;
-    state.carUpgRolling=true;const btn=document.getElementById('btnDoCarUpg');btn.disabled=true;btn.textContent='Крутим...';
-    const ch=state.carUpgChance;const win=Math.random()<ch/100;
-    const gd=ch*3.6,hg=gd/2;
-    let R;
-    if(win){R=Math.random()<.5?Math.random()*hg*.9:360-hg+Math.random()*hg*.9;}
-    else R=hg+Math.random()*(360-2*hg)*.9;
-    const bm=((carPointerRot%360)+360)%360;
-    const dm=((R-bm)%360+360)%360;
-    const spins=6+Math.floor(Math.random()*3);
-    const final=carPointerRot+dm+spins*360;
-    const wrap=document.getElementById('carPointerWrap');
-    wrap.style.transition='transform 5s cubic-bezier(.15,.7,.2,1)';
-    wrap.style.transform=`rotate(${final}deg)`;carPointerRot=final;
-    playSpinTicks(4500);
-    setTimeout(()=>{
-        state.carUpgRolling=false;
-        const st=state.garageCars[state.carUpgIdx];
-        if(win){
-            const mult=100/ch;const target=st.price*mult;
-            const all=Object.values(CONFIG.cars).flat();
-            let best=all[0],bd=Infinity;
-            all.forEach(c=>{const cp=c.price*(1+state.upgradeLevel*.1)*(1+state.prestigeLevel*.25);const d=Math.abs(cp-target);if(d<bd){bd=d;best=c;}});
-            let pr='common';
-            if(best.price>=30000000)pr='legend';else if(best.price>=7000000)pr='epic';else if(best.price>=3200000)pr='rare';
-            const nc={...best,rarity:pr};
-            nc.price=Math.floor(best.price*(1+state.upgradeLevel*.1)*(1+state.prestigeLevel*.25));
-            state.garageCars.splice(state.carUpgIdx,1);state.garageCars.push(nc);state.carUpgIdx=state.garageCars.length-1;
-            state.stats.upgradeWins=(state.stats.upgradeWins||0)+1;
-            saveState();renderCarUpg();playChing();burst('legend');
-            showModal('🎉 АПГРЕЙД',`${nc.brand} ${nc.name}<br>${formatMoney(nc.price)} ₽`,'🏆');
-        }else{
-            const cb=Math.floor(st.price*.10);
-            state.balanceRub+=cb;state.totalEarned+=cb;state.stats.earned+=cb;
-            state.garageCars.splice(state.carUpgIdx,1);state.carUpgIdx=state.garageCars.length>0?0:-1;
-            saveState();renderCarUpg();playTone(150,'sawtooth',.5,.1);
-            showModal('💥 ПРОИГРЫШ',`Машина сгорела<br>💰 Кэшбэк 10%: +${formatMoney(cb)} ₽`,'💀');
-        }
-        btn.textContent='Апгрейд машины';btn.disabled=!state.garageCars.length;
-        updateUI();checkAch();
-    },5100);
-}
-function renderPlateUpg(){
-    const list=document.getElementById('upgPlateList');
-    if(!state.garagePlates.length){list.innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:10px;width:100%;">Гараж пуст</div>';document.getElementById('btnDoPlateUpg').disabled=true;return;}
-    if(state.plateUpgIdx===-1||state.plateUpgIdx>=state.garagePlates.length)state.plateUpgIdx=0;
-    list.innerHTML='';
-    state.garagePlates.forEach((p,i)=>{
-        const d=document.createElement('div');
-        d.className='upg-item'+(i===state.plateUpgIdx?' selected':'');
-        d.onclick=()=>{state.plateUpgIdx=i;renderPlateUpg();};
-        d.innerHTML=`<div style="font-size:9px;font-weight:800;padding:2px 4px;background:#fbfbfb;color:#000;border-radius:3px;border:1px solid #111;margin-bottom:4px;">${p.l1} ${p.num} ${p.l2}</div><div class="name">${p.region} рег.</div><div class="price-mini">${formatMoney(p.price)} 💎</div>`;
-        list.appendChild(d);
-    });
-    const st=state.garagePlates[state.plateUpgIdx];
-    document.getElementById('upgPlateStakeDisplay').innerHTML=plateSmall(st);
-    document.getElementById('upgPlateStakePrice').textContent=formatMoney(st.price)+' 💎';
-    const gd=state.plateUpgChance*3.6,hg=gd/2;
-    const wheel=document.getElementById('plateWheelSpin');
-    wheel.style.background=`conic-gradient(from ${-hg}deg, #10b981 0deg ${gd}deg, #ef4444 ${gd}deg 360deg)`;
-    document.getElementById('plateWheelChance').textContent=state.plateUpgChance+'%';
-    document.querySelectorAll('#upgPlatesPanel .upg-ch-b').forEach(b=>b.classList.toggle('active',parseInt(b.textContent)===state.plateUpgChance));
-    const prize=genPrizePlate(st.price*(100/state.plateUpgChance));
-    document.getElementById('upgPlatePrizeDisplay').innerHTML=plateSmall(prize);
-    document.getElementById('upgPlatePrizePrice').textContent=formatMoney(prize.price)+' 💎';
-    document.getElementById('btnDoPlateUpg').disabled=state.plateUpgRolling;
-}
-function plateSmall(p){return`<div class="plate r-${p.rarity.slice(0,3)}" style="transform:scale(.85);transform-origin:center;"><div class="plate-t" style="font-size:22px;padding:2px 8px;min-width:100px;">${p.l1} ${p.num} ${p.l2}</div><div class="plate-s" style="min-width:36px;padding:1px 4px;"><div class="plate-r" style="font-size:14px;">${p.region}</div><div class="plate-c" style="font-size:6px;">RUS</div></div></div>`;}
-function genPrizePlate(target){let b=null,bd=Infinity;for(let i=0;i<40;i++){const p=genPlate(true);const d=Math.abs(p.price-target);if(d<bd){bd=d;b=p;}}return b;}
-function setPlateChance(c){if(state.plateUpgRolling)return;state.plateUpgChance=c;saveState();platePointerRot=0;document.getElementById('platePointerWrap').style.transition='none';document.getElementById('platePointerWrap').style.transform='rotate(0deg)';renderPlateUpg();}
-function doPlateUpgrade(){
-    if(state.plateUpgRolling||state.plateUpgIdx===-1||!state.garagePlates.length)return;
-    state.plateUpgRolling=true;const btn=document.getElementById('btnDoPlateUpg');btn.disabled=true;btn.textContent='Крутим...';
-    const ch=state.plateUpgChance;const win=Math.random()<ch/100;
-    const gd=ch*3.6,hg=gd/2;
-    let R;
-    if(win){R=Math.random()<.5?Math.random()*hg*.9:360-hg+Math.random()*hg*.9;}
-    else R=hg+Math.random()*(360-2*hg)*.9;
-    const bm=((platePointerRot%360)+360)%360;
-    const dm=((R-bm)%360+360)%360;
-    const spins=6+Math.floor(Math.random()*3);
-    const final=platePointerRot+dm+spins*360;
-    const wrap=document.getElementById('platePointerWrap');
-    wrap.style.transition='transform 5s cubic-bezier(.15,.7,.2,1)';
-    wrap.style.transform=`rotate(${final}deg)`;platePointerRot=final;
-    playSpinTicks(4500);
-    setTimeout(()=>{
-        state.plateUpgRolling=false;
-        const st=state.garagePlates[state.plateUpgIdx];
-        if(win){
-            const target=st.price*(100/ch);
-            const prize=genPrizePlate(target);
-            state.garagePlates.splice(state.plateUpgIdx,1);state.garagePlates.push(prize);state.plateUpgIdx=state.garagePlates.length-1;
-            state.stats.upgradeWins=(state.stats.upgradeWins||0)+1;
-            saveState();renderPlateUpg();playChing();burst('legend');
-            showModal('🎉 АПГРЕЙД',`${prize.l1} ${prize.num} ${prize.l2}<br>${formatMoney(prize.price)} 💎`,'🏆');
-        }else{
-            const cb=Math.floor(st.price*.10);
-            state.balanceToken+=cb;
-            state.garagePlates.splice(state.plateUpgIdx,1);state.plateUpgIdx=state.garagePlates.length>0?0:-1;
-            saveState();renderPlateUpg();playTone(150,'sawtooth',.5,.1);
-            showModal('💥 ПРОИГРЫШ',`Номер сгорел<br>💎 Кэшбэк 10%: +${formatMoney(cb)} 💎`,'💀');
-        }
-        btn.textContent='Апгрейд номера';btn.disabled=!state.garagePlates.length;
-        updateUI();checkAch();
-    },5100);
-}
-
-/* БАТЛ */
-function genBattleRooms(){
-    const rooms=[];const used=new Set();
-    const myP=state.garageCars.length?state.garageCars.map(c=>c.price):[5000000];
-    const avg=myP.reduce((a,b)=>a+b,0)/myP.length;
-    for(let i=0;i<5;i++){
-        let n;do{n=BOT_NAMES[Math.floor(Math.random()*BOT_NAMES.length)]+Math.floor(Math.random()*99);}while(used.has(n));
-        used.add(n);
-        const av=BOT_AVATARS[Math.floor(Math.random()*BOT_AVATARS.length)];
-        const target=avg*(.7+Math.random()*1.3);
-        const all=Object.values(CONFIG.cars).flat();
-        let best=all[0],bd=Infinity;
-        all.forEach(c=>{const d=Math.abs(c.price-target);if(d<bd){bd=d;best=c;}});
-        const rar=best.price>=30000000?'legend':best.price>=7000000?'epic':best.price>=3200000?'rare':'common';
-        const car={...best,rarity:rar};
-        const rating=3+Math.floor(Math.random()*5);
-        rooms.push({name:n,avatar:av,car,rating});
-    }
-    return rooms;
-}
-function renderBattleLobby(){
-    const myCars=document.getElementById('battleMyCars');
-    if(!state.garageCars.length){myCars.innerHTML='<div style="color:var(--muted);font-size:12px;padding:15px;text-align:center;width:100%;">Гараж пуст</div>';}
-    else{
-        if(state.battleMyIdx===-1||state.battleMyIdx>=state.garageCars.length)state.battleMyIdx=0;
-        myCars.innerHTML='';
-        state.garageCars.forEach((c,i)=>{
-            const d=document.createElement('div');
-            d.className='battle-ci'+(i===state.battleMyIdx?' selected':'');
-            d.onclick=()=>{state.battleMyIdx=i;renderBattleLobby();};
-            d.innerHTML=`${svgFor(c)}<div class="battle-cn">${c.name}</div><div class="battle-cp">${formatMoney(c.price)} ₽</div>`;
-            myCars.appendChild(d);
-        });
-    }
-    const roomsEl=document.getElementById('battleRooms');
-    roomsEl.innerHTML='';
-    genBattleRooms().forEach(room=>{
-        const d=document.createElement('div');d.className='battle-r';
-        d.innerHTML=`<div class="battle-rav">${room.avatar}</div><div class="battle-ri"><div class="battle-rn">${room.name}</div><div class="battle-rr">${room.rating} ⭐</div></div><div class="battle-rc">${svgFor(room.car)}<div class="battle-rp">${formatMoney(room.car.price)} ₽</div></div><button class="battle-rj">⚔️ Войти</button>`;
-        d.querySelector('.battle-rj').onclick=(e)=>{e.stopPropagation();joinBattleRoom(room);};
-        roomsEl.appendChild(d);
-    });
-    const oc=document.getElementById('battleOnline');if(oc)oc.textContent=(1200+Math.floor(Math.random()*500)).toLocaleString();
-    document.getElementById('battleLobby').style.display='block';
-    document.getElementById('battleActive').style.display='none';
-    checkMMRCycle();renderMMRBar();
-}
-function joinBattleRoom(room){
-    if(!state.garageCars.length||state.battleMyIdx===-1||state.battleMyIdx>=state.garageCars.length)return showModal('Нет ставки','Выбери машину','⚠️');
-    const myCar=state.garageCars[state.battleMyIdx];
-    const overlay=document.getElementById('lobbyTransition');
-    document.getElementById('lobbyMyAvatar').textContent=state.avatar;
-    document.getElementById('lobbyEnemyAvatar').textContent=room.avatar;
-    document.getElementById('lobbyEnemyName').textContent=room.name;
-    document.getElementById('lobbyText').textContent='Подключение...';
-    overlay.classList.add('active');
-    setTimeout(()=>{document.getElementById('lobbyText').textContent='Синхронизация...';},800);
-    setTimeout(()=>{document.getElementById('lobbyText').textContent='БАТЛ!';},1600);
-    setTimeout(()=>{overlay.classList.remove('active');startBattle(room,myCar);},2400);
-}
-function startBattle(room,myCar){
-    state.battleState={opponent:room,myBetCar:myCar,enemyBetCar:room.car,myScore:0,enemyScore:0,myBank:BATTLE_BANK,enemyBank:BATTLE_BANK,timeLeft:60,myDrops:[],enemyDrops:[],timerId:null,enemyTimerId:null,finished:false};
-    state.garageCars.splice(state.battleMyIdx,1);state.battleMyIdx=-1;saveState();
-    document.getElementById('battleLobby').style.display='none';
-    document.getElementById('battleActive').style.display='block';
-    document.getElementById('battleEnemyName').textContent=room.name;
-    document.getElementById('battleScoreMyVal').textContent='0 ₽';
-    document.getElementById('battleScoreEnemyVal').textContent='0 ₽';
-    document.getElementById('battleBankMy').textContent=formatMoney(BATTLE_BANK);
-    document.getElementById('battleBankEnemy').textContent=formatMoney(BATTLE_BANK);
-    document.getElementById('battleHistory').innerHTML='';
-    document.getElementById('battleLastDrop').innerHTML='<div style="font-size:10px;color:var(--muted);font-weight:800;text-transform:uppercase;">Последний дроп</div><div style="color:var(--muted);font-size:12px;">Крути машины!</div>';
-    updateBattleTimer();startBattleTimers();
-}
-function updateBattleTimer(){
-    if(!state.battleState)return;
-    const t=state.battleState.timeLeft,m=Math.floor(t/60),s=t%60;
-    const el=document.getElementById('battleTimerVal');if(el)el.textContent=`${m}:${s.toString().padStart(2,'0')}`;
-}
-function startBattleTimers(){
-    if(!state.battleState)return;
-    state.battleState.timerId=setInterval(()=>{
-        if(!state.battleState||state.battleState.finished)return;
-        state.battleState.timeLeft--;updateBattleTimer();
-        if(state.battleState.timeLeft<=0)finishBattle();
-    },1000);
-    const enemyRoll=()=>{
-        if(!state.battleState||state.battleState.finished)return;
-        const s=state.battleState;
-        if(s.enemyBank<CONFIG.costCar)return;
-        s.enemyBank-=CONFIG.costCar;
-        const car=genCar(false);
-        s.enemyScore+=car.price;s.enemyDrops.push(car.price);
-        document.getElementById('battleScoreEnemyVal').textContent=formatMoney(s.enemyScore)+' ₽';
-        document.getElementById('battleBankEnemy').textContent=formatMoney(Math.max(0,s.enemyBank));
-        const d=document.createElement('div');
-        d.style.cssText='display:flex;align-items:center;gap:6px;font-size:11px;padding:4px 8px;border-radius:8px;background:rgba(239,68,68,.12);';
-        d.innerHTML=`<span style="font-weight:900;color:#f87171;">${s.opponent.name}</span><span style="flex:1;text-align:center;color:var(--muted);">${car.brand} ${car.name}</span><span style="font-weight:900;color:var(--rub);">+${formatMoney(car.price)} ₽</span>`;
-        const h=document.getElementById('battleHistory');h.insertBefore(d,h.firstChild);
-        while(h.children.length>10)h.removeChild(h.lastChild);
-        updateWinning();
-        s.enemyTimerId=setTimeout(enemyRoll,1200+Math.random()*800);
-    };
-    state.battleState.enemyTimerId=setTimeout(enemyRoll,1200);
-}
-function updateWinning(){
-    if(!state.battleState)return;
-    const s=state.battleState;
-    const my=document.getElementById('battleScoreMy'),en=document.getElementById('battleScoreEnemy');
-    if(my)my.classList.toggle('winning',s.myScore>s.enemyScore);
-    if(en)en.classList.toggle('winning',s.enemyScore>s.myScore);
-}
-function battleRollCar(){
-    if(!state.battleState||state.battleState.finished)return;
-    const s=state.battleState;
-    if(s.myBank<CONFIG.costCar)return showModal('Мало денег','Банк батла закончился','❌');
-    s.myBank-=CONFIG.costCar;
-    const car=genCar(false);
-    s.myScore+=car.price;s.myDrops.push(car.price);
-    document.getElementById('battleScoreMyVal').textContent=formatMoney(s.myScore)+' ₽';
-    document.getElementById('battleBankMy').textContent=formatMoney(Math.max(0,s.myBank));
-    document.getElementById('battleLastDrop').innerHTML=`<div style="font-size:10px;color:var(--muted);font-weight:800;text-transform:uppercase;">Твой дроп</div><div style="display:flex;align-items:center;gap:8px;"><div style="width:80px;height:35px;">${svgFor(car)}</div><div><div style="font-size:13px;font-weight:800;">${car.brand} ${car.name}</div><div style="color:var(--rub);font-weight:900;">+${formatMoney(car.price)} ₽</div></div></div>`;
-    const d=document.createElement('div');
-    d.style.cssText='display:flex;align-items:center;gap:6px;font-size:11px;padding:4px 8px;border-radius:8px;background:rgba(52,211,153,.12);';
-    d.innerHTML=`<span style="font-weight:900;color:var(--rub);">Ты</span><span style="flex:1;text-align:center;color:var(--muted);">${car.brand} ${car.name}</span><span style="font-weight:900;color:var(--rub);">+${formatMoney(car.price)} ₽</span>`;
-    const h=document.getElementById('battleHistory');h.insertBefore(d,h.firstChild);
-    while(h.children.length>10)h.removeChild(h.lastChild);
-    updateWinning();playChing();
-}
-function finishBattle(){
-    if(!state.battleState||state.battleState.finished)return;
-    state.battleState.finished=true;
-    clearInterval(state.battleState.timerId);
-    clearTimeout(state.battleState.enemyTimerId);
-    const s=state.battleState;const win=s.myScore>=s.enemyScore;
-    const ov=document.getElementById('bresOv');
-    document.getElementById('bresIcon').textContent=win?'🏆':'💀';
-    document.getElementById('bresTitle').textContent=win?'ПОБЕДА!':'ПРОИГРЫШ';
-    document.getElementById('bresScore').innerHTML=`Ты: <b>${formatMoney(s.myScore)} ₽</b><br>${s.opponent.name}: <b>${formatMoney(s.enemyScore)} ₽</b>`;
-    if(win){
-        state.garageCars.push(s.enemyBetCar);state.garageCars.push(s.myBetCar);
-        state.stats.battleWins=(state.stats.battleWins||0)+1;addMMR(MMR_WIN);
-        document.getElementById('bresPrize').innerHTML=`Ты забрал:<br>🏆 <b>${s.enemyBetCar.brand} ${s.enemyBetCar.name}</b><br><br><span style="color:var(--acc);font-size:16px;">+${MMR_WIN} MMR</span>`;
-        burst('legend');playChing();
-    }else{
-        addMMR(-MMR_LOSS);
-        document.getElementById('bresPrize').innerHTML=`Ты потерял:<br>💀 <b>${s.myBetCar.brand} ${s.myBetCar.name}</b><br><br><span style="color:#f87171;font-size:16px;">−${MMR_LOSS} MMR</span>`;
-        playTone(150,'sawtooth',.5,.1);
-    }
-    saveState();checkAch();ov.classList.add('active');
-}
-function closeBattleResult(){
-    document.getElementById('bresOv').classList.remove('active');
-    state.battleState=null;
-    document.getElementById('battleLobby').style.display='block';
-    document.getElementById('battleActive').style.display='none';
-    renderBattleLobby();updateUI();
-}
-
-/* MMR */
-function getTier(m){let t=MMR_TIERS[0];for(const x of MMR_TIERS)if(m>=x.min)t=x;return t;}
-function checkMMRCycle(){
-    if(!state.mmrCycleStart){state.mmrCycleStart=Date.now();saveState();return;}
-    const el=Date.now()-state.mmrCycleStart;
-    if(el>=MMR_CYCLE&&(state.mmrSession||0)<MMR_TARGET){state.mmrSession=0;state.mmrCycleStart=Date.now();saveState();}
-}
-function addMMR(d){state.mmr=Math.max(0,(state.mmr||0)+d);state.mmrSession=Math.max(0,(state.mmrSession||0)+d);saveState();}
-function renderMMRBar(){
-    const box=document.getElementById('mmrContainer');if(!box)return;
-    const t=getTier(state.mmr||0);
-    const left=Math.max(0,(state.mmrCycleStart+MMR_CYCLE)-Date.now());
-    const d=Math.floor(left/86400000),h=Math.floor((left%86400000)/3600000);
-    const sv=state.mmrSession||0;
-    const pct=Math.min(100,(sv/MMR_TARGET)*100);
-    const ready=sv>=MMR_TARGET;
-    box.innerHTML=`<div class="mmr-h"><div><div class="mmr-t">Твой MMR</div><div style="display:flex;align-items:baseline;gap:4px;margin-top:4px;"><span class="mmr-v">${state.mmr||0}</span><span class="mmr-ti" style="background:${t.b};color:${t.c};">${t.name}</span></div></div><div style="text-align:right;"><div class="mmr-t">До приза</div><div style="font-size:13px;font-weight:900;color:${ready?'var(--rub)':'var(--text)'};margin-top:4px;">${Math.min(sv,MMR_TARGET)} / ${MMR_TARGET}</div></div></div><div class="mmr-pb"><div class="mmr-pf ${ready?'ready':''}" style="width:${pct}%"></div></div><div class="mmr-i"><span>${ready?'🏆 Приз готов!':`⏳ ${d}д ${h}ч`}</span><span>+${MMR_WIN}/−${MMR_LOSS}</span></div>${ready?'<button class="mmr-cl" onclick="claimMMR()">🎁 Забрать приз</button>':''}`;
-}
-function claimMMR(){
-    if((state.mmrSession||0)<MMR_TARGET)return;
-    const p=CONFIG.cars.legend;const sel=p[Math.floor(Math.random()*p.length)];
-    const m=(1+state.upgradeLevel*.10)*(1+state.prestigeLevel*.25);
-    state.garageCars.push({...sel,rarity:'legend',price:Math.floor(sel.price*m)});
-    state.balanceRub+=50000000;state.balanceToken+=25000;
-    state.totalEarned+=50000000;state.stats.earned+=50000000;
-    state.mmrTitle='Чемпион MMR';state.mmrSession=0;state.mmrCycleStart=Date.now();
-    saveState();updateUI();renderMMRBar();renderGarage();burst('legend');playChing();
-    showModal('🏆 Награда',`3 000 MMR за 3 дня!<br><br>🚗 <b>${sel.brand} ${sel.name}</b><br>💰 <b>50 000 000 ₽</b><br>💎 <b>25 000 жетонов</b><br>👑 Чемпион MMR`,'🏆');
-}
-
-/* БАНК */
-function getTotalRub(){let t=state.balanceRub;for(const c of['USD','EUR','CNY','BTC'])t+=(state.bank[c]||0)*CURR[c].r;return t;}
-function getTotalIn(c){return getTotalRub()/CURR[c].r;}
-function fmtCur(a,c){const x=CURR[c];if(x.d===0)return formatMoney(Math.floor(a))+' '+x.s;const f=Number(a).toFixed(x.d);const[p1,p2]=f.split('.');return formatMoney(parseInt(p1,10))+'.'+p2+' '+x.s;}
-function renderBank(){
-    if(!state.card)return;
-    document.getElementById('bankCardNumber').textContent=state.card.number;
-    document.getElementById('bankCardHolder').textContent=state.card.holder;
-    document.getElementById('bankCardExpiry').textContent=state.card.expiry;
-    const cur=state.displayCur;const tot=getTotalIn(cur);
-    document.getElementById('bankCurrencyLabel').textContent='Всего в '+CURR[cur].s;
-    document.getElementById('bankBalanceDisplay').textContent=fmtCur(tot,cur);
-    const tt=document.getElementById('bankBalanceTotal');
-    if(tt)tt.textContent=cur==='RUB'?'':'≈ '+formatMoney(Math.round(getTotalRub()))+' ₽';
-    const grid=document.getElementById('bankCurrencies');
-    grid.innerHTML='';
-    Object.entries(CURR).forEach(([c,x])=>{
-        const b=document.createElement('div');
-        b.className='bank-cb2'+(c===cur?' active':'');
-        b.onclick=()=>switchBankCur(c);
-        b.innerHTML=`<div style="font-size:16px;">${x.f}</div><div>${c}</div>`;
-        grid.appendChild(b);
-    });
-    const rb=document.getElementById('bankRates');rb.innerHTML='';
-    ['USD','EUR','CNY','BTC'].forEach(c=>{
-        const x=CURR[c];const bal=state.bank[c]||0;
-        const r=document.createElement('div');r.className='bank-rr';
-        const bs=bal>0?` · ${fmtCur(bal,c)}`:'';
-        r.innerHTML=`<div><span style="font-size:16px;">${x.f}</span> <span class="bank-rc">${c}</span><span style="color:var(--muted);font-size:11px;">${bs}</span></div><div class="bank-rv">${formatMoney(Math.round(x.r))} ₽</div>`;
-        rb.appendChild(r);
-    });
-}
-function switchBankCur(c){state.displayCur=c;saveState();renderBank();}
-function openExchange(){
-    const m=document.getElementById('exchangeModal');if(!m)return;
-    const fs=document.getElementById('exchFromCur'),ts=document.getElementById('exchToCur');
-    fs.innerHTML='';ts.innerHTML='';
-    Object.entries(CURR).forEach(([c,x])=>{const o=`<option value="${c}">${x.f} ${c}</option>`;fs.insertAdjacentHTML('beforeend',o);ts.insertAdjacentHTML('beforeend',o);});
-    fs.value='RUB';ts.value='USD';
-    document.getElementById('exchAmount').value='';updateExchPreview();m.classList.add('active');
-}
-function closeExchange(){document.getElementById('exchangeModal').classList.remove('active');}
-function getBalIn(c){if(c==='RUB')return state.balanceRub;return state.bank[c]||0;}
-function updateExchPreview(){
-    const f=document.getElementById('exchFromCur').value,t=document.getElementById('exchToCur').value,a=parseFloat(document.getElementById('exchAmount').value)||0;
-    const re=document.getElementById('exchResult'),fe=document.getElementById('exchFee');
-    if(f===t){if(re)re.textContent=fmtCur(a,t);if(fe)fe.textContent='Выбери разные';return;}
-    const rub=a*CURR[f].r;const r=(rub*(1-EXCH_FEE))/CURR[t].r;
-    if(re)re.textContent=fmtCur(r,t);
-    if(fe)fe.textContent=`Комиссия 2% (≈ ${formatMoney(Math.round(rub*EXCH_FEE))} ₽)`;
-}
-function doExchange(){
-    const f=document.getElementById('exchFromCur').value,t=document.getElementById('exchToCur').value,a=parseFloat(document.getElementById('exchAmount').value)||0;
-    if(f===t){showModal('Ошибка','Выбери разные','⚠️');return;}
-    if(a<=0){showModal('Ошибка','Введи сумму','⚠️');return;}
-    const bal=getBalIn(f);
-    if(a>bal+0.000001){showModal('Мало средств',fmtCur(bal,f),'❌');return;}
-    const rub=a*CURR[f].r;
-    if(rub<100){showModal('Мало','Минимум 100 ₽','⚠️');return;}
-    const r=(rub*(1-EXCH_FEE))/CURR[t].r;
-    if(f==='RUB')state.balanceRub-=a;else{state.bank[f]=(state.bank[f]||0)-a;if(state.bank[f]<0.000001)state.bank[f]=0;}
-    if(t==='RUB')state.balanceRub+=Math.floor(r);else state.bank[t]=(state.bank[t]||0)+r;
-    saveState();closeExchange();renderBank();updateUI();playChing();
-    showModal('💱 Обмен',`${fmtCur(a,f)} → ${fmtCur(r,t)}<br><br>Комиссия: ${formatMoney(Math.round(rub*EXCH_FEE))} ₽`,'💱');
-}
-
-/* ЗАДАНИЯ */
-function ensureQuests(){const t=new Date().setHours(0,0,0,0);if(!state.quests||state.quests.date!==t){state.quests={date:t,spins:0,earned:0,epics:0,claimed:{}};saveState();}}
-function getQuests(){
-    ensureQuests();
-    return[
-        {id:'s10',icon:'🎲',title:'Прокрути',desc:'10 круток',rw:'1 000 000 ₽',p:Math.min(10,state.quests.spins),t:10,can:state.quests.spins>=10&&!state.quests.claimed.s10,cl:!!state.quests.claimed.s10,claim:()=>{addRubles(1000000);state.quests.claimed.s10=true;saveState();}},
-        {id:'e1',icon:'💎',title:'Epic+',desc:'Epic или Legend',rw:'2 500 💎',p:Math.min(1,state.quests.epics),t:1,can:state.quests.epics>=1&&!state.quests.claimed.e1,cl:!!state.quests.claimed.e1,claim:()=>{addTokens(2500);state.quests.claimed.e1=true;saveState();}},
-        {id:'e50',icon:'💰',title:'Куш',desc:'50 млн ₽',rw:'500 💎 + 5 млн ₽',p:Math.min(50000000,state.quests.earned),t:50000000,can:state.quests.earned>=50000000&&!state.quests.claimed.e50,cl:!!state.quests.claimed.e50,claim:()=>{addRubles(5000000);addTokens(500);state.quests.claimed.e50=true;saveState();}}
-    ];
-}
-function trackQuest(a,v){ensureQuests();if(a==='spin')state.quests.spins+=v;if(a==='epic')state.quests.epics+=v;if(a==='earn')state.quests.earned+=v;saveState();}
-function renderQuests(){
-    const list=document.getElementById('questsList');if(!list)return;
-    const qs=getQuests();list.innerHTML='';
-    qs.forEach(q=>{
-        const c=document.createElement('div');
-        c.className='qc'+(q.cl?' claimed':q.can?' done':'');
-        c.innerHTML=`<div class="q-ico">${q.icon}</div><div class="q-body" style="flex:1;"><div class="q-title">${q.title}</div><div class="q-desc">${q.desc}</div><div class="q-rw">🎁 ${q.rw}</div><div class="q-bar"><div class="q-f" style="width:${(q.p/q.t)*100}%"></div></div></div><button class="q-claim" ${q.can?'':'disabled'}>${q.cl?'✓':q.can?'Забрать':`${q.p}/${q.t}`}</button>`;
-        if(q.can)c.querySelector('.q-claim').onclick=()=>{q.claim();renderQuests();updateUI();playChing();};
-        list.appendChild(c);
-    });
-    const cl=qs.filter(q=>q.can).length,cd=qs.filter(q=>q.cl).length;
-    const b=document.getElementById('questsBadge');if(b)b.textContent=cl>0?`🎁 ${cl}`:`${cd}/3`;
-}
-function updateQuestsCountdown(){
-    const l=document.getElementById('questsResetLabel');if(!l)return;
-    const now=new Date();const t=new Date(now);t.setDate(t.getDate()+1);t.setHours(0,0,0,0);
-    const ms=t-now;const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000),s=Math.floor((ms%60000)/1000);
-    const p=n=>String(n).padStart(2,'0');
-    l.textContent=`Обновятся через ${p(h)}:${p(m)}:${p(s)}`;
-}
-function checkTrend(){
-    const today=new Date().setHours(0,0,0,0);
-    if(state.trendDate===today){updateTrend();return;}
-    const brands=['LADA','KIA','HYUNDAI','VW','RENAULT','TOYOTA','BMW','MERCEDES','AUDI','PORSCHE','ROLLS-ROYCE','LEXUS','VOLVO','FERRARI','LAMBORGHINI','BUGATTI'];
-    state.trendDate=today;state.trendBrand=brands[Math.floor(Math.random()*brands.length)];
-    saveState();updateTrend();
-}
-function updateTrend(){
-    let el=document.getElementById('trendBanner');
-    if(!el){
-        el=document.createElement('div');el.id='trendBanner';el.className='trend';
-        const tb=document.querySelector('.top');
-        if(tb)tb.insertAdjacentElement('afterend',el);
-    }
-    if(state.trendBrand){el.textContent=`🔥 Тренд дня: ${state.trendBrand} +100%`;el.style.display='block';}
-    else el.style.display='none';
-}
-function updatePity(){const el=document.getElementById('pityBox');if(!el)return;const l=Math.max(0,PITY-(state.pityLegend||0));el.innerHTML=`🎯 До гаранта Legend: <span style="color:var(--leg);">${l}</span>`;}
-function updateCombo(){state.combo=(state.combo||0)+1;state.comboLast=Date.now();}
-
-/* ANDROID BACK */
-try{history.replaceState({v:'menu'},'');}catch(e){}
-window.addEventListener('popstate',()=>{
-    const ovs=[{id:'modal',f:closeModal},{id:'rulesOv',f:closeRules},{id:'jackpotOv',f:closeJackpot},{id:'bresOv',f:closeBattleResult},{id:'exchangeModal',f:closeExchange},{id:'tradeInModal',f:closeTradeIn}];
-    for(const o of ovs){const el=document.getElementById(o.id);if(el&&el.classList.contains('active')){o.f();try{history.pushState({v:'trap'},'');}catch(e){}return;}}
-    const ch=document.getElementById('chestOv');if(ch&&ch.classList.contains('active')){try{history.pushState({v:'trap'},'');}catch(e){}return;}
-    const lo=document.getElementById('lobbyTransition');if(lo&&lo.classList.contains('active')){try{history.pushState({v:'trap'},'');}catch(e){}return;}
-    const av=document.querySelector('.view.active');
-    if(av&&av.id!=='v-menu'){navigate('menu');try{history.pushState({v:'menu'},'');}catch(e){}return;}
-    if(window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.App&&window.Capacitor.Plugins.App.exitApp){try{window.Capacitor.Plugins.App.exitApp();return;}catch(e){}}
-});
-
-/* ИНИЦИАЛИЗАЦИЯ */
-setupPWA();
-const subs=['бизнес на колесах','твой госномер','крути удачу','стань магнатом','номер 1','дороги ждут','тачки и номера'];
-const ss=document.getElementById('splashSub');if(ss)ss.textContent=subs[Math.floor(Math.random()*subs.length)];
-
-loadState();
-document.getElementById('sndBtn').textContent=state.soundOn?'🔊':'🔇';
-document.getElementById('sndBtn').classList.toggle('off',!state.soundOn);
-document.getElementById('asComLbl').classList.toggle('on',state.autoCom);
-document.getElementById('asRarLbl').classList.toggle('on',state.autoRar);
-document.getElementById('asComChk').checked=state.autoCom;
-document.getElementById('asRarChk').checked=state.autoRar;
-document.querySelectorAll('.theme-b').forEach(b=>b.classList.toggle('active',b.dataset.theme===state.bgTheme));
-document.querySelectorAll('.av-b').forEach(b=>b.classList.toggle('active',b.dataset.avatar===state.avatar));
-updateUI();
-applyOffline();
-checkDaily();
-checkStreak();
-checkChest();
-checkTrend();
-updateTrend();
-updatePity();
-checkMMRCycle();
-aidTick();
-
-setInterval(()=>{
-    aidTick();
-    updateQuestsCountdown();
-    if(document.getElementById('v-fortune').classList.contains('active'))renderFortune();
-    if(document.getElementById('v-shop').classList.contains('active'))renderShop();
-},1000);
-setInterval(rentalTick,60000);
-
-let _splashHidden=false;
-function hideSplash(){if(_splashHidden)return;_splashHidden=true;const s=document.getElementById('splash');if(s)s.classList.add('hide');}
-window.addEventListener('load',()=>setTimeout(hideSplash,2200));
-setTimeout(hideSplash,3500);
-</script>
-<!-- Кнопка Пополнить в углу -->
-<div style="position: absolute; top: 10px; right: 10px; z-index: 100;">
-  <button onclick="document.getElementById('promoModal').style.display='flex'" 
-          style="background: #FFD700; border: 2px solid #B8860B; border-radius: 8px; padding: 10px 15px; font-weight: bold; cursor: pointer; font-size: 16px; color: #000;">
-    💰 Пополнить
-  </button>
-</div>
-<!-- Всплывающее окно пополнения -->
-<div id="promoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
-  <div style="background: #fff; padding: 25px; border-radius: 15px; text-align: center; max-width: 320px; width: 90%;">
-    <h2 style="margin-top: 0; color: #333;">Пополнение</h2>
-    
-    <p style="color: #333; font-weight: bold; margin-bottom: 5px; text-align: left;">Ваш ник в игре:</p>
-    <input type="text" id="nickInput" placeholder="Например: SuperVasya" 
-           style="width: 90%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px;">
-           
-    <p style="color: #666; font-size: 14px; margin-bottom: 10px; text-align: left;">
-      1. Нажмите "Оплатить" и переведите нужную сумму.<br>
-      2. Напишите боту ваш ник, чтобы получить промокод.
-    </p>
-
-    <!-- Кнопка ЮMoney -->
-    <div style="margin-bottom: 15px; display: flex; justify-content: center;">
-       <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=1LIT3NTOLV3.261116&" width="330" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
-    </div>
-
-    <!-- Ссылка на бота -->
-    <a href="https://t.me/NumberGiveSupportBot" target="_blank" 
-       style="display: block; background: #0088cc; color: white; padding: 10px; text-decoration: none; border-radius: 5px; margin-bottom: 15px; font-weight: bold;">
-      ✈️ Написать боту
-    </a>
-
-    <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
-    
-    <p style="color: #333; font-weight: bold; margin-bottom: 5px; text-align: left;">Уже есть промокод?</p>
-    <input type="text" id="promoInput" placeholder="Введите промокод" 
-           style="width: 90%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; text-transform: uppercase;">
-    
-    <button onclick="activatePromo()" 
-            style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; margin-bottom: 10px;">
-      Активировать
-    </button>
-    <button onclick="document.getElementById('promoModal').style.display='none'" 
-            style="background: #dc3545; color: white; border: none; padding: 8px; border-radius: 5px; cursor: pointer; width: 100%;">
-        <button onclick="syncBalance()" 
-        style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; margin-bottom: 10px;">
-  🔄 Забрать деньги из базы
-        </button>
-      Закрыть
-    </button>
-  </div>
-</div>
-<!-- Скрипт Firebase -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBJSUhv_kGhpTn67UrvhACSMDplhMrP5W0",
-    authDomain: "numbergive-1-83eb6.firebaseapp.com",
-    projectId: "numbergive-1-83eb6",
-    storageBucket: "numbergive-1-83eb6.firebasestorage.app",
-    messagingSenderId: "1049511282476",
-    appId: "1:1049511282476:web:db7f9e4b752478d98d8e89",
-    measurementId: "G-9F6X3E7W0V"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const STORAGE_KEY = 'numberGiveSave'; 
-
-  // ФУНКЦИЯ АКТИВАЦИИ ПРОМОКОДА
-  window.activatePromo = async function() {
-    const codeInput = document.getElementById('promoInput').value.trim().toUpperCase();
-    const nick = document.getElementById('nickInput').value.trim(); // Берем ник из поля
-
-    if (!nick) return alert("Пожалуйста, сначала введите ваш ник в игре!");
-    if (!codeInput) return alert("Пожалуйста, введите промокод!");
-
+function loadGame() {
     try {
-      // 1. Ищем промокод в базе
-      const docRef = doc(db, "promocodes", codeInput);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        const amount = Number(docSnap.data().amount);
-        
-        // 2. Ищем игрока в базе (коллекция players)
-        const playerRef = doc(db, "players", nick);
-        const playerSnap = await getDoc(playerRef);
-
-        if (!playerSnap.exists()) {
-           return alert("Игрок с таким ником не найден. Проверьте ник!");
+        const s = localStorage.getItem('nomerdaySave');
+        if(s) {
+            const p = JSON.parse(s);
+            player = { ...player, ...p, stats: {...player.stats, ...(p.stats||{})} };
         }
+    } catch(e){}
+}
 
-        // 3. Прибавляем деньги в базе данных
-        await updateDoc(playerRef, {
-            money: increment(amount)
-        });
+function getRarityColor(r) {
+    if(r === 'common') return '#94a3b8';
+    if(r === 'rare') return '#10b981';
+    if(r === 'epic') return '#a855f7';
+    if(r === 'legend') return '#fbbf24';
+    return '#ff0080';
+}
 
-        // 4. Удаляем промокод, чтобы он сработал один раз
-        // (Чтобы удалить, нужна другая функция, но для простоты мы просто дадим деньги)
-        
-        alert(`Успех! Вам начислено ${amount} рублей. Перезагружаем игру...`);
-        
-        // 5. Берем новый баланс из базы и записываем в игру
-        const newPlayerSnap = await getDoc(playerRef);
-        const newMoney = Number(newPlayerSnap.data().money);
-        
-        let saveData = localStorage.getItem(STORAGE_KEY);
-        if (saveData) {
-            let state = JSON.parse(saveData);
-            // Обновляем рубли в памяти игры
-            if (state.money !== undefined) state.money = newMoney;
-            else if (state.rub !== undefined) state.rub = newMoney;
-            else if (state.cash !== undefined) state.cash = newMoney;
-            else state.money = newMoney;
-            
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-        }
-        
-        location.reload(); 
+function navigate(view) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('v-' + view).classList.add('active');
+    document.getElementById('backBtn').style.display = view === 'menu' ? 'none' : 'block';
+    updateUI();
+}
 
-      } else {
-        alert("Такого промокода не существует.");
-      }
-    } catch (error) {
-      console.error("Ошибка Firebase:", error);
-      alert("Ошибка: " + error.message);
-    }
-  };
-</script>
+function checkLock(view, price) {
+    if(player.rub >= price) { navigate(view); }
+    else { toast(`Нужно ${fmt(price)} ₽`); }
+}
+
+let isRolling = false;
+function rollCar(isBoost) {
+    if(isRolling) return;
+    const cost = isBoost ? CONFIG.costCarBoost : CONFIG.costCar;
+    if(player.rub < cost) return toast(`Нужно ${fmt(cost)} ₽`);
+    player.rub -= cost; isRolling = true;
+    document.getElementById('actCarStart').style.display = 'none';
+    document.getElementById('actCarRes').style.display = 'none';
+    document.getElementById('rollProg').classList.add('on');
+    document.getElementById('genCarBox').classList.add('spinning');
+    document.getElementById('carSvgBox').innerHTML = '';
+    document.getElementById('carPrice').classList.remove('show');
+    document.getElementById('carPrice').textContent = '';
     
+    let ticks = 0;
+    const interval = setInterval(() => {
+        const r = Math.random();
+        const c = r < 0.5 ? CONFIG.cars.common[Math.floor(Math.random()*CONFIG.cars.common.length)] : CONFIG.cars.rare[Math.floor(Math.random()*CONFIG.cars.rare.length)];
+        document.getElementById('carSvgBox').innerHTML = c.svg;
+        document.getElementById('carBrand').textContent = c.brand;
+        document.getElementById('carName').textContent = c.name;
+        ticks++;
+    }, 80);
+
+    setTimeout(() => {
+        clearInterval(interval);
+        document.getElementById('genCarBox').classList.remove('spinning');
+        document.getElementById('rollProg').classList.remove('on');
+        document.getElementById('rollProgF').style.animation = 'none';
+        void document.getElementById('rollProgF').offsetWidth;
+        
+        let weights = isBoost ? [40, 40, 15, 4.5, 0.5] : [60, 30, 8, 1.8, 0.2];
+        let pityLeft = 50 - (player.pity || 0);
+        if(pityLeft <= 1) { weights = [0, 0, 0, 100, 0]; player.pity = 0; }
+        
+        let r = Math.random() * 100, pickedRarity = 'common';
+        if(r < weights[4]) pickedRarity = 'mythic';
+        else if(r < weights[4]+weights[3]) pickedRarity = 'legend';
+        else if(r < weights[4]+weights[3]+weights[2]) pickedRarity = 'epic';
+        else if(r < weights[4]+weights[3]+weights[2]+weights[1]) pickedRarity = 'rare';
+        
+        if(pickedRarity === 'legend' || pickedRarity === 'mythic') player.pity = 0; else player.pity++;
+        
+        const list = CONFIG.cars[pickedRarity];
+        const car = list[Math.floor(Math.random() * list.length)];
+        
+        document.getElementById('genCarBox').dataset.rarity = pickedRarity;
+        document.getElementById('carSvgBox').innerHTML = car.svg;
+        document.getElementById('carBrand').textContent = car.brand;
+        document.getElementById('carName').textContent = car.name;
+        
+        const badge = document.getElementById('carBadge');
+        badge.textContent = pickedRarity.toUpperCase();
+        badge.style.display = 'inline-block';
+        badge.className = 'badge pop';
+        if(pickedRarity === 'common') badge.classList.add('bg-com');
+        if(pickedRarity === 'rare') badge.classList.add('bg-rar');
+        if(pickedRarity === 'epic') badge.classList.add('bg-epi');
+        if(pickedRarity === 'legend') badge.classList.add('bg-leg');
+        if(pickedRarity === 'mythic') badge.classList.add('bg-myt');
+        
+        player.curCar = { ...car, rarity: pickedRarity, price: car.price };
+        
+        const priceEl = document.getElementById('carPrice');
+        priceEl.textContent = fmt(car.price) + ' ₽';
+        priceEl.classList.add('show');
+        
+        document.getElementById('actCarRes').style.display = 'flex';
+        document.getElementById('btnSellCar').textContent = `Продать за ${fmt(car.price)} ₽`;
+        
+        player.stats.rolls++; saveGame(); updateUI();
+        isRolling = false;
+    }, 1000);
+}
+
+function rollCarX10() {
+    if(player.rub < CONFIG.costCarX10) return toast(`Нужно ${fmt(CONFIG.costCarX10)} ₽`);
+    if(player.garage.cars.length >= 50) return toast('Гараж полон!');
+    
+    player.rub -= CONFIG.costCarX10;
+    let foundLegend = false;
+    
+    for(let i=0; i<10; i++) {
+        let weights = [60, 30, 8, 1.8, 0.2];
+        let r = Math.random() * 100, pickedRarity = 'common';
+        if(r < weights[4]) pickedRarity = 'mythic';
+        else if(r < weights[4]+weights[3]) pickedRarity = 'legend';
+        else if(r < weights[4]+weights[3]+weights[2]) pickedRarity = 'epic';
+        else if(r < weights[4]+weights[3]+weights[2]+weights[1]) pickedRarity = 'rare';
+        
+        const list = CONFIG.cars[pickedRarity];
+        const car = list[Math.floor(Math.random() * list.length)];
+        if(pickedRarity === 'legend' || pickedRarity === 'mythic') foundLegend = true;
+        
+        if(player.garage.cars.length < 50) {
+            player.garage.cars.push({ ...car, id: Date.now()+i, rarity: pickedRarity });
+        }
+    }
+    if(foundLegend) toast('🔥 Ты выбил Legend/Mythic!');
+    else toast('Машины добавлены в гараж!');
+    
+    saveGame(); updateUI();
+}
+
+function sellCurrentCar() {
+    if(!player.curCar) return;
+    player.rub += player.curCar.price;
+    player.stats.earned += player.curCar.price;
+    player.curCar = null;
+    document.getElementById('actCarRes').style.display = 'none';
+    document.getElementById('carPrice').classList.remove('show');
+    toast('Машина продана!');
+    saveGame(); updateUI();
+}
+
+function saveCurrentCar() {
+    if(!player.curCar) return;
+    if(player.garage.cars.length >= 50) return toast('Гараж полон!');
+    player.garage.cars.push({ ...player.curCar, id: Date.now() });
+    player.curCar = null;
+    document.getElementById('actCarRes').style.display = 'none';
+    toast('Машина в гараже!');
+    saveGame(); updateUI();
+}
+
+function updateUI() {
+    document.getElementById('uiRub').textContent = fmt(player.rub);
+    document.getElementById('uiTok').textContent = fmt(player.tok);
+    document.getElementById('menuGarage').textContent = `${player.garage.cars.length} | ${player.garage.plates.length}`;
+    if(document.getElementById('carPrice').classList.contains('show') && player.curCar) {
+         document.getElementById('carPrice').textContent = fmt(player.curCar.price) + ' ₽';
+         document.getElementById('btnSellCar').textContent = `Продать за ${fmt(player.curCar.price)} ₽`;
+    }
+    if(document.getElementById('v-garage').classList.contains('active')) renderGarage();
+}
+
+function renderGarage() {
+    const list = document.getElementById('garageList');
+    list.innerHTML = '';
+    if(player.garage.cars.length === 0) {
+        list.innerHTML = '<div class="empty">Гараж пуст</div>';
+        return;
+    }
+    let cars = [...player.garage.cars];
+    cars.sort((a,b) => b.price - a.price);
+    cars.forEach((c, i) => {
+        const div = document.createElement('div');
+        div.className = 'li';
+        div.innerHTML = `
+            <div style="display:flex;align-items:center;">
+                <div class="li-svg">${c.svg}</div>
+                <div>
+                    <div class="li-brand">${c.brand}</div>
+                    <div class="li-title">${c.name}</div>
+                </div>
+            </div>
+            <div style="text-align:right;">
+                <div class="li-price rub">${fmt(c.price)} ₽</div>
+                <button class="sell-b" onclick="sellGarageCar(${i})">Продать</button>
+            </div>
+        `;
+        list.appendChild(div);
+    });
+}
+
+function sellGarageCar(idx) {
+    const cars = [...player.garage.cars].sort((a,b) => b.price - a.price);
+    const car = cars[idx];
+    player.rub += car.price;
+    player.garage.cars = player.garage.cars.filter(c => c.id !== car.id);
+    toast('Машина продана!');
+    saveGame(); updateUI();
+}
+
+document.getElementById('splash').classList.add('hide');
+setTimeout(() => document.getElementById('splash').remove(), 600);
+loadGame(); updateUI();
+
+// Заглушки для нереализованных функций, чтобы не было ошибок
+function toggleSound(){} function showRules(){document.getElementById('rulesOv').classList.add('active')} function closeRules(){document.getElementById('rulesOv').classList.remove('active')} function closeModal(){document.getElementById('modal').classList.remove('active')}
+function setTheme(t){player.theme=t; document.body.className='t-'+t; saveGame();} function setAvatar(a){player.avatar=a; saveGame();}
+function openTradeIn(){document.getElementById('tradeInModal').classList.add('active')} function closeTradeIn(){document.getElementById('tradeInModal').classList.remove('active')}
+function sellAllGarage(){player.garage.cars=[]; saveGame(); updateUI();}
+</script>
 </body>
-</html>
+    </html>
