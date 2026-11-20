@@ -313,11 +313,9 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 
 .battle-stat { background: var(--card-2); border-radius: 12px; padding: 8px; text-align: center; font-weight: 800; font-size: 12px; }
 
-/* ---- Банк-кредит ---- */
 .loan-badge { display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 13px; }
 .loan-warn { color: var(--red); font-weight: 800; font-size: 12px; animation: blink .8s infinite alternate; }
 
-/* ---- Реклама с кнопкой закрытия ---- */
 .ad-wrap {
     position: relative;
     width: 100%; border-radius: 16px; overflow: hidden;
@@ -338,12 +336,23 @@ select.input-field { appearance: none; -webkit-appearance: none; }
     backdrop-filter: blur(4px);
 }
 .ad-close:active { transform: scale(.9); }
+
+/* крипта */
+.crypto-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--card-2); border-radius: 14px; }
+.crypto-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; flex-shrink: 0; }
+.crypto-info { flex: 1; }
+.crypto-price { font-weight: 900; font-size: 15px; }
+.crypto-change { font-size: 12px; font-weight: 800; }
+.crypto-change.up { color: var(--green); }
+.crypto-change.down { color: var(--red); }
+.crypto-btns { display: flex; gap: 6px; }
+.crypto-btn { padding: 8px 10px; border-radius: 10px; font-size: 11px; font-weight: 900; }
+.crypto-buy { background: linear-gradient(135deg, #46e6a2, #1fae72); color: #02210f; }
+.crypto-sell { background: linear-gradient(135deg, #ff6f86, #d93353); color: #fff; }
 </style>
 </head>
 <body>
 
-<!-- ===== Yandex RTB система ===== -->
-<!-- Yandex.RTB -->
 <script>window.yaContextCb=window.yaContextCb||[]</script>
 <script src="https://yandex.ru/ads/system/context.js" async></script>
 
@@ -357,7 +366,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
     </div>
 
     <div class="content">
-        <!-- ГЛАВНАЯ -->
         <div class="main-screen" id="main-view">
             <div class="trend">🔥 Тренд дня: KIA +100%</div>
             <div class="title-big">НОМЕРДАЙ</div>
@@ -381,16 +389,14 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                 <div class="menu-item" onclick="openScreen('screen-tasks')"><div class="menu-icon">📋</div><div class="menu-title">Задания</div><div class="menu-desc" id="ui-tasks-count">0/3</div></div>
                 <div class="menu-item" onclick="openScreen('screen-tuning')"><div class="menu-icon">🛠️</div><div class="menu-title">Тюнинг</div><div class="menu-desc">Удача</div></div>
                 <div class="menu-item" onclick="openScreen('screen-auction')"><div class="menu-icon">💎</div><div class="menu-title">Аукцион</div><div class="menu-desc">Ставки</div></div>
-                <div class="menu-item" onclick="openScreen('screen-bank')"><div class="menu-icon">💳</div><div class="menu-title">Банк</div><div class="menu-desc">Карта и кредит</div></div>
+                <div class="menu-item" onclick="openScreen('screen-bank')"><div class="menu-icon">💳</div><div class="menu-title">Банк</div><div class="menu-desc">Кредит, крипта</div></div>
                 <div class="menu-item" onclick="openScreen('screen-profile')"><div class="menu-icon">👑</div><div class="menu-title">Профиль</div><div class="menu-desc">Статистика</div></div>
                 <div class="menu-item" onclick="openScreen('screen-catalog')"><div class="menu-icon">📚</div><div class="menu-title">Каталог</div><div class="menu-desc">100 машин</div></div>
                 <div class="menu-item" onclick="openScreen('screen-rules')"><div class="menu-icon">📖</div><div class="menu-title">Правила</div><div class="menu-desc">Как играть</div></div>
             </div>
 
-            <!-- РЕКЛАМА (главная) -->
             <div class="ad-wrap" id="ad-main">
-                <button class="ad-close" onclick="closeAd('ad-main')" aria-label="Закрыть рекламу">✕</button>
-                <!-- Yandex.RTB R-A-20432576-4 -->
+                <button class="ad-close" onclick="closeAd('ad-main')">✕</button>
                 <div id="yandex_rtb_R-A-20432576-4"></div>
                 <script>
                 window.yaContextCb.push(() => {
@@ -403,7 +409,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
             </div>
         </div>
 
-        <!-- АВТОСАЛОН -->
         <div class="screen" id="screen-autosalon">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-autosalon')">‹</button><div class="screen-title">Автосалон</div></div>
             <div class="pad">
@@ -415,12 +420,11 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                 <div class="spin-btns" id="car-controls">
                     <button class="spin-btn spin-std" onclick="spin('car', false)"><span>🎲 Крутить</span><b>5 000 000 ₽</b></button>
                     <button class="spin-btn spin-boost" onclick="spin('car', 'boost')"><span>⚡ BOOST</span><b>10 000 000 ₽</b></button>
-                    <button class="spin-btn spin-x10" onclick="spin('car', 'x10')"><span>🎰 X10 КРУТИТЬ</span><b>100 000 000 ₽</b></button>
+                    <button class="spin-btn spin-x10" onclick="spin('car', 'x10')"><span>🎰 X10 КРУТИТЬ</span><b>700 000 000 ₽</b></button>
                 </div>
             </div>
         </div>
 
-        <!-- ГОСЗНАКИ -->
         <div class="screen" id="screen-gosznaki">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-gosznaki')">‹</button><div class="screen-title">Генератор номеров</div></div>
             <div class="pad">
@@ -437,7 +441,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
             </div>
         </div>
 
-        <!-- ГАРАЖ -->
         <div class="screen" id="screen-garage">
             <div class="screen-header">
                 <button class="back-btn" onclick="closeScreen('screen-garage')">‹</button>
@@ -455,7 +458,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
             </div>
         </div>
 
-        <!-- АПГРЕЙДЕР -->
         <div class="screen" id="screen-upgrade">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-upgrade')">‹</button><div class="screen-title">Апгрейдер</div></div>
             <div class="pad">
@@ -481,7 +483,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
             </div>
         </div>
 
-        <!-- БАНК -->
         <div class="screen" id="screen-bank">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-bank')">‹</button><div class="screen-title">Банк</div></div>
             <div class="pad">
@@ -490,14 +491,32 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                     <div class="card-number">4276 0000 0000 0000</div>
                     <div style="display:flex; justify-content:space-between; font-weight:800;"><div>ИГРОК</div><div>12/28</div></div>
                 </div>
-                <h3 style="text-align:center;">Баланс: <span id="ui-usd" style="color: var(--green);">0</span> $</h3>
-                <p style="text-align:center; font-size:12px; color: var(--muted);">Курс: 1$ = 90₽</p>
+                <div class="card" style="display:grid; grid-template-columns:1fr 1fr; gap:8px; text-align:center; font-weight:800;">
+                    <div>💵 <span id="ui-usd">0</span> $</div>
+                    <div>💶 <span id="ui-eur">0</span> €</div>
+                    <div>💴 <span id="ui-cny">0</span> ¥</div>
+                    <div>💎 <span id="ui-cry-bal">0</span></div>
+                </div>
+                <p style="text-align:center; font-size:12px; color: var(--muted);">Курс: 1$ = 90₽ · 1€ = 100₽ · 1¥ = 12₽</p>
                 <div class="btn-row">
-                    <input type="number" id="bank-input" class="input-field" placeholder="Сумма в ₽" style="flex:2;">
-                    <button class="btn btn-gold" style="flex:1;" onclick="convertMoney()">Купить $</button>
+                    <input type="number" id="bank-input" class="input-field" placeholder="Сумма ₽" style="flex:2;">
+                    <select id="bank-currency" class="input-field" style="flex:1;">
+                        <option value="usd">$</option>
+                        <option value="eur">€</option>
+                        <option value="cny">¥</option>
+                    </select>
+                </div>
+                <button class="btn btn-gold" onclick="convertMoney()">Купить валюту</button>
+
+                <div class="card" style="display:flex; flex-direction:column; gap:8px;">
+                    <div class="loan-badge"><span>💎 Обмен кристаллов</span></div>
+                    <p style="font-size:12px; color: var(--muted); margin:0;">
+                        При накоплении <b style="color:#6fd3ff">50 000 💎</b> можно обменять на <b style="color:var(--green)">50 000 000 ₽</b>.
+                    </p>
+                    <button class="btn btn-gold" id="cry-exchange-btn" onclick="exchangeCrystals()">Обменять 50 000 💎 → 50 000 000 ₽</button>
+                    <button class="btn btn-glass" onclick="openScreen('screen-cryshop')">💎 Магазин за кристаллы</button>
                 </div>
 
-                <!-- Помощь новичкам -->
                 <div class="card" style="display:flex; flex-direction:column; gap:8px;">
                     <div class="loan-badge"><span>🆘 Помощь новичкам</span></div>
                     <p style="font-size:12px; color: var(--muted); margin:0;">
@@ -506,7 +525,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                     <div style="font-size:12px; font-weight:800; color: var(--blue);" id="aid-status">—</div>
                 </div>
 
-                <!-- Кредит -->
                 <div class="card" style="display:flex; flex-direction:column; gap:10px;">
                     <div class="loan-badge"><span>💳 Кредит</span><span id="loan-badge-val" style="color:var(--red); font-size:12px;"></span></div>
                     <div id="loan-active-box" style="display:none; flex-direction:column; gap:8px;">
@@ -514,25 +532,29 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                             <div style="font-size:11px; color: var(--muted);">Долг</div>
                             <div style="font-size:22px; font-weight:900; color: var(--red);" id="loan-debt">0 ₽</div>
                             <div style="font-size:12px; margin-top:4px;">До срока: <span id="loan-left" class="loan-warn">00:00:00</span></div>
+                            <div style="font-size:12px; margin-top:4px;">Залог: <span id="loan-collateral" style="color:var(--gold);">—</span></div>
                         </div>
                         <button class="btn btn-green" onclick="repayLoan()">Выплатить <span id="loan-repay-sum"></span></button>
-                        <p style="font-size:11px; color: var(--muted); margin:0;">Если не выплатить вовремя — банк заберёт все деньги, машины и номера.</p>
                     </div>
                     <div id="loan-form-box" style="display:flex; flex-direction:column; gap:8px;">
-                        <input type="number" id="loan-amount" class="input-field" placeholder="Сумма кредита (до 10 000 000 ₽)" min="1" max="10000000">
+                        <input type="number" id="loan-amount" class="input-field" placeholder="Сумма кредита (до 50 000 000 ₽)">
                         <select id="loan-term" class="input-field">
                             <option value="0.5">Срок: 30 минут</option>
                             <option value="1">Срок: 1 час</option>
+                            <option value="1.5">Срок: 1.5 часа</option>
                             <option value="2">Срок: 2 часа</option>
-                            <option value="3">Срок: 3 часа</option>
                         </select>
                         <button class="btn btn-gold" onclick="takeLoan()">Взять кредит</button>
                     </div>
                 </div>
 
-                <!-- РЕКЛАМА (банк) -->
+                <div class="card">
+                    <div class="loan-badge"><span>📈 Рынок крипты</span></div>
+                    <div id="crypto-list" style="display:flex; flex-direction:column; gap:8px; margin-top:10px;"></div>
+                </div>
+
                 <div class="ad-wrap" id="ad-bank">
-                    <button class="ad-close" onclick="closeAd('ad-bank')" aria-label="Закрыть рекламу">✕</button>
+                    <button class="ad-close" onclick="closeAd('ad-bank')">✕</button>
                     <div id="yandex_rtb_R-A-20432576-4_bank"></div>
                     <script>
                     window.yaContextCb.push(() => {
@@ -546,7 +568,28 @@ select.input-field { appearance: none; -webkit-appearance: none; }
             </div>
         </div>
 
-        <!-- ПРОФИЛЬ -->
+        <!-- магазин за кристаллы -->
+        <div class="screen" id="screen-cryshop">
+            <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-cryshop')">‹</button><div class="screen-title">Магазин за 💎</div></div>
+            <div class="pad">
+                <div class="list-item">
+                    <div class="list-icon">🚗</div>
+                    <div class="li-main"><div class="li-title">Случайная Legendary</div><div class="li-sub">Кристаллы → машина</div><div class="li-gold">25 000 💎</div></div>
+                    <button class="btn-join" onclick="buyLegendaryCry()">КУПИТЬ</button>
+                </div>
+                <div class="list-item">
+                    <div class="list-icon">🎲</div>
+                    <div class="li-main"><div class="li-title">X10 Круток за кристаллы</div><div class="li-sub">Автосалон x10</div><div class="li-gold">8 000 💎</div></div>
+                    <button class="btn-join" onclick="buySpinPackCry()">КУПИТЬ</button>
+                </div>
+                <div class="list-item">
+                    <div class="list-icon">💰</div>
+                    <div class="li-main"><div class="li-title">1 000 000 ₽ за кристаллы</div><div class="li-sub">Обмен 1 000 💎 → 1 млн ₽</div></div>
+                    <button class="btn-join" onclick="buyMoneyCry()">КУПИТЬ</button>
+                </div>
+            </div>
+        </div>
+
         <div class="screen" id="screen-profile">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-profile')">‹</button><div class="screen-title">Профиль</div></div>
             <div class="pad" style="align-items:center;">
@@ -566,7 +609,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
             </div>
         </div>
 
-        <!-- ФОРТУНА -->
         <div class="screen" id="screen-fortune">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-fortune')">‹</button><div class="screen-title">Фортуна</div></div>
             <div class="pad" style="align-items:center;">
@@ -583,13 +625,12 @@ select.input-field { appearance: none; -webkit-appearance: none; }
             </div>
         </div>
 
-        <!-- ТЮНИНГ -->
         <div class="screen" id="screen-tuning">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-tuning')">‹</button><div class="screen-title">Тюнинг</div></div>
             <div class="pad">
                 <div class="card" style="display:flex; flex-direction:column; gap:12px;">
                     <h3>Прокачка салона (Удача)</h3>
-                    <p style="font-size:13px; color: var(--muted);">Каждый уровень повышает шанс выпадения дорогих машин на <b style="color: var(--gold);">+1.5%</b>.</p>
+                    <p style="font-size:13px; color: var(--muted);">Каждый уровень повышает шанс выпадения дорогих машин на <b style="color: var(--gold);">+1.5%</b>, а также повышает стоимость улучшаемой машины на <b style="color: var(--gold);">+0.5%</b>.</p>
                     <div style="display:flex; justify-content:space-between; font-weight:800; font-size:14px;">
                         <span>Уровень: <span id="tune-level" style="color: var(--blue);">0</span></span>
                         <span>Бонус: <span id="tune-bonus" style="color: var(--green);">0%</span></span>
@@ -599,7 +640,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
             </div>
         </div>
 
-        <!-- АУКЦИОН -->
         <div class="screen" id="screen-auction">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-auction')">‹</button><div class="screen-title">Аукцион</div></div>
             <div class="pad">
@@ -618,7 +658,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
             </div>
         </div>
 
-        <!-- КОНТРАКТЫ -->
         <div class="screen" id="screen-contracts">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-contracts')">‹</button><div class="screen-title">Контракты</div></div>
             <div class="pad">
@@ -627,35 +666,33 @@ select.input-field { appearance: none; -webkit-appearance: none; }
             </div>
         </div>
 
-        <!-- ДОСТИЖЕНИЯ -->
         <div class="screen" id="screen-achievements">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-achievements')">‹</button><div class="screen-title">Достижения</div></div>
             <div class="pad" id="achievements-list"></div>
         </div>
 
-        <!-- КАТАЛОГ -->
         <div class="screen" id="screen-catalog">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-catalog')">‹</button><div class="screen-title">Каталог (100 машин)</div></div>
             <div class="pad" id="catalog-list"></div>
         </div>
 
-        <!-- ПРАВИЛА -->
         <div class="screen" id="screen-rules">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-rules')">‹</button><div class="screen-title">Правила</div></div>
             <div class="pad rules">
                 <h3 style="margin-bottom:6px;">Как играть в НОМЕРДАЙ:</h3>
-                <p><b>1. Крутка:</b> в автосалоне тратите рубли, в госзнаках — кристаллы, чтобы выбить случайную машину или номер. Чем выше редкость (Common, Rare, Epic, Legendary, Hyper), тем дороже предмет. Кнопка X10 выдаёт сразу 10 предметов.</p>
-                <p><b>2. Гараж:</b> выбитое можно оставить в гараже или продать. Если закрыть экран крутки, предметы сами попадут в гараж.</p>
-                <p><b>3. Батлы:</b> каждому даётся 40 000 000 ₽. За 30 секунд вы крутите машины, и у кого суммарная стоимость выкрученных машин выше — тот забирает машину соперника. Ставка — машина из гаража.</p>
-                <p><b>4. Апгрейдер:</b> рискните машиной, чтобы получить более дорогую. Чем ниже шанс (10–75%), тем дороже приз. Деньги не тратятся, но при проигрыше машина сгорает.</p>
-                <p><b>5. Задания:</b> ежедневно выполняйте 3 задания и получайте награды. Обновляются в полночь.</p>
-                <p><b>6. Перерождение:</b> сбросьте прогресс ради постоянного бонуса к удаче. После перерождения вы снова начинаете с 20 000 000 ₽.</p>
-                <p><b>7. Помощь:</b> если на балансе меньше 4 999 999 ₽, каждые 30 минут начисляется 2 500 000 ₽.</p>
-                <p><b>8. Кредит:</b> можно взять до 10 000 000 ₽ на срок до 3 часов. Вовремя не вернёте — банк заберёт все деньги, машины и номера.</p>
+                <p><b>1. Крутка:</b> в автосалоне тратите рубли, в госзнаках — кристаллы, чтобы выбить случайную машину или номер. X10 выдаёт сразу 10 предметов.</p>
+                <p><b>2. Гараж:</b> выбитое можно оставить или продать.</p>
+                <p><b>3. Батлы:</b> 40 млн ₽ на 30 секунд, побеждает тот, у кого сумма машин больше.</p>
+                <p><b>4. Апгрейдер:</b> рискните машиной ради более дорогой.</p>
+                <p><b>5. Задания:</b> ежедневно 3 задания и награды.</p>
+                <p><b>6. Перерождение:</b> сброс прогресса ради +0.5% к удаче за каждое.</p>
+                <p><b>7. Помощь:</b> баланс < 4 999 999 ₽ → +2.5 млн ₽ раз в 30 минут.</p>
+                <p><b>8. Кредит:</b> до 50 млн ₽ на срок до 2 часов. От 10 млн — нужен залог машины. Просрочка — банк забирает всё.</p>
+                <p><b>9. Крипта:</b> BTC, ETH, SOL — цена меняется каждые 5 секунд. Покупайте дешевле, продавайте дороже.</p>
+                <p><b>10. Кристаллы:</b> 50 000 💎 → 50 млн ₽ или магазин за 💎.</p>
             </div>
         </div>
 
-        <!-- БАТЛ -->
         <div class="screen" id="screen-battle">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-battle')">‹</button><div class="screen-title">Батл 1x1</div></div>
             <div class="pad">
@@ -683,7 +720,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
             </div>
         </div>
 
-        <!-- МАГАЗИН -->
         <div class="screen" id="screen-shop">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-shop')">‹</button><div class="screen-title">Магазин дня</div></div>
             <div class="pad">
@@ -694,7 +730,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
             </div>
         </div>
 
-        <!-- ТОП -->
         <div class="screen" id="screen-top">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-top')">‹</button><div class="screen-title">Топ игроков</div></div>
             <div class="pad">
@@ -705,7 +740,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
             </div>
         </div>
 
-        <!-- ЗАДАНИЯ -->
         <div class="screen" id="screen-tasks">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-tasks')">‹</button><div class="screen-title">Задания</div></div>
             <div class="pad">
@@ -722,42 +756,31 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 </div>
 
 <script>
-// ================= УТИЛИТЫ =================
 const $ = id => document.getElementById(id);
 const fmt = n => Math.round(n).toLocaleString('ru-RU');
 const newUid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 const START_MONEY = 20000000;
 const START_CRYSTALS = 10060;
-const SAVE_KEY = 'numberday_save_v10';
+const SAVE_KEY = 'numberday_save_v11';
 const AD_KEY = 'numberday_ads_closed';
 
 function rng(seed) { let s = seed; return () => { s = (s * 1664525 + 1013904223) % 4294967296; return s / 4294967296; }; }
 
-// ================= РЕКЛАМА: ЗАКРЫТИЕ =================
-function getClosedAds() {
-    try { return JSON.parse(localStorage.getItem(AD_KEY)) || {}; } catch (e) { return {}; }
-}
+function getClosedAds() { try { return JSON.parse(localStorage.getItem(AD_KEY)) || {}; } catch (e) { return {}; } }
 function closeAd(id) {
-    const wrap = $(id);
-    if (wrap) wrap.classList.add('hidden');
-    const closed = getClosedAds();
-    closed[id] = true;
-    try { localStorage.setItem(AD_KEY, JSON.stringify(closed)); } catch (e) {}
+    const wrap = $(id); if (wrap) wrap.classList.add('hidden');
+    const c = getClosedAds(); c[id] = true;
+    try { localStorage.setItem(AD_KEY, JSON.stringify(c)); } catch (e) {}
 }
 function restoreClosedAds() {
-    const closed = getClosedAds();
-    ['ad-main', 'ad-bank'].forEach(id => {
-        if (closed[id]) { const el = $(id); if (el) el.classList.add('hidden'); }
-    });
+    const c = getClosedAds();
+    ['ad-main', 'ad-bank'].forEach(id => { if (c[id]) { const el = $(id); if (el) el.classList.add('hidden'); } });
 }
-// прячем рекламные обёртки, пока идёт загрузка/рендер
 restoreClosedAds();
 
-// ================= БАЗА ДАННЫХ =================
-const BRANDS = ["Lada", "Kia", "Toyota", "BMW", "Audi", "Mercedes", "Porsche", "Ferrari", "Lamborghini", "Bugatti", "Ford", "Chevrolet", "Nissan", "Honda", "Mazda", "Subaru", "Volkswagen", "Hyundai", "Renault", "Mitsubishi"];
-const MODELS = ["Sport", "GT", "Turbo", "Max", "Lux", "Premium", "Evo", "RS", "AMG", "M", "S", "X", "Z", "V"];
-const SHAPES = ["sedan", "sport", "suv", "pickup"];
-
+const BRANDS = ["Lada","Kia","Toyota","BMW","Audi","Mercedes","Porsche","Ferrari","Lamborghini","Bugatti","Ford","Chevrolet","Nissan","Honda","Mazda","Subaru","Volkswagen","Hyundai","Renault","Mitsubishi"];
+const MODELS = ["Sport","GT","Turbo","Max","Lux","Premium","Evo","RS","AMG","M","S","X","Z","V"];
+const SHAPES = ["sedan","sport","suv","pickup"];
 const RARITY_RANGES = {
     common:    [1000000,   3000000],
     rare:      [5000000,   15000000],
@@ -765,19 +788,15 @@ const RARITY_RANGES = {
     legendary: [120000000, 500000000],
     hyper:     [700000000, 2000000000]
 };
-
 const CARS_DB = [];
 (function () {
     let carId = 0;
     CARS_DB.push({ id: carId++, name: "Bugatti Chiron",   price: 1500000000, rarity: "hyper", shape: "sport" });
     CARS_DB.push({ id: carId++, name: "Koenigsegg Jesko", price: 2000000000, rarity: "hyper", shape: "sport" });
     CARS_DB.push({ id: carId++, name: "Pagani Huayra",    price: 1200000000, rarity: "hyper", shape: "sport" });
-
     const layout = [
-        { rarity: 'common',    count: 40 },
-        { rarity: 'rare',      count: 25 },
-        { rarity: 'epic',      count: 15 },
-        { rarity: 'legendary', count: 7  }
+        { rarity: 'common', count: 40 }, { rarity: 'rare', count: 25 },
+        { rarity: 'epic', count: 15 }, { rarity: 'legendary', count: 7 }
     ];
     layout.forEach(({ rarity, count }) => {
         const [lo, hi] = RARITY_RANGES[rarity];
@@ -785,18 +804,12 @@ const CARS_DB = [];
             const t = count === 1 ? 0.5 : i / (count - 1);
             const raw = lo + (hi - lo) * t;
             const price = Math.round(raw / 100000) * 100000;
-            CARS_DB.push({
-                id: carId++,
-                name: `${BRANDS[i % BRANDS.length]} ${MODELS[i % MODELS.length]} ${carId}`,
-                price,
-                rarity,
-                shape: SHAPES[i % SHAPES.length]
-            });
+            CARS_DB.push({ id: carId++, name: `${BRANDS[i % BRANDS.length]} ${MODELS[i % MODELS.length]} ${carId}`, price, rarity, shape: SHAPES[i % SHAPES.length] });
         }
     });
 })();
 
-const NUMBER_LETTERS = ["А", "В", "Е", "К", "М", "Н", "О", "Р", "С", "Т", "У", "Х"];
+const NUMBER_LETTERS = ["А","В","Е","К","М","Н","О","Р","С","Т","У","Х"];
 const NUMBERS_DB = [];
 (function () {
     const r = rng(77);
@@ -805,8 +818,7 @@ const NUMBERS_DB = [];
         const rarity = i < 50 ? "common" : i < 80 ? "rare" : i < 95 ? "epic" : "legendary";
         const base = rarity === "common" ? 100 : rarity === "rare" ? 500 : rarity === "epic" ? 1500 : 5000;
         const price = Math.round(base + r() * base * 0.5);
-        let digits;
-        const d = () => Math.floor(r() * 10);
+        let digits; const d = () => Math.floor(r() * 10);
         if (rarity === "legendary") { const x = d(); digits = `${x}${x}${x}`; }
         else if (rarity === "epic") { const x = d(); digits = `${x}${x}${d()}`; }
         else if (rarity === "rare") { digits = `${d()}0${d()}`; }
@@ -823,7 +835,6 @@ const PAL = {
     hyper:     { col: '#ff3d6e', dark: '#9c0f35' }
 };
 
-// ================= ОТРИСОВКА =================
 let gradCounter = 0;
 function carSVG(car) {
     if (!car) return '';
@@ -834,21 +845,17 @@ function carSVG(car) {
     let body, win, extra = '', ly;
     if (shape === 'sport') {
         body = 'M8 72 L8 64 Q10 58 24 56 L60 50 Q80 34 110 34 Q132 36 146 48 L180 54 Q192 58 192 66 L192 72 Z';
-        win = 'M72 49 Q86 38 106 38 L112 38 L112 49 Z M118 38 Q132 40 142 49 L118 49 Z';
-        ly = 63;
+        win = 'M72 49 Q86 38 106 38 L112 38 L112 49 Z M118 38 Q132 40 142 49 L118 49 Z'; ly = 63;
     } else if (shape === 'suv') {
         body = 'M10 72 L10 52 Q10 46 18 45 L52 43 L62 30 L132 30 L146 43 L180 46 Q190 48 190 56 L190 72 Z';
-        win = 'M68 42 L72 34 L96 34 L96 42 Z M102 34 L128 34 L138 42 L102 42 Z';
-        ly = 57;
+        win = 'M68 42 L72 34 L96 34 L96 42 Z M102 34 L128 34 L138 42 L102 42 Z'; ly = 57;
     } else if (shape === 'pickup') {
         body = 'M10 72 L10 54 Q10 48 20 47 L100 47 L106 46 L116 34 L152 34 Q160 34 164 44 L184 48 Q192 50 192 58 L192 72 Z';
         win = 'M120 37 L150 37 L158 45 L116 45 Z';
-        extra = `<path d="M14 51 L98 51" stroke="${p.dark}" stroke-width="2" opacity=".7"/>`;
-        ly = 58;
+        extra = `<path d="M14 51 L98 51" stroke="${p.dark}" stroke-width="2" opacity=".7"/>`; ly = 58;
     } else {
         body = 'M10 72 L10 62 Q10 56 20 54 L48 49 Q58 36 78 34 L120 34 Q140 35 150 48 L178 54 Q190 57 190 64 L190 72 Z';
-        win = 'M62 48 Q68 38 80 38 L96 38 L96 48 Z M102 38 L120 38 Q132 39 140 48 L102 48 Z';
-        ly = 61;
+        win = 'M62 48 Q68 38 80 38 L96 38 L96 48 Z M102 38 L120 38 Q132 39 140 48 L102 48 Z'; ly = 61;
     }
     const wheel = x => `<circle cx="${x}" cy="73" r="${w + 3}" fill="#07060c"/><circle cx="${x}" cy="73" r="${w}" fill="#1b1b24" stroke="#000" stroke-width="1"/><circle cx="${x}" cy="73" r="${(w * 0.62).toFixed(1)}" fill="url(#${g}r)"/><circle cx="${x}" cy="73" r="2.5" fill="#2c2c36"/>`;
     return `<svg class="car-svg" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
@@ -861,14 +868,12 @@ function carSVG(car) {
         <ellipse cx="100" cy="88" rx="86" ry="7" fill="rgba(0,0,0,.45)"/>
         <path d="${body}" fill="url(#${g}b)" stroke="${p.dark}" stroke-width="1.5" stroke-linejoin="round"/>
         <path d="${body}" fill="url(#${g}s)"/>
-        ${extra}
-        <path d="${win}" fill="url(#${g}w)"/>
+        ${extra}<path d="${win}" fill="url(#${g}w)"/>
         ${wheel(48)}${wheel(152)}
         <rect x="${shape === 'sport' ? 8 : 11}" y="${ly}" width="6" height="5" rx="2" fill="#ff3b4e"/>
         <rect x="181" y="${ly}" width="7" height="5" rx="2" fill="#fff6c9"/>
     </svg>`;
 }
-
 function plateHTML(n, sm) {
     const nm = n.name;
     const rc = (PAL[n.rarity] || PAL.common).col;
@@ -878,7 +883,6 @@ const artOf = (item, sm) => item.type === 'number' ? plateHTML(item, sm) : carSV
 const priceStr = item => item.type === 'number' ? `${fmt(item.price)} 💎` : `${fmt(item.price)} ₽`;
 const priceCls = item => item.type === 'number' ? 'crys' : '';
 
-// ================= СОСТОЯНИЕ =================
 const BACKGROUNDS = [
     { id: 'bg1', style: 'radial-gradient(900px 500px at 50% -10%, #3b2a6e 0%, transparent 60%), linear-gradient(180deg, #100c20 0%, #161029 60%, #0b0814 100%)' },
     { id: 'bg2', style: 'radial-gradient(900px 500px at 50% -10%, #1d4d8f 0%, transparent 60%), linear-gradient(180deg, #08101f 0%, #0c1830 60%, #060b16 100%)' },
@@ -887,7 +891,6 @@ const BACKGROUNDS = [
     { id: 'bg5', style: 'radial-gradient(900px 500px at 50% -10%, #4a4a58 0%, transparent 60%), linear-gradient(180deg, #121217 0%, #1b1b22 60%, #09090c 100%)' },
     { id: 'bg6', style: 'radial-gradient(900px 500px at 50% -10%, #8a5a10 0%, transparent 60%), linear-gradient(180deg, #17110a 0%, #241a0b 60%, #0c0904 100%)' }
 ];
-
 const ACHIEVEMENTS = [
     { id: 'ach1', title: 'Первый шаг', desc: 'Сделайте 1 крутку', icon: '🎲' },
     { id: 'ach2', title: 'Миллионер', desc: 'Накопите 100 млн ₽', icon: '💰' },
@@ -898,16 +901,16 @@ const ACHIEVEMENTS = [
     { id: 'ach7', title: 'Легенда', desc: 'Выбейте Legendary машину', icon: '🏆' },
     { id: 'ach8', title: 'Тюнер', desc: 'Прокачайте салон 1 раз', icon: '🛠️' }
 ];
-
 const DAILY_TASKS = [
-    { id: 'spins',    icon: '🎲', title: 'Прокрути',   desc: 'Сделайте 10 круток',     goal: 10,      reward: { money: 1000000 },              label: '1 000 000 ₽' },
-    { id: 'epicPlus', icon: '💎', title: 'Epic+',      desc: 'Выбейте Epic или выше',  goal: 1,       reward: { crystals: 2500 },              label: '2 500 💎' },
-    { id: 'earned',   icon: '💸', title: 'Куш',        desc: 'Заработайте 50 млн ₽',    goal: 50000000, reward: { money: 5000000, crystals: 500 }, label: '5 млн ₽ + 500 💎' }
+    { id: 'spins', icon: '🎲', title: 'Прокрути', desc: 'Сделайте 10 круток', goal: 10, reward: { money: 1000000 }, label: '1 000 000 ₽' },
+    { id: 'epicPlus', icon: '💎', title: 'Epic+', desc: 'Выбейте Epic или выше', goal: 1, reward: { crystals: 2500 }, label: '2 500 💎' },
+    { id: 'earned', icon: '💸', title: 'Куш', desc: 'Заработайте 50 млн ₽', goal: 50000000, reward: { money: 5000000, crystals: 500 }, label: '5 млн ₽ + 500 💎' }
 ];
 
 function defaultState() {
     return {
-        money: START_MONEY, crystals: START_CRYSTALS, usd: 0, rebirths: 0,
+        money: START_MONEY, crystals: START_CRYSTALS,
+        usd: 0, eur: 0, cny: 0, rebirths: 0,
         garage: [], pending: { car: [], number: [] },
         playerName: 'Игрок_2107', upgradeChance: 50,
         battleCar: null, mmr: 0, battleWins: 0,
@@ -915,26 +918,31 @@ function defaultState() {
         contracts: [], ach: {}, lastFortuneSpin: 0,
         spins: 0, upgradeWins: 0, gotLegendary: false,
         dailyDate: '', dailyProgress: { spins: 0, epicPlus: 0, earned: 0 }, dailyClaimed: { spins: false, epicPlus: false, earned: false },
-        loan: 0, loanDueAt: 0, lastAidAt: 0
+        loan: 0, loanDueAt: 0, lastAidAt: 0, loanCollateralUid: null,
+        crypto: {
+            btc: { name: 'BTC', icon: '₿', color: '#f7931a', price: 5000000, prev: 5000000, hold: 0 },
+            eth: { name: 'ETH', icon: 'Ξ', color: '#627eea', price: 350000, prev: 350000, hold: 0 },
+            sol: { name: 'SOL', icon: '◎', color: '#14f195', price: 18000, prev: 18000, hold: 0 }
+        }
     };
 }
 let state = defaultState();
 try {
-    const saved = JSON.parse(localStorage.getItem(SAVE_KEY)) || JSON.parse(localStorage.getItem('numberday_save_v9'));
-    if (saved) state = { ...state, ...saved, pending: { car: [], number: [], ...(saved.pending || {}) } };
+    const saved = JSON.parse(localStorage.getItem(SAVE_KEY)) || JSON.parse(localStorage.getItem('numberday_save_v10'));
+    if (saved) state = { ...state, ...saved, pending: { car: [], number: [], ...(saved.pending || {}) }, crypto: { ...defaultState().crypto, ...(saved.crypto || {}) } };
 } catch (e) {}
 ['car', 'number'].forEach(t => { state.garage.push(...state.pending[t]); state.pending[t] = []; });
+if (!state.eur) state.eur = 0;
+if (!state.cny) state.cny = 0;
 
 function saveGame() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {} }
 
-// ================= ДЕНЬГИ =================
 function earnMoney(amount) {
     if (!amount || amount <= 0) return;
     state.money += amount;
     addDailyProgress('earned', amount);
 }
 
-// ================= МОДАЛКИ =================
 let toastTimer = null;
 function toast(msg) {
     const t = $('toast');
@@ -965,17 +973,12 @@ function pickCar(cb) {
 }
 function pickDone(u) { closeModal(); if (_pickCb) _pickCb(u); }
 
-// ================= ДОСТИЖЕНИЯ =================
 function checkAchievements() {
     const cond = {
-        ach1: state.spins >= 1,
-        ach2: state.money >= 100000000,
+        ach1: state.spins >= 1, ach2: state.money >= 100000000,
         ach3: state.garage.filter(i => i.type === 'car').length >= 10,
-        ach4: state.battleWins >= 5,
-        ach5: state.upgradeWins >= 1,
-        ach6: state.rebirths >= 1,
-        ach7: state.gotLegendary,
-        ach8: state.tuningLevel >= 1
+        ach4: state.battleWins >= 5, ach5: state.upgradeWins >= 1,
+        ach6: state.rebirths >= 1, ach7: state.gotLegendary, ach8: state.tuningLevel >= 1
     };
     let n = 0;
     ACHIEVEMENTS.forEach(a => {
@@ -991,11 +994,7 @@ const TIERS = [
 ];
 const rankName = m => m < 1000 ? 'Бронза' : m < 2000 ? 'Серебро' : 'Золото';
 
-// ================= ЕЖЕДНЕВНЫЕ =================
-function todayKey() {
-    const d = new Date();
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-}
+function todayKey() { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
 function resetDailyIfNeeded() {
     if (!state.dailyProgress) state.dailyProgress = { spins: 0, epicPlus: 0, earned: 0 };
     if (!state.dailyClaimed) state.dailyClaimed = { spins: false, epicPlus: false, earned: false };
@@ -1016,7 +1015,7 @@ function addDailyProgress(key, amount) {
 function tasksDoneCount() {
     resetDailyIfNeeded();
     let n = 0;
-    DAILY_TASKS.forEach(t => { const p = state.dailyProgress[t.id] || 0; if (p >= t.goal) n++; });
+    DAILY_TASKS.forEach(t => { if ((state.dailyProgress[t.id] || 0) >= t.goal) n++; });
     return n;
 }
 function claimDaily(id) {
@@ -1024,8 +1023,7 @@ function claimDaily(id) {
     const task = DAILY_TASKS.find(t => t.id === id);
     if (!task) return;
     if (state.dailyClaimed[id]) { toast('Уже получено'); return; }
-    const prog = state.dailyProgress[id] || 0;
-    if (prog < task.goal) { toast('Ещё не выполнено'); return; }
+    if ((state.dailyProgress[id] || 0) < task.goal) { toast('Ещё не выполнено'); return; }
     state.dailyClaimed[id] = true;
     if (task.reward.money) earnMoney(task.reward.money);
     if (task.reward.crystals) state.crystals += task.reward.crystals;
@@ -1034,19 +1032,13 @@ function claimDaily(id) {
 }
 function renderTasks() {
     resetDailyIfNeeded();
-    const container = $('tasks-list');
-    if (!container) return;
-    container.innerHTML = DAILY_TASKS.map(task => {
+    const c = $('tasks-list'); if (!c) return;
+    c.innerHTML = DAILY_TASKS.map(task => {
         const prog = Math.min(state.dailyProgress[task.id] || 0, task.goal);
-        const done = prog >= task.goal;
-        const claimed = !!state.dailyClaimed[task.id];
+        const done = prog >= task.goal, claimed = !!state.dailyClaimed[task.id];
         const pct = Math.floor((prog / task.goal) * 100);
-        const progText = task.id === 'earned'
-            ? `${fmt(prog)} / ${fmt(task.goal)} ₽`
-            : `${fmt(prog)} / ${fmt(task.goal)}`;
-        const bar = `<div style="height:6px; background: var(--card-2); border-radius:3px; margin-top:8px; overflow:hidden;">
-                        <div style="height:100%; width:${pct}%; background: linear-gradient(90deg, var(--gold-2), var(--gold)); transition: width .3s;"></div>
-                     </div>`;
+        const progText = task.id === 'earned' ? `${fmt(prog)} / ${fmt(task.goal)} ₽` : `${fmt(prog)} / ${fmt(task.goal)}`;
+        const bar = `<div style="height:6px; background: var(--card-2); border-radius:3px; margin-top:8px; overflow:hidden;"><div style="height:100%; width:${pct}%; background: linear-gradient(90deg, var(--gold-2), var(--gold)); transition: width .3s;"></div></div>`;
         let btn;
         if (claimed) btn = `<button class="btn-join" disabled style="opacity:.5; cursor:default;">✓</button>`;
         else if (done) btn = `<button class="btn-join" onclick="claimDaily('${task.id}')">Забрать</button>`;
@@ -1054,37 +1046,28 @@ function renderTasks() {
         return `<div class="list-item" style="flex-direction:column; align-items:stretch; gap:4px;">
             <div style="display:flex; align-items:center; gap:10px;">
                 <div class="list-icon">${task.icon}</div>
-                <div class="li-main">
-                    <div class="li-title">${task.title}</div>
-                    <div class="li-sub">${task.desc}</div>
-                    <div class="li-gold">🎁 ${task.label}</div>
-                </div>
+                <div class="li-main"><div class="li-title">${task.title}</div><div class="li-sub">${task.desc}</div><div class="li-gold">🎁 ${task.label}</div></div>
                 ${btn}
-            </div>
-            ${bar}
+            </div>${bar}
         </div>`;
     }).join('');
 }
 
-// ================= ПОМОЩЬ + КРЕДИТ =================
 const AID_THRESHOLD = 4999999;
 const AID_AMOUNT = 2500000;
 const AID_INTERVAL = 30 * 60 * 1000;
-const LOAN_MAX = 10000000;
+const LOAN_MAX = 50000000;
+const LOAN_COLLATERAL_FROM = 10000000;
 
 function checkLoanExpired() {
     if (state.loan > 0 && state.loanDueAt && Date.now() >= state.loanDueAt) {
-        state.loan = 0;
-        state.loanDueAt = 0;
-        state.money = 0;
-        state.garage = [];
-        state.contracts = [];
-        state.battleCar = null;
-        state.pending = { car: [], number: [] };
-        saveGame();
-        updateUI();
+        state.loan = 0; state.loanDueAt = 0;
+        state.money = 0; state.garage = []; state.contracts = [];
+        state.battleCar = null; state.pending = { car: [], number: [] };
+        state.loanCollateralUid = null;
+        saveGame(); updateUI();
         if ($('screen-bank') && $('screen-bank').classList.contains('active')) renderBank();
-        infoBox('🚫 Кредит просрочен!', 'Банк забрал <b>все деньги, машины и номера</b> за неуплату кредита. Долг списан.');
+        infoBox('🚫 Кредит просрочен!', 'Банк забрал <b>все деньги, машины и номера</b> (включая залог) за неуплату кредита.');
     }
 }
 function applyAidIfNeeded() {
@@ -1093,39 +1076,55 @@ function applyAidIfNeeded() {
         if (!state.lastAidAt) state.lastAidAt = now;
         if (now - state.lastAidAt >= AID_INTERVAL) {
             state.lastAidAt = now;
-            earnMoney(AID_AMOUNT);
-            updateUI();
+            earnMoney(AID_AMOUNT); updateUI();
             if ($('screen-bank') && $('screen-bank').classList.contains('active')) renderBank();
             toast(`🆘 Помощь новичкам: +${fmt(AID_AMOUNT)} ₽`);
         }
-    } else {
-        state.lastAidAt = now;
-    }
+    } else state.lastAidAt = now;
     saveGame();
 }
+
+let pendingLoan = null;
 function takeLoan() {
     if (state.loan > 0) { toast('У вас уже есть активный кредит'); return; }
     const amount = Math.floor(Number($('loan-amount').value));
     const hours = Number($('loan-term').value);
     if (!amount || amount < 1) { toast('Введите сумму кредита'); return; }
     if (amount > LOAN_MAX) { toast(`Максимум ${fmt(LOAN_MAX)} ₽`); return; }
-    if (!hours || hours <= 0 || hours > 3) { toast('Срок должен быть от 0.5 до 3 часов'); return; }
+    if (!hours || hours <= 0 || hours > 2) { toast('Срок до 2 часов'); return; }
+
+    pendingLoan = { amount, hours };
+    if (amount >= LOAN_COLLATERAL_FROM) {
+        // нужен залог-машина
+        const cars = state.garage.filter(i => i.type === 'car');
+        if (!cars.length) { toast('Нужен залог-машина (кредит от 10 млн)'); pendingLoan = null; return; }
+        pickCar(u => {
+            const car = state.garage.find(i => i.uid === u);
+            if (!car) return;
+            finalizeLoan(amount, hours, u);
+        });
+    } else {
+        finalizeLoan(amount, hours, null);
+    }
+}
+function finalizeLoan(amount, hours, collateralUid) {
     state.loan = amount;
     state.loanDueAt = Date.now() + hours * 60 * 60 * 1000;
+    state.loanCollateralUid = collateralUid;
     state.money += amount;
     $('loan-amount').value = '';
+    pendingLoan = null;
     saveGame(); updateUI(); renderBank();
     toast(`💳 Кредит ${fmt(amount)} ₽ получен`);
 }
 function repayLoan() {
     if (state.loan <= 0) { toast('Нет активного кредита'); return; }
     const debt = state.loan;
-    if (state.money < debt) { toast(`Нужно ${fmt(debt)} ₽ для выплаты`); return; }
+    if (state.money < debt) { toast(`Нужно ${fmt(debt)} ₽`); return; }
     state.money -= debt;
-    state.loan = 0;
-    state.loanDueAt = 0;
+    state.loan = 0; state.loanDueAt = 0; state.loanCollateralUid = null;
     saveGame(); updateUI(); renderBank();
-    toast('✅ Кредит выплачен!');
+    toast('✅ Кредит выплачен! Залог возвращён.');
 }
 function renderBank() {
     const aidEl = $('aid-status');
@@ -1134,41 +1133,143 @@ function renderBank() {
             const left = Math.max(0, AID_INTERVAL - (Date.now() - (state.lastAidAt || Date.now())));
             const m = Math.floor(left / 60000), s = Math.floor((left % 60000) / 1000);
             aidEl.textContent = `Следующее начисление через ${m}м ${String(s).padStart(2,'0')}с`;
-        } else {
-            aidEl.textContent = 'Доступно только при балансе меньше 4 999 999 ₽';
-        }
+        } else aidEl.textContent = 'Доступно только при балансе меньше 4 999 999 ₽';
     }
     const active = $('loan-active-box'), form = $('loan-form-box'), badge = $('loan-badge-val');
     if (state.loan > 0) {
         if (active) active.style.display = 'flex';
         if (form) form.style.display = 'none';
         if (badge) badge.textContent = 'активен';
-        const debtEl = $('loan-debt'); if (debtEl) debtEl.textContent = fmt(state.loan) + ' ₽';
-        const rep = $('loan-repay-sum'); if (rep) rep.textContent = fmt(state.loan) + ' ₽';
+        const d = $('loan-debt'); if (d) d.textContent = fmt(state.loan) + ' ₽';
+        const r = $('loan-repay-sum'); if (r) r.textContent = fmt(state.loan) + ' ₽';
         const left = Math.max(0, state.loanDueAt - Date.now());
         const h = Math.floor(left / 3600000), m = Math.floor((left % 3600000) / 60000), s = Math.floor((left % 60000) / 1000);
-        const leftEl = $('loan-left');
-        if (leftEl) leftEl.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        const le = $('loan-left');
+        if (le) le.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        const col = $('loan-collateral');
+        if (col) {
+            if (state.loanCollateralUid) {
+                const car = state.garage.find(i => i.uid === state.loanCollateralUid);
+                col.textContent = car ? `${car.name} (${fmt(car.price)} ₽)` : '—';
+            } else col.textContent = '—';
+        }
     } else {
         if (active) active.style.display = 'none';
         if (form) form.style.display = 'flex';
         if (badge) badge.textContent = '';
     }
+    // крипта
+    renderCrypto();
+    // обмен кристаллов
+    const cb = $('cry-exchange-btn');
+    if (cb) {
+        if (state.crystals >= 50000) cb.classList.remove('disabled');
+        else cb.classList.add('disabled');
+    }
 }
+
+function exchangeCrystals() {
+    if (state.crystals < 50000) { toast('Нужно 50 000 💎'); return; }
+    state.crystals -= 50000;
+    earnMoney(50000000);
+    updateUI(); renderBank();
+    toast('💎 50 000 → 50 000 000 ₽');
+}
+
+// крипта
+const CRYPTO_KEYS = ['btc', 'eth', 'sol'];
+function renderCrypto() {
+    const list = $('crypto-list'); if (!list) return;
+    list.innerHTML = CRYPTO_KEYS.map(k => {
+        const c = state.crypto[k];
+        if (!c) return '';
+        const ch = c.prev ? ((c.price - c.prev) / c.prev) * 100 : 0;
+        const cls = ch >= 0 ? 'up' : 'down';
+        const arrow = ch >= 0 ? '▲' : '▼';
+        return `<div class="crypto-row">
+            <div class="crypto-icon" style="background:${c.color}22;color:${c.color};">${c.icon}</div>
+            <div class="crypto-info">
+                <div class="crypto-price">${c.name} · ${fmt(c.price)} ₽</div>
+                <div class="crypto-change ${cls}">${arrow} ${Math.abs(ch).toFixed(2)}%</div>
+                <div style="font-size:11px; color: var(--muted);">У вас: ${c.hold}</div>
+            </div>
+            <div class="crypto-btns">
+                <button class="crypto-btn crypto-buy" onclick="tradeCrypto('${k}', 1)">Купить</button>
+                <button class="crypto-btn crypto-sell" onclick="tradeCrypto('${k}', -1)">Продать</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+function tradeCrypto(key, dir) {
+    const c = state.crypto[key]; if (!c) return;
+    if (dir > 0) {
+        if (state.money < c.price) { toast('Недостаточно ₽'); return; }
+        state.money -= c.price;
+        c.hold += 1;
+        toast(`Куплено 1 ${c.name} за ${fmt(c.price)} ₽`);
+    } else {
+        if (c.hold < 1) { toast(`Нет ${c.name} для продажи`); return; }
+        c.hold -= 1;
+        earnMoney(c.price);
+        toast(`Продано 1 ${c.name} за ${fmt(c.price)} ₽`);
+    }
+    updateUI(); renderBank(); saveGame();
+}
+// колебания каждые 5 секунд
+setInterval(() => {
+    CRYPTO_KEYS.forEach(k => {
+        const c = state.crypto[k];
+        if (!c) return;
+        c.prev = c.price;
+        const delta = (Math.random() - 0.5) * 0.08;
+        c.price = Math.max(1, Math.round(c.price * (1 + delta)));
+    });
+    if ($('screen-bank') && $('screen-bank').classList.contains('active')) renderCrypto();
+    saveGame();
+}, 5000);
+
 setInterval(() => {
     checkLoanExpired();
     applyAidIfNeeded();
     if ($('screen-bank') && $('screen-bank').classList.contains('active')) renderBank();
 }, 1000);
 
-// ================= UI =================
+// магазин за кристаллы
+function buyLegendaryCry() {
+    if (state.crystals < 25000) { toast('Нужно 25 000 💎'); return; }
+    state.crystals -= 25000;
+    const pool = CARS_DB.filter(c => c.rarity === 'legendary');
+    const car = pool[Math.floor(Math.random() * pool.length)];
+    state.garage.push({ ...car, type: 'car', uid: newUid() });
+    state.gotLegendary = true;
+    updateUI(); toast(`🚗 Получена: ${car.name}`);
+}
+function buySpinPackCry() {
+    if (state.crystals < 8000) { toast('Нужно 8 000 💎'); return; }
+    state.crystals -= 8000;
+    for (let i = 0; i < 10; i++) {
+        const it = { ...getRandomItem('car', 'x10'), type: 'car', uid: newUid() };
+        state.garage.push(it);
+    }
+    updateUI(); toast('10 машин добавлено в гараж');
+}
+function buyMoneyCry() {
+    if (state.crystals < 1000) { toast('Нужно 1 000 💎'); return; }
+    state.crystals -= 1000;
+    earnMoney(1000000);
+    updateUI(); toast('💎 1 000 → 1 000 000 ₽');
+}
+
 function updateUI() {
     $('ui-money').textContent = fmt(state.money);
     $('ui-crystals').textContent = fmt(state.crystals);
-    const carCount = state.garage.filter(i => i.type === 'car').length;
-    const numCount = state.garage.filter(i => i.type === 'number').length;
-    $('ui-garage-count').textContent = `${carCount} | ${numCount}`;
-    $('ui-usd').textContent = state.usd;
+    const cc = state.garage.filter(i => i.type === 'car').length;
+    const nc = state.garage.filter(i => i.type === 'number').length;
+    $('ui-garage-count').textContent = `${cc} | ${nc}`;
+    $('ui-usd').textContent = state.usd || 0;
+    const eurEl = $('ui-eur'); if (eurEl) eurEl.textContent = state.eur || 0;
+    const cnyEl = $('ui-cny'); if (cnyEl) cnyEl.textContent = state.cny || 0;
+    const cryEl = $('ui-cry-bal'); if (cryEl) cryEl.textContent = fmt(state.crystals);
     $('profile-name').textContent = state.playerName;
     $('profile-rebirths').textContent = state.rebirths;
     $('ui-rebirth-cost').textContent = fmt(rebirthCost()) + ' ₽';
@@ -1179,8 +1280,7 @@ function updateUI() {
     document.documentElement.style.setProperty('--app-bg', bg.style);
 
     const net = state.money + state.garage.filter(i => i.type === 'car').reduce((s, i) => s + i.price, 0);
-    let ti = 0;
-    TIERS.forEach((t, i) => { if (net >= t.from) ti = i; });
+    let ti = 0; TIERS.forEach((t, i) => { if (net >= t.from) ti = i; });
     $('ui-status').textContent = TIERS[ti].name;
     const next = TIERS[ti + 1];
     $('ui-progress').style.width = next ? Math.min(100, ((net - TIERS[ti].from) / (next.from - TIERS[ti].from)) * 100) + '%' : '100%';
@@ -1192,11 +1292,9 @@ function updateUI() {
     saveGame();
 }
 
-// ================= НАВИГАЦИЯ =================
 const SPIN_SCREENS = { 'screen-autosalon': 'car', 'screen-gosznaki': 'number' };
 function openScreen(id) {
-    const el = $(id);
-    if (!el) return;
+    const el = $(id); if (!el) return;
     el.scrollTop = 0;
     if (id === 'screen-autosalon') renderPending('car');
     if (id === 'screen-gosznaki') renderPending('number');
@@ -1230,15 +1328,15 @@ function closeScreen(id) {
     updateUI();
 }
 
-// ================= ВЫПАДЕНИЕ =================
 function getRandomItem(type, mode) {
     const pool = type === 'car' ? CARS_DB : NUMBERS_DB;
     const roll = Math.random() * 100;
     const boost = (mode === 'boost' || mode === 'x10') ? 2 : 0;
     const bonus = boost + state.rebirths * 0.5 + state.tuningBonus;
 
-    const cH = type === 'car' ? 0.1 + boost * 0.02 : 0;
-    const cL = 1 + bonus;
+    // понижено: hyper 0.05%, legendary 0.9%, epic 4%, rare 15%
+    const cH = type === 'car' ? 0.05 + boost * 0.02 : 0;
+    const cL = 0.9 + bonus;
     const cE = 4 + bonus;
     const cR = 15 + bonus;
 
@@ -1259,8 +1357,7 @@ let busySpin = false;
 function spin(type, mode) {
     if (busySpin) return;
     if (state.pending[type].length) { toast('Сначала заберите предыдущие призы'); return; }
-
-    const costMoney = mode === 'x10' ? 100000000 : mode === 'boost' ? 10000000 : 5000000;
+    const costMoney = mode === 'x10' ? 700000000 : mode === 'boost' ? 10000000 : 5000000;
     const costCrys = mode === 'x10' ? 5000 : mode === 'boost' ? 1500 : 500;
     if (type === 'car') {
         if (state.money < costMoney) { toast('Недостаточно рублей!'); return; }
@@ -1269,14 +1366,11 @@ function spin(type, mode) {
         if (state.crystals < costCrys) { toast('Недостаточно кристаллов!'); return; }
         state.crystals -= costCrys;
     }
-    busySpin = true;
-    updateUI();
-
+    busySpin = true; updateUI();
     $(type + '-actions').style.display = 'none';
     $(type + '-controls').style.display = 'flex';
     const display = $(type + '-display');
     display.classList.remove('glow-hyper');
-
     let n = 0;
     const iv = setInterval(() => {
         const t = getRandomItem(type, mode);
@@ -1291,11 +1385,9 @@ function finishSpin(type, mode) {
     state.pending[type] = items;
     state.spins += count;
     addDailyProgress('spins', count);
-    if (type === 'car' && items.some(i => i.rarity === 'epic' || i.rarity === 'legendary' || i.rarity === 'hyper')) addDailyProgress('epicPlus', 1);
-    if (items.some(i => i.type === 'car' && (i.rarity === 'legendary' || i.rarity === 'hyper'))) state.gotLegendary = true;
-    busySpin = false;
-    renderPending(type);
-    updateUI();
+    if (type === 'car' && items.some(i => ['epic','legendary','hyper'].includes(i.rarity))) addDailyProgress('epicPlus', 1);
+    if (items.some(i => i.type === 'car' && ['legendary','hyper'].includes(i.rarity))) state.gotLegendary = true;
+    busySpin = false; renderPending(type); updateUI();
 }
 function renderPending(type) {
     const items = state.pending[type];
@@ -1303,45 +1395,36 @@ function renderPending(type) {
     const actions = $(type + '-actions');
     const controls = $(type + '-controls');
     display.classList.remove('glow-hyper');
-
     if (!items.length) {
         display.innerHTML = `<div class="idle"><div class="big">${type === 'car' ? '🚗' : '🔢'}</div>Нажми на кнопку!</div>`;
-        actions.style.display = 'none';
-        controls.style.display = 'flex';
-        return;
+        actions.style.display = 'none'; controls.style.display = 'flex'; return;
     }
     const total = items.reduce((s, i) => s + i.price, 0);
     const unit = type === 'car' ? '₽' : '💎';
     if (items.length === 1) {
         const it = items[0];
         display.innerHTML = `<div class="r-${it.rarity}" style="width:100%; display:flex; flex-direction:column; align-items:center;">
-            ${artOf(it)}
-            <div class="car-name" ${type === 'number' ? 'style="font-size:15px; color: var(--muted);"' : ''}>${it.name}</div>
+            ${artOf(it)}<div class="car-name" ${type === 'number' ? 'style="font-size:15px; color: var(--muted);"' : ''}>${it.name}</div>
             <div class="rar-label">${it.rarity}</div>
             <div class="car-price ${priceCls(it)}">${fmt(it.price)} ${unit}</div></div>`;
         $(type + '-keep').textContent = 'В гараж';
         $(type + '-sell').textContent = 'Продать';
     } else {
-        display.innerHTML = `<div class="res-head">Выпало: <b>${items.length}</b> • Общая стоимость: <b>${fmt(total)} ${unit}</b></div>
+        display.innerHTML = `<div class="res-head">Выпало: <b>${items.length}</b> • Стоимость: <b>${fmt(total)} ${unit}</b></div>
             <div class="res-grid">${items.map(it => `<div class="res-card r-${it.rarity}">${artOf(it, true)}<div class="rc-name">${it.name}</div><div class="rar-label" style="font-size:9px;">${it.rarity}</div><div class="rc-price ${priceCls(it)}">${fmt(it.price)} ${unit}</div></div>`).join('')}</div>`;
         $(type + '-keep').textContent = 'Все в гараж';
         $(type + '-sell').textContent = 'Продать всё';
     }
     if (items.some(i => i.rarity === 'hyper')) display.classList.add('glow-hyper');
-    actions.style.display = 'flex';
-    controls.style.display = 'none';
+    actions.style.display = 'flex'; controls.style.display = 'none';
 }
 function keepPending(type) {
-    const items = state.pending[type];
-    if (!items.length) return;
-    state.garage.push(...items);
-    state.pending[type] = [];
-    renderPending(type); updateUI();
-    toast(`В гараж добавлено: ${items.length}`);
+    const items = state.pending[type]; if (!items.length) return;
+    state.garage.push(...items); state.pending[type] = [];
+    renderPending(type); updateUI(); toast(`В гараж добавлено: ${items.length}`);
 }
 function sellPending(type) {
-    const items = state.pending[type];
-    if (!items.length) return;
+    const items = state.pending[type]; if (!items.length) return;
     const sum = items.reduce((s, i) => s + i.price, 0);
     if (type === 'car') earnMoney(sum); else state.crystals += sum;
     state.pending[type] = [];
@@ -1349,20 +1432,15 @@ function sellPending(type) {
     toast(`Продано на ${fmt(sum)} ${type === 'car' ? '₽' : '💎'}`);
 }
 
-// ================= ГАРАЖ =================
 let garageFilter = 'all';
 function renderGarage() {
     const chips = [['all', 'Всё'], ['car', 'Машины'], ['number', 'Номера']];
     $('garage-chips').innerHTML = chips.map(([k, l]) => `<div class="chip ${garageFilter === k ? 'active' : ''}" onclick="garageFilter='${k}'; renderGarage();">${l}</div>`).join('');
-
     const mode = $('sort-garage').value;
     let list = state.garage.filter(i => garageFilter === 'all' || i.type === garageFilter);
     if (mode === 'price-desc') list.sort((a, b) => b.price - a.price);
     if (mode === 'price-asc') list.sort((a, b) => a.price - b.price);
-    if (mode === 'rarity') {
-        const order = { hyper: 0, legendary: 1, epic: 2, rare: 3, common: 4 };
-        list.sort((a, b) => order[a.rarity] - order[b.rarity]);
-    }
+    if (mode === 'rarity') { const o = { hyper:0, legendary:1, epic:2, rare:3, common:4 }; list.sort((a, b) => o[a.rarity] - o[b.rarity]); }
     $('garage-grid').innerHTML = list.length ? list.map(it => `
         <div class="g-card r-${it.rarity}">
             <div class="g-art">${artOf(it, true)}</div>
@@ -1390,27 +1468,26 @@ function sellAllGarage() {
     }, 'Продать всё');
 }
 
-// ================= БАНК / ПРОФИЛЬ =================
+const CURRENCY_RATES = { usd: 90, eur: 100, cny: 12 };
 function convertMoney() {
     const amount = parseInt($('bank-input').value);
     if (!amount || amount <= 0) return;
+    const cur = $('bank-currency').value;
+    const rate = CURRENCY_RATES[cur];
     if (state.money < amount) { toast('Недостаточно рублей!'); return; }
-    const got = Math.floor(amount / 90);
-    state.money -= amount; state.usd += got;
+    const got = Math.floor(amount / rate);
+    state.money -= amount;
+    state[cur] = (state[cur] || 0) + got;
     $('bank-input').value = '';
-    updateUI();
-    toast(`Куплено ${got} $`);
+    updateUI(); toast(`Куплено ${got} ${cur.toUpperCase()}`);
 }
 function changeName() {
-    const v = $('input-name').value.trim();
-    if (!v) return;
-    state.playerName = v.slice(0, 16);
-    $('input-name').value = '';
+    const v = $('input-name').value.trim(); if (!v) return;
+    state.playerName = v.slice(0, 16); $('input-name').value = '';
     updateUI(); toast('Имя изменено!');
 }
 function renderBgPicker() {
-    const grid = $('bg-grid');
-    grid.innerHTML = '';
+    const grid = $('bg-grid'); grid.innerHTML = '';
     BACKGROUNDS.forEach(bg => {
         const d = document.createElement('div');
         d.className = 'bg-option' + (state.currentBg === bg.id ? ' active' : '');
@@ -1420,33 +1497,29 @@ function renderBgPicker() {
     });
 }
 
-// ================= ПЕРЕРОЖДЕНИЕ =================
 const rebirthCost = () => 100000000 + state.rebirths * 500000000;
 function rebirth() {
     const cost = rebirthCost();
     if (state.money < cost) { toast(`Для перерождения нужно ${fmt(cost)} ₽`); return; }
-    confirmBox('Вы потеряете ВСЁ (деньги, машины, номера), но получите +0.5% к шансу редких предметов навсегда. После перерождения вы начнёте с 20 000 000 ₽.', () => {
+    confirmBox('Вы потеряете ВСЁ, но получите +0.5% к удаче. Старт: 20 000 000 ₽.', () => {
         state.rebirths++;
-        state.money = START_MONEY;
-        state.crystals = START_CRYSTALS;
+        state.money = START_MONEY; state.crystals = START_CRYSTALS;
         state.garage = []; state.contracts = []; state.battleCar = null;
         state.pending = { car: [], number: [] };
-        state.usd = 0;
+        state.usd = 0; state.eur = 0; state.cny = 0;
+        state.loanCollateralUid = null;
         updateUI();
         infoBox('🔄 Перерождение!', `Перерождений: ${state.rebirths} (+${(state.rebirths * 0.5).toFixed(1)}% к удаче).<br>Стартовый баланс: ${fmt(START_MONEY)} ₽`);
     }, 'Переродиться');
 }
 
-// ================= КОЛЕСО =================
 function spinWheel(el, target) {
     let rot = el._rot || 0;
     const cur = ((rot % 360) + 360) % 360;
     rot += 1440 + ((target - cur) + 360) % 360;
-    el._rot = rot;
-    el.style.transform = `rotate(${rot}deg)`;
+    el._rot = rot; el.style.transform = `rotate(${rot}deg)`;
 }
 
-// ================= АПГРЕЙДЕР =================
 let upgUid = null, upgBusy = false;
 function chooseUpgradeCar() { if (upgBusy) return; pickCar(u => { upgUid = u; updateUpgradeUI(); }); }
 function getUpgradePrize(car, chance) {
@@ -1462,17 +1535,14 @@ function updateUpgradeUI() {
     let car = state.garage.find(i => i.uid === upgUid && i.type === 'car');
     if (!car) upgUid = null;
     const prize = getUpgradePrize(car, state.upgradeChance);
-
     $('upg-slot-cur').className = 'upg-slot' + (car ? ` filled r-${car.rarity}` : '');
     $('upg-slot-cur').innerHTML = car
         ? `<div class="upg-cap">ТВОЯ</div>${carSVG(car)}<div class="li-title" style="font-size:12px;">${car.name}</div><div class="li-green" style="font-size:12px;">${fmt(car.price)} ₽</div>`
         : `<div class="upg-plus">＋</div><div class="li-title" style="font-size:12px;">Выбрать машину</div><div class="li-sub">из гаража</div>`;
-
     $('upg-slot-prize').className = 'upg-slot' + (prize ? ` filled r-${prize.rarity}` : '');
     $('upg-slot-prize').innerHTML = prize
         ? `<div class="upg-cap">ПРИЗ</div>${carSVG(prize)}<div class="li-title" style="font-size:12px;">${prize.name}</div><div class="li-green" style="font-size:12px;">${fmt(prize.price)} ₽</div>`
         : `<div class="upg-cap">ПРИЗ</div><div class="upg-plus" style="color: var(--muted);">?</div>${car ? '<div class="li-sub">Улучшать некуда</div>' : ''}`;
-
     const c = state.upgradeChance;
     $('upg-wheel-bg').style.background = `conic-gradient(#1fae72 0 ${c}%, #d93353 ${c}% 100%)`;
     $('upg-wheel-text').textContent = c + '%';
@@ -1482,65 +1552,53 @@ function setChance(c) { if (upgBusy) return; state.upgradeChance = c; updateUpgr
 function doUpgrade() {
     if (upgBusy) return;
     const car = state.garage.find(i => i.uid === upgUid && i.type === 'car');
-    if (!car) { toast('Выберите машину из гаража!'); return; }
+    if (!car) { toast('Выберите машину!'); return; }
     const prize = getUpgradePrize(car, state.upgradeChance);
-    if (!prize) { toast('Для этой машины нет улучшения'); return; }
-
-    upgBusy = true;
-    $('upg-go').classList.add('disabled');
+    if (!prize) { toast('Улучшать некуда'); return; }
+    upgBusy = true; $('upg-go').classList.add('disabled');
     const chance = state.upgradeChance;
     const win = Math.random() * 100 < chance;
     const zone = chance * 3.6;
     const target = win ? 4 + Math.random() * (zone - 8) : zone + 4 + Math.random() * (360 - zone - 8);
     spinWheel($('upg-arrow'), target);
-
     setTimeout(() => {
         const idx = state.garage.findIndex(i => i.uid === car.uid);
         if (idx >= 0) state.garage.splice(idx, 1);
         if (state.battleCar === car.uid) state.battleCar = null;
         if (win) {
-            const got = { ...prize, type: 'car', uid: newUid() };
+            // +0.5% к стоимости за каждый уровень тюнинга
+            const bonusMul = 1 + (state.tuningLevel * 0.005);
+            const newPrice = Math.round(prize.price * bonusMul);
+            const got = { ...prize, price: newPrice, type: 'car', uid: newUid() };
             state.garage.push(got);
             state.upgradeWins++;
             if (got.rarity === 'legendary' || got.rarity === 'hyper') state.gotLegendary = true;
             upgUid = got.uid;
-            infoBox('🎉 ПОБЕДА!', `${carSVG(got)}Вы получили <b>${got.name}</b><br>за ${fmt(got.price)} ₽`);
-        } else {
-            upgUid = null;
-            infoBox('🔥 ПРОИГРЫШ', `Машина <b>${car.name}</b> сгорела.`, 'Ладно');
-        }
-        upgBusy = false;
-        $('upg-go').classList.remove('disabled');
+            infoBox('🎉 ПОБЕДА!', `${carSVG(got)}Вы получили <b>${got.name}</b><br>за ${fmt(got.price)} ₽${state.tuningLevel ? ` (+${(state.tuningLevel*0.5).toFixed(1)}% тюнинг)` : ''}`);
+        } else { upgUid = null; infoBox('🔥 ПРОИГРЫШ', `Машина <b>${car.name}</b> сгорела.`, 'Ладно'); }
+        upgBusy = false; $('upg-go').classList.remove('disabled');
         updateUI(); updateUpgradeUI();
     }, 3200);
 }
 
-// ================= БАТЛЫ =================
-const BOT_NAMES = ['Shadow60', 'Neo60', 'Viper77', 'Ghost21', 'Rocket99', 'Drift42', 'Phantom', 'Nitro88', 'Racer13', 'Blaze07'];
-const BOT_AV = ['😈', '🥷', '🦊', '🐺', '🦁', '💀', '🤖', '👽'];
+const BOT_NAMES = ['Shadow60','Neo60','Viper77','Ghost21','Rocket99','Drift42','Phantom','Nitro88','Racer13','Blaze07'];
+const BOT_AV = ['😈','🥷','🦊','🐺','🦁','💀','🤖','👽'];
 const BATTLE_BUDGET = 40000000;
 const BATTLE_SPIN_COST = 5000000;
 const BATTLE_TIME = 30;
 let lobbies = [], battling = false;
 let battleState = null;
-
 function genLobby() {
     const pool = CARS_DB.filter(c => c.rarity !== 'hyper');
     const car = pool[Math.floor(Math.random() * pool.length)];
-    return {
-        name: BOT_NAMES[Math.floor(Math.random() * BOT_NAMES.length)],
-        av: BOT_AV[Math.floor(Math.random() * BOT_AV.length)],
-        stars: 3 + Math.floor(Math.random() * 7),
-        car: { ...car, type: 'car' }
-    };
+    return { name: BOT_NAMES[Math.floor(Math.random() * BOT_NAMES.length)], av: BOT_AV[Math.floor(Math.random() * BOT_AV.length)], stars: 3 + Math.floor(Math.random() * 7), car: { ...car, type: 'car' } };
 }
 function ensureLobbies() { while (lobbies.length < 4) lobbies.push(genLobby()); }
 function refreshLobbies() { if (battling) return; lobbies = []; ensureLobbies(); updateBattleUI(); }
 const getBattleCar = () => state.garage.find(i => i.uid === state.battleCar && i.type === 'car') || null;
 function selectBattleCar() { if (battling) return; pickCar(u => { state.battleCar = u; updateBattleUI(); saveGame(); }); }
 function updateBattleUI() {
-    const my = getBattleCar();
-    if (!my) state.battleCar = null;
+    const my = getBattleCar(); if (!my) state.battleCar = null;
     $('battle-mmr').textContent = state.mmr;
     $('battle-rank').textContent = rankName(state.mmr);
     $('battle-need').textContent = state.mmr;
@@ -1548,7 +1606,6 @@ function updateBattleUI() {
     $('battle-my-car').innerHTML = my ? carSVG(my) : '<div style="font-size:30px; text-align:center;">🚗</div>';
     $('battle-my-name').textContent = my ? my.name : 'Не выбрана';
     $('battle-my-price').textContent = my ? fmt(my.price) + ' ₽' : '0 ₽';
-
     $('battle-lobbies').innerHTML = lobbies.map((lb, i) => `
         <div class="lobby-item">
             <div class="avatar">${lb.av}</div>
@@ -1558,8 +1615,7 @@ function updateBattleUI() {
         </div>`).join('');
 }
 function botSpins(budget) {
-    const items = [];
-    let money = budget;
+    const items = []; let money = budget;
     while (money >= BATTLE_SPIN_COST && items.length < 100) {
         money -= BATTLE_SPIN_COST;
         items.push({ ...getRandomItem('car', false), type: 'car' });
@@ -1568,20 +1624,12 @@ function botSpins(budget) {
 }
 function startBattle(i) {
     if (battling) return;
-    const my = getBattleCar();
-    if (!my) { toast('Сначала выберите свою машину для ставки'); return; }
-    const lb = lobbies[i];
-    if (!lb) return;
+    const my = getBattleCar(); if (!my) { toast('Выберите машину для ставки'); return; }
+    const lb = lobbies[i]; if (!lb) return;
     battling = true;
-
     const botItems = botSpins(BATTLE_BUDGET);
     const botSum = botItems.reduce((s, it) => s + it.price, 0);
-
-    battleState = {
-        my, lb, botItems, botSum,
-        myItems: [], myMoney: BATTLE_BUDGET, over: false, timeLeft: BATTLE_TIME, timerIv: null
-    };
-
+    battleState = { my, lb, botItems, botSum, myItems: [], myMoney: BATTLE_BUDGET, over: false, timeLeft: BATTLE_TIME, timerIv: null };
     openModal(`
         <div class="modal-title">⚔️ БАТЛ</div>
         <div class="vs-wrap">
@@ -1593,132 +1641,90 @@ function startBattle(i) {
             <span>⏱ <span id="battle-timer">${BATTLE_TIME}</span> сек</span>
             <span>Бюджет: <span id="battle-budget">${fmt(BATTLE_BUDGET)}</span> ₽</span>
         </div>
-        <div class="spin-display" id="battle-display" style="min-height:170px; margin-top:6px;">
-            <div class="idle"><div class="big">🎰</div>Крути машины!</div>
-        </div>
+        <div class="spin-display" id="battle-display" style="min-height:170px; margin-top:6px;"><div class="idle"><div class="big">🎰</div>Крути машины!</div></div>
         <div style="display:flex; gap:10px;">
             <div class="battle-stat">ТЫ<br><span id="battle-my-sum" style="color:var(--green); font-size:16px;">0 ₽</span><br><span id="battle-my-count" style="font-size:11px; color:var(--muted);">0 машин</span></div>
             <div class="battle-stat">СОПЕРНИК<br><span style="color:var(--gold); font-size:16px;">??? ₽</span><br><span style="font-size:11px; color:var(--muted);">скрыто</span></div>
         </div>
         <button class="btn btn-gold" id="battle-spin-btn" onclick="battleSpin()">🎲 КРУТИТЬ (${fmt(BATTLE_SPIN_COST)} ₽)</button>
-        <button class="btn btn-glass" id="battle-end-btn" onclick="battleFinish()">ЗАВЕРШИТЬ ДОСРОЧНО</button>
+        <button class="btn btn-glass" onclick="battleFinish()">ЗАВЕРШИТЬ</button>
     `);
-
     battleState.timerIv = setInterval(() => {
         if (!battleState || battleState.over) { clearInterval(battleState.timerIv); return; }
         battleState.timeLeft--;
-        const tEl = $('battle-timer');
-        if (tEl) tEl.textContent = battleState.timeLeft;
-        if (battleState.timeLeft <= 0) {
-            clearInterval(battleState.timerIv);
-            battleFinish();
-        }
+        const tEl = $('battle-timer'); if (tEl) tEl.textContent = battleState.timeLeft;
+        if (battleState.timeLeft <= 0) { clearInterval(battleState.timerIv); battleFinish(); }
     }, 1000);
 }
 function battleSpin() {
-    const b = battleState;
-    if (!b || b.over) return;
+    const b = battleState; if (!b || b.over) return;
     if (b.myMoney < BATTLE_SPIN_COST) { toast('Бюджет закончился!'); return; }
     b.myMoney -= BATTLE_SPIN_COST;
-
     const it = { ...getRandomItem('car', false), type: 'car' };
     b.myItems.push(it);
-
     const sum = b.myItems.reduce((s, x) => s + x.price, 0);
     const disp = $('battle-display');
     if (disp) disp.innerHTML = `<div class="r-${it.rarity}" style="width:100%">${carSVG(it)}<div class="car-name" style="font-size:14px;">${it.name}</div><div class="rar-label">${it.rarity}</div><div class="car-price" style="font-size:17px;">${fmt(it.price)} ₽</div></div>`;
-
     if ($('battle-budget')) $('battle-budget').textContent = fmt(b.myMoney);
     if ($('battle-my-sum')) $('battle-my-sum').textContent = fmt(sum) + ' ₽';
     if ($('battle-my-count')) $('battle-my-count').textContent = b.myItems.length + ' машин';
-
     if (b.myMoney < BATTLE_SPIN_COST && $('battle-spin-btn')) $('battle-spin-btn').classList.add('disabled');
 }
 function battleFinish() {
-    const b = battleState;
-    if (!b || b.over) return;
-    b.over = true;
-    clearInterval(b.timerIv);
-
+    const b = battleState; if (!b || b.over) return;
+    b.over = true; clearInterval(b.timerIv);
     const mySum = b.myItems.reduce((s, x) => s + x.price, 0);
     const botSum = b.botSum;
     const win = mySum > botSum;
     const tie = mySum === botSum;
-
-    const topMy = [...b.myItems].sort((x, y) => y.price - x.price).slice(0, 3);
-    const topBot = [...b.botItems].sort((x, y) => y.price - x.price).slice(0, 3);
-    const listHtml = arr => arr.length ? arr.map(it => `<div style="font-size:11px;">${it.name} — ${fmt(it.price)} ₽</div>`).join('') : '<div style="font-size:11px; color:var(--muted);">пусто</div>';
-    const details = `<details style="text-align:left; background:var(--card); border-radius:12px; padding:10px; margin-top:6px;">
-        <summary style="cursor:pointer; font-weight:800; font-size:12px; color:var(--gold);">Показать топ-3</summary>
-        <div style="margin-top:8px;"><b style="font-size:11px;">ТЫ (${b.myItems.length}):</b>${listHtml(topMy)}</div>
-        <div style="margin-top:6px;"><b style="font-size:11px;">СОПЕРНИК (${b.botItems.length}):</b>${listHtml(topBot)}</div>
-    </details>`;
-
     let body = '';
     if (win) {
         const prize = { ...b.lb.car, type: 'car', uid: newUid() };
-        state.garage.push(prize);
-        state.mmr += 100; state.battleWins++;
-        if (prize.rarity === 'legendary' || prize.rarity === 'hyper') state.gotLegendary = true;
+        state.garage.push(prize); state.mmr += 100; state.battleWins++;
+        if (['legendary','hyper'].includes(prize.rarity)) state.gotLegendary = true;
         body = `<div class="modal-title" style="color:var(--green);">🏆 ПОБЕДА!</div>
-            <div style="font-size:13px; color:var(--muted);">Твоя сумма <b style="color:var(--green);">${fmt(mySum)} ₽</b> vs соперник <b style="color:var(--gold);">${fmt(botSum)} ₽</b></div>
+            <div style="font-size:13px; color:var(--muted);">${fmt(mySum)} ₽ vs ${fmt(botSum)} ₽</div>
             <div class="card">${carSVG(prize)}<div class="li-title">${prize.name}</div><div class="li-green">Забрали: ${fmt(prize.price)} ₽</div></div>
             <div class="li-sub">MMR +100</div>`;
     } else if (tie) {
         state.mmr = Math.max(0, state.mmr - 10);
-        body = `<div class="modal-title">🤝 НИЧЬЯ</div>
-            <div style="font-size:13px; color:var(--muted);">Оба набрали <b>${fmt(mySum)} ₽</b>. Машины остаются у владельцев.</div>`;
+        body = `<div class="modal-title">🤝 НИЧЬЯ</div><div style="font-size:13px; color:var(--muted);">Оба набрали ${fmt(mySum)} ₽.</div>`;
     } else {
         const idx = state.garage.findIndex(g => g.uid === b.my.uid);
         if (idx >= 0) state.garage.splice(idx, 1);
-        state.battleCar = null;
-        state.mmr = Math.max(0, state.mmr - 50);
+        state.battleCar = null; state.mmr = Math.max(0, state.mmr - 50);
         body = `<div class="modal-title" style="color:var(--red);">💀 ПОРАЖЕНИЕ</div>
-            <div style="font-size:13px; color:var(--muted);">Твоя сумма <b>${fmt(mySum)} ₽</b> vs соперник <b style="color:var(--red);">${fmt(botSum)} ₽</b></div>
+            <div style="font-size:13px; color:var(--muted);">${fmt(mySum)} ₽ vs ${fmt(botSum)} ₽</div>
             <div class="card">${carSVG(b.my)}<div class="li-title">${b.my.name}</div><div style="font-size:12px; color:var(--red);">Машина ушла сопернику</div></div>
             <div class="li-sub">MMR −50</div>`;
     }
-
-    if (state.mmr >= 3000) {
-        state.crystals += 5000; state.mmr = 0;
-        body += `<div class="modal-text" style="color: var(--gold);">🎁 MMR 3000! Приз: +5 000 💎. MMR сброшен.</div>`;
-    }
-
-    const li = lobbies.indexOf(b.lb);
-    if (li >= 0) lobbies.splice(li, 1);
-    ensureLobbies();
-    battling = false;
-    battleState = null;
+    if (state.mmr >= 3000) { state.crystals += 5000; state.mmr = 0; body += `<div class="modal-text" style="color: var(--gold);">🎁 +5 000 💎. MMR сброшен.</div>`; }
+    const li = lobbies.indexOf(b.lb); if (li >= 0) lobbies.splice(li, 1);
+    ensureLobbies(); battling = false; battleState = null;
     updateUI(); updateBattleUI();
-    openModal(body + details + `<button class="btn btn-gold" onclick="closeModal()">ОК</button>`);
+    openModal(body + `<button class="btn btn-gold" onclick="closeModal()">ОК</button>`);
 }
 
-// ================= ФОРТУНА =================
 const FORTUNE_PRIZES = [
     { t: '1 000 000 ₽', m: 1000000, color: '#ff4d6d' },
-    { t: '500 💎',      c: 500,     color: '#1fae72' },
+    { t: '500 💎', c: 500, color: '#1fae72' },
     { t: '2 000 000 ₽', m: 2000000, color: '#4a7aff' },
-    { t: '100 💎',      c: 100,     color: '#a000ff' },
+    { t: '100 💎', c: 100, color: '#a000ff' },
     { t: '5 000 000 ₽', m: 5000000, color: '#ffaa00' },
-    { t: '250 💎',      c: 250,     color: '#ff00aa' },
+    { t: '250 💎', c: 250, color: '#ff00aa' },
     { t: '3 000 000 ₽', m: 3000000, color: '#00a0e9' },
     { t: '1 500 000 ₽', m: 1500000, color: '#ff8800' }
 ];
 const FORTUNE_CD = 24 * 60 * 60 * 1000;
 let fortuneBusy = false;
-
 function fortuneSectorCenter(i) { return i * 45 + 22.5; }
 function renderFortuneWheel() {
-    const wheel = $('fortune-wheel-bg');
-    if (!wheel) return;
+    const wheel = $('fortune-wheel-bg'); if (!wheel) return;
     const stops = FORTUNE_PRIZES.map((p, i) => `${p.color} ${i * 45}deg ${(i + 1) * 45}deg`).join(', ');
     wheel.style.background = `conic-gradient(${stops})`;
     const legend = $('fortune-legend');
     if (legend) {
-        legend.innerHTML = FORTUNE_PRIZES.map(p =>
-            `<span style="display:inline-flex; align-items:center; gap:4px; margin:2px 4px;">
-                <span style="width:10px; height:10px; border-radius:3px; background:${p.color};"></span>${p.t}
-            </span>`).join('');
+        legend.innerHTML = FORTUNE_PRIZES.map(p => `<span style="display:inline-flex; align-items:center; gap:4px; margin:2px 4px;"><span style="width:10px; height:10px; border-radius:3px; background:${p.color};"></span>${p.t}</span>`).join('');
     }
 }
 function spinWheelToAngle(el, targetAngle) {
@@ -1730,50 +1736,40 @@ function spinWheelToAngle(el, targetAngle) {
 function spinFortune() {
     if (fortuneBusy) return;
     if (Date.now() - state.lastFortuneSpin < FORTUNE_CD) { toast('Вы уже крутили сегодня!'); return; }
-    fortuneBusy = true;
-    state.lastFortuneSpin = Date.now();
-    saveGame();
-
+    fortuneBusy = true; state.lastFortuneSpin = Date.now(); saveGame();
     const idx = Math.floor(Math.random() * FORTUNE_PRIZES.length);
     const targetAngle = (360 - fortuneSectorCenter(idx)) % 360;
     const jitter = (Math.random() - 0.5) * 20;
     spinWheelToAngle($('fortune-arrow'), targetAngle + jitter);
-
     $('fortune-btn').classList.add('disabled');
     setTimeout(() => {
         const pr = FORTUNE_PRIZES[idx];
         if (pr.m) earnMoney(pr.m); else state.crystals += pr.c;
-        fortuneBusy = false;
-        updateUI(); updateFortuneBtn();
+        fortuneBusy = false; updateUI(); updateFortuneBtn();
         infoBox('🎁 Ваш приз', `<span style="font-size:24px; font-weight:900; color: var(--gold);">${pr.t}</span>`);
     }, 3200);
 }
 function updateFortuneBtn() {
-    const btn = $('fortune-btn'), status = $('fortune-status');
-    if (!btn) return;
+    const btn = $('fortune-btn'), status = $('fortune-status'); if (!btn) return;
     const left = FORTUNE_CD - (Date.now() - state.lastFortuneSpin);
     if (left > 0) {
         btn.classList.add('disabled'); btn.textContent = 'Подождите';
         status.textContent = `Следующий спин через ${Math.floor(left / 3600000)}ч ${Math.floor((left % 3600000) / 60000)}м`;
-    } else {
-        btn.classList.remove('disabled'); btn.textContent = '🎁 КРУТИТЬ БЕСПЛАТНО';
-        status.textContent = 'Бесплатный спин доступен!';
-    }
+    } else { btn.classList.remove('disabled'); btn.textContent = '🎁 КРУТИТЬ БЕСПЛАТНО'; status.textContent = 'Бесплатный спин доступен!'; }
 }
 
-// ================= МАГАЗИН =================
 function renderShop() {
     const kia = CARS_DB.find(c => c.rarity === 'common');
     const kiaPrice = Math.round(kia.price * 1.26 / 100000) * 100000;
     $('shop-list').innerHTML = `
         <div class="list-item">
             <div class="li-art r-${kia.rarity}">${carSVG(kia)}</div>
-            <div class="li-main"><div class="li-title">${kia.name}</div><div class="li-sub">Скидка 30% • тренд дня</div><div class="li-gold">${fmt(kiaPrice)} ₽</div></div>
+            <div class="li-main"><div class="li-title">${kia.name}</div><div class="li-sub">Скидка 30%</div><div class="li-gold">${fmt(kiaPrice)} ₽</div></div>
             <button class="btn-join" onclick="buyShopCar(${kiaPrice})">КУПИТЬ</button>
         </div>
         <div class="list-item">
             <div class="list-icon">💎</div>
-            <div class="li-main"><div class="li-title">5 000 кристаллов</div><div class="li-sub">Для круток номеров</div><div class="li-gold">3 000 000 ₽</div></div>
+            <div class="li-main"><div class="li-title">5 000 кристаллов</div><div class="li-sub">Для круток</div><div class="li-gold">3 000 000 ₽</div></div>
             <button class="btn-join" onclick="buyShopCrystals(3000000, 5000)">КУПИТЬ</button>
         </div>`;
 }
@@ -1782,15 +1778,14 @@ function buyShopCar(price) {
     const kia = CARS_DB.find(c => c.rarity === 'common');
     state.money -= price;
     state.garage.push({ ...kia, type: 'car', uid: newUid() });
-    updateUI(); toast('Машина добавлена в гараж!');
+    updateUI(); toast('Машина в гараже!');
 }
 function buyShopCrystals(price, crys) {
     if (state.money < price) { toast('Недостаточно средств!'); return; }
     state.money -= price; state.crystals += crys;
-    updateUI(); toast('Успешно куплено!');
+    updateUI(); toast('Куплено!');
 }
 
-// ================= ТЮНИНГ =================
 const tuneCost = () => 50000000 + state.tuningLevel * 250000000;
 function updateTuningUI() {
     $('tune-level').textContent = state.tuningLevel;
@@ -1802,10 +1797,9 @@ function upgradeTuning() {
     if (state.money < cost) { toast(`Нужно ${fmt(cost)} ₽`); return; }
     state.money -= cost; state.tuningLevel++; state.tuningBonus += 1.5;
     updateUI(); updateTuningUI();
-    toast(`Шанс дорогих машин: +${state.tuningBonus}%`);
+    toast(`Тюнинг: +${state.tuningBonus}%`);
 }
 
-// ================= АУКЦИОН =================
 const BID_STEP = 5000000;
 let auction = { car: null, bid: 0, leader: null, hold: 0, timer: 20, iv: null };
 function startAuction() {
@@ -1841,28 +1835,23 @@ function tickAuction() {
         clearInterval(auction.iv); auction.iv = null;
         if (auction.leader === 'player') {
             const car = { ...auction.car, type: 'car', uid: newUid() };
-            state.garage.push(car); auction.hold = 0;
-            updateUI();
+            state.garage.push(car); auction.hold = 0; updateUI();
             infoBox('🏆 Аукцион выигран!', `${carSVG(car)}Вы забрали <b>${car.name}</b> за ${fmt(auction.bid)} ₽`);
-        } else {
-            toast(auction.leader === 'bot' ? 'Аукцион завершён: машину купил другой игрок' : 'Аукцион отменён: никто не сделал ставку');
-        }
-        startAuction();
-        return;
+        } else toast(auction.leader === 'bot' ? 'Машину купил другой' : 'Никто не сделал ставку');
+        startAuction(); return;
     }
     renderAuction();
 }
 function placeBid() {
-    if (auction.leader === 'player') { toast('Ваша ставка уже лидирует'); return; }
+    if (auction.leader === 'player') { toast('Ваша ставка лидирует'); return; }
     const newBid = auction.bid + BID_STEP;
-    if (state.money < newBid) { toast('Недостаточно денег для ставки!'); return; }
+    if (state.money < newBid) { toast('Недостаточно денег!'); return; }
     state.money -= newBid;
     auction.hold = newBid; auction.bid = newBid; auction.leader = 'player';
     auction.timer = Math.max(auction.timer, 10);
     updateUI(); renderAuction();
 }
 
-// ================= КОНТРАКТЫ =================
 function renderContracts() {
     const list = $('contracts-list');
     const cars = state.garage.filter(i => i.type === 'car');
@@ -1885,22 +1874,18 @@ function renderContracts() {
     list.innerHTML = html;
 }
 function rentCar(u) {
-    const idx = state.garage.findIndex(i => i.uid === u);
-    if (idx < 0) return;
+    const idx = state.garage.findIndex(i => i.uid === u); if (idx < 0) return;
     const car = state.garage[idx];
     state.contracts.push({ car, income: Math.floor(car.price * 0.05) });
     state.garage.splice(idx, 1);
     if (state.battleCar === u) state.battleCar = null;
-    renderContracts(); updateUI();
-    toast('Машина сдана в аренду!');
+    renderContracts(); updateUI(); toast('Машина в аренде!');
 }
 function returnCar(u) {
-    const idx = state.contracts.findIndex(c => c.car.uid === u);
-    if (idx < 0) return;
+    const idx = state.contracts.findIndex(c => c.car.uid === u); if (idx < 0) return;
     state.garage.push(state.contracts[idx].car);
     state.contracts.splice(idx, 1);
-    renderContracts(); updateUI();
-    toast('Машина вернулась в гараж');
+    renderContracts(); updateUI(); toast('Машина вернулась');
 }
 setInterval(() => {
     if (state.contracts.length) {
@@ -1909,7 +1894,6 @@ setInterval(() => {
     }
 }, 10000);
 
-// ================= ПРОЧИЕ ЭКРАНЫ =================
 function renderAchievements() {
     $('achievements-list').innerHTML = ACHIEVEMENTS.map(a => {
         const on = !!state.ach[a.id];
@@ -1956,9 +1940,8 @@ setInterval(() => {
     if ($('tasks-timer')) $('tasks-timer').textContent = t;
 }, 1000);
 
-// ================= СТАРТ =================
 resetDailyIfNeeded();
 updateUI();
 </script>
 </body>
-                                                                                                          </html>
+                    </html>
