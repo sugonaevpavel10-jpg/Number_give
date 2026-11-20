@@ -313,17 +313,31 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 
 .battle-stat { background: var(--card-2); border-radius: 12px; padding: 8px; text-align: center; font-weight: 800; font-size: 12px; }
 
-/* ---- НОВОЕ: банк-кредит ---- */
+/* ---- Банк-кредит ---- */
 .loan-badge { display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 13px; }
 .loan-warn { color: var(--red); font-weight: 800; font-size: 12px; animation: blink .8s infinite alternate; }
 
-/* ---- НОВОЕ: реклама ---- */
+/* ---- Реклама с кнопкой закрытия ---- */
 .ad-wrap {
+    position: relative;
     width: 100%; border-radius: 16px; overflow: hidden;
     background: var(--card); border: 1px solid var(--line);
     padding: 6px; margin-top: 6px;
+    transition: opacity .2s;
 }
+.ad-wrap.hidden { display: none; }
 .ad-wrap > div { min-height: 60px; width: 100%; }
+.ad-close {
+    position: absolute; top: 4px; right: 4px; z-index: 5;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: rgba(0,0,0,.65); color: #fff;
+    font-size: 16px; font-weight: 900; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255,255,255,.35);
+    box-shadow: 0 2px 8px rgba(0,0,0,.4);
+    backdrop-filter: blur(4px);
+}
+.ad-close:active { transform: scale(.9); }
 </style>
 </head>
 <body>
@@ -374,7 +388,8 @@ select.input-field { appearance: none; -webkit-appearance: none; }
             </div>
 
             <!-- РЕКЛАМА (главная) -->
-            <div class="ad-wrap">
+            <div class="ad-wrap" id="ad-main">
+                <button class="ad-close" onclick="closeAd('ad-main')" aria-label="Закрыть рекламу">✕</button>
                 <!-- Yandex.RTB R-A-20432576-4 -->
                 <div id="yandex_rtb_R-A-20432576-4"></div>
                 <script>
@@ -516,7 +531,8 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                 </div>
 
                 <!-- РЕКЛАМА (банк) -->
-                <div class="ad-wrap">
+                <div class="ad-wrap" id="ad-bank">
+                    <button class="ad-close" onclick="closeAd('ad-bank')" aria-label="Закрыть рекламу">✕</button>
                     <div id="yandex_rtb_R-A-20432576-4_bank"></div>
                     <script>
                     window.yaContextCb.push(() => {
@@ -713,8 +729,29 @@ const newUid = () => Date.now().toString(36) + Math.random().toString(36).slice(
 const START_MONEY = 20000000;
 const START_CRYSTALS = 10060;
 const SAVE_KEY = 'numberday_save_v10';
+const AD_KEY = 'numberday_ads_closed';
 
 function rng(seed) { let s = seed; return () => { s = (s * 1664525 + 1013904223) % 4294967296; return s / 4294967296; }; }
+
+// ================= РЕКЛАМА: ЗАКРЫТИЕ =================
+function getClosedAds() {
+    try { return JSON.parse(localStorage.getItem(AD_KEY)) || {}; } catch (e) { return {}; }
+}
+function closeAd(id) {
+    const wrap = $(id);
+    if (wrap) wrap.classList.add('hidden');
+    const closed = getClosedAds();
+    closed[id] = true;
+    try { localStorage.setItem(AD_KEY, JSON.stringify(closed)); } catch (e) {}
+}
+function restoreClosedAds() {
+    const closed = getClosedAds();
+    ['ad-main', 'ad-bank'].forEach(id => {
+        if (closed[id]) { const el = $(id); if (el) el.classList.add('hidden'); }
+    });
+}
+// прячем рекламные обёртки, пока идёт загрузка/рендер
+restoreClosedAds();
 
 // ================= БАЗА ДАННЫХ =================
 const BRANDS = ["Lada", "Kia", "Toyota", "BMW", "Audi", "Mercedes", "Porsche", "Ferrari", "Lamborghini", "Bugatti", "Ford", "Chevrolet", "Nissan", "Honda", "Mazda", "Subaru", "Volkswagen", "Hyundai", "Renault", "Mitsubishi"];
@@ -890,7 +927,7 @@ try {
 
 function saveGame() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {} }
 
-// ================= ДЕНЬГИ (учёт заработка) =================
+// ================= ДЕНЬГИ =================
 function earnMoney(amount) {
     if (!amount || amount <= 0) return;
     state.money += amount;
@@ -979,10 +1016,7 @@ function addDailyProgress(key, amount) {
 function tasksDoneCount() {
     resetDailyIfNeeded();
     let n = 0;
-    DAILY_TASKS.forEach(t => {
-        const p = state.dailyProgress[t.id] || 0;
-        if (p >= t.goal) n++;
-    });
+    DAILY_TASKS.forEach(t => { const p = state.dailyProgress[t.id] || 0; if (p >= t.goal) n++; });
     return n;
 }
 function claimDaily(id) {
@@ -1035,9 +1069,8 @@ function renderTasks() {
 // ================= ПОМОЩЬ + КРЕДИТ =================
 const AID_THRESHOLD = 4999999;
 const AID_AMOUNT = 2500000;
-const AID_INTERVAL = 30 * 60 * 1000; // 30 минут
+const AID_INTERVAL = 30 * 60 * 1000;
 const LOAN_MAX = 10000000;
-const LOAN_MAX_MS = 3 * 60 * 60 * 1000;
 
 function checkLoanExpired() {
     if (state.loan > 0 && state.loanDueAt && Date.now() >= state.loanDueAt) {
@@ -1054,7 +1087,6 @@ function checkLoanExpired() {
         infoBox('🚫 Кредит просрочен!', 'Банк забрал <b>все деньги, машины и номера</b> за неуплату кредита. Долг списан.');
     }
 }
-
 function applyAidIfNeeded() {
     const now = Date.now();
     if (state.money < AID_THRESHOLD) {
@@ -1071,7 +1103,6 @@ function applyAidIfNeeded() {
     }
     saveGame();
 }
-
 function takeLoan() {
     if (state.loan > 0) { toast('У вас уже есть активный кредит'); return; }
     const amount = Math.floor(Number($('loan-amount').value));
@@ -1083,12 +1114,9 @@ function takeLoan() {
     state.loanDueAt = Date.now() + hours * 60 * 60 * 1000;
     state.money += amount;
     $('loan-amount').value = '';
-    saveGame();
-    updateUI();
-    renderBank();
+    saveGame(); updateUI(); renderBank();
     toast(`💳 Кредит ${fmt(amount)} ₽ получен`);
 }
-
 function repayLoan() {
     if (state.loan <= 0) { toast('Нет активного кредита'); return; }
     const debt = state.loan;
@@ -1096,12 +1124,9 @@ function repayLoan() {
     state.money -= debt;
     state.loan = 0;
     state.loanDueAt = 0;
-    saveGame();
-    updateUI();
-    renderBank();
+    saveGame(); updateUI(); renderBank();
     toast('✅ Кредит выплачен!');
 }
-
 function renderBank() {
     const aidEl = $('aid-status');
     if (aidEl) {
@@ -1130,7 +1155,6 @@ function renderBank() {
         if (badge) badge.textContent = '';
     }
 }
-
 setInterval(() => {
     checkLoanExpired();
     applyAidIfNeeded();
@@ -1170,7 +1194,6 @@ function updateUI() {
 
 // ================= НАВИГАЦИЯ =================
 const SPIN_SCREENS = { 'screen-autosalon': 'car', 'screen-gosznaki': 'number' };
-
 function openScreen(id) {
     const el = $(id);
     if (!el) return;
@@ -1193,7 +1216,6 @@ function openScreen(id) {
     if (id === 'screen-fortune') { renderFortuneWheel(); updateFortuneBtn(); }
     el.classList.add('active');
 }
-
 function closeScreen(id) {
     const t = SPIN_SCREENS[id];
     if (t && state.pending[t].length && !busySpin) {
@@ -1263,22 +1285,18 @@ function spin(type, mode) {
         if (++n > 10) { clearInterval(iv); finishSpin(type, mode); }
     }, 100);
 }
-
 function finishSpin(type, mode) {
     const count = mode === 'x10' ? 10 : 1;
     const items = Array.from({ length: count }, () => makeItem(type, mode));
     state.pending[type] = items;
     state.spins += count;
     addDailyProgress('spins', count);
-    if (type === 'car' && items.some(i => i.rarity === 'epic' || i.rarity === 'legendary' || i.rarity === 'hyper')) {
-        addDailyProgress('epicPlus', 1);
-    }
+    if (type === 'car' && items.some(i => i.rarity === 'epic' || i.rarity === 'legendary' || i.rarity === 'hyper')) addDailyProgress('epicPlus', 1);
     if (items.some(i => i.type === 'car' && (i.rarity === 'legendary' || i.rarity === 'hyper'))) state.gotLegendary = true;
     busySpin = false;
     renderPending(type);
     updateUI();
 }
-
 function renderPending(type) {
     const items = state.pending[type];
     const display = $(type + '-display');
@@ -1313,25 +1331,21 @@ function renderPending(type) {
     actions.style.display = 'flex';
     controls.style.display = 'none';
 }
-
 function keepPending(type) {
     const items = state.pending[type];
     if (!items.length) return;
     state.garage.push(...items);
     state.pending[type] = [];
-    renderPending(type);
-    updateUI();
+    renderPending(type); updateUI();
     toast(`В гараж добавлено: ${items.length}`);
 }
-
 function sellPending(type) {
     const items = state.pending[type];
     if (!items.length) return;
     const sum = items.reduce((s, i) => s + i.price, 0);
     if (type === 'car') earnMoney(sum); else state.crystals += sum;
     state.pending[type] = [];
-    renderPending(type);
-    updateUI();
+    renderPending(type); updateUI();
     toast(`Продано на ${fmt(sum)} ${type === 'car' ? '₽' : '💎'}`);
 }
 
@@ -1408,7 +1422,6 @@ function renderBgPicker() {
 
 // ================= ПЕРЕРОЖДЕНИЕ =================
 const rebirthCost = () => 100000000 + state.rebirths * 500000000;
-
 function rebirth() {
     const cost = rebirthCost();
     if (state.money < cost) { toast(`Для перерождения нужно ${fmt(cost)} ₽`); return; }
@@ -1466,7 +1479,6 @@ function updateUpgradeUI() {
     document.querySelectorAll('#chance-pills .chance-pill').forEach(p => p.classList.toggle('active', parseInt(p.textContent) === c));
 }
 function setChance(c) { if (upgBusy) return; state.upgradeChance = c; updateUpgradeUI(); saveGame(); }
-
 function doUpgrade() {
     if (upgBusy) return;
     const car = state.garage.find(i => i.uid === upgUid && i.type === 'car');
@@ -1525,9 +1537,7 @@ function genLobby() {
 function ensureLobbies() { while (lobbies.length < 4) lobbies.push(genLobby()); }
 function refreshLobbies() { if (battling) return; lobbies = []; ensureLobbies(); updateBattleUI(); }
 const getBattleCar = () => state.garage.find(i => i.uid === state.battleCar && i.type === 'car') || null;
-
 function selectBattleCar() { if (battling) return; pickCar(u => { state.battleCar = u; updateBattleUI(); saveGame(); }); }
-
 function updateBattleUI() {
     const my = getBattleCar();
     if (!my) state.battleCar = null;
@@ -1547,7 +1557,6 @@ function updateBattleUI() {
             <button class="btn-join" onclick="startBattle(${i})">⚔️ ВОЙТИ</button>
         </div>`).join('');
 }
-
 function botSpins(budget) {
     const items = [];
     let money = budget;
@@ -1557,7 +1566,6 @@ function botSpins(budget) {
     }
     return items;
 }
-
 function startBattle(i) {
     if (battling) return;
     const my = getBattleCar();
@@ -1607,7 +1615,6 @@ function startBattle(i) {
         }
     }, 1000);
 }
-
 function battleSpin() {
     const b = battleState;
     if (!b || b.over) return;
@@ -1625,11 +1632,8 @@ function battleSpin() {
     if ($('battle-my-sum')) $('battle-my-sum').textContent = fmt(sum) + ' ₽';
     if ($('battle-my-count')) $('battle-my-count').textContent = b.myItems.length + ' машин';
 
-    if (b.myMoney < BATTLE_SPIN_COST && $('battle-spin-btn')) {
-        $('battle-spin-btn').classList.add('disabled');
-    }
+    if (b.myMoney < BATTLE_SPIN_COST && $('battle-spin-btn')) $('battle-spin-btn').classList.add('disabled');
 }
-
 function battleFinish() {
     const b = battleState;
     if (!b || b.over) return;
@@ -1704,7 +1708,6 @@ const FORTUNE_CD = 24 * 60 * 60 * 1000;
 let fortuneBusy = false;
 
 function fortuneSectorCenter(i) { return i * 45 + 22.5; }
-
 function renderFortuneWheel() {
     const wheel = $('fortune-wheel-bg');
     if (!wheel) return;
@@ -1718,14 +1721,12 @@ function renderFortuneWheel() {
             </span>`).join('');
     }
 }
-
 function spinWheelToAngle(el, targetAngle) {
     const cur = ((el._absRot || 0) % 360 + 360) % 360;
     const delta = ((targetAngle - cur) % 360 + 360) % 360;
     el._absRot = (el._absRot || 0) + 1440 + delta;
     el.style.transform = `rotate(${el._absRot}deg)`;
 }
-
 function spinFortune() {
     if (fortuneBusy) return;
     if (Date.now() - state.lastFortuneSpin < FORTUNE_CD) { toast('Вы уже крутили сегодня!'); return; }
@@ -1747,7 +1748,6 @@ function spinFortune() {
         infoBox('🎁 Ваш приз', `<span style="font-size:24px; font-weight:900; color: var(--gold);">${pr.t}</span>`);
     }, 3200);
 }
-
 function updateFortuneBtn() {
     const btn = $('fortune-btn'), status = $('fortune-status');
     if (!btn) return;
@@ -1808,7 +1808,6 @@ function upgradeTuning() {
 // ================= АУКЦИОН =================
 const BID_STEP = 5000000;
 let auction = { car: null, bid: 0, leader: null, hold: 0, timer: 20, iv: null };
-
 function startAuction() {
     stopAuction();
     const pool = CARS_DB.filter(c => c.rarity === 'legendary');
@@ -1962,4 +1961,4 @@ resetDailyIfNeeded();
 updateUI();
 </script>
 </body>
-                                           </html>
+                                                                                                          </html>
