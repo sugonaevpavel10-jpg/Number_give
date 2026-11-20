@@ -437,7 +437,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
     <div class="content">
         <!-- ГЛАВНАЯ -->
         <div class="main-screen" id="main-view">
-            <!-- Реклама сверху, закрывается крестиком -->
             <div class="ad-wrap ad-top" id="ad-main">
                 <button class="ad-close" onclick="closeAd('ad-main')">✕</button>
                 <div id="yandex_rtb_R-A-20432576-4"></div>
@@ -896,12 +895,24 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 </div>
 
 <script>
+// ===== ОДНОРАЗОВЫЙ СБРОС ВСЕХ ИГРОКОВ =====
+(function wipeEveryone() {
+    if (localStorage.getItem('numberday_wipe_done_v1')) return;
+    const keys = [
+        'numberday_save_v14','numberday_save_v13','numberday_save_v12',
+        'numberday_save_v11','numberday_save_v10','numberday_save_v9','numberday_save_v8'
+    ];
+    keys.forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
+    try { localStorage.setItem('numberday_wipe_done_v1', '1'); } catch (e) {}
+    location.reload();
+})();
+
 const $ = id => document.getElementById(id);
 const fmt = n => Math.round(n).toLocaleString('ru-RU');
 const newUid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 const START_MONEY = 20000000;
 const START_CRYSTALS = 10060;
-const SAVE_KEY = 'numberday_save_v13';
+const SAVE_KEY = 'numberday_save_v14';
 const AD_KEY = 'numberday_ads_closed';
 
 function rng(seed) { let s = seed; return () => { s = (s * 1664525 + 1013904223) % 4294967296; return s / 4294967296; }; }
@@ -1070,7 +1081,7 @@ function defaultState() {
 }
 let state = defaultState();
 try {
-    const saved = JSON.parse(localStorage.getItem(SAVE_KEY)) || JSON.parse(localStorage.getItem('numberday_save_v12')) || JSON.parse(localStorage.getItem('numberday_save_v11'));
+    const saved = JSON.parse(localStorage.getItem(SAVE_KEY));
     if (saved) state = { ...state, ...saved, pending: { car: [], number: [], ...(saved.pending || {}) }, crypto: { ...defaultState().crypto, ...(saved.crypto || {}) } };
 } catch (e) {}
 ['car', 'number'].forEach(t => { state.garage.push(...state.pending[t]); state.pending[t] = []; });
@@ -1573,7 +1584,7 @@ function getRandomItem(type, mode) {
     const pool = type === 'car' ? CARS_DB : NUMBERS_DB;
     const roll = Math.random() * 100;
 
-    const streakBonus = Math.min((state.streakDays || 0) * 2, 60); // +2% за день, макс +60%
+    const streakBonus = Math.min((state.streakDays || 0) * 2, 60);
     let boost = 0;
     if (mode === 'boost') boost = 1.5;
     else if (mode === 'x10') boost = -1.0;
@@ -1591,7 +1602,6 @@ function getRandomItem(type, mode) {
     else if (roll < cH + cL + cE) rar = 'epic';
     else if (roll < cH + cL + cE + cR) rar = 'rare';
 
-    // Пити
     if (type === 'car') {
         state.pityCounter = (state.pityCounter || 0) + 1;
         if (rar === 'legendary' || rar === 'hyper') state.pityCounter = 0;
@@ -2239,4 +2249,4 @@ updateUI();
 setTimeout(tickLoader, 200);
 </script>
 </body>
-                                          </html>
+                    </html>
