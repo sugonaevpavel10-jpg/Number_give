@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Номердай</title>
+
+<!-- Yandex RTB система -->
+<script>window.yaContextCb=window.yaContextCb||[]</script>
+<script src="https://yandex.ru/ads/system/context.js" async></script>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
 
@@ -316,26 +321,29 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .loan-badge { display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 13px; }
 .loan-warn { color: var(--red); font-weight: 800; font-size: 12px; animation: blink .8s infinite alternate; }
 
+/* === РЕКЛАМА (Теперь всегда сверху) === */
 .ad-wrap {
     position: relative;
-    width: 100%; border-radius: 16px; overflow: hidden;
-    background: var(--card); border: 1px solid var(--line);
-    padding: 6px; margin-top: 6px;
+    width: 100%;
+    border-radius: 0; /* Убрали скругление, чтобы прилегало к краям */
+    background: rgba(0,0,0,0.4);
+    border-bottom: 1px solid var(--line);
+    padding: 4px 8px;
+    flex-shrink: 0;
+    z-index: 290;
 }
 .ad-wrap.hidden { display: none; }
-.ad-wrap > div { min-height: 60px; width: 100%; }
-.ad-close {
-    position: absolute; top: 4px; right: 4px; z-index: 5;
-    width: 26px; height: 26px; border-radius: 50%;
-    background: rgba(0,0,0,.65); color: #fff;
-    font-size: 16px; font-weight: 900; line-height: 1;
-    display: flex; align-items: center; justify-content: center;
-    border: 1px solid rgba(255,255,255,.35);
-    box-shadow: 0 2px 8px rgba(0,0,0,.4);
-    backdrop-filter: blur(4px);
+.ad-wrap .ad-inner {
+    width: 100%;
+    min-height: 90px;
+    max-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 8px;
 }
-.ad-close:active { transform: scale(.9); }
-.ad-top { position: sticky; top: 0; z-index: 50; margin-bottom: 12px; backdrop-filter: blur(6px); background: rgba(10,8,20,0.7); }
+.ad-wrap .ad-inner > div { width: 100%; min-height: 90px; max-height: 120px; }
 
 .crypto-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--card-2); border-radius: 14px; }
 .crypto-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; flex-shrink: 0; }
@@ -398,12 +406,28 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .load-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold-2), var(--gold), #fff3cf); border-radius: 3px; transition: width .3s; box-shadow: 0 0 14px rgba(246,200,98,.6); }
 .load-car { margin-top: 24px; width: 200px; max-width: 60%; animation: bob 2s ease-in-out infinite; }
 @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+/* === НОВЫЕ АНИМАЦИИ РЕДКОСТЕЙ === */
+@keyframes shimmer-rare { 0%,100% { filter: drop-shadow(0 0 4px #4aa3ff); } 50% { filter: drop-shadow(0 0 14px #4aa3ff); } }
+@keyframes pulse-epic { 0%,100% { filter: drop-shadow(0 0 6px #b86bff); transform: scale(1); } 50% { filter: drop-shadow(0 0 20px #b86bff); transform: scale(1.02); } }
+@keyframes glow-legendary { 0%,100% { filter: drop-shadow(0 0 8px #ffc247) drop-shadow(0 0 2px #fff3cf); } 50% { filter: drop-shadow(0 0 26px #ffc247) drop-shadow(0 0 8px #fff3cf); } }
+@keyframes shake-hyper { 0%,100% { filter: drop-shadow(0 0 10px #ff3d6e); transform: translateX(0); } 25% { transform: translateX(-1.5px); } 75% { transform: translateX(1.5px); } 50% { filter: drop-shadow(0 0 30px #ff3d6e) drop-shadow(0 0 10px #ff3d6e); } }
+.r-rare .car-svg      { animation: shimmer-rare 2.4s ease-in-out infinite; }
+.r-epic .car-svg      { animation: pulse-epic 1.8s ease-in-out infinite; }
+.r-legendary .car-svg { animation: glow-legendary 1.6s ease-in-out infinite; }
+.r-hyper .car-svg     { animation: shake-hyper 0.9s ease-in-out infinite; }
+.r-legendary { position: relative; overflow: hidden; }
+.r-legendary::after { content: ''; position: absolute; top: -50%; left: -60%; width: 40%; height: 200%; background: linear-gradient(120deg, transparent, rgba(255,243,207,.35), transparent); transform: rotate(25deg); animation: shine 2.8s infinite; pointer-events: none;}
+@keyframes shine { 0% { left: -60%; } 60%,100% { left: 130%; } }
+
+/* === НОВОЕ КОЛЕСО АПГРЕЙДА === */
+.upg-wheel-wrap { position: relative; width: 260px; height: 260px; margin: 10px auto; }
+.upg-wheel { width: 100%; height: 100%; border-radius: 50%; border: 6px solid #2a2438; box-shadow: 0 0 30px rgba(246,200,98,.25), inset 0 0 20px rgba(0,0,0,.6); transition: transform 3s cubic-bezier(.12,.72,.15,1); background: conic-gradient(#ff5470 0deg 90deg, #ffc247 90deg 180deg, #3ddc97 180deg 270deg, #5b8cff 270deg 360deg); }
+.upg-pointer { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 34px; color: #fff; text-shadow: 0 0 12px #000, 0 0 6px var(--gold); z-index: 5; }
+.upg-wheel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 96px; height: 96px; border-radius: 50%; background: radial-gradient(circle at 30% 25%, #3a3350, #14111f); border: 3px solid var(--gold-2); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 900; color: var(--gold); z-index: 4; }
 </style>
 </head>
 <body>
-
-<script>window.yaContextCb=window.yaContextCb||[]</script>
-<script src="https://yandex.ru/ads/system/context.js" async></script>
 
 <!-- ЭКРАН ЗАГРУЗКИ -->
 <div id="loader">
@@ -434,22 +458,29 @@ select.input-field { appearance: none; -webkit-appearance: none; }
         </div>
     </div>
 
+    <!-- БАННЕР ПОМОЩИ НОВИЧКАМ (теперь виден везде) -->
+    <div id="aid-banner" style="display:none; flex-shrink:0; z-index:290; padding:8px 16px; font-size:12px; font-weight:800; text-align:center; color:#5b8cff; background:rgba(91,140,255,.12); border-bottom:1px solid rgba(91,140,255,.3);">
+      🆘 Помощь: +2 500 000 ₽ через <span id="aid-banner-timer">--:--</span>
+    </div>
+
+    <!-- РЕКЛАМА ВСЕГДА СВЕРХУ (закреплена над контентом) -->
+    <div class="ad-wrap" id="ad-main">
+        <div class="ad-inner">
+            <div id="yandex_rtb_R-A-20432576-4"></div>
+            <script>
+            window.yaContextCb.push(() => {
+                Ya.Context.AdvManager.render({
+                    "blockId": "R-A-20432576-4",
+                    "renderTo": "yandex_rtb_R-A-20432576-4"
+                })
+            })
+            </script>
+        </div>
+    </div>
+
     <div class="content">
         <!-- ГЛАВНАЯ -->
         <div class="main-screen" id="main-view">
-            <div class="ad-wrap ad-top" id="ad-main">
-                <button class="ad-close" onclick="closeAd('ad-main')">✕</button>
-                <div id="yandex_rtb_R-A-20432576-4"></div>
-                <script>
-                window.yaContextCb.push(() => {
-                    Ya.Context.AdvManager.render({
-                        "blockId": "R-A-20432576-4",
-                        "renderTo": "yandex_rtb_R-A-20432576-4"
-                    })
-                })
-                </script>
-            </div>
-
             <div class="trend">🔥 Тренд дня: KIA +100%</div>
             <div class="title-big">НОМЕРДАЙ</div>
             <div id="home-plate" style="width:100%; margin-bottom:14px;"></div>
@@ -553,12 +584,13 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                     <div class="chance-pill" onclick="setChance(50)">50%</div>
                     <div class="chance-pill" onclick="setChance(75)">75%</div>
                 </div>
-                <div class="wheel-wrapper">
-                    <div class="wheel-bg" id="upg-wheel-bg"></div>
-                    <div class="wheel-center" id="upg-wheel-text">50%</div>
-                    <div class="wheel-arrow-container" id="upg-arrow"><div class="wheel-arrow">▼</div></div>
+                <!-- НОВОЕ КОЛЕСО -->
+                <div class="upg-wheel-wrap">
+                  <div class="upg-wheel" id="upg-wheel"></div>
+                  <div class="upg-pointer">▼</div>
+                  <div class="upg-wheel-center" id="upg-wheel-text">50%</div>
                 </div>
-                <div style="text-align:center; color: var(--gold); font-weight: 700; font-size: 13px;">🔥 При проигрыше машина сгорает.</div>
+                <div style="text-align:center; color: var(--gold); font-weight: 700; font-size: 13px;">🔥 При проигрыше машина сгорает, но вы получите 10% кэшбэка.</div>
                 <button class="btn btn-gold" id="upg-go" onclick="doUpgrade()">АПГРЕЙД МАШИНЫ</button>
             </div>
         </div>
@@ -634,19 +666,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                     <input type="number" id="crypto-amount" class="input-field" placeholder="Сумма в ₽ (пусто = всё)" style="margin-top:10px;">
                     <div id="crypto-list" style="display:flex; flex-direction:column; gap:8px; margin-top:10px;"></div>
                 </div>
-
-                <div class="ad-wrap" id="ad-bank">
-                    <button class="ad-close" onclick="closeAd('ad-bank')">✕</button>
-                    <div id="yandex_rtb_R-A-20432576-4_bank"></div>
-                    <script>
-                    window.yaContextCb.push(() => {
-                        Ya.Context.AdvManager.render({
-                            "blockId": "R-A-20432576-4",
-                            "renderTo": "yandex_rtb_R-A-20432576-4_bank"
-                        })
-                    })
-                    </script>
-                </div>
             </div>
         </div>
 
@@ -667,11 +686,16 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                     <div style="font-size:11px; color: var(--muted); text-align:center;" id="cry-spin-result"></div>
                 </div>
 
+                <!-- НОВАЯ ИГРА: КРИСТАЛЬНЫЙ КРАШ -->
                 <div class="card" style="display:flex; flex-direction:column; gap:10px;">
-                    <div style="font-weight:900; font-size:15px;">⚔️ Кристалл-дуэль 50/50</div>
-                    <p style="font-size:12px; color: var(--muted); margin:0;">Ставка: либо удвоишь, либо потеряешь.</p>
-                    <input type="number" id="duel-amount" class="input-field" placeholder="Ставка в 💎 (мин 1 000)">
-                    <button class="btn btn-purple" onclick="crystalDuel()">⚔️ Играть</button>
+                    <div style="font-weight:900; font-size:15px;">🚀 Кристальный краш</div>
+                    <p style="font-size:12px; color: var(--muted); margin:0;">Множитель растёт. Успей забрать до краша!</p>
+                    <input type="number" id="crash-bet" class="input-field" placeholder="Ставка в 💎 (мин 1 000)">
+                    <div id="crash-display" style="text-align:center; font-size:28px; font-weight:900; color:var(--gold); min-height:40px;">—</div>
+                    <div class="btn-row">
+                        <button class="btn btn-green" id="crash-start" onclick="startCrash()">Старт</button>
+                        <button class="btn btn-gold" id="crash-take" onclick="takeCrash()" disabled>Забрать</button>
+                    </div>
                 </div>
 
                 <div class="card" style="display:flex; flex-direction:column; gap:10px;">
@@ -913,21 +937,8 @@ const newUid = () => Date.now().toString(36) + Math.random().toString(36).slice(
 const START_MONEY = 20000000;
 const START_CRYSTALS = 10060;
 const SAVE_KEY = 'numberday_save_v14';
-const AD_KEY = 'numberday_ads_closed';
 
 function rng(seed) { let s = seed; return () => { s = (s * 1664525 + 1013904223) % 4294967296; return s / 4294967296; }; }
-
-function getClosedAds() { try { return JSON.parse(localStorage.getItem(AD_KEY)) || {}; } catch (e) { return {}; } }
-function closeAd(id) {
-    const wrap = $(id); if (wrap) wrap.classList.add('hidden');
-    const c = getClosedAds(); c[id] = true;
-    try { localStorage.setItem(AD_KEY, JSON.stringify(c)); } catch (e) {}
-}
-function restoreClosedAds() {
-    const c = getClosedAds();
-    ['ad-main', 'ad-bank'].forEach(id => { if (c[id]) { const el = $(id); if (el) el.classList.add('hidden'); } });
-}
-restoreClosedAds();
 
 const BRANDS = ["Lada","Kia","Toyota","BMW","Audi","Mercedes","Porsche","Ferrari","Lamborghini","Bugatti","Ford","Chevrolet","Nissan","Honda","Mazda","Subaru","Volkswagen","Hyundai","Renault","Mitsubishi"];
 const MODELS = ["Sport","GT","Turbo","Max","Lux","Premium","Evo","RS","AMG","M","S","X","Z","V"];
@@ -1412,8 +1423,22 @@ setInterval(() => {
 setInterval(() => {
     checkLoanExpired();
     applyAidIfNeeded();
+    renderAidBanner(); // ОБНОВЛЕНИЕ БАННЕРА ПОМОЩИ
     if ($('screen-bank') && $('screen-bank').classList.contains('active')) renderBank();
 }, 1000);
+
+// === НОВАЯ МЕХАНИКА ПОМОЩИ ===
+function renderAidBanner() {
+    const banner = $('aid-banner');
+    const timerEl = $('aid-banner-timer');
+    if (!banner || !timerEl) return;
+    if (state.money >= AID_THRESHOLD) { banner.style.display = 'none'; return; }
+    banner.style.display = 'block';
+    const left = Math.max(0, AID_INTERVAL - (Date.now() - (state.lastAidAt || Date.now())));
+    const m = Math.floor(left / 60000);
+    const s = Math.floor((left % 60000) / 1000);
+    timerEl.textContent = `${m}м ${String(s).padStart(2,'0')}с`;
+}
 
 const CRY_PRIZES = [
     { t: 'Пусто',     m: 0,          color: '#444' },
@@ -1458,16 +1483,51 @@ function spinCrystalWheel() {
         toast(`🎡 ${pr.t}`);
     }, 3200);
 }
-function crystalDuel() {
-    const amt = Math.floor(Number($('duel-amount').value));
-    if (!amt || amt < 1000) { toast('Минимум 1 000 💎'); return; }
-    if (state.crystals < amt) { toast('Недостаточно 💎'); return; }
-    state.crystals -= amt;
-    const win = Math.random() < 0.5;
-    if (win) state.crystals += amt * 2;
-    updateUI(); updateCryPage();
-    infoBox(win ? '🏆 Победа!' : '💀 Проигрыш', win ? `+${fmt(amt)} 💎` : `−${fmt(amt)} 💎`);
+
+// === НОВАЯ ИГРА: КРИСТАЛЬНЫЙ КРАШ ===
+let crash = { active: false, mult: 1, bet: 0, timer: null, crashed: false };
+function startCrash() {
+    if (crash.active) return;
+    const bet = Math.floor(Number($('crash-bet').value));
+    if (!bet || bet < 1000) { toast('Минимум 1 000 💎'); return; }
+    if (state.crystals < bet) { toast('Недостаточно 💎'); return; }
+    state.crystals -= bet;
+    crash = { active: true, mult: 1, bet, timer: null, crashed: false };
+    $('crash-start').disabled = true;
+    $('crash-take').disabled = false;
+    $('crash-display').textContent = '1.00x';
+    $('crash-display').style.color = 'var(--gold)';
+    crash.timer = setInterval(() => {
+        const crashChance = 0.008 + crash.mult * 0.004;
+        if (Math.random() < crashChance) {
+            clearInterval(crash.timer);
+            crash.active = false; crash.crashed = true;
+            $('crash-display').textContent = '💥 КРАШ!';
+            $('crash-display').style.color = 'var(--red)';
+            $('crash-start').disabled = false;
+            $('crash-take').disabled = true;
+            updateUI(); updateCryPage();
+            toast(`💥 Краш на ${crash.mult.toFixed(2)}x — ставка потеряна`);
+            return;
+        }
+        crash.mult += 0.02 + crash.mult * 0.01;
+        $('crash-display').textContent = crash.mult.toFixed(2) + 'x';
+    }, 200);
 }
+function takeCrash() {
+    if (!crash.active) return;
+    clearInterval(crash.timer);
+    crash.active = false;
+    const win = Math.floor(crash.bet * crash.mult);
+    state.crystals += win;
+    $('crash-start').disabled = false;
+    $('crash-take').disabled = true;
+    $('crash-display').textContent = `✅ +${fmt(win)} 💎`;
+    $('crash-display').style.color = 'var(--green)';
+    updateUI(); updateCryPage();
+    toast(`✅ Забрано ${fmt(win)} 💎`);
+}
+
 function claimCrystalDaily() {
     const now = Date.now();
     if (now - (state.lastCrystalDaily || 0) < 24 * 60 * 60 * 1000) { toast('Уже забрали сегодня'); return; }
@@ -1539,6 +1599,7 @@ function updateUI() {
 
     renderStreak();
     updateCryPage();
+    renderAidBanner(); // ОБНОВЛЕНИЕ БАННЕРА
     checkAchievements();
     saveGame();
 }
@@ -1784,11 +1845,41 @@ function rebirth() {
     }, 'Переродиться');
 }
 
-function spinWheel(el, target) {
-    let rot = el._rot || 0;
-    const cur = ((rot % 360) + 360) % 360;
-    rot += 1440 + ((target - cur) + 360) % 360;
-    el._rot = rot; el.style.transform = `rotate(${rot}deg)`;
+// === НОВОЕ КОЛЕСО АПГРЕЙДА ===
+const CHANCE_SECTORS = [
+  { val: 10, color: '#ff5470' },
+  { val: 25, color: '#ffc247' },
+  { val: 50, color: '#3ddc97' },
+  { val: 75, color: '#5b8cff' }
+];
+
+function renderUpgradeWheel() {
+    const wheel = $('upg-wheel');
+    if (!wheel) return;
+    const stops = CHANCE_SECTORS.map((s, i) =>
+        `${s.color} ${i*90}deg ${(i+1)*90}deg`).join(', ');
+    wheel.style.background = `conic-gradient(${stops})`;
+}
+
+function setChance(v) {
+    if (upgBusy) return;
+    state.upgradeChance = v;
+    document.querySelectorAll('#chance-pills .chance-pill').forEach(el => {
+        el.classList.toggle('active', el.textContent.trim() === v + '%');
+    });
+    const txt = $('upg-wheel-text');
+    if (txt) txt.textContent = v + '%';
+    const idx = CHANCE_SECTORS.findIndex(s => s.val === v);
+    const wheel = $('upg-wheel');
+    if (wheel && idx >= 0) {
+        const target = 360 - (idx * 90 + 45);
+        wheel._rot = wheel._rot || 0;
+        const cur = ((wheel._rot % 360) + 360) % 360;
+        const delta = ((target - cur) % 360 + 360) % 360;
+        wheel._rot += 360 + delta;
+        wheel.style.transform = `rotate(${wheel._rot}deg)`;
+    }
+    saveGame();
 }
 
 let upgUid = null, upgBusy = false;
@@ -1814,12 +1905,9 @@ function updateUpgradeUI() {
     $('upg-slot-prize').innerHTML = prize
         ? `<div class="upg-cap">ПРИЗ</div>${carSVG(prize)}<div class="li-title" style="font-size:12px;">${prize.name}</div><div class="li-green" style="font-size:12px;">${fmt(prize.price)} ₽</div>`
         : `<div class="upg-cap">ПРИЗ</div><div class="upg-plus" style="color: var(--muted);">?</div>${car ? '<div class="li-sub">Улучшать некуда</div>' : ''}`;
-    const c = state.upgradeChance;
-    $('upg-wheel-bg').style.background = `conic-gradient(#1fae72 0 ${c}%, #d93353 ${c}% 100%)`;
-    $('upg-wheel-text').textContent = c + '%';
-    document.querySelectorAll('#chance-pills .chance-pill').forEach(p => p.classList.toggle('active', parseInt(p.textContent) === c));
+    renderUpgradeWheel();
+    setChance(state.upgradeChance || 50);
 }
-function setChance(c) { if (upgBusy) return; state.upgradeChance = c; updateUpgradeUI(); saveGame(); }
 function doUpgrade() {
     if (upgBusy) return;
     const car = state.garage.find(i => i.uid === upgUid && i.type === 'car');
@@ -1829,9 +1917,15 @@ function doUpgrade() {
     upgBusy = true; $('upg-go').classList.add('disabled');
     const chance = state.upgradeChance;
     const win = Math.random() * 100 < chance;
-    const zone = chance * 3.6;
-    const target = win ? 4 + Math.random() * (zone - 8) : zone + 4 + Math.random() * (360 - zone - 8);
-    spinWheel($('upg-arrow'), target);
+    
+    // Визуальный спин колеса
+    const wheel = $('upg-wheel');
+    if (wheel) {
+        wheel.style.transition = 'transform 3s cubic-bezier(.12,.72,.15,1)';
+        wheel._rot = (wheel._rot || 0) + 360 * 5 + Math.random() * 360;
+        wheel.style.transform = `rotate(${wheel._rot}deg)`;
+    }
+
     setTimeout(() => {
         const idx = state.garage.findIndex(i => i.uid === car.uid);
         if (idx >= 0) state.garage.splice(idx, 1);
@@ -1845,7 +1939,13 @@ function doUpgrade() {
             if (got.rarity === 'legendary' || got.rarity === 'hyper') state.gotLegendary = true;
             upgUid = got.uid;
             infoBox('🎉 ПОБЕДА!', `${carSVG(got)}Вы получили <b>${got.name}</b><br>за ${fmt(got.price)} ₽${state.tuningLevel ? ` (+${(state.tuningLevel*0.5).toFixed(1)}% тюнинг)` : ''}`);
-        } else { upgUid = null; infoBox('🔥 ПРОИГРЫШ', `Машина <b>${car.name}</b> сгорела.`, 'Ладно'); }
+        } else { 
+            // ВЫПЛАТА КЭШБЭКА 10%
+            const cashback = Math.round(car.price * 0.10);
+            earnMoney(cashback);
+            upgUid = null; 
+            infoBox('🔥 ПРОИГРЫШ', `Машина <b>${car.name}</b> сгорела.<br>Возврат 10%: <b style="color:var(--green);">+${fmt(cashback)} ₽</b>`, 'Ладно'); 
+        }
         upgBusy = false; $('upg-go').classList.remove('disabled');
         updateUI(); updateUpgradeUI();
     }, 3200);
@@ -2249,4 +2349,4 @@ updateUI();
 setTimeout(tickLoader, 200);
 </script>
 </body>
-                    </html>
+    </html>
