@@ -335,6 +335,7 @@ select.input-field { appearance: none; -webkit-appearance: none; }
     backdrop-filter: blur(4px);
 }
 .ad-close:active { transform: scale(.9); }
+.ad-top { position: sticky; top: 0; z-index: 50; margin-bottom: 12px; backdrop-filter: blur(6px); background: rgba(10,8,20,0.7); }
 
 .crypto-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--card-2); border-radius: 14px; }
 .crypto-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; flex-shrink: 0; }
@@ -348,7 +349,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .crypto-buy { background: linear-gradient(135deg, #46e6a2, #1fae72); color: #02210f; }
 .crypto-sell { background: linear-gradient(135deg, #ff6f86, #d93353); color: #fff; }
 
-/* кристаллы */
 .crystal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .crystal-tile {
     background: linear-gradient(160deg, rgba(111,211,255,.15), rgba(111,211,255,.04));
@@ -360,20 +360,70 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .crystal-tile .t-icon { font-size: 30px; }
 .crystal-tile .t-title { font-weight: 800; font-size: 13px; }
 .crystal-tile .t-sub { font-size: 11px; color: var(--muted); font-weight: 600; }
-.crystal-tile .t-cost { font-weight: 900; color: #6fd3ff; font-size: 12px; margin-top: 4px; }
 
-/* рулетка кристаллов */
 .cry-wheel-wrap { position: relative; width: 220px; height: 220px; margin: 4px auto; }
 .cry-wheel { width:100%; height:100%; border-radius:50%; border:5px solid #2a2438; }
 .cry-arrow-wrap { position:absolute; inset:0; transition: transform 3s cubic-bezier(.12,.72,.15,1); }
 .cry-arrow { position:absolute; top:-16px; left:50%; transform:translateX(-50%); font-size:28px; color:#fff; text-shadow:0 0 10px #000; }
 .cry-center { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:80px; height:80px; border-radius:50%; background:radial-gradient(circle at 30% 25%, #3a3350, #14111f); border:3px solid #6fd3ff; display:flex; align-items:center; justify-content:center; font-size:30px; z-index:2; }
+
+.streak-banner {
+    width: 100%; padding: 10px 14px; border-radius: 16px;
+    background: linear-gradient(135deg, rgba(255,170,0,.22), rgba(246,200,98,.10));
+    border: 1px solid rgba(255,170,0,.45);
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12px; font-weight: 800; color: var(--gold); margin-bottom: 12px;
+}
+
+/* ======= Экран загрузки ======= */
+#loader {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: radial-gradient(900px 500px at 50% 20%, #3b2a6e 0%, transparent 70%), linear-gradient(180deg, #0b0814, #100c20);
+    transition: opacity .6s ease, visibility .6s ease;
+    padding: 20px;
+}
+#loader.hide { opacity: 0; visibility: hidden; }
+.load-logo {
+    font-size: 44px; font-weight: 900; letter-spacing: 4px;
+    background: linear-gradient(180deg, #fff3cf, var(--gold) 55%, var(--gold-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 6px 22px rgba(246,200,98,.45));
+    animation: pop 1.6s ease-in-out infinite alternate;
+}
+@keyframes pop { from { transform: scale(1); } to { transform: scale(1.05); } }
+.load-sub { font-size: 11px; letter-spacing: 4px; color: var(--muted); margin-top: 6px; text-transform: uppercase; font-weight: 700; }
+.load-tagline { margin-top: 18px; font-size: 14px; font-weight: 700; color: #d8d2ea; min-height: 22px; text-align: center; }
+.load-bar { width: 260px; max-width: 80%; height: 6px; background: rgba(255,255,255,.1); border-radius: 3px; overflow: hidden; margin-top: 22px; }
+.load-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold-2), var(--gold), #fff3cf); border-radius: 3px; transition: width .3s; box-shadow: 0 0 14px rgba(246,200,98,.6); }
+.load-car { margin-top: 24px; width: 200px; max-width: 60%; animation: bob 2s ease-in-out infinite; }
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 </style>
 </head>
 <body>
 
 <script>window.yaContextCb=window.yaContextCb||[]</script>
 <script src="https://yandex.ru/ads/system/context.js" async></script>
+
+<!-- ЭКРАН ЗАГРУЗКИ -->
+<div id="loader">
+    <div class="load-logo">НОМЕРДАЙ</div>
+    <div class="load-sub">БИЗНЕС НА КОЛЕСАХ</div>
+    <div class="load-tagline" id="loader-text">Загружаем твой гараж...</div>
+    <div class="load-bar"><div class="load-fill" id="loader-fill"></div></div>
+    <svg class="load-car" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="lg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6c862"/><stop offset="1" stop-color="#d89a1f"/></linearGradient>
+        </defs>
+        <ellipse cx="100" cy="88" rx="86" ry="7" fill="rgba(0,0,0,.5)"/>
+        <path d="M8 72 L8 64 Q10 58 24 56 L60 50 Q80 34 110 34 Q132 36 146 48 L180 54 Q192 58 192 66 L192 72 Z" fill="url(#lg1)" stroke="#b87a00" stroke-width="1.5"/>
+        <path d="M72 49 Q86 38 106 38 L112 38 L112 49 Z M118 38 Q132 40 142 49 L118 49 Z" fill="#1b2030"/>
+        <circle cx="48" cy="73" r="14" fill="#07060c"/><circle cx="48" cy="73" r="11" fill="#1b1b24"/><circle cx="48" cy="73" r="6" fill="#cfcfd6"/>
+        <circle cx="152" cy="73" r="14" fill="#07060c"/><circle cx="152" cy="73" r="11" fill="#1b1b24"/><circle cx="152" cy="73" r="6" fill="#cfcfd6"/>
+        <rect x="8" y="63" width="6" height="5" rx="2" fill="#ff3b4e"/>
+        <rect x="181" y="63" width="7" height="5" rx="2" fill="#fff6c9"/>
+    </svg>
+</div>
 
 <div id="app">
     <div class="top-bar">
@@ -387,6 +437,20 @@ select.input-field { appearance: none; -webkit-appearance: none; }
     <div class="content">
         <!-- ГЛАВНАЯ -->
         <div class="main-screen" id="main-view">
+            <!-- Реклама сверху, закрывается крестиком -->
+            <div class="ad-wrap ad-top" id="ad-main">
+                <button class="ad-close" onclick="closeAd('ad-main')">✕</button>
+                <div id="yandex_rtb_R-A-20432576-4"></div>
+                <script>
+                window.yaContextCb.push(() => {
+                    Ya.Context.AdvManager.render({
+                        "blockId": "R-A-20432576-4",
+                        "renderTo": "yandex_rtb_R-A-20432576-4"
+                    })
+                })
+                </script>
+            </div>
+
             <div class="trend">🔥 Тренд дня: KIA +100%</div>
             <div class="title-big">НОМЕРДАЙ</div>
             <div id="home-plate" style="width:100%; margin-bottom:14px;"></div>
@@ -394,6 +458,11 @@ select.input-field { appearance: none; -webkit-appearance: none; }
             <div class="subtitle" style="margin-bottom:0;">ТВОЙ СТАТУС</div>
             <div class="status-pill" id="ui-status">Дилер</div>
             <div class="progress-bar"><div class="progress-fill" id="ui-progress"></div></div>
+
+            <div class="streak-banner" id="streak-banner" style="display:none;">
+                <span id="streak-text">🔥 Стрик 1 день</span>
+                <span id="streak-bonus" style="color: var(--green);">+2%</span>
+            </div>
 
             <div class="grid-menu">
                 <div class="menu-item" onclick="openScreen('screen-autosalon')"><div class="menu-icon">🚗</div><div class="menu-title">Автосалон</div><div class="menu-desc">Крутить тачки</div></div>
@@ -414,19 +483,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                 <div class="menu-item" onclick="openScreen('screen-profile')"><div class="menu-icon">👑</div><div class="menu-title">Профиль</div><div class="menu-desc">Статистика</div></div>
                 <div class="menu-item" onclick="openScreen('screen-catalog')"><div class="menu-icon">📚</div><div class="menu-title">Каталог</div><div class="menu-desc">100 машин</div></div>
                 <div class="menu-item" onclick="openScreen('screen-rules')"><div class="menu-icon">📖</div><div class="menu-title">Правила</div><div class="menu-desc">Как играть</div></div>
-            </div>
-
-            <div class="ad-wrap" id="ad-main">
-                <button class="ad-close" onclick="closeAd('ad-main')">✕</button>
-                <div id="yandex_rtb_R-A-20432576-4"></div>
-                <script>
-                window.yaContextCb.push(() => {
-                    Ya.Context.AdvManager.render({
-                        "blockId": "R-A-20432576-4",
-                        "renderTo": "yandex_rtb_R-A-20432576-4"
-                    })
-                })
-                </script>
             </div>
         </div>
 
@@ -601,7 +657,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
             <div class="pad">
                 <div style="text-align:center; font-weight:900; font-size:18px;">Баланс: <span style="color:#6fd3ff"><span id="cry-page-bal">0</span> 💎</span></div>
 
-                <!-- рулетка кристаллов -->
                 <div class="card" style="display:flex; flex-direction:column; gap:10px; align-items:center;">
                     <div style="font-weight:900; font-size:15px;">🎡 Рулетка кристаллов</div>
                     <div class="cry-wheel-wrap">
@@ -613,7 +668,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                     <div style="font-size:11px; color: var(--muted); text-align:center;" id="cry-spin-result"></div>
                 </div>
 
-                <!-- апгрейд 50/50 -->
                 <div class="card" style="display:flex; flex-direction:column; gap:10px;">
                     <div style="font-weight:900; font-size:15px;">⚔️ Кристалл-дуэль 50/50</div>
                     <p style="font-size:12px; color: var(--muted); margin:0;">Ставка: либо удвоишь, либо потеряешь.</p>
@@ -621,14 +675,12 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                     <button class="btn btn-purple" onclick="crystalDuel()">⚔️ Играть</button>
                 </div>
 
-                <!-- бонус -->
                 <div class="card" style="display:flex; flex-direction:column; gap:10px;">
                     <div style="font-weight:900; font-size:15px;">🎁 Ежедневный бонус</div>
                     <p style="font-size:12px; color: var(--muted); margin:0;">+500 💎 раз в сутки.</p>
                     <button class="btn btn-green" id="daily-bonus-btn" onclick="claimCrystalDaily()">Забрать бонус</button>
                 </div>
 
-                <!-- магазин за кристаллы -->
                 <div class="card" style="display:flex; flex-direction:column; gap:10px;">
                     <div style="font-weight:900; font-size:15px;">🛒 Магазин за 💎</div>
                     <div class="list-item">
@@ -670,6 +722,7 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                 <div class="avatar" style="width:96px; height:96px; font-size:48px;">👤</div>
                 <h2 id="profile-name">Игрок</h2>
                 <p style="color: var(--muted);">Перерождений: <span id="profile-rebirths">0</span></p>
+                <p style="color: var(--muted); font-size:13px;">Стрик: <span id="profile-streak" style="color: var(--gold); font-weight:800;">0 дней</span></p>
                 <div style="width:100%;">
                     <label style="font-size:12px; color: var(--muted); font-weight:700;">Изменить имя:</label>
                     <input type="text" id="input-name" class="input-field" maxlength="16" placeholder="Новое имя" style="margin: 8px 0 10px;">
@@ -771,6 +824,8 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                 <p><b>8. Кредит:</b> до 50 млн ₽ на срок до 2 часов. От 10 млн — нужен залог машины. Просрочка — банк забирает всё.</p>
                 <p><b>9. Крипта:</b> BTC, ETH, SOL — цена меняется каждые 5 секунд. Купить можно на любую сумму в ₽.</p>
                 <p><b>10. Кристаллы:</b> рулетка, дуэль 50/50, ежедневный бонус, магазин и обмен 50 000 💎 → 50 млн ₽.</p>
+                <p><b>11. Стрик:</b> заходите каждый день, чтобы получать до +60% к удаче.</p>
+                <p><b>12. Пити:</b> 80 круток без Legendary — и она гарантированно выпадет.</p>
             </div>
         </div>
 
@@ -846,7 +901,7 @@ const fmt = n => Math.round(n).toLocaleString('ru-RU');
 const newUid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 const START_MONEY = 20000000;
 const START_CRYSTALS = 10060;
-const SAVE_KEY = 'numberday_save_v12';
+const SAVE_KEY = 'numberday_save_v13';
 const AD_KEY = 'numberday_ads_closed';
 
 function rng(seed) { let s = seed; return () => { s = (s * 1664525 + 1013904223) % 4294967296; return s / 4294967296; }; }
@@ -1005,6 +1060,7 @@ function defaultState() {
         dailyDate: '', dailyProgress: { spins: 0, epicPlus: 0, earned: 0 }, dailyClaimed: { spins: false, epicPlus: false, earned: false },
         loan: 0, loanDueAt: 0, lastAidAt: 0, loanCollateralUid: null,
         lastCrystalDaily: 0,
+        pityCounter: 0, streakDays: 0, lastLoginDate: '',
         crypto: {
             btc: { name: 'BTC', icon: '₿', color: '#f7931a', price: 5000000, prev: 5000000, hold: 0 },
             eth: { name: 'ETH', icon: 'Ξ', color: '#627eea', price: 350000, prev: 350000, hold: 0 },
@@ -1014,7 +1070,7 @@ function defaultState() {
 }
 let state = defaultState();
 try {
-    const saved = JSON.parse(localStorage.getItem(SAVE_KEY)) || JSON.parse(localStorage.getItem('numberday_save_v11')) || JSON.parse(localStorage.getItem('numberday_save_v10'));
+    const saved = JSON.parse(localStorage.getItem(SAVE_KEY)) || JSON.parse(localStorage.getItem('numberday_save_v12')) || JSON.parse(localStorage.getItem('numberday_save_v11'));
     if (saved) state = { ...state, ...saved, pending: { car: [], number: [], ...(saved.pending || {}) }, crypto: { ...defaultState().crypto, ...(saved.crypto || {}) } };
 } catch (e) {}
 ['car', 'number'].forEach(t => { state.garage.push(...state.pending[t]); state.pending[t] = []; });
@@ -1082,6 +1138,38 @@ const TIERS = [
 const rankName = m => m < 1000 ? 'Бронза' : m < 2000 ? 'Серебро' : 'Золото';
 
 function todayKey() { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+
+function checkDailyStreak() {
+    const t = todayKey();
+    if (state.lastLoginDate === t) { renderStreak(); return; }
+    const y = new Date(); y.setDate(y.getDate() - 1);
+    const yKey = `${y.getFullYear()}-${String(y.getMonth()+1).padStart(2,'0')}-${String(y.getDate()).padStart(2,'0')}`;
+    if (state.lastLoginDate === yKey) {
+        state.streakDays = Math.min((state.streakDays || 0) + 1, 30);
+    } else {
+        state.streakDays = 1;
+    }
+    state.lastLoginDate = t;
+    saveGame();
+    renderStreak();
+    if (state.streakDays > 1) {
+        setTimeout(() => toast(`🔥 Стрик ${state.streakDays} дн.! Бонус к удаче: +${Math.min(state.streakDays*2, 60)}%`), 800);
+    }
+}
+function renderStreak() {
+    const banner = $('streak-banner');
+    if (!banner) return;
+    if (state.streakDays > 1) {
+        banner.style.display = 'flex';
+        $('streak-text').textContent = `🔥 Стрик ${state.streakDays} дн.`;
+        $('streak-bonus').textContent = `+${Math.min(state.streakDays * 2, 60)}% к удаче`;
+    } else {
+        banner.style.display = 'none';
+    }
+    const ps = $('profile-streak');
+    if (ps) ps.textContent = `${state.streakDays || 0} дн.`;
+}
+
 function resetDailyIfNeeded() {
     if (!state.dailyProgress) state.dailyProgress = { spins: 0, epicPlus: 0, earned: 0 };
     if (!state.dailyClaimed) state.dailyClaimed = { spins: false, epicPlus: false, earned: false };
@@ -1316,7 +1404,6 @@ setInterval(() => {
     if ($('screen-bank') && $('screen-bank').classList.contains('active')) renderBank();
 }, 1000);
 
-// ====== КРИСТАЛЛЫ ======
 const CRY_PRIZES = [
     { t: 'Пусто',     m: 0,          color: '#444' },
     { t: '100 000 ₽', m: 100000,     color: '#4a7aff' },
@@ -1439,6 +1526,7 @@ function updateUI() {
     const nums = state.garage.filter(i => i.type === 'number').sort((a, b) => b.price - a.price);
     $('home-plate').innerHTML = plateHTML(nums[0] || { name: 'О777ОО', rarity: 'legendary' });
 
+    renderStreak();
     updateCryPage();
     checkAchievements();
     saveGame();
@@ -1484,21 +1572,31 @@ function closeScreen(id) {
 function getRandomItem(type, mode) {
     const pool = type === 'car' ? CARS_DB : NUMBERS_DB;
     const roll = Math.random() * 100;
+
+    const streakBonus = Math.min((state.streakDays || 0) * 2, 60); // +2% за день, макс +60%
     let boost = 0;
     if (mode === 'boost') boost = 1.5;
-    else if (mode === 'x10') boost = -1.2;
-    const bonus = boost + state.rebirths * 0.5 + state.tuningBonus;
+    else if (mode === 'x10') boost = -1.0;
 
-    const cH = type === 'car' ? Math.max(0, 0.04 + boost * 0.01) : 0;
-    const cL = Math.max(0, 0.8 + bonus);
-    const cE = Math.max(0, 3.5 + bonus);
-    const cR = Math.max(0, 14 + bonus);
+    const bonus = boost + state.rebirths * 0.5 + state.tuningBonus + streakBonus * 0.05;
+
+    const cH = type === 'car' ? Math.max(0, 0.08 + boost * 0.01) : 0;
+    const cL = Math.max(0, 1.2 + bonus);
+    const cE = Math.max(0, 5 + bonus);
+    const cR = Math.max(0, 18 + bonus);
 
     let rar = 'common';
     if (roll < cH) rar = 'hyper';
     else if (roll < cH + cL) rar = 'legendary';
     else if (roll < cH + cL + cE) rar = 'epic';
     else if (roll < cH + cL + cE + cR) rar = 'rare';
+
+    // Пити
+    if (type === 'car') {
+        state.pityCounter = (state.pityCounter || 0) + 1;
+        if (rar === 'legendary' || rar === 'hyper') state.pityCounter = 0;
+        else if (state.pityCounter >= 80) { rar = 'legendary'; state.pityCounter = 0; }
+    }
 
     let filtered = pool.filter(i => i.rarity === rar);
     if (!filtered.length) filtered = pool.filter(i => i.rarity === 'legendary');
@@ -1537,9 +1635,7 @@ function finishSpin(type, mode) {
     const count = mode === 'x10' ? 10 : 1;
     let items = Array.from({ length: count }, () => makeItem(type, mode));
 
-    // X10: экономика-казино — иногда в плюс, иногда в минус
     if (mode === 'x10' && type === 'car') {
-        // множитель удачи для всего дропа X10: 0.35 ... 1.7
         const luck = 0.35 + Math.random() * 1.35;
         items = items.map(it => ({
             ...it,
@@ -2104,8 +2200,43 @@ setInterval(() => {
     if ($('tasks-timer')) $('tasks-timer').textContent = t;
 }, 1000);
 
+// ===== ЗАГРУЗКА =====
+const LOADER_PHRASES = [
+    "Заводим двигатель...",
+    "Полируем номера...",
+    "Считаем миллионы...",
+    "Договариваемся с дилерами...",
+    "Прогреваем шины...",
+    "Открываем гараж...",
+    "Готовим твой бизнес..."
+];
+let loadProgress = 0, loadPhraseIdx = 0;
+const loadText = $('loader-text'), loadFill = $('loader-fill'), loader = $('loader');
+function tickLoader() {
+    loadProgress += Math.random() * 18 + 4;
+    if (loadProgress >= 100) loadProgress = 100;
+    loadFill.style.width = loadProgress + '%';
+    if (loadProgress < 100) {
+        if (Math.random() < 0.4) {
+            loadPhraseIdx = (loadPhraseIdx + 1) % LOADER_PHRASES.length;
+            loadText.textContent = LOADER_PHRASES[loadPhraseIdx];
+        }
+        setTimeout(tickLoader, 200 + Math.random() * 200);
+    } else {
+        loadText.textContent = "Готово! Погнали 🚀";
+        setTimeout(() => {
+            loader.classList.add('hide');
+            setTimeout(() => loader.style.display = 'none', 700);
+        }, 400);
+    }
+}
+
+// ===== СТАРТ =====
 resetDailyIfNeeded();
+checkDailyStreak();
+renderStreak();
 updateUI();
+setTimeout(tickLoader, 200);
 </script>
 </body>
-                </html>
+                                          </html>
