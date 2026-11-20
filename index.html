@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <!-- Yandex.RTB -->
-<script>window.yaContextCb=window.yaContextCb||[]</script>
-<script src="https://yandex.ru/ads/system/context.js" async></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Номердай</title>
@@ -315,9 +312,26 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .rules b { color: var(--gold); }
 
 .battle-stat { background: var(--card-2); border-radius: 12px; padding: 8px; text-align: center; font-weight: 800; font-size: 12px; }
+
+/* ---- НОВОЕ: банк-кредит ---- */
+.loan-badge { display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 13px; }
+.loan-warn { color: var(--red); font-weight: 800; font-size: 12px; animation: blink .8s infinite alternate; }
+
+/* ---- НОВОЕ: реклама ---- */
+.ad-wrap {
+    width: 100%; border-radius: 16px; overflow: hidden;
+    background: var(--card); border: 1px solid var(--line);
+    padding: 6px; margin-top: 6px;
+}
+.ad-wrap > div { min-height: 60px; width: 100%; }
 </style>
 </head>
 <body>
+
+<!-- ===== Yandex RTB система ===== -->
+<!-- Yandex.RTB -->
+<script>window.yaContextCb=window.yaContextCb||[]</script>
+<script src="https://yandex.ru/ads/system/context.js" async></script>
 
 <div id="app">
     <div class="top-bar">
@@ -353,10 +367,24 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                 <div class="menu-item" onclick="openScreen('screen-tasks')"><div class="menu-icon">📋</div><div class="menu-title">Задания</div><div class="menu-desc" id="ui-tasks-count">0/3</div></div>
                 <div class="menu-item" onclick="openScreen('screen-tuning')"><div class="menu-icon">🛠️</div><div class="menu-title">Тюнинг</div><div class="menu-desc">Удача</div></div>
                 <div class="menu-item" onclick="openScreen('screen-auction')"><div class="menu-icon">💎</div><div class="menu-title">Аукцион</div><div class="menu-desc">Ставки</div></div>
-                <div class="menu-item" onclick="openScreen('screen-bank')"><div class="menu-icon">💳</div><div class="menu-title">Банк</div><div class="menu-desc">Карта и валюта</div></div>
+                <div class="menu-item" onclick="openScreen('screen-bank')"><div class="menu-icon">💳</div><div class="menu-title">Банк</div><div class="menu-desc">Карта и кредит</div></div>
                 <div class="menu-item" onclick="openScreen('screen-profile')"><div class="menu-icon">👑</div><div class="menu-title">Профиль</div><div class="menu-desc">Статистика</div></div>
                 <div class="menu-item" onclick="openScreen('screen-catalog')"><div class="menu-icon">📚</div><div class="menu-title">Каталог</div><div class="menu-desc">100 машин</div></div>
                 <div class="menu-item" onclick="openScreen('screen-rules')"><div class="menu-icon">📖</div><div class="menu-title">Правила</div><div class="menu-desc">Как играть</div></div>
+            </div>
+
+            <!-- РЕКЛАМА (главная) -->
+            <div class="ad-wrap">
+                <!-- Yandex.RTB R-A-20432576-4 -->
+                <div id="yandex_rtb_R-A-20432576-4"></div>
+                <script>
+                window.yaContextCb.push(() => {
+                    Ya.Context.AdvManager.render({
+                        "blockId": "R-A-20432576-4",
+                        "renderTo": "yandex_rtb_R-A-20432576-4"
+                    })
+                })
+                </script>
             </div>
         </div>
 
@@ -452,6 +480,52 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                 <div class="btn-row">
                     <input type="number" id="bank-input" class="input-field" placeholder="Сумма в ₽" style="flex:2;">
                     <button class="btn btn-gold" style="flex:1;" onclick="convertMoney()">Купить $</button>
+                </div>
+
+                <!-- Помощь новичкам -->
+                <div class="card" style="display:flex; flex-direction:column; gap:8px;">
+                    <div class="loan-badge"><span>🆘 Помощь новичкам</span></div>
+                    <p style="font-size:12px; color: var(--muted); margin:0;">
+                        Если баланс меньше <b style="color:var(--gold)">4 999 999 ₽</b>, каждые 30 минут начисляется <b style="color:var(--green)">2 500 000 ₽</b>.
+                    </p>
+                    <div style="font-size:12px; font-weight:800; color: var(--blue);" id="aid-status">—</div>
+                </div>
+
+                <!-- Кредит -->
+                <div class="card" style="display:flex; flex-direction:column; gap:10px;">
+                    <div class="loan-badge"><span>💳 Кредит</span><span id="loan-badge-val" style="color:var(--red); font-size:12px;"></span></div>
+                    <div id="loan-active-box" style="display:none; flex-direction:column; gap:8px;">
+                        <div style="background: var(--card-2); border-radius:14px; padding:12px; text-align:center;">
+                            <div style="font-size:11px; color: var(--muted);">Долг</div>
+                            <div style="font-size:22px; font-weight:900; color: var(--red);" id="loan-debt">0 ₽</div>
+                            <div style="font-size:12px; margin-top:4px;">До срока: <span id="loan-left" class="loan-warn">00:00:00</span></div>
+                        </div>
+                        <button class="btn btn-green" onclick="repayLoan()">Выплатить <span id="loan-repay-sum"></span></button>
+                        <p style="font-size:11px; color: var(--muted); margin:0;">Если не выплатить вовремя — банк заберёт все деньги, машины и номера.</p>
+                    </div>
+                    <div id="loan-form-box" style="display:flex; flex-direction:column; gap:8px;">
+                        <input type="number" id="loan-amount" class="input-field" placeholder="Сумма кредита (до 10 000 000 ₽)" min="1" max="10000000">
+                        <select id="loan-term" class="input-field">
+                            <option value="0.5">Срок: 30 минут</option>
+                            <option value="1">Срок: 1 час</option>
+                            <option value="2">Срок: 2 часа</option>
+                            <option value="3">Срок: 3 часа</option>
+                        </select>
+                        <button class="btn btn-gold" onclick="takeLoan()">Взять кредит</button>
+                    </div>
+                </div>
+
+                <!-- РЕКЛАМА (банк) -->
+                <div class="ad-wrap">
+                    <div id="yandex_rtb_R-A-20432576-4_bank"></div>
+                    <script>
+                    window.yaContextCb.push(() => {
+                        Ya.Context.AdvManager.render({
+                            "blockId": "R-A-20432576-4",
+                            "renderTo": "yandex_rtb_R-A-20432576-4_bank"
+                        })
+                    })
+                    </script>
                 </div>
             </div>
         </div>
@@ -560,6 +634,8 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                 <p><b>4. Апгрейдер:</b> рискните машиной, чтобы получить более дорогую. Чем ниже шанс (10–75%), тем дороже приз. Деньги не тратятся, но при проигрыше машина сгорает.</p>
                 <p><b>5. Задания:</b> ежедневно выполняйте 3 задания и получайте награды. Обновляются в полночь.</p>
                 <p><b>6. Перерождение:</b> сбросьте прогресс ради постоянного бонуса к удаче. После перерождения вы снова начинаете с 20 000 000 ₽.</p>
+                <p><b>7. Помощь:</b> если на балансе меньше 4 999 999 ₽, каждые 30 минут начисляется 2 500 000 ₽.</p>
+                <p><b>8. Кредит:</b> можно взять до 10 000 000 ₽ на срок до 3 часов. Вовремя не вернёте — банк заберёт все деньги, машины и номера.</p>
             </div>
         </div>
 
@@ -656,7 +732,6 @@ const RARITY_RANGES = {
 const CARS_DB = [];
 (function () {
     let carId = 0;
-    // Гиперкары — фиксированные
     CARS_DB.push({ id: carId++, name: "Bugatti Chiron",   price: 1500000000, rarity: "hyper", shape: "sport" });
     CARS_DB.push({ id: carId++, name: "Koenigsegg Jesko", price: 2000000000, rarity: "hyper", shape: "sport" });
     CARS_DB.push({ id: carId++, name: "Pagani Huayra",    price: 1200000000, rarity: "hyper", shape: "sport" });
@@ -802,7 +877,8 @@ function defaultState() {
         currentBg: 'bg1', tuningLevel: 0, tuningBonus: 0,
         contracts: [], ach: {}, lastFortuneSpin: 0,
         spins: 0, upgradeWins: 0, gotLegendary: false,
-        dailyDate: '', dailyProgress: { spins: 0, epicPlus: 0, earned: 0 }, dailyClaimed: { spins: false, epicPlus: false, earned: false }
+        dailyDate: '', dailyProgress: { spins: 0, epicPlus: 0, earned: 0 }, dailyClaimed: { spins: false, epicPlus: false, earned: false },
+        loan: 0, loanDueAt: 0, lastAidAt: 0
     };
 }
 let state = defaultState();
@@ -956,6 +1032,111 @@ function renderTasks() {
     }).join('');
 }
 
+// ================= ПОМОЩЬ + КРЕДИТ =================
+const AID_THRESHOLD = 4999999;
+const AID_AMOUNT = 2500000;
+const AID_INTERVAL = 30 * 60 * 1000; // 30 минут
+const LOAN_MAX = 10000000;
+const LOAN_MAX_MS = 3 * 60 * 60 * 1000;
+
+function checkLoanExpired() {
+    if (state.loan > 0 && state.loanDueAt && Date.now() >= state.loanDueAt) {
+        state.loan = 0;
+        state.loanDueAt = 0;
+        state.money = 0;
+        state.garage = [];
+        state.contracts = [];
+        state.battleCar = null;
+        state.pending = { car: [], number: [] };
+        saveGame();
+        updateUI();
+        if ($('screen-bank') && $('screen-bank').classList.contains('active')) renderBank();
+        infoBox('🚫 Кредит просрочен!', 'Банк забрал <b>все деньги, машины и номера</b> за неуплату кредита. Долг списан.');
+    }
+}
+
+function applyAidIfNeeded() {
+    const now = Date.now();
+    if (state.money < AID_THRESHOLD) {
+        if (!state.lastAidAt) state.lastAidAt = now;
+        if (now - state.lastAidAt >= AID_INTERVAL) {
+            state.lastAidAt = now;
+            earnMoney(AID_AMOUNT);
+            updateUI();
+            if ($('screen-bank') && $('screen-bank').classList.contains('active')) renderBank();
+            toast(`🆘 Помощь новичкам: +${fmt(AID_AMOUNT)} ₽`);
+        }
+    } else {
+        state.lastAidAt = now;
+    }
+    saveGame();
+}
+
+function takeLoan() {
+    if (state.loan > 0) { toast('У вас уже есть активный кредит'); return; }
+    const amount = Math.floor(Number($('loan-amount').value));
+    const hours = Number($('loan-term').value);
+    if (!amount || amount < 1) { toast('Введите сумму кредита'); return; }
+    if (amount > LOAN_MAX) { toast(`Максимум ${fmt(LOAN_MAX)} ₽`); return; }
+    if (!hours || hours <= 0 || hours > 3) { toast('Срок должен быть от 0.5 до 3 часов'); return; }
+    state.loan = amount;
+    state.loanDueAt = Date.now() + hours * 60 * 60 * 1000;
+    state.money += amount;
+    $('loan-amount').value = '';
+    saveGame();
+    updateUI();
+    renderBank();
+    toast(`💳 Кредит ${fmt(amount)} ₽ получен`);
+}
+
+function repayLoan() {
+    if (state.loan <= 0) { toast('Нет активного кредита'); return; }
+    const debt = state.loan;
+    if (state.money < debt) { toast(`Нужно ${fmt(debt)} ₽ для выплаты`); return; }
+    state.money -= debt;
+    state.loan = 0;
+    state.loanDueAt = 0;
+    saveGame();
+    updateUI();
+    renderBank();
+    toast('✅ Кредит выплачен!');
+}
+
+function renderBank() {
+    const aidEl = $('aid-status');
+    if (aidEl) {
+        if (state.money < AID_THRESHOLD) {
+            const left = Math.max(0, AID_INTERVAL - (Date.now() - (state.lastAidAt || Date.now())));
+            const m = Math.floor(left / 60000), s = Math.floor((left % 60000) / 1000);
+            aidEl.textContent = `Следующее начисление через ${m}м ${String(s).padStart(2,'0')}с`;
+        } else {
+            aidEl.textContent = 'Доступно только при балансе меньше 4 999 999 ₽';
+        }
+    }
+    const active = $('loan-active-box'), form = $('loan-form-box'), badge = $('loan-badge-val');
+    if (state.loan > 0) {
+        if (active) active.style.display = 'flex';
+        if (form) form.style.display = 'none';
+        if (badge) badge.textContent = 'активен';
+        const debtEl = $('loan-debt'); if (debtEl) debtEl.textContent = fmt(state.loan) + ' ₽';
+        const rep = $('loan-repay-sum'); if (rep) rep.textContent = fmt(state.loan) + ' ₽';
+        const left = Math.max(0, state.loanDueAt - Date.now());
+        const h = Math.floor(left / 3600000), m = Math.floor((left % 3600000) / 60000), s = Math.floor((left % 60000) / 1000);
+        const leftEl = $('loan-left');
+        if (leftEl) leftEl.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    } else {
+        if (active) active.style.display = 'none';
+        if (form) form.style.display = 'flex';
+        if (badge) badge.textContent = '';
+    }
+}
+
+setInterval(() => {
+    checkLoanExpired();
+    applyAidIfNeeded();
+    if ($('screen-bank') && $('screen-bank').classList.contains('active')) renderBank();
+}, 1000);
+
 // ================= UI =================
 function updateUI() {
     $('ui-money').textContent = fmt(state.money);
@@ -1001,6 +1182,7 @@ function openScreen(id) {
     if (id === 'screen-battle') { ensureLobbies(); updateBattleUI(); }
     if (id === 'screen-profile') renderBgPicker();
     if (id === 'screen-tuning') updateTuningUI();
+    if (id === 'screen-bank') renderBank();
     if (id === 'screen-auction') startAuction();
     if (id === 'screen-contracts') renderContracts();
     if (id === 'screen-achievements') renderAchievements();
@@ -1030,12 +1212,9 @@ function closeScreen(id) {
 function getRandomItem(type, mode) {
     const pool = type === 'car' ? CARS_DB : NUMBERS_DB;
     const roll = Math.random() * 100;
-    // Множитель для буста / x10 (немного повышает шансы)
     const boost = (mode === 'boost' || mode === 'x10') ? 2 : 0;
-    // Бонус от перерождений (+0.5% за каждое) и тюнинга (+1.5% за уровень)
     const bonus = boost + state.rebirths * 0.5 + state.tuningBonus;
 
-    // Пониженные базовые шансы: hyper 0.1%, legendary 1%, epic 4%, rare 15%
     const cH = type === 'car' ? 0.1 + boost * 0.02 : 0;
     const cL = 1 + bonus;
     const cE = 4 + bonus;
@@ -1228,7 +1407,6 @@ function renderBgPicker() {
 }
 
 // ================= ПЕРЕРОЖДЕНИЕ =================
-// Каждое перерождение дороже предыдущего на 500 млн, даёт +0.5% к удаче
 const rebirthCost = () => 100000000 + state.rebirths * 500000000;
 
 function rebirth() {
@@ -1613,7 +1791,6 @@ function buyShopCrystals(price, crys) {
 }
 
 // ================= ТЮНИНГ =================
-// Каждый следующий уровень дороже на 250 млн, даёт +1.5% к шансу дорогих машин
 const tuneCost = () => 50000000 + state.tuningLevel * 250000000;
 function updateTuningUI() {
     $('tune-level').textContent = state.tuningLevel;
@@ -1784,15 +1961,5 @@ setInterval(() => {
 resetDailyIfNeeded();
 updateUI();
 </script>
-    <!-- Yandex.RTB R-A-20432576-4 -->
-<div id="yandex_rtb_R-A-20432576-4"></div>
-<script>
-window.yaContextCb.push(() => {
-    Ya.Context.AdvManager.render({
-        "blockId": "R-A-20432576-4",
-        "renderTo": "yandex_rtb_R-A-20432576-4"
-    })
-})
-</script>
 </body>
-    </html>
+                                           </html>
