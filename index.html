@@ -380,6 +380,45 @@ select.input-field { appearance: none; -webkit-appearance: none; }
     font-size: 12px; font-weight: 800; color: var(--gold); margin-bottom: 12px;
 }
 
+/* === НОВЫЕ СТИЛИ: ID и переводы === */
+.player-id-box {
+    width: 100%;
+    background: rgba(255,255,255,.05);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+}
+.player-id-label {
+    font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
+    color: var(--muted); text-transform: uppercase;
+}
+.player-id-row { display: flex; align-items: center; gap: 8px; }
+.player-id-value {
+    flex: 1; font-family: 'Courier New', monospace; font-size: 17px; font-weight: 900;
+    color: var(--gold); letter-spacing: 1.5px;
+    background: rgba(246,200,98,.08); border: 1px solid rgba(246,200,98,.3);
+    border-radius: 12px; padding: 10px 12px; text-align: center;
+    user-select: all; -webkit-user-select: all;
+}
+.transfer-history {
+    display: flex; flex-direction: column; gap: 8px; margin-top: 8px;
+}
+.transfer-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: 14px;
+    background: var(--card-2); font-size: 12.5px;
+}
+.transfer-row.in { border-left: 3px solid var(--green); }
+.transfer-row.out { border-left: 3px solid var(--red); }
+.transfer-row .tr-ico { font-size: 18px; }
+.transfer-row .tr-main { flex: 1; min-width: 0; }
+.transfer-row .tr-title { font-weight: 800; }
+.transfer-row .tr-sub { font-size: 10.5px; color: var(--muted); font-weight: 600; margin-top: 1px; }
+.transfer-row .tr-amt { font-weight: 900; font-size: 13px; white-space: nowrap; }
+.transfer-row.in .tr-amt { color: var(--green); }
+.transfer-row.out .tr-amt { color: var(--red); }
+
 /* ======= Экран загрузки ======= */
 #loader {
     position: fixed; inset: 0; z-index: 9999;
@@ -593,6 +632,20 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                 </div>
                 <button class="btn btn-gold" onclick="convertMoney()">Купить валюту</button>
 
+                <!-- ===== НОВОЕ: ПЕРЕВОД ИГРОКУ ===== -->
+                <div class="card" style="display:flex; flex-direction:column; gap:10px;">
+                    <div class="loan-badge"><span>💸 Перевод игроку</span><span style="font-size:11px; color:var(--muted);">по ID</span></div>
+                    <div style="font-size:11.5px; color:var(--muted); font-weight:600; line-height:1.4;">
+                        Введите ID получателя. Свой ID можно посмотреть в <b style="color:var(--gold)">Профиле</b>.
+                    </div>
+                    <input type="text" id="transfer-id" class="input-field" placeholder="ND-XXXXXX" maxlength="20" autocomplete="off">
+                    <input type="number" id="transfer-amount" class="input-field" placeholder="Сумма перевода, ₽" min="1">
+                    <button class="btn btn-green" onclick="transferMoney()">💸 Перевести</button>
+                    <div style="font-size:11px; color:var(--muted); font-weight:600; text-align:center;" id="transfer-recipient-hint"></div>
+                    <div class="transfer-history" id="transfer-history"></div>
+                </div>
+                <!-- ===== /ПЕРЕВОД ===== -->
+
                 <div class="card" style="display:flex; flex-direction:column; gap:8px;">
                     <div class="loan-badge"><span>💠 Кристаллы</span></div>
                     <p style="font-size:12px; color: var(--muted); margin:0;">
@@ -639,9 +692,8 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                     <div id="crypto-list" style="display:flex; flex-direction:column; gap:8px; margin-top:10px;"></div>
                 </div>
             </div>
-        </div>
-
-        <!-- КРИСТАЛЛЫ -->
+            </div>
+                    <!-- КРИСТАЛЛЫ -->
         <div class="screen" id="screen-crystals">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-crystals')">‹</button><div class="screen-title">💠 Кристаллы</div></div>
             <div class="pad">
@@ -711,6 +763,20 @@ select.input-field { appearance: none; -webkit-appearance: none; }
             <div class="pad" style="align-items:center;">
                 <div class="avatar" style="width:96px; height:96px; font-size:48px;">👤</div>
                 <h2 id="profile-name">Игрок</h2>
+
+                <!-- ===== НОВОЕ: ID ИГРОКА ===== -->
+                <div class="player-id-box">
+                    <div class="player-id-label">Твой ID для переводов</div>
+                    <div class="player-id-row">
+                        <div class="player-id-value" id="profile-id">ND-000000</div>
+                        <button class="btn btn-glass btn-sm" onclick="copyPlayerId()" title="Копировать">📋</button>
+                    </div>
+                    <div style="font-size:11px; color: var(--muted); font-weight:600; line-height:1.4; text-align:center;">
+                        Поделитесь этим ID, чтобы вам перевели деньги.
+                    </div>
+                </div>
+                <!-- ===== /ID ИГРОКА ===== -->
+
                 <p style="color: var(--muted);">Перерождений: <span id="profile-rebirths">0</span></p>
                 <p style="color: var(--muted); font-size:13px;">Стрик: <span id="profile-streak" style="color: var(--gold); font-weight:800;">0 дней</span></p>
                 <div style="width:100%;">
@@ -816,6 +882,7 @@ select.input-field { appearance: none; -webkit-appearance: none; }
                 <p><b>10. Кристаллы:</b> рулетка, дуэль 50/50, ежедневный бонус, магазин и обмен 50 000 💎 → 50 млн ₽.</p>
                 <p><b>11. Стрик:</b> заходите каждый день, чтобы получать до +60% к удаче.</p>
                 <p><b>12. Пити:</b> 80 круток без Legendary — и она гарантированно выпадет.</p>
+                <p><b>13. Переводы:</b> в Банке можно перевести деньги другому игроку по его ID (смотрите ID в Профиле).</p>
             </div>
         </div>
 
@@ -883,9 +950,8 @@ select.input-field { appearance: none; -webkit-appearance: none; }
         <div class="modal" id="modal"><div class="modal-box" id="modal-box"></div></div>
         <div id="toast"></div>
     </div>
-</div>
-
-<script>
+                        </div>
+                        <script>
 // ===== ОДНОРАЗОВЫЙ СБРОС ВСЕХ ИГРОКОВ =====
 (function wipeEveryone() {
     if (localStorage.getItem('numberday_wipe_done_v1')) return;
@@ -904,7 +970,40 @@ const newUid = () => Date.now().toString(36) + Math.random().toString(36).slice(
 const START_MONEY = 20000000;
 const START_CRYSTALS = 10060;
 const SAVE_KEY = 'numberday_save_v14';
-const UPGRADE_CASHBACK = 0.10; // кэшбек за проигрыш в апгрейдере
+const UPGRADE_CASHBACK = 0.10;
+
+// ===== НОВОЕ: РЕЕСТР ИГРОКОВ (демо-«сервер» в localStorage) =====
+const REGISTRY_KEY = 'numberday_players_registry_v1';
+const TRANSFER_LOG_KEY = 'numberday_transfers_v1';
+
+function loadRegistry() {
+    try { return JSON.parse(localStorage.getItem(REGISTRY_KEY)) || {}; } catch (e) { return {}; }
+}
+function saveRegistry(reg) {
+    try { localStorage.setItem(REGISTRY_KEY, JSON.stringify(reg)); } catch (e) {}
+}
+function loadTransferLog() {
+    try { return JSON.parse(localStorage.getItem(TRANSFER_LOG_KEY)) || []; } catch (e) { return []; }
+}
+function saveTransferLog(log) {
+    try { localStorage.setItem(TRANSFER_LOG_KEY, JSON.stringify(log.slice(0, 50))); } catch (e) {}
+}
+function generatePlayerId() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let s = '';
+    for (let i = 0; i < 6; i++) s += chars[Math.floor(Math.random() * chars.length)];
+    return 'ND-' + s;
+}
+function ensureRegistrySeed() {
+    const reg = loadRegistry();
+    if (!Object.keys(reg).length) {
+        // Демо-боты, чтобы перевод можно было проверить сразу
+        reg['ND-BOT001'] = { name: 'Shadow60', money: 120000000, bot: true };
+        reg['ND-BOT002'] = { name: 'Viper77',  money: 45000000,  bot: true };
+        reg['ND-BOT003'] = { name: 'Nitro88',  money: 8000000,   bot: true };
+        saveRegistry(reg);
+    }
+}
 
 function rng(seed) { let s = seed; return () => { s = (s * 1664525 + 1013904223) % 4294967296; return s / 4294967296; }; }
 
@@ -1039,6 +1138,7 @@ const DAILY_TASKS = [
 
 function defaultState() {
     return {
+        playerId: '',                          // ← НОВОЕ: ID игрока
         money: START_MONEY, crystals: START_CRYSTALS,
         usd: 0, eur: 0, cny: 0, rebirths: 0,
         garage: [], pending: { car: [], number: [] },
@@ -1068,7 +1168,23 @@ if (!state.eur) state.eur = 0;
 if (!state.cny) state.cny = 0;
 if (!state.lastCrystalDaily) state.lastCrystalDaily = 0;
 
-function saveGame() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {} }
+// ===== НОВОЕ: гарантируем ID игрока =====
+(function ensurePlayerId() {
+    if (!state.playerId) {
+        state.playerId = generatePlayerId();
+        saveGame();
+    }
+})();
+
+function saveGame() {
+    try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {}
+    // синхронизируем себя в реестре игроков
+    try {
+        const reg = loadRegistry();
+        reg[state.playerId] = { name: state.playerName, money: state.money, bot: false };
+        saveRegistry(reg);
+    } catch (e) {}
+}
 
 function earnMoney(amount) {
     if (!amount || amount <= 0) return;
@@ -1105,6 +1221,102 @@ function pickCar(cb) {
         <button class="btn btn-glass" onclick="closeModal()">Отмена</button>`);
 }
 function pickDone(u) { closeModal(); if (_pickCb) _pickCb(u); }
+
+// ===== НОВОЕ: ПЕРЕВОДЫ И ID =====
+function copyPlayerId() {
+    const id = state.playerId;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(id).then(() => toast('📋 ID скопирован: ' + id))
+            .catch(() => fallbackCopy(id));
+    } else fallbackCopy(id);
+}
+function fallbackCopy(text) {
+    try {
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta);
+        toast('📋 ID скопирован: ' + text);
+    } catch (e) { toast('Ваш ID: ' + text); }
+}
+function getPlayerById(id) {
+    if (!id) return null;
+    const reg = loadRegistry();
+    return reg[id] || null;
+}
+function renderTransfers() {
+    const hint = $('transfer-recipient-hint');
+    const input = $('transfer-id');
+    if (hint && input) {
+        const id = input.value.trim().toUpperCase();
+        if (!id) hint.textContent = '';
+        else {
+            const p = getPlayerById(id);
+            if (id === state.playerId) hint.innerHTML = '<span style="color:var(--red)">Это ваш ID — нельзя перевести самому себе</span>';
+            else if (p) hint.innerHTML = `<span style="color:var(--green)">Получатель: ${p.name}</span>`;
+            else hint.innerHTML = '<span style="color:var(--red)">Игрок с таким ID не найден</span>';
+        }
+    }
+    const hist = $('transfer-history');
+    if (hist) {
+        const log = loadTransferLog().slice(0, 5);
+        if (!log.length) hist.innerHTML = '<div style="text-align:center; font-size:11px; color:var(--muted); font-weight:600;">Пока нет переводов</div>';
+        else hist.innerHTML = log.map(t => {
+            const isIn = t.to === state.playerId;
+            return `<div class="transfer-row ${isIn ? 'in' : 'out'}">
+                <div class="tr-ico">${isIn ? '📥' : '📤'}</div>
+                <div class="tr-main">
+                    <div class="tr-title">${isIn ? 'От: ' + t.fromName : 'Кому: ' + t.toName}</div>
+                    <div class="tr-sub">${new Date(t.ts).toLocaleString('ru-RU', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' })}</div>
+                </div>
+                <div class="tr-amt">${isIn ? '+' : '−'}${fmt(t.amount)} ₽</div>
+            </div>`;
+        }).join('');
+    }
+}
+function transferMoney() {
+    const idEl = $('transfer-id');
+    const amtEl = $('transfer-amount');
+    const rawId = (idEl.value || '').trim().toUpperCase();
+    const amount = Math.floor(Number(amtEl.value));
+
+    if (!rawId) { toast('Введите ID получателя'); return; }
+    if (rawId === state.playerId) { toast('Нельзя перевести самому себе'); return; }
+    const recipient = getPlayerById(rawId);
+    if (!recipient) { toast('Игрок с таким ID не найден'); return; }
+    if (!amount || amount <= 0) { toast('Введите корректную сумму'); return; }
+    if (amount > state.money) { toast(`Недостаточно средств. Баланс: ${fmt(state.money)} ₽`); return; }
+
+    confirmBox(`Перевести <b>${fmt(amount)} ₽</b> игроку <b>${recipient.name}</b> (${rawId})?`, () => {
+        // списываем у себя
+        state.money -= amount;
+        // начисляем получателю (если он есть в локальном state — только если совпадает ID, иначе пишем в реестр)
+        const reg = loadRegistry();
+        if (reg[rawId]) {
+            reg[rawId].money = (reg[rawId].money || 0) + amount;
+            reg[rawId].name = recipient.name;
+            saveRegistry(reg);
+            // Если получатель — мы сами (маловероятно), начисляем
+            if (rawId === state.playerId) state.money += amount;
+        }
+
+        // записываем в лог
+        const log = loadTransferLog();
+        log.unshift({
+            from: state.playerId,
+            fromName: state.playerName,
+            to: rawId,
+            toName: recipient.name,
+            amount,
+            ts: Date.now()
+        });
+        saveTransferLog(log);
+
+        idEl.value = ''; amtEl.value = '';
+        saveGame(); updateUI(); renderTransfers();
+        toast(`✅ Переведено ${fmt(amount)} ₽ → ${recipient.name}`);
+    }, 'Перевести');
+}
 
 function checkAchievements() {
     const cond = {
@@ -1315,6 +1527,7 @@ function renderBank() {
         if (badge) badge.textContent = '';
     }
     renderCrypto();
+    renderTransfers();
     const cb = $('cry-exchange-btn');
     if (cb) { if (state.crystals >= 50000) cb.classList.remove('disabled'); else cb.classList.add('disabled'); }
 }
@@ -1499,6 +1712,8 @@ function updateUI() {
     const cnyEl = $('ui-cny'); if (cnyEl) cnyEl.textContent = state.cny || 0;
     const cryEl = $('ui-cry-bal'); if (cryEl) cryEl.textContent = fmt(state.crystals);
     $('profile-name').textContent = state.playerName;
+    // ===== НОВОЕ: показываем ID в профиле =====
+    const pidEl = $('profile-id'); if (pidEl) pidEl.textContent = state.playerId;
     $('profile-rebirths').textContent = state.rebirths;
     $('ui-rebirth-cost').textContent = fmt(rebirthCost()) + ' ₽';
     $('ui-battle-desc').textContent = `MMR: ${state.mmr} • ${rankName(state.mmr)}`;
@@ -1531,9 +1746,9 @@ function openScreen(id) {
     if (id === 'screen-upgrade') updateUpgradeUI();
     if (id === 'screen-garage') renderGarage();
     if (id === 'screen-battle') { ensureLobbies(); updateBattleUI(); }
-    if (id === 'screen-profile') renderBgPicker();
+    if (id === 'screen-profile') { renderBgPicker(); const pidEl = $('profile-id'); if (pidEl) pidEl.textContent = state.playerId; }
     if (id === 'screen-tuning') updateTuningUI();
-    if (id === 'screen-bank') renderBank();
+    if (id === 'screen-bank') { renderBank(); renderTransfers(); }
     if (id === 'screen-crystals') { renderCryWheel(); updateCryPage(); }
     if (id === 'screen-auction') startAuction();
     if (id === 'screen-contracts') renderContracts();
@@ -1798,6 +2013,7 @@ function updateUpgradeUI() {
     $('upg-wheel-text').textContent = c + '%';
     document.querySelectorAll('#chance-pills .chance-pill').forEach(p => p.classList.toggle('active', parseInt(p.textContent) === c));
 }
+
 function setChance(c) { if (upgBusy) return; state.upgradeChance = c; updateUpgradeUI(); saveGame(); }
 function doUpgrade() {
     if (upgBusy) return;
@@ -1825,7 +2041,6 @@ function doUpgrade() {
             upgUid = got.uid;
             infoBox('🎉 ПОБЕДА!', `${carSVG(got)}Вы получили <b>${got.name}</b><br>за ${fmt(got.price)} ₽${state.tuningLevel ? ` (+${(state.tuningLevel*0.5).toFixed(1)}% тюнинг)` : ''}`);
         } else {
-            // КЭШБЕК 10% от стоимости сгоревшей машины
             const cashback = Math.round(car.price * UPGRADE_CASHBACK);
             earnMoney(cashback);
             upgUid = null;
@@ -2195,7 +2410,7 @@ setInterval(() => {
     if ($('tasks-timer')) $('tasks-timer').textContent = t;
 }, 1000);
 
-// ===== ЗАГРУЗКА =====
+// ===== ЛОАДЕР =====
 const LOADER_PHRASES = [
     "Заводим двигатель...",
     "Полируем номера...",
@@ -2227,11 +2442,21 @@ function tickLoader() {
 }
 
 // ===== СТАРТ =====
+ensureRegistrySeed();
 resetDailyIfNeeded();
 checkDailyStreak();
 renderStreak();
 updateUI();
+
+// слушатели для живого превью получателя перевода
+(function bindTransferInputs() {
+    const idEl = $('transfer-id');
+    if (idEl) idEl.addEventListener('input', () => { idEl.value = idEl.value.toUpperCase().replace(/[^A-Z0-9-]/g, ''); renderTransfers(); });
+    const amtEl = $('transfer-amount');
+    if (amtEl) amtEl.addEventListener('input', renderTransfers);
+})();
+
 setTimeout(tickLoader, 200);
 </script>
 </body>
-</html>
+    </html>
