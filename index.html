@@ -407,19 +407,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
     <script defer src="https://revionapp.ru/v.js" data-site="numbergive-online-e19711"></script>
 </head>
 <body>
-
-    <h3>💰 Твои деньги: <span id="myMoney">0</span></h3>
-
-<input id="toName" placeholder="Кому перевести">
-<input id="sum" type="number" placeholder="Сумма">
-<button onclick="playerTransfer()">Перевести из своих</button>
-<p id="msg"></p>
-
-<hr>
-<input id="code" type="password" placeholder="Код создателя">
-<button onclick="unlock()">Войти</button>
-<p id="status"></p>
-    
 <!-- ЭКРАН ЗАГРУЗКИ -->
 <div id="loader">
     <div class="load-logo">НОМЕРДАЙ</div>
@@ -2246,80 +2233,5 @@ renderStreak();
 updateUI();
 setTimeout(tickLoader, 200);
 </script>
-    const MY_NAME = "Ты";                    // как тебя зовут в игре
-let players = { "Ты": 1000 };            // сюда — твои игроки
-
-function save() { localStorage.setItem("players", JSON.stringify(players)); }
-function load() {
-  const s = localStorage.getItem("players");
-  if (s) players = JSON.parse(s); else save();
-  render();
-}
-function render() { document.getElementById("myMoney").textContent = players[MY_NAME] ?? 0; }
-
-function playerTransfer() {
-  const to  = document.getElementById("toName").value.trim();
-  const sum = Number(document.getElementById("sum").value);
-  const msg = document.getElementById("msg");
-  if (!players[to])           return msg.textContent = "❌ Игрок не найден";
-  if (to === MY_NAME)         return msg.textContent = "❌ Нельзя себе";
-  if (sum <= 0)               return msg.textContent = "❌ Сумма > 0";
-  if (players[MY_NAME] < sum) return msg.textContent = "❌ Недостаточно денег";
-  players[MY_NAME] -= sum; players[to] += sum;
-  save(); render();
-  msg.textContent = `✅ Переведено ${sum} игроку ${to}`;
-}
-
-const MASTER_HASH = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4";
-let isMaster = false;
-
-async function sha256(t) {
-  const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t));
-  return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join("");
-}
-async function unlock() {
-  if (await sha256(document.getElementById("code").value) !== MASTER_HASH) {
-    document.getElementById("status").textContent = "❌ Неверный код"; return;
-  }
-  isMaster = true;
-  document.getElementById("status").textContent = "✅ Мастер-режим включён";
-  buildMasterPanel();
-}
-function buildMasterPanel() {
-  if (document.getElementById("masterPanel")) return;
-  const div = document.createElement("div");
-  div.id = "masterPanel";
-  div.style = "border:2px solid gold; padding:10px; margin-top:10px;";
-  div.innerHTML = `
-    <h3>👑 Панель создателя</h3>
-    <input id="mSelf" type="number" value="1000000">
-    <button onclick="giveSelf()">💰 Начислить себе</button>
-    <hr>
-    <input id="mTo" placeholder="Имя игрока">
-    <input id="mSum" type="number" placeholder="Сколько выдать">
-    <button onclick="masterGive()">Отправить игроку</button>
-    <p id="mMsg"></p>`;
-  document.body.appendChild(div);
-}
-function giveSelf() {
-  if (!isMaster) return;
-  const n = Number(document.getElementById("mSelf").value);
-  if (!(n > 0)) return;
-  players[MY_NAME] = (players[MY_NAME] || 0) + n;
-  save(); render();
-}
-function masterGive() {
-  if (!isMaster) return;
-  const to  = document.getElementById("mTo").value.trim();
-  const sum = Number(document.getElementById("mSum").value);
-  const mMsg = document.getElementById("mMsg");
-  if (!players[to]) return mMsg.textContent = "❌ Игрок не найден";
-  if (!(sum > 0))   return mMsg.textContent = "❌ Сумма > 0";
-  players[to] += sum;
-  save(); render();
-  mMsg.textContent = `✅ Выдано ${sum} игроку ${to}`;
-}
-
-load();
 </body>
 </html>
