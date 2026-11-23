@@ -40,6 +40,7 @@ button { cursor: pointer; border: none; color: inherit; }
     display: flex; flex-direction: column;
     position: relative; overflow: hidden;
     box-shadow: 0 0 80px rgba(246,200,98,0.08);
+    isolation: isolate;
 }
 .top-bar {
     flex-shrink: 0; z-index: 300;
@@ -296,7 +297,14 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .bg-option { height: 70px; border-radius: 14px; border: 3px solid transparent; }
 .bg-option.active { border-color: var(--gold); }
 
-.modal { position: absolute; inset: 0; z-index: 500; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(4,3,9,.78); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+/* Оверлеи — строго внутри #app, не вылезают за его пределы */
+.modal {
+    position: absolute; inset: 0; z-index: 500;
+    display: none; align-items: center; justify-content: center; padding: 18px;
+    background: rgba(4,3,9,.78);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    overflow: hidden;
+}
 .modal.show { display: flex; animation: fadeIn .18s ease; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 .modal-box {
@@ -433,6 +441,7 @@ select.input-field { appearance: none; -webkit-appearance: none; }
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     padding: 20px; background: #07060c; transition: --sc .7s ease;
     animation: rvIn .3s ease both; user-select: none; -webkit-user-select: none;
+    will-change: opacity;
 }
 @keyframes rvIn { from { opacity: 0; } to { opacity: 1; } }
 .rv-bg { position: absolute; inset: 0; background:
@@ -612,7 +621,7 @@ span.rvc { display: inline-block; }
                 <div class="spin-btns" id="car-controls">
                     <button class="spin-btn spin-std" onclick="spin('car', false)"><span>🎲 Крутить</span><b>5 000 000 ₽</b></button>
                     <button class="spin-btn spin-boost" onclick="spin('car', 'boost')"><span>⚡ BOOST</span><b>10 000 000 ₽</b></button>
-                    <button class="spin-btn spin-x10" onclick="spin('car', 'x10')"><span>🎰 X10 КРУТИТЬ</span><b>700 000 000 ₽</b></button>
+                    <button class="spin-btn spin-x10" onclick="spin('car', 'x10')"><span>🎰 X10 КРУТИТЬ</span><b>450 000 000 ₽</b></button>
                 </div>
             </div>
         </div>
@@ -1305,13 +1314,18 @@ if (!state.upgradeChanceN) state.upgradeChanceN = 50;
     }
 })();
 
+// Дебаунс сохранения — снижает лаги при частых вызовах
+let _saveTimer = null;
 function saveGame() {
-    try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {}
-    try {
-        const reg = loadRegistry();
-        reg[state.playerId] = { name: state.playerName, money: state.money, bot: false };
-        saveRegistry(reg);
-    } catch (e) {}
+    clearTimeout(_saveTimer);
+    _saveTimer = setTimeout(() => {
+        try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {}
+        try {
+            const reg = loadRegistry();
+            reg[state.playerId] = { name: state.playerName, money: state.money, bot: false };
+            saveRegistry(reg);
+        } catch (e) {}
+    }, 120);
 }
 
 function earnMoney(amount) {
@@ -1552,14 +1566,13 @@ const AID_THRESHOLD = 4999999;
 const AID_AMOUNT = 2500000;
 const AID_INTERVAL = 30 * 60 * 1000;
 const LOAN_MAX = 500000000;
-const LOAN_TIER1 = 10000000;   // до 10 млн — без залога
-const LOAN_TIER2 = 100000000;  // 10..100 млн — залог ≥ 5 млн
+const LOAN_TIER1 = 10000000;
+const LOAN_TIER2 = 100000000;
 const COLLATERAL_MIN_1 = 5000000;
 const COLLATERAL_MIN_2 = 30000000;
 
 function checkLoanExpired() {
     if (state.loan > 0 && state.loanDueAt && Date.now() >= state.loanDueAt) {
-        // Штраф: забираем залоговую машину (или рандомную) и списываем долг
         let seized = null;
         if (state.loanCollateralUid) {
             const idx = state.garage.findIndex(i => i.uid === state.loanCollateralUid);
@@ -1608,7 +1621,6 @@ function takeLoan() {
     if (amount > LOAN_MAX) { toast(`Максимум ${fmt(LOAN_MAX)} ₽`); return; }
     if (!hours || hours <= 0 || hours > 2) { toast('Срок до 2 часов'); return; }
 
-    // Правила залога
     if (amount <= LOAN_TIER1) {
         finalizeLoan(amount, hours, null);
     } else if (amount <= LOAN_TIER2) {
@@ -1686,7 +1698,7 @@ function exchangeCrystals() {
 }
 
 const CRYPTO_KEYS = ['btc', 'eth', 'sol'];
-const CRYPTO_FEE = 0.01;   // комиссия 1%
+const CRYPTO_FEE = 0.01;
 
 function renderCrypto() {
     const list = $('crypto-list'); if (!list) return;
@@ -1715,7 +1727,6 @@ function tradeCrypto(key, dir) {
     const amountEl = $('crypto-amount');
     const amount = Math.floor(Number(amountEl ? amountEl.value : 0));
     if (dir > 0) {
-        // покупка: списываем рубли и зачисляем монеты по текущей цене + комиссия
         if (!amount || amount <= 0) { toast('Введите сумму в ₽ для покупки'); return; }
         const maxAfford = Math.min(amount, state.money);
         if (maxAfford < c.price) { toast(`Минимум ${fmt(c.price)} ₽ (1 ${c.name})`); return; }
@@ -1726,7 +1737,6 @@ function tradeCrypto(key, dir) {
         c.hold += qty;
         toast(`Куплено ${qty} ${c.name} за ${fmt(cost)} ₽ (с комиссией 1%)`);
     } else {
-        // продажа: зачисляем рубли по текущей цене минус комиссия
         if (!c.hold) { toast(`Нет ${c.name} для продажи`); return; }
         let qty;
         if (amount && amount > 0) {
@@ -1741,6 +1751,7 @@ function tradeCrypto(key, dir) {
     updateUI(); renderBank(); saveGame();
 }
 
+// Единый интервал крипты (без дублей)
 setInterval(() => {
     CRYPTO_KEYS.forEach(k => {
         const c = state.crypto[k]; if (!c) return;
@@ -1749,7 +1760,6 @@ setInterval(() => {
         c.price = Math.max(1, Math.round(c.price * (1 + delta)));
     });
     if ($('screen-bank') && $('screen-bank').classList.contains('active')) renderCrypto();
-    saveGame();
 }, 5000);
 
 setInterval(() => {
@@ -1760,7 +1770,6 @@ setInterval(() => {
     if ($('screen-business') && $('screen-business').classList.contains('active')) renderBusinesses();
 }, 1000);
 
-// ===== БИЗНЕСЫ: расчёт доходов =====
 function bizLevelDef(b) {
     return BUSINESSES_DEF.find(d => d.id === b) || null;
 }
@@ -1788,7 +1797,7 @@ function tickBusinesses() {
         if (!b) return;
         const perHr = bizIncomePerHour(def.id);
         if (perHr <= 0) { b.acc = 0; b.lastTick = now; return; }
-        const dt = Math.max(0, Math.min(now - (b.lastTick || now), 60 * 60 * 1000)) / 1000; // cap 1h
+        const dt = Math.max(0, Math.min(now - (b.lastTick || now), 60 * 60 * 1000)) / 1000;
         const add = perHr * (dt / 3600);
         b.acc = Math.min(bizLimit(def.id), b.acc + add);
         b.lastTick = now;
@@ -1871,17 +1880,6 @@ function renderBusinesses() {
         </div>`;
     }).join('');
 }
-
-setInterval(() => {
-    CRYPTO_KEYS.forEach(k => {
-        const c = state.crypto[k]; if (!c) return;
-        c.prev = c.price;
-        const delta = (Math.random() - 0.5) * 0.08;
-        c.price = Math.max(1, Math.round(c.price * (1 + delta)));
-    });
-    if ($('screen-bank') && $('screen-bank').classList.contains('active')) renderCrypto();
-    saveGame();
-}, 5000);
 
 const CRY_PRIZES = [
     { t: 'Пусто',     m: 0,          color: '#444' },
@@ -2058,7 +2056,8 @@ function getRandomItem(type, mode) {
     const roll = Math.random() * 100;
     const streakBonus = Math.min((state.streakDays || 0) * 2, 60);
     let boost = 0;
-    if (mode === 'boost') boost = 1.5;
+    // БУСТ: шансы выше обычного прокрута (машины и номера)
+    if (mode === 'boost') boost = 2.0;
     else if (mode === 'x10') boost = -1.0;
     const bonus = boost + state.rebirths * 0.5 + state.tuningBonus + streakBonus * 0.05;
     const cH = type === 'car' ? Math.max(0, 0.08 + boost * 0.01) : 0;
@@ -2088,7 +2087,8 @@ let busySpin = false;
 function spin(type, mode) {
     if (busySpin) return;
     if (state.pending[type].length) { toast('Сначала заберите предыдущие призы'); return; }
-    const costMoney = mode === 'x10' ? 700000000 : mode === 'boost' ? 10000000 : 5000000;
+    // X10 автосалон: 450 000 000 ₽
+    const costMoney = mode === 'x10' ? 450000000 : mode === 'boost' ? 10000000 : 5000000;
     const costCrys = type === 'number' ? (mode === 'x10' ? 5000 : mode === 'boost' ? 1000 : 300) : (mode === 'x10' ? 5000 : mode === 'boost' ? 1500 : 500);
     if (type === 'car') {
         if (state.money < costMoney) { toast('Недостаточно рублей!'); return; }
@@ -2259,7 +2259,6 @@ function spinWheel(el, target) {
     el._rot = rot; el.style.transform = `rotate(${rot}deg)`;
 }
 
-// ===== АПГРЕЙДЕР МАШИН =====
 let upgUid = null, upgBusy = false;
 function chooseUpgradeCar() { if (upgBusy) return; pickCar(u => { upgUid = u; updateUpgradeUI(); }); }
 function getUpgradePrize(car, chance) {
@@ -2326,7 +2325,6 @@ function doUpgrade() {
     }, 3200);
 }
 
-// ===== АПГРЕЙДЕР НОМЕРОВ =====
 let upgnUid = null, upgnBusy = false;
 function chooseUpgradeNumber() { if (upgnBusy) return; pickNumber(u => { upgnUid = u; updateUpgradeNumUI(); }); }
 function getNumberUpgradePrize(number, chance) {
@@ -2933,11 +2931,11 @@ function playReveal(item, type, total, done, opts) {
         else if (fin === 4) { fx.burst(x, y, 120, pal, 400); fx.burst(x, y, 26, ['#ffc247', '#ffe49a'], 520, 'coin'); retrigger('flash', 800);
             ov.style.setProperty('--sh', '6px'); retrigger('shake', 500); ov.classList.add('rays-fast'); vib([40, 30, 80]); }
         else if (fin >= 6) { const rb = ['#2de2ff', '#ff3d6e', '#ffc247', '#b86bff', '#3ddc97', '#fff'];
-            fx.burst(x, y, 260, rb, 560); fx.burst(x, y, 80, ['#ffc247', '#ffe49a'], 680, 'coin'); fx.rain(160, rb);
+            fx.burst(x, y, 220, rb, 540); fx.burst(x, y, 60, ['#ffc247', '#ffe49a'], 640, 'coin'); fx.rain(120, rb);
             retrigger('flash2', 1100); setTimeout(() => !closed && retrigger('flash', 800), 1200);
             ov.style.setProperty('--sh', '14px'); retrigger('shake', 500); setTimeout(() => !closed && retrigger('shake', 500), 1200);
             ov.classList.add('rays-fast'); vib([80, 40, 80, 40, 80, 40, 220]); }
-        else { fx.burst(x, y, 190, pal, 480); fx.burst(x, y, 60, ['#ffc247', '#ffe49a'], 600, 'coin'); fx.rain(90, [RV_STAGES[5].c, '#ffc247', '#fff', '#ffe49a']);
+        else { fx.burst(x, y, 150, pal, 440); fx.burst(x, y, 40, ['#ffc247', '#ffe49a'], 520, 'coin'); fx.rain(60, [RV_STAGES[5].c, '#ffc247', '#fff', '#ffe49a']);
             retrigger('flash2', 1100); ov.style.setProperty('--sh', '10px'); retrigger('shake', 500); ov.classList.add('rays-fast'); vib([60, 40, 60, 40, 160]); }
         ov.classList.add('done'); sfx('win', fin);
     }
@@ -3018,4 +3016,4 @@ updateUI();
 setTimeout(tickLoader, 200);
 </script>
 </body>
-</html
+    </html>
