@@ -527,6 +527,16 @@ span.rvc { display: inline-block; }
 .rv-hint { position: absolute; left: 0; right: 0; bottom: 24px; text-align: center; font-size: 11.5px; color: rgba(255,255,255,.4); z-index: 2; animation: blink 1.2s infinite alternate; }
 .rv.done .rv-hint { display: none; }
 @media (prefers-reduced-motion: reduce) { .rv-rays { animation: none; } .rv.shake .rv-main { animation: none; } }
+
+/* ===== НАСТРОЙКИ ===== */
+.set-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 16px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; cursor: pointer; }
+.set-t { font-weight: 800; font-size: 14px; } .set-d { font-size: 11.5px; color: var(--muted); font-weight: 600; margin-top: 3px; line-height: 1.35; }
+.sw { position: relative; width: 48px; height: 28px; flex-shrink: 0; border-radius: 14px; background: rgba(255,255,255,.14); transition: background .2s; }
+.sw::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; transition: transform .2s; box-shadow: 0 2px 6px rgba(0,0,0,.4); }
+.sw.on { background: var(--green); } .sw.on::after { transform: translateX(20px); }
+.set-title { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: var(--muted); margin: 6px 4px -4px; }
+.rv-skip { position: absolute; top: 16px; right: 16px; z-index: 6; padding: 8px 14px; border-radius: 18px; font-size: 12px; font-weight: 800; color: #fff; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.rv.done .rv-skip { display: none; }
 </style>
     <script defer src="https://revionapp.ru/v.js" data-site="numbergive-online-e19711"></script>
 </head>
@@ -609,6 +619,7 @@ span.rvc { display: inline-block; }
                 <div class="menu-item" onclick="openScreen('screen-crystals')"><div class="menu-icon">💠</div><div class="menu-title">Кристаллы</div><div class="menu-desc">Мини-игры</div></div>
                 <div class="menu-item" onclick="openScreen('screen-profile')"><div class="menu-icon">👑</div><div class="menu-title">Профиль</div><div class="menu-desc">Статистика</div></div>
                 <div class="menu-item" onclick="openScreen('screen-catalog')"><div class="menu-icon">📚</div><div class="menu-title">Каталог</div><div class="menu-desc">Машины и номера</div></div>
+                <div class="menu-item" onclick="openScreen('screen-settings')"><div class="menu-icon">⚙️</div><div class="menu-title">Настройки</div><div class="menu-desc">Анимации, звук</div></div>
                 <div class="menu-item" onclick="openScreen('screen-rules')"><div class="menu-icon">📖</div><div class="menu-title">Правила</div><div class="menu-desc">Как играть</div></div>
             </div>
         </div>
@@ -951,6 +962,11 @@ span.rvc { display: inline-block; }
         </div>
 
         <!-- ПРАВИЛА -->
+        <div class="screen" id="screen-settings">
+            <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-settings')">‹</button><div class="screen-title">Настройки</div></div>
+            <div class="pad" id="settings-list"></div>
+        </div>
+
         <div class="screen" id="screen-rules">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-rules')">‹</button><div class="screen-title">Правила</div></div>
             <div class="pad rules">
@@ -1859,6 +1875,7 @@ function openScreen(id) {
     if (id === 'screen-shop') renderShop();
     if (id === 'screen-tasks') { resetDailyIfNeeded(); renderTasks(); }
     if (id === 'screen-top') renderTop();
+    if (id === 'screen-settings') renderSettings();
     if (id === 'screen-fortune') { renderFortuneWheel(); updateFortuneBtn(); }
     el.classList.add('active');
 }
@@ -2149,7 +2166,8 @@ function doUpgrade() {
             state.upgradeWins++;
             if (['legendary','hyper','ultra'].includes(got.rarity)) state.gotLegendary = true;
             upgUid = got.uid;
-            playReveal(got, 'car', 1, () => {}, { always: true, title: '🎉 АПГРЕЙД УДАЛСЯ!', sub: `${car.name} ➜ ${got.name}<br><span style="color:var(--green);font-weight:800;">+${fmt(got.price - car.price)} ₽ к стоимости</span>`, btn: 'Отлично' });
+            if (SETTINGS.skipAnim) infoBox('🎉 ПОБЕДА!', `${carSVG(got)}Вы получили <b>${got.name}</b><br>за ${fmt(got.price)} ₽${state.tuningLevel ? ` (+${(state.tuningLevel*0.5).toFixed(1)}% тюнинг)` : ''}`);
+            else playReveal(got, 'car', 1, () => {}, { always: true, title: '🎉 АПГРЕЙД УДАЛСЯ!', sub: `${car.name} ➜ ${got.name}<br><span style="color:var(--green);font-weight:800;">+${fmt(got.price - car.price)} ₽ к стоимости</span>`, btn: 'Отлично' });
         } else {
             const cashback = Math.round(car.price * UPGRADE_CASHBACK);
             earnMoney(cashback);
@@ -2531,6 +2549,55 @@ setInterval(() => {
     if ($('tasks-timer')) $('tasks-timer').textContent = t;
 }, 1000);
 
+// ===== НАСТРОЙКИ =====
+const SETTINGS_KEY = 'numberday_settings_v1';
+const SETTINGS_DEFAULT = { skipAnim: false, fastAnim: false, sound: true, vibrate: true, calm: false };
+const SETTINGS_INFO = [
+    ['skipAnim', 'Пропускать анимации', 'Сразу показывать результат прокрутки и апгрейда, без раскрытия'],
+    ['fastAnim', 'Быстрые анимации', 'Раскрытие проходит в 2 раза быстрее'],
+    ['sound',    'Звуки', 'Тики счётчика и звон при выпадении дорогих призов'],
+    ['vibrate',  'Вибрация', 'Отклик на телефоне при раскрытии'],
+    ['calm',     'Без тряски и вспышек', 'Убирает тряску экрана и яркие вспышки']
+];
+let SETTINGS = { ...SETTINGS_DEFAULT };
+try { Object.assign(SETTINGS, JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {}); } catch (e) {}
+function toggleSetting(k) {
+    SETTINGS[k] = !SETTINGS[k];
+    try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(SETTINGS)); } catch (e) {}
+    if (k === 'sound' && SETTINGS.sound) sfx('stage', 3);
+    if (k === 'vibrate' && SETTINGS.vibrate) { try { navigator.vibrate && navigator.vibrate(30); } catch (e) {} }
+    renderSettings();
+}
+function renderSettings() {
+    $('settings-list').innerHTML = '<div class="set-title">АНИМАЦИИ И ЗВУК</div>' + SETTINGS_INFO.map(([k, t, d]) =>
+        `<div class="set-row" onclick="toggleSetting('${k}')"><div><div class="set-t">${t}</div><div class="set-d">${d}</div></div><div class="sw ${SETTINGS[k] ? 'on' : ''}"></div></div>`).join('');
+}
+
+// ===== ЗВУКИ (синтез через WebAudio, файлов не нужно) =====
+let _ac = null;
+function sfxTone(f, t0, dur, vol, type) {
+    const o = _ac.createOscillator(), g = _ac.createGain();
+    o.type = type || 'sine'; o.frequency.value = f;
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vol, t0 + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g); g.connect(_ac.destination); o.start(t0); o.stop(t0 + dur + 0.05);
+}
+function sfx(kind, n) {
+    if (!SETTINGS.sound) return;
+    try {
+        _ac = _ac || new (window.AudioContext || window.webkitAudioContext)();
+        if (_ac.state === 'suspended') _ac.resume();
+        const t = _ac.currentTime;
+        if (kind === 'tick') sfxTone(n, t, 0.05, 0.05, 'square');
+        else if (kind === 'stage') { sfxTone(440 * Math.pow(1.122, n * 2), t, 0.22, 0.12, 'triangle'); sfxTone(880 * Math.pow(1.122, n * 2), t + 0.05, 0.25, 0.06, 'sine'); }
+        else if (kind === 'win') {   // n = ступень 0..6: чем выше, тем длиннее и богаче аккорд
+            const notes = [523, 659, 784, 1047, 1319, 1568, 2093].slice(0, 3 + Math.min(4, n));
+            notes.forEach((f, i) => { sfxTone(f, t + i * 0.09, 0.9, 0.12, 'triangle'); sfxTone(f * 2, t + i * 0.09, 0.6, 0.04, 'sine'); });
+            if (n >= 4) sfxTone(130, t, 1.2, 0.2, 'sawtooth');
+            if (n >= 6) [0, 0.25, 0.5].forEach(d => sfxTone(2093, t + 0.6 + d, 0.5, 0.06, 'sine'));
+        }
+    } catch (e) {}
+}
+
 // ===== РАСКРЫТИЕ ДОРОГИХ ПРИЗОВ =====
 // Цена растёт счётчиком, фон/плашка проходят ступени редкости, номер «собирается» по частям.
 // Показывается для призов от «rare» и выше. Тап по экрану — пропустить до финала.
@@ -2608,9 +2675,9 @@ function playReveal(item, type, total, done, opts) {
     opts = opts || {};
     const fin = RV_FINAL[item.rarity];
     const app = $('app');
-    if (fin == null || fin < (opts.always ? 0 : 2) || !app) { done(); return; }
+    if (fin == null || fin < (opts.always ? 0 : 2) || !app || SETTINGS.skipAnim) { done(); return; }
     const isNum = type === 'number', unit = isNum ? '💎' : '₽';
-    const dur = RV_DUR[fin] * (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches ? .5 : 1);
+    const dur = RV_DUR[fin] * (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches ? .5 : 1) * (SETTINGS.fastAnim ? .5 : 1);
     const ov = document.createElement('div');
     ov.className = 'rv';
     ov.innerHTML = `<div class="rv-bg"></div><div class="rv-rays"></div><canvas class="rv-fx"></canvas><div class="rv-flash"></div>
@@ -2625,18 +2692,19 @@ function playReveal(item, type, total, done, opts) {
             </div>
             <button class="btn rv-btn">${opts.btn || 'Забрать'}</button>
         </div>
+        <button class="rv-skip">Пропустить ⏭</button>
         <div class="rv-hint">Нажми, чтобы пропустить</div>`;
     app.appendChild(ov);
 
     const tag = ov.querySelector('.rv-tag'), rn = ov.querySelector('.rv-rn'), price = ov.querySelector('.rv-price');
     const dots = [...ov.querySelectorAll('.rv-dots i')], art = ov.querySelector('.rv-art'), chars = [...ov.querySelectorAll('.rvc')];
     const fx = rvFx(ov.querySelector('.rv-fx'));
-    const vib = p => { try { navigator.vibrate && navigator.vibrate(p); } catch (e) {} };
+    const vib = p => { if (!SETTINGS.vibrate) return; try { navigator.vibrate && navigator.vibrate(p); } catch (e) {} };
     const center = () => { const a = art.getBoundingClientRect(), o = ov.getBoundingClientRect(); return [a.left - o.left + a.width / 2, a.top - o.top + a.height / 2]; };
     const palette = () => [RV_STAGES[fin].c, '#ffffff', '#ffe49a'];
-    const retrigger = (cls, ms) => { ov.classList.remove(cls); void ov.offsetWidth; ov.classList.add(cls); setTimeout(() => ov.classList.remove(cls), ms); };
+    const retrigger = (cls, ms) => { if (SETTINGS.calm && (cls === 'flash' || cls === 'flash2' || cls === 'shake')) return; ov.classList.remove(cls); void ov.offsetWidth; ov.classList.add(cls); setTimeout(() => ov.classList.remove(cls), ms); };
 
-    let stage = -1, finished = false, closed = false, raf = 0, last = 0, t0 = 0, rise = 0, doneAt = 0;
+    let stage = -1, finished = false, closed = false, raf = 0, last = 0, t0 = 0, rise = 0, doneAt = 0, lastTick = 0;
 
     function setStage(s) {
         if (s === stage) return;
@@ -2648,7 +2716,7 @@ function playReveal(item, type, total, done, opts) {
         if (up) {
             tag.classList.remove('pulse'); void tag.offsetWidth; tag.classList.add('pulse');
             const [x, y] = center(); fx.burst(x, y, 10 + s * 5, [RV_STAGES[s].c, '#fff'], 150 + s * 30);
-            vib(12);
+            vib(12); sfx('stage', s);
         }
     }
 
@@ -2670,7 +2738,7 @@ function playReveal(item, type, total, done, opts) {
             ov.classList.add('rays-fast'); vib([80, 40, 80, 40, 80, 40, 220]); }
         else { fx.burst(x, y, 190, pal, 480); fx.burst(x, y, 60, ['#ffc247', '#ffe49a'], 600, 'coin'); fx.rain(90, [RV_STAGES[5].c, '#ffc247', '#fff', '#ffe49a']);
             retrigger('flash2', 1100); ov.style.setProperty('--sh', '10px'); retrigger('shake', 500); ov.classList.add('rays-fast'); vib([60, 40, 60, 40, 160]); }
-        ov.classList.add('done');
+        ov.classList.add('done'); sfx('win', fin);
     }
 
     function frame(now) {
@@ -2679,6 +2747,7 @@ function playReveal(item, type, total, done, opts) {
         if (!finished) {
             const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
             price.textContent = fmt(item.price * e) + ' ' + unit;
+            if (now - lastTick > 80) { lastTick = now; sfx('tick', 300 + 900 * e); }
             setStage(Math.min(fin, Math.floor(e * (fin + 1))));
             chars.forEach(c => { if (!c.classList.contains('on') && p >= +c.dataset.t) c.classList.add('on'); });
             if (p > .3) art.classList.add('lit');
@@ -2753,4 +2822,4 @@ updateUI();
 setTimeout(tickLoader, 200);
 </script>
 </body>
-                                                                                                                                                     </html>
+                                         </html>
