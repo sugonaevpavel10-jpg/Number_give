@@ -158,7 +158,7 @@ button { cursor: pointer; border: none; color: inherit; }
 .spin-btns { display: flex; flex-direction: column; gap: 10px; }
 
 .r-common { --rc: #9aa3b2; } .r-rare { --rc: #4aa3ff; } .r-epic { --rc: #b86bff; }
-.r-legendary { --rc: #ffc247; } .r-hyper { --rc: #ff3d6e; }
+.r-legendary { --rc: #ffc247; } .r-hyper { --rc: #ff3d6e; } .r-ultra { --rc: #2de2ff; }
 .rar-label { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--rc); }
 
 .spin-display {
@@ -168,6 +168,8 @@ button { cursor: pointer; border: none; color: inherit; }
     display: flex; flex-direction: column; justify-content: center; align-items: center;
 }
 .spin-display.glow-hyper { animation: glow 1.5s infinite; border-color: #ff3d6e; }
+.spin-display.glow-ultra { animation: glowU 1.3s infinite; border-color: #2de2ff; }
+@keyframes glowU { 0%,100% { box-shadow: 0 0 16px rgba(45,226,255,.5); } 50% { box-shadow: 0 0 50px rgba(45,226,255,.95), inset 0 0 26px rgba(45,226,255,.35); } }
 @keyframes glow { 0%,100% { box-shadow: 0 0 14px rgba(255,61,110,.5); } 50% { box-shadow: 0 0 44px rgba(255,61,110,.9), inset 0 0 22px rgba(255,61,110,.35); } }
 .idle { color: var(--muted); font-weight: 700; font-size: 15px; }
 .idle .big { font-size: 46px; margin-bottom: 8px; }
@@ -493,6 +495,8 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .rv.done .rv-price { animation: rvBounce .6s cubic-bezier(.2,1.8,.4,1); }
 @keyframes rvBounce { 0% { transform: scale(1); } 40% { transform: scale(1.3); } 100% { transform: scale(1); } }
 
+.rv-title { font-size: 20px; font-weight: 900; letter-spacing: 1px; margin-bottom: 14px; color: #fff; text-shadow: 0 0 22px var(--sc); animation: rvTitle .7s cubic-bezier(.2,1.6,.4,1) both; }
+@keyframes rvTitle { from { opacity: 0; transform: scale(.4) translateY(-14px); } to { opacity: 1; transform: none; } }
 .rv-art { position: relative; width: 100%; margin: 44px 0 26px; display: flex; justify-content: center;
     filter: drop-shadow(0 0 26px color-mix(in srgb, var(--sc) 55%, transparent)); }
 .rv-plate { max-width: 330px; height: 92px; border-width: 4px; border-radius: 14px; position: relative; }
@@ -604,7 +608,7 @@ span.rvc { display: inline-block; }
                 <div class="menu-item" onclick="openScreen('screen-bank')"><div class="menu-icon">💳</div><div class="menu-title">Банк</div><div class="menu-desc">Кредит, крипта</div></div>
                 <div class="menu-item" onclick="openScreen('screen-crystals')"><div class="menu-icon">💠</div><div class="menu-title">Кристаллы</div><div class="menu-desc">Мини-игры</div></div>
                 <div class="menu-item" onclick="openScreen('screen-profile')"><div class="menu-icon">👑</div><div class="menu-title">Профиль</div><div class="menu-desc">Статистика</div></div>
-                <div class="menu-item" onclick="openScreen('screen-catalog')"><div class="menu-icon">📚</div><div class="menu-title">Каталог</div><div class="menu-desc">100 машин</div></div>
+                <div class="menu-item" onclick="openScreen('screen-catalog')"><div class="menu-icon">📚</div><div class="menu-title">Каталог</div><div class="menu-desc">Машины и номера</div></div>
                 <div class="menu-item" onclick="openScreen('screen-rules')"><div class="menu-icon">📖</div><div class="menu-title">Правила</div><div class="menu-desc">Как играть</div></div>
             </div>
         </div>
@@ -636,8 +640,8 @@ span.rvc { display: inline-block; }
                     <button class="btn btn-danger" id="number-sell" onclick="sellPending('number')">Продать</button>
                 </div>
                 <div class="spin-btns" id="number-controls">
-                    <button class="spin-btn spin-std" onclick="spin('number', false)"><span>🎲 Крутить</span><b>500 💎</b></button>
-                    <button class="spin-btn spin-boost" onclick="spin('number', 'boost')"><span>⚡ BOOST</span><b>1 500 💎</b></button>
+                    <button class="spin-btn spin-std" onclick="spin('number', false)"><span>🎲 Крутить</span><b>300 💎</b></button>
+                    <button class="spin-btn spin-boost" onclick="spin('number', 'boost')"><span>⚡ BOOST</span><b>1 000 💎</b></button>
                     <button class="spin-btn spin-x10" onclick="spin('number', 'x10')"><span>🎰 X10 КРУТИТЬ</span><b>5 000 💎</b></button>
                 </div>
             </div>
@@ -942,8 +946,8 @@ span.rvc { display: inline-block; }
 
         <!-- КАТАЛОГ -->
         <div class="screen" id="screen-catalog">
-            <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-catalog')">‹</button><div class="screen-title">Каталог (100 машин)</div></div>
-            <div class="pad" id="catalog-list"></div>
+            <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-catalog')">‹</button><div class="screen-title">Каталог</div></div>
+            <div class="pad"><div class="chips" id="catalog-chips"></div><div id="catalog-list" style="display:flex;flex-direction:column;gap:12px;"></div></div>
         </div>
 
         <!-- ПРАВИЛА -->
@@ -1104,6 +1108,10 @@ const CARS_DB = [];
     CARS_DB.push({ id: carId++, name: "Bugatti Chiron",   price: 1500000000, rarity: "hyper", shape: "sport" });
     CARS_DB.push({ id: carId++, name: "Koenigsegg Jesko", price: 2000000000, rarity: "hyper", shape: "sport" });
     CARS_DB.push({ id: carId++, name: "Pagani Huayra",    price: 1200000000, rarity: "hyper", shape: "sport" });
+    // ULTRA: дороже 2 млрд ₽, шанс выпадения очень маленький (см. getRandomItem)
+    [["Rolls-Royce Boat Tail", 2800000000], ["Ferrari 250 GTO", 3500000000], ["Bugatti La Voiture Noire", 4700000000],
+     ["Mercedes 300 SLR Uhlenhaut", 6000000000], ["Aston Martin Valkyrie AMR Pro", 7500000000], ["Koenigsegg CCXR Trevita", 10000000000]]
+        .forEach(([name, price]) => CARS_DB.push({ id: carId++, name, price, rarity: "ultra", shape: "sport" }));
     const layout = [
         { rarity: 'common', count: 40 }, { rarity: 'rare', count: 25 },
         { rarity: 'epic', count: 15 }, { rarity: 'legendary', count: 7 }
@@ -1121,17 +1129,17 @@ const CARS_DB = [];
 
 const NUMBER_LETTERS = ["А","В","Е","К","М","Н","О","Р","С","Т","У","Х"];
 const NUMBER_PRICE_RANGES = {
-    common:    [20,   150],
-    rare:      [450,  900],
-    epic:      [1200, 2400],
-    legendary: [6000, 12000]
+    common:    [20,   120],
+    rare:      [300,  700],
+    epic:      [1000, 2200],
+    legendary: [6000, 15000]
 };
 const NUMBERS_DB = [];
 (function () {
     const r = rng(77);
     const pick = () => NUMBER_LETTERS[Math.floor(r() * 12)];
     for (let i = 0; i < 100; i++) {
-        const rarity = i < 50 ? "common" : i < 80 ? "rare" : i < 95 ? "epic" : "legendary";
+        const rarity = i < 40 ? "common" : i < 68 ? "rare" : i < 88 ? "epic" : "legendary";   // 40/28/20/12
         // диапазоны цен номеров (💎). Раньше: 100-150 / 500-750 / 1500-2250 / 5000-7500 (RTP ~75%)
         const [plo, phi] = NUMBER_PRICE_RANGES[rarity];
         const price = Math.round((plo + r() * (phi - plo)) / 10) * 10;
@@ -1142,6 +1150,11 @@ const NUMBERS_DB = [];
         else { digits = `${d()}${d()}${d()}`; }
         NUMBERS_DB.push({ id: i, name: `${pick()}${digits}${pick()}${pick()}`, price, rarity });
     }
+    // ULTRA-номера: очень дорогие, шанс выпадения очень маленький
+    [["А777АА", 250000, "Три семёрки, дублёр"], ["В777ВВ", 180000, "Три семёрки, дублёр"], ["К777КК", 150000, "Три семёрки, дублёр"],
+     ["О777ОО", 120000, "Три семёрки, дублёр"], ["М777ММ", 100000, "Три семёрки, дублёр"], ["Х777ХХ", 90000, "Три семёрки, дублёр"],
+     ["С001СС", 75000, "Первый номер региона"], ["Н001НН", 60000, "Первый номер региона"]]
+        .forEach(([name, price, desc], k) => NUMBERS_DB.push({ id: 100 + k, name, price, rarity: "ultra", desc }));
 })();
 
 const PAL = {
@@ -1149,7 +1162,8 @@ const PAL = {
     rare:      { col: '#4aa3ff', dark: '#1f5fc7' },
     epic:      { col: '#b86bff', dark: '#6d2fc0' },
     legendary: { col: '#ffc247', dark: '#b87a00' },
-    hyper:     { col: '#ff3d6e', dark: '#9c0f35' }
+    hyper:     { col: '#ff3d6e', dark: '#9c0f35' },
+    ultra:     { col: '#2de2ff', dark: '#0a6c8a' }
 };
 
 let gradCounter = 0;
@@ -1874,21 +1888,22 @@ function getRandomItem(type, mode) {
     const bonus = boost + state.rebirths * 0.5 + state.tuningBonus + streakBonus * 0.05;
 
     const cH = type === 'car' ? Math.max(0, 0.08 + boost * 0.01) : 0;
-    // для номеров шансы выше: при цене прокрутки 500💎 это даёт RTP ≈ 106% (было ≈ 75%)
-    const isNum = type === 'number';
-    const cL = Math.max(0, (isNum ? 2 : 1.2) + bonus);
-    const cE = Math.max(0, (isNum ? 8 : 5) + bonus);
-    const cR = Math.max(0, (isNum ? 22 : 18) + bonus);
+    // ULTRA: машины 0.01%, номера 0.02% (буст чуть повышает, x10 чуть понижает)
+    const cU = Math.max(0, (type === 'car' ? 0.01 : 0.02) * (1 + boost * 0.5));
+    const cL = Math.max(0, 1.2 + bonus);
+    const cE = Math.max(0, 5 + bonus);
+    const cR = Math.max(0, 18 + bonus);
 
     let rar = 'common';
-    if (roll < cH) rar = 'hyper';
-    else if (roll < cH + cL) rar = 'legendary';
-    else if (roll < cH + cL + cE) rar = 'epic';
-    else if (roll < cH + cL + cE + cR) rar = 'rare';
+    if (roll < cU) rar = 'ultra';
+    else if (roll < cU + cH) rar = 'hyper';
+    else if (roll < cU + cH + cL) rar = 'legendary';
+    else if (roll < cU + cH + cL + cE) rar = 'epic';
+    else if (roll < cU + cH + cL + cE + cR) rar = 'rare';
 
     if (type === 'car') {
         state.pityCounter = (state.pityCounter || 0) + 1;
-        if (rar === 'legendary' || rar === 'hyper') state.pityCounter = 0;
+        if (rar === 'legendary' || rar === 'hyper' || rar === 'ultra') state.pityCounter = 0;
         else if (state.pityCounter >= 80) { rar = 'legendary'; state.pityCounter = 0; }
     }
 
@@ -1904,7 +1919,7 @@ function spin(type, mode) {
     if (busySpin) return;
     if (state.pending[type].length) { toast('Сначала заберите предыдущие призы'); return; }
     const costMoney = mode === 'x10' ? 700000000 : mode === 'boost' ? 10000000 : 5000000;
-    const costCrys = mode === 'x10' ? 5000 : mode === 'boost' ? 1500 : 500;
+    const costCrys = type === 'number' ? (mode === 'x10' ? 5000 : mode === 'boost' ? 1000 : 300) : (mode === 'x10' ? 5000 : mode === 'boost' ? 1500 : 500);
     if (type === 'car') {
         if (state.money < costMoney) { toast('Недостаточно рублей!'); return; }
         state.money -= costMoney;
@@ -1916,7 +1931,7 @@ function spin(type, mode) {
     $(type + '-actions').style.display = 'none';
     $(type + '-controls').style.display = 'flex';
     const display = $(type + '-display');
-    display.classList.remove('glow-hyper');
+    display.classList.remove('glow-hyper', 'glow-ultra');
     let n = 0;
     const iv = setInterval(() => {
         const t = getRandomItem(type, mode);
@@ -1941,8 +1956,8 @@ function finishSpin(type, mode) {
     state.pending[type] = items;
     state.spins += count;
     addDailyProgress('spins', count);
-    if (type === 'car' && items.some(i => ['epic','legendary','hyper'].includes(i.rarity))) addDailyProgress('epicPlus', 1);
-    if (items.some(i => i.type === 'car' && ['legendary','hyper'].includes(i.rarity))) state.gotLegendary = true;
+    if (type === 'car' && items.some(i => ['epic','legendary','hyper','ultra'].includes(i.rarity))) addDailyProgress('epicPlus', 1);
+    if (items.some(i => i.type === 'car' && ['legendary','hyper','ultra'].includes(i.rarity))) state.gotLegendary = true;
     // дорогой приз → красивое раскрытие, и только потом экран с кнопками «В гараж / Продать»
     const best = items.reduce((a, b) => (b.price > a.price ? b : a), items[0]);
     const finishUI = () => { busySpin = false; renderPending(type); updateUI(); };
@@ -1954,7 +1969,7 @@ function renderPending(type) {
     const display = $(type + '-display');
     const actions = $(type + '-actions');
     const controls = $(type + '-controls');
-    display.classList.remove('glow-hyper');
+    display.classList.remove('glow-hyper', 'glow-ultra');
     if (!items.length) {
         display.innerHTML = `<div class="idle"><div class="big">${type === 'car' ? '🚗' : '🔢'}</div>Нажми на кнопку!</div>`;
         actions.style.display = 'none'; controls.style.display = 'flex'; return;
@@ -1975,7 +1990,8 @@ function renderPending(type) {
         $(type + '-keep').textContent = 'Все в гараж';
         $(type + '-sell').textContent = 'Продать всё';
     }
-    if (items.some(i => i.rarity === 'hyper')) display.classList.add('glow-hyper');
+    if (items.some(i => i.rarity === 'ultra')) display.classList.add('glow-ultra');
+    else if (items.some(i => i.rarity === 'hyper')) display.classList.add('glow-hyper');
     actions.style.display = 'flex'; controls.style.display = 'none';
 }
 function keepPending(type) {
@@ -2000,7 +2016,7 @@ function renderGarage() {
     let list = state.garage.filter(i => garageFilter === 'all' || i.type === garageFilter);
     if (mode === 'price-desc') list.sort((a, b) => b.price - a.price);
     if (mode === 'price-asc') list.sort((a, b) => a.price - b.price);
-    if (mode === 'rarity') { const o = { hyper:0, legendary:1, epic:2, rare:3, common:4 }; list.sort((a, b) => o[a.rarity] - o[b.rarity]); }
+    if (mode === 'rarity') { const o = { ultra:-1, hyper:0, legendary:1, epic:2, rare:3, common:4 }; list.sort((a, b) => o[a.rarity] - o[b.rarity]); }
     $('garage-grid').innerHTML = list.length ? list.map(it => `
         <div class="g-card r-${it.rarity}">
             <div class="g-art">${artOf(it, true)}</div>
@@ -2085,7 +2101,7 @@ function getUpgradePrize(car, chance) {
     if (!car) return null;
     const mult = chance === 10 ? 6 : chance === 25 ? 3 : chance === 50 ? 1.8 : 1.3;
     const target = car.price * mult;
-    const cands = CARS_DB.filter(c => c.price > car.price);
+    const cands = CARS_DB.filter(c => c.price > car.price && (c.rarity !== 'ultra' || car.rarity === 'hyper' || car.rarity === 'ultra'));
     if (!cands.length) return null;
     cands.sort((a, b) => Math.abs(a.price - target) - Math.abs(b.price - target));
     return cands[0];
@@ -2131,9 +2147,9 @@ function doUpgrade() {
             const got = { ...prize, price: newPrice, type: 'car', uid: newUid() };
             state.garage.push(got);
             state.upgradeWins++;
-            if (got.rarity === 'legendary' || got.rarity === 'hyper') state.gotLegendary = true;
+            if (['legendary','hyper','ultra'].includes(got.rarity)) state.gotLegendary = true;
             upgUid = got.uid;
-            infoBox('🎉 ПОБЕДА!', `${carSVG(got)}Вы получили <b>${got.name}</b><br>за ${fmt(got.price)} ₽${state.tuningLevel ? ` (+${(state.tuningLevel*0.5).toFixed(1)}% тюнинг)` : ''}`);
+            playReveal(got, 'car', 1, () => {}, { always: true, title: '🎉 АПГРЕЙД УДАЛСЯ!', sub: `${car.name} ➜ ${got.name}<br><span style="color:var(--green);font-weight:800;">+${fmt(got.price - car.price)} ₽ к стоимости</span>`, btn: 'Отлично' });
         } else {
             const cashback = Math.round(car.price * UPGRADE_CASHBACK);
             earnMoney(cashback);
@@ -2153,7 +2169,7 @@ const BATTLE_TIME = 30;
 let lobbies = [], battling = false;
 let battleState = null;
 function genLobby() {
-    const pool = CARS_DB.filter(c => c.rarity !== 'hyper');
+    const pool = CARS_DB.filter(c => c.rarity !== 'hyper' && c.rarity !== 'ultra');
     const car = pool[Math.floor(Math.random() * pool.length)];
     return { name: BOT_NAMES[Math.floor(Math.random() * BOT_NAMES.length)], av: BOT_AV[Math.floor(Math.random() * BOT_AV.length)], stars: 3 + Math.floor(Math.random() * 7), car: { ...car, type: 'car' } };
 }
@@ -2245,7 +2261,7 @@ function battleFinish() {
     if (win) {
         const prize = { ...b.lb.car, type: 'car', uid: newUid() };
         state.garage.push(prize); state.mmr += 100; state.battleWins++;
-        if (['legendary','hyper'].includes(prize.rarity)) state.gotLegendary = true;
+        if (['legendary','hyper','ultra'].includes(prize.rarity)) state.gotLegendary = true;
         body = `<div class="modal-title" style="color:var(--green);">🏆 ПОБЕДА!</div>
             <div style="font-size:13px; color:var(--muted);">${fmt(mySum)} ₽ vs ${fmt(botSum)} ₽</div>
             <div class="card">${carSVG(prize)}<div class="li-title">${prize.name}</div><div class="li-green">Забрали: ${fmt(prize.price)} ₽</div></div>
@@ -2467,12 +2483,23 @@ function renderAchievements() {
             <div style="font-size:20px;">${on ? '✅' : '🔒'}</div></div>`;
     }).join('');
 }
+let catalogTab = 'car';
 function renderCatalog() {
-    $('catalog-list').innerHTML = [...CARS_DB].sort((a, b) => b.price - a.price).map(car => `
-        <div class="list-item r-${car.rarity}">
-            <div class="li-art">${carSVG(car)}</div>
-            <div class="li-main"><div class="li-title">${car.name}</div><div class="rar-label" style="font-size:10px;">${car.rarity}</div></div>
-            <div class="li-green">${fmt(car.price)} ₽</div>
+    $('catalog-chips').innerHTML = [['car', `Машины (${CARS_DB.length})`], ['number', `Номера (${NUMBERS_DB.length})`]]
+        .map(([k, l]) => `<div class="chip ${catalogTab === k ? 'active' : ''}" onclick="catalogTab='${k}'; renderCatalog();">${l}</div>`).join('');
+    const own = new Set(state.garage.filter(i => i.type === catalogTab).map(i => i.id));
+    const have = id => own.has(id) ? '<div class="li-sub" style="color:var(--green);">✓ есть в гараже</div>' : '';
+    const db = catalogTab === 'car' ? CARS_DB : NUMBERS_DB;
+    $('catalog-list').innerHTML = [...db].sort((a, b) => b.price - a.price).map(it => catalogTab === 'car' ? `
+        <div class="list-item r-${it.rarity}">
+            <div class="li-art">${carSVG(it)}</div>
+            <div class="li-main"><div class="li-title">${it.name}</div><div class="rar-label" style="font-size:10px;">${it.rarity}</div>${have(it.id)}</div>
+            <div class="li-green">${fmt(it.price)} ₽</div>
+        </div>` : `
+        <div class="list-item r-${it.rarity}">
+            <div class="li-art" style="width:118px;">${plateHTML({ ...it, type: 'number' }, true)}</div>
+            <div class="li-main"><div class="rar-label" style="font-size:10px;">${it.rarity}</div>${it.desc ? `<div class="li-sub">${it.desc}</div>` : ''}${have(it.id)}</div>
+            <div class="li-green" style="color:#6fd3ff;">${fmt(it.price)} 💎</div>
         </div>`).join('');
 }
 const TOP_BOTS = [
@@ -2513,12 +2540,14 @@ const RV_STAGES = [
     { n: 'Редкий',      c: '#4aa3ff' },
     { n: 'Эпический',   c: '#b86bff' },
     { n: 'Легендарный', c: '#ffc247' },
-    { n: 'Гиперкар',    c: '#ff3d6e' }
+    { n: 'Гиперкар',    c: '#ff3d6e' },
+    { n: 'Ультра',      c: '#2de2ff' }
 ];
-const RV_FINAL = { common: 0, rare: 2, epic: 3, legendary: 4, hyper: 5 };   // на какой ступени остановимся
-const RV_DUR   = [900, 1800, 2600, 3600, 4800, 6200];                         // длительность разгона, мс
+const RV_FINAL = { common: 0, rare: 2, epic: 3, legendary: 4, hyper: 5, ultra: 6 };   // на какой ступени остановимся
+const RV_DUR   = [900, 1800, 2600, 3600, 4800, 6200, 8200];                         // длительность разгона, мс
 
 function rvNumberDesc(n) {
+    if (n.desc) return n.desc;
     const d = n.name.slice(1, 4);
     if (d[0] === d[1] && d[1] === d[2]) return 'Три одинаковые цифры';
     if (d[0] === d[1] || d[1] === d[2] || d[0] === d[2]) return 'Пара одинаковых цифр';
@@ -2575,24 +2604,26 @@ function rvFx(canvas) {
     };
 }
 
-function playReveal(item, type, total, done) {
+function playReveal(item, type, total, done, opts) {
+    opts = opts || {};
     const fin = RV_FINAL[item.rarity];
     const app = $('app');
-    if (fin == null || fin < 2 || !app) { done(); return; }
+    if (fin == null || fin < (opts.always ? 0 : 2) || !app) { done(); return; }
     const isNum = type === 'number', unit = isNum ? '💎' : '₽';
     const dur = RV_DUR[fin] * (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches ? .5 : 1);
     const ov = document.createElement('div');
     ov.className = 'rv';
     ov.innerHTML = `<div class="rv-bg"></div><div class="rv-rays"></div><canvas class="rv-fx"></canvas><div class="rv-flash"></div>
         <div class="rv-main">
+            ${opts.title ? `<div class="rv-title">${opts.title}</div>` : ''}
             <div class="rv-tag"><div><div class="rv-rn"></div><div class="rv-dots">${RV_STAGES.map(() => '<i></i>').join('')}</div></div><div class="rv-price">0 ${unit}</div></div>
             <div class="rv-art">${isNum ? rvPlate(item) : carSVG(item)}</div>
             <div class="rv-desc">
                 <div class="rv-name">${isNum ? item.name : item.name}</div>
-                <div class="rv-sub">${isNum ? rvNumberDesc(item) : RV_STAGES[fin].n}</div>
+                <div class="rv-sub">${opts.sub || (isNum ? rvNumberDesc(item) : RV_STAGES[fin].n)}</div>
                 ${total > 1 ? `<div class="rv-multi">Лучший приз из ${total}</div>` : ''}
             </div>
-            <button class="btn rv-btn">Забрать</button>
+            <button class="btn rv-btn">${opts.btn || 'Забрать'}</button>
         </div>
         <div class="rv-hint">Нажми, чтобы пропустить</div>`;
     app.appendChild(ov);
@@ -2628,10 +2659,15 @@ function playReveal(item, type, total, done) {
         chars.forEach(c => c.classList.add('on'));
         art.classList.add('lit', 'shine');
         const [x, y] = center(), pal = palette();
-        if (fin === 2) { fx.burst(x, y, 30, pal, 260); }
+        if (fin <= 2) { fx.burst(x, y, 30 + fin * 10, pal, 260); if (opts.always) { retrigger('flash', 800); vib([30, 30, 50]); } }
         else if (fin === 3) { fx.burst(x, y, 70, pal, 330); retrigger('flash', 800); ov.style.setProperty('--sh', '3px'); retrigger('shake', 500); vib([30, 30, 50]); }
         else if (fin === 4) { fx.burst(x, y, 120, pal, 400); fx.burst(x, y, 26, ['#ffc247', '#ffe49a'], 520, 'coin'); retrigger('flash', 800);
             ov.style.setProperty('--sh', '6px'); retrigger('shake', 500); ov.classList.add('rays-fast'); vib([40, 30, 80]); }
+        else if (fin >= 6) { const rb = ['#2de2ff', '#ff3d6e', '#ffc247', '#b86bff', '#3ddc97', '#fff'];
+            fx.burst(x, y, 260, rb, 560); fx.burst(x, y, 80, ['#ffc247', '#ffe49a'], 680, 'coin'); fx.rain(160, rb);
+            retrigger('flash2', 1100); setTimeout(() => !closed && retrigger('flash', 800), 1200);
+            ov.style.setProperty('--sh', '14px'); retrigger('shake', 500); setTimeout(() => !closed && retrigger('shake', 500), 1200);
+            ov.classList.add('rays-fast'); vib([80, 40, 80, 40, 80, 40, 220]); }
         else { fx.burst(x, y, 190, pal, 480); fx.burst(x, y, 60, ['#ffc247', '#ffe49a'], 600, 'coin'); fx.rain(90, [RV_STAGES[5].c, '#ffc247', '#fff', '#ffe49a']);
             retrigger('flash2', 1100); ov.style.setProperty('--sh', '10px'); retrigger('shake', 500); ov.classList.add('rays-fast'); vib([60, 40, 60, 40, 160]); }
         ov.classList.add('done');
@@ -2647,7 +2683,7 @@ function playReveal(item, type, total, done) {
             chars.forEach(c => { if (!c.classList.contains('on') && p >= +c.dataset.t) c.classList.add('on'); });
             if (p > .3) art.classList.add('lit');
             if (p >= 1) finish();
-        } else if (fin >= 4 && now - rise > 70) {
+        } else if (fin >= 4 && now - rise > (fin >= 6 ? 35 : 70)) {
             rise = now; const [x, y] = center(); fx.rise(x, y, palette());
         }
         fx.step(dt);
@@ -2717,4 +2753,4 @@ updateUI();
 setTimeout(tickLoader, 200);
 </script>
 </body>
-                        </html>
+                                                                                                                                                     </html>
