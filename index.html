@@ -442,6 +442,87 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .load-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold-2), var(--gold), #fff3cf); border-radius: 3px; transition: width .3s; box-shadow: 0 0 14px rgba(246,200,98,.6); }
 .load-car { margin-top: 24px; width: 200px; max-width: 60%; animation: bob 2s ease-in-out infinite; }
 @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+/* ===== РАСКРЫТИЕ ДОРОГИХ ПРИЗОВ (номера и машины) ===== */
+@property --sc { syntax: '<color>'; inherits: true; initial-value: #9aa3b2; }
+.rv {
+    --sc: #9aa3b2; --sh: 0px;
+    position: absolute; inset: 0; z-index: 520; overflow: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 20px; background: #07060c; transition: --sc .7s ease;
+    animation: rvIn .3s ease both; user-select: none; -webkit-user-select: none;
+}
+@keyframes rvIn { from { opacity: 0; } to { opacity: 1; } }
+.rv-bg { position: absolute; inset: 0; background:
+    radial-gradient(120% 65% at 50% 38%, color-mix(in srgb, var(--sc) 42%, #07060c) 0%, #07060c 72%),
+    linear-gradient(180deg, transparent 60%, color-mix(in srgb, var(--sc) 14%, transparent)); }
+.rv-rays { position: absolute; left: 50%; top: 40%; width: 170vmax; height: 170vmax; margin: -85vmax 0 0 -85vmax; opacity: 0; transition: opacity 1.2s;
+    background: repeating-conic-gradient(from 0deg, color-mix(in srgb, var(--sc) 34%, transparent) 0 5deg, transparent 5deg 15deg);
+    -webkit-mask-image: radial-gradient(circle, #000 0, transparent 46%); mask-image: radial-gradient(circle, #000 0, transparent 46%);
+    animation: rvSpin 22s linear infinite; pointer-events: none; }
+.rv.rays .rv-rays { opacity: .6; }
+.rv.rays-fast .rv-rays { animation-duration: 9s; opacity: .85; }
+@keyframes rvSpin { to { transform: rotate(360deg); } }
+.rv-fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
+.rv-flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 4; }
+.rv.flash .rv-flash { animation: rvFlash .75s ease-out; }
+.rv.flash2 .rv-flash { animation: rvFlash2 1.1s ease-out; }
+@keyframes rvFlash { 0% { opacity: .85; } 100% { opacity: 0; } }
+@keyframes rvFlash2 { 0% { opacity: 1; } 15% { opacity: .2; } 30% { opacity: .9; } 100% { opacity: 0; } }
+
+.rv-main { position: relative; z-index: 2; width: 100%; max-width: 360px; display: flex; flex-direction: column; align-items: center; }
+.rv.shake .rv-main { animation: rvShake .5s ease-out; }
+@keyframes rvShake {
+    0%,100% { transform: none; } 15% { transform: translate(var(--sh), calc(var(--sh) * -.6)); } 30% { transform: translate(calc(var(--sh) * -1), var(--sh)); }
+    45% { transform: translate(calc(var(--sh) * .7), calc(var(--sh) * .5)); } 60% { transform: translate(calc(var(--sh) * -.5), calc(var(--sh) * -.4)); } 80% { transform: translate(calc(var(--sh) * .2), 0); }
+}
+
+.rv-tag {
+    width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 11px 16px; border-radius: 15px; background: rgba(10,9,16,.86);
+    border: 1px solid color-mix(in srgb, var(--sc) 50%, transparent);
+    box-shadow: 0 0 26px color-mix(in srgb, var(--sc) 32%, transparent);
+}
+.rv-tag.pulse { animation: rvPulse .4s ease-out; }
+@keyframes rvPulse { 0% { transform: scale(1); } 40% { transform: scale(1.045); box-shadow: 0 0 44px color-mix(in srgb, var(--sc) 70%, transparent); } 100% { transform: scale(1); } }
+.rv-rn { font-size: 12px; font-weight: 800; color: var(--sc); letter-spacing: .3px; }
+.rv-dots { display: flex; gap: 3px; margin-top: 6px; }
+.rv-dots i { width: 13px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.16); transition: background .3s, box-shadow .3s; }
+.rv-dots i.on { background: var(--sc); box-shadow: 0 0 8px var(--sc); }
+.rv-price { font-size: 21px; font-weight: 900; color: var(--sc); font-variant-numeric: tabular-nums; white-space: nowrap; text-shadow: 0 0 16px color-mix(in srgb, var(--sc) 55%, transparent); }
+.rv.done .rv-price { animation: rvBounce .6s cubic-bezier(.2,1.8,.4,1); }
+@keyframes rvBounce { 0% { transform: scale(1); } 40% { transform: scale(1.3); } 100% { transform: scale(1); } }
+
+.rv-art { position: relative; width: 100%; margin: 44px 0 26px; display: flex; justify-content: center;
+    filter: drop-shadow(0 0 26px color-mix(in srgb, var(--sc) 55%, transparent)); }
+.rv-plate { max-width: 330px; height: 92px; border-width: 4px; border-radius: 14px; position: relative; }
+.rv-plate .plate-main { font-size: clamp(30px, 10.5vw, 46px); letter-spacing: 3px; }
+.rv-plate .plate-reg { width: 74px; } .rv-plate .plate-reg b { font-size: 30px; } .rv-plate .plate-reg small { font-size: 12px; }
+span.rvc { display: inline-block; }
+.rvc { opacity: 0; transform: scale(.35) translateY(10px); transition: opacity .3s, transform .45s cubic-bezier(.2,1.7,.4,1); }
+.rvc.on { opacity: 1; transform: none; }
+.rv-art.shine .rv-plate::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.85) 50%, transparent 62%); transform: translateX(-130%); animation: rvShine 1.1s .1s ease-out 1 forwards; }
+@keyframes rvShine { to { transform: translateX(130%); } }
+
+.rv-art .car-svg { max-width: 330px; filter: brightness(0) drop-shadow(0 8px 14px rgba(0,0,0,.4)); transition: filter 1s ease;
+    animation: rvDrive 1s cubic-bezier(.15,.85,.25,1) both; }
+.rv-art.lit .car-svg { filter: brightness(1) drop-shadow(0 8px 14px rgba(0,0,0,.4)); }
+@keyframes rvDrive { from { transform: translateX(-130%) skewX(-14deg); } 70% { transform: translateX(4%) skewX(3deg); } to { transform: none; } }
+.rv-art.lit::before { content: ''; position: absolute; left: 6%; right: 6%; top: 52%; height: 3px; background: linear-gradient(90deg, transparent, var(--sc), transparent); opacity: 0; animation: rvStreak .8s ease-out; }
+@keyframes rvStreak { 0% { opacity: 0; transform: scaleX(.2); } 30% { opacity: .9; } 100% { opacity: 0; transform: scaleX(1.6); } }
+
+.rv-desc { text-align: center; opacity: 0; transform: translateY(8px); transition: opacity .6s .15s, transform .6s .15s; min-height: 62px; }
+.rv.done .rv-desc { opacity: 1; transform: none; }
+.rv-name { font-size: 22px; font-weight: 900; color: #fff; text-shadow: 0 0 18px color-mix(in srgb, var(--sc) 60%, transparent); }
+.rv-sub { font-size: 13.5px; color: #cfcbe0; margin-top: 5px; line-height: 1.35; }
+.rv-multi { font-size: 11.5px; color: var(--muted); margin-top: 6px; }
+.rv-btn { margin-top: 20px; padding: 15px 52px; border-radius: 16px; font-size: 15px; font-weight: 900; letter-spacing: .5px;
+    background: linear-gradient(135deg, #ffe49a, var(--gold), var(--gold-2)); color: #1a1204; box-shadow: 0 8px 26px rgba(246,200,98,.35);
+    opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity .4s .5s, transform .4s .5s; }
+.rv.done .rv-btn { opacity: 1; transform: none; pointer-events: auto; }
+.rv-hint { position: absolute; left: 0; right: 0; bottom: 24px; text-align: center; font-size: 11.5px; color: rgba(255,255,255,.4); z-index: 2; animation: blink 1.2s infinite alternate; }
+.rv.done .rv-hint { display: none; }
+@media (prefers-reduced-motion: reduce) { .rv-rays { animation: none; } .rv.shake .rv-main { animation: none; } }
 </style>
     <script defer src="https://revionapp.ru/v.js" data-site="numbergive-online-e19711"></script>
 </head>
@@ -1039,14 +1120,21 @@ const CARS_DB = [];
 })();
 
 const NUMBER_LETTERS = ["А","В","Е","К","М","Н","О","Р","С","Т","У","Х"];
+const NUMBER_PRICE_RANGES = {
+    common:    [20,   150],
+    rare:      [450,  900],
+    epic:      [1200, 2400],
+    legendary: [6000, 12000]
+};
 const NUMBERS_DB = [];
 (function () {
     const r = rng(77);
     const pick = () => NUMBER_LETTERS[Math.floor(r() * 12)];
     for (let i = 0; i < 100; i++) {
         const rarity = i < 50 ? "common" : i < 80 ? "rare" : i < 95 ? "epic" : "legendary";
-        const base = rarity === "common" ? 100 : rarity === "rare" ? 500 : rarity === "epic" ? 1500 : 5000;
-        const price = Math.round(base + r() * base * 0.5);
+        // диапазоны цен номеров (💎). Раньше: 100-150 / 500-750 / 1500-2250 / 5000-7500 (RTP ~75%)
+        const [plo, phi] = NUMBER_PRICE_RANGES[rarity];
+        const price = Math.round((plo + r() * (phi - plo)) / 10) * 10;
         let digits; const d = () => Math.floor(r() * 10);
         if (rarity === "legendary") { const x = d(); digits = `${x}${x}${x}`; }
         else if (rarity === "epic") { const x = d(); digits = `${x}${x}${d()}`; }
@@ -1786,9 +1874,11 @@ function getRandomItem(type, mode) {
     const bonus = boost + state.rebirths * 0.5 + state.tuningBonus + streakBonus * 0.05;
 
     const cH = type === 'car' ? Math.max(0, 0.08 + boost * 0.01) : 0;
-    const cL = Math.max(0, 1.2 + bonus);
-    const cE = Math.max(0, 5 + bonus);
-    const cR = Math.max(0, 18 + bonus);
+    // для номеров шансы выше: при цене прокрутки 500💎 это даёт RTP ≈ 106% (было ≈ 75%)
+    const isNum = type === 'number';
+    const cL = Math.max(0, (isNum ? 2 : 1.2) + bonus);
+    const cE = Math.max(0, (isNum ? 8 : 5) + bonus);
+    const cR = Math.max(0, (isNum ? 22 : 18) + bonus);
 
     let rar = 'common';
     if (roll < cH) rar = 'hyper';
@@ -1853,7 +1943,11 @@ function finishSpin(type, mode) {
     addDailyProgress('spins', count);
     if (type === 'car' && items.some(i => ['epic','legendary','hyper'].includes(i.rarity))) addDailyProgress('epicPlus', 1);
     if (items.some(i => i.type === 'car' && ['legendary','hyper'].includes(i.rarity))) state.gotLegendary = true;
-    busySpin = false; renderPending(type); updateUI();
+    // дорогой приз → красивое раскрытие, и только потом экран с кнопками «В гараж / Продать»
+    const best = items.reduce((a, b) => (b.price > a.price ? b : a), items[0]);
+    const finishUI = () => { busySpin = false; renderPending(type); updateUI(); };
+    updateUI();
+    playReveal(best, type, items.length, finishUI);
 }
 function renderPending(type) {
     const items = state.pending[type];
@@ -2410,6 +2504,170 @@ setInterval(() => {
     if ($('tasks-timer')) $('tasks-timer').textContent = t;
 }, 1000);
 
+// ===== РАСКРЫТИЕ ДОРОГИХ ПРИЗОВ =====
+// Цена растёт счётчиком, фон/плашка проходят ступени редкости, номер «собирается» по частям.
+// Показывается для призов от «rare» и выше. Тап по экрану — пропустить до финала.
+const RV_STAGES = [
+    { n: 'Обычный',     c: '#9aa3b2' },
+    { n: 'Необычный',   c: '#3ddc97' },
+    { n: 'Редкий',      c: '#4aa3ff' },
+    { n: 'Эпический',   c: '#b86bff' },
+    { n: 'Легендарный', c: '#ffc247' },
+    { n: 'Гиперкар',    c: '#ff3d6e' }
+];
+const RV_FINAL = { common: 0, rare: 2, epic: 3, legendary: 4, hyper: 5 };   // на какой ступени остановимся
+const RV_DUR   = [900, 1800, 2600, 3600, 4800, 6200];                         // длительность разгона, мс
+
+function rvNumberDesc(n) {
+    const d = n.name.slice(1, 4);
+    if (d[0] === d[1] && d[1] === d[2]) return 'Три одинаковые цифры';
+    if (d[0] === d[1] || d[1] === d[2] || d[0] === d[2]) return 'Пара одинаковых цифр';
+    if (d[1] === '0') return 'Ноль в середине';
+    return 'Красивый номер';
+}
+function rvPlate(n) {
+    const nm = n.name, rc = (PAL[n.rarity] || PAL.common).col;
+    return `<div class="plate rv-plate" style="--rc:${rc}">
+        <div class="plate-main"><span class="rvc" data-t="0.02">${nm[0]}</span>&nbsp;<span class="rvc" data-t="0.2">${nm.slice(1, 4)}</span>&nbsp;<span class="rvc" data-t="0.5">${nm.slice(4)}</span></div>
+        <div class="plate-reg rvc" data-t="0.74"><b>77</b><small>RUS</small></div></div>`;
+}
+
+function rvFx(canvas) {
+    const ctx = canvas.getContext('2d'), dpr = Math.min(2, window.devicePixelRatio || 1), ps = [];
+    let W = 0, H = 0;
+    const size = () => { W = canvas.clientWidth; H = canvas.clientHeight; canvas.width = W * dpr; canvas.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+    size();
+    const R = Math.random;
+    return {
+        size, get w() { return W; },
+        burst(x, y, n, colors, pow, kind) {
+            for (let i = 0; i < n; i++) {
+                const a = R() * Math.PI * 2, v = pow * (.3 + R() * .7);
+                ps.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - pow * .3, t: 0, max: .9 + R() * 1.2,
+                    s: kind === 'coin' ? 7 + R() * 4 : 2 + R() * 3.5, c: colors[i % colors.length], g: kind === 'coin' ? 700 : 380, k: kind || 'spark', r: R() * 6, vr: (R() - .5) * 14 });
+            }
+        },
+        rain(n, colors) {
+            for (let i = 0; i < n; i++) ps.push({ x: R() * W, y: -10 - R() * 120, vx: (R() - .5) * 60, vy: 90 + R() * 160, t: 0, max: 3 + R() * 1.5,
+                s: 5 + R() * 5, c: colors[i % colors.length], g: 40, k: 'conf', r: R() * 6, vr: (R() - .5) * 12 });
+        },
+        rise(x, y, colors) {
+            ps.push({ x: x + (R() - .5) * 220, y: y + (R() - .5) * 60, vx: (R() - .5) * 30, vy: -40 - R() * 70, t: 0, max: 1 + R(), s: 1.5 + R() * 2.5, c: colors[(R() * colors.length) | 0], g: -10, k: 'spark', r: 0, vr: 0 });
+        },
+        step(dt) {
+            ctx.clearRect(0, 0, W, H);
+            for (let i = ps.length - 1; i >= 0; i--) {
+                const p = ps[i]; p.t += dt;
+                if (p.t > p.max || p.y > H + 30) { ps.splice(i, 1); continue; }
+                p.vy += p.g * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.r += p.vr * dt;
+                const a = Math.max(0, 1 - p.t / p.max);
+                ctx.globalAlpha = a; ctx.fillStyle = p.c;
+                if (p.k === 'spark') { ctx.globalCompositeOperation = 'lighter'; ctx.beginPath(); ctx.arc(p.x, p.y, p.s * (.6 + a * .6), 0, 6.283); ctx.fill(); }
+                else {
+                    ctx.globalCompositeOperation = 'source-over'; ctx.save(); ctx.translate(p.x, p.y);
+                    if (p.k === 'coin') { ctx.scale(Math.abs(Math.cos(p.r)) + .08, 1); ctx.beginPath(); ctx.arc(0, 0, p.s, 0, 6.283); ctx.fill(); ctx.strokeStyle = '#8a5a00'; ctx.lineWidth = 1.2; ctx.stroke(); }
+                    else { ctx.rotate(p.r); ctx.fillRect(-p.s / 2, -p.s / 3, p.s, p.s * .6); }
+                    ctx.restore();
+                }
+            }
+            ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+        }
+    };
+}
+
+function playReveal(item, type, total, done) {
+    const fin = RV_FINAL[item.rarity];
+    const app = $('app');
+    if (fin == null || fin < 2 || !app) { done(); return; }
+    const isNum = type === 'number', unit = isNum ? '💎' : '₽';
+    const dur = RV_DUR[fin] * (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches ? .5 : 1);
+    const ov = document.createElement('div');
+    ov.className = 'rv';
+    ov.innerHTML = `<div class="rv-bg"></div><div class="rv-rays"></div><canvas class="rv-fx"></canvas><div class="rv-flash"></div>
+        <div class="rv-main">
+            <div class="rv-tag"><div><div class="rv-rn"></div><div class="rv-dots">${RV_STAGES.map(() => '<i></i>').join('')}</div></div><div class="rv-price">0 ${unit}</div></div>
+            <div class="rv-art">${isNum ? rvPlate(item) : carSVG(item)}</div>
+            <div class="rv-desc">
+                <div class="rv-name">${isNum ? item.name : item.name}</div>
+                <div class="rv-sub">${isNum ? rvNumberDesc(item) : RV_STAGES[fin].n}</div>
+                ${total > 1 ? `<div class="rv-multi">Лучший приз из ${total}</div>` : ''}
+            </div>
+            <button class="btn rv-btn">Забрать</button>
+        </div>
+        <div class="rv-hint">Нажми, чтобы пропустить</div>`;
+    app.appendChild(ov);
+
+    const tag = ov.querySelector('.rv-tag'), rn = ov.querySelector('.rv-rn'), price = ov.querySelector('.rv-price');
+    const dots = [...ov.querySelectorAll('.rv-dots i')], art = ov.querySelector('.rv-art'), chars = [...ov.querySelectorAll('.rvc')];
+    const fx = rvFx(ov.querySelector('.rv-fx'));
+    const vib = p => { try { navigator.vibrate && navigator.vibrate(p); } catch (e) {} };
+    const center = () => { const a = art.getBoundingClientRect(), o = ov.getBoundingClientRect(); return [a.left - o.left + a.width / 2, a.top - o.top + a.height / 2]; };
+    const palette = () => [RV_STAGES[fin].c, '#ffffff', '#ffe49a'];
+    const retrigger = (cls, ms) => { ov.classList.remove(cls); void ov.offsetWidth; ov.classList.add(cls); setTimeout(() => ov.classList.remove(cls), ms); };
+
+    let stage = -1, finished = false, closed = false, raf = 0, last = 0, t0 = 0, rise = 0, doneAt = 0;
+
+    function setStage(s) {
+        if (s === stage) return;
+        const up = stage >= 0; stage = s;
+        ov.style.setProperty('--sc', RV_STAGES[s].c);
+        rn.textContent = RV_STAGES[s].n;
+        dots.forEach((d, i) => d.classList.toggle('on', i <= s));
+        if (s >= 3) ov.classList.add('rays');
+        if (up) {
+            tag.classList.remove('pulse'); void tag.offsetWidth; tag.classList.add('pulse');
+            const [x, y] = center(); fx.burst(x, y, 10 + s * 5, [RV_STAGES[s].c, '#fff'], 150 + s * 30);
+            vib(12);
+        }
+    }
+
+    function finish() {
+        if (finished) return; finished = true; doneAt = performance.now();
+        price.textContent = fmt(item.price) + ' ' + unit;
+        setStage(fin);
+        chars.forEach(c => c.classList.add('on'));
+        art.classList.add('lit', 'shine');
+        const [x, y] = center(), pal = palette();
+        if (fin === 2) { fx.burst(x, y, 30, pal, 260); }
+        else if (fin === 3) { fx.burst(x, y, 70, pal, 330); retrigger('flash', 800); ov.style.setProperty('--sh', '3px'); retrigger('shake', 500); vib([30, 30, 50]); }
+        else if (fin === 4) { fx.burst(x, y, 120, pal, 400); fx.burst(x, y, 26, ['#ffc247', '#ffe49a'], 520, 'coin'); retrigger('flash', 800);
+            ov.style.setProperty('--sh', '6px'); retrigger('shake', 500); ov.classList.add('rays-fast'); vib([40, 30, 80]); }
+        else { fx.burst(x, y, 190, pal, 480); fx.burst(x, y, 60, ['#ffc247', '#ffe49a'], 600, 'coin'); fx.rain(90, [RV_STAGES[5].c, '#ffc247', '#fff', '#ffe49a']);
+            retrigger('flash2', 1100); ov.style.setProperty('--sh', '10px'); retrigger('shake', 500); ov.classList.add('rays-fast'); vib([60, 40, 60, 40, 160]); }
+        ov.classList.add('done');
+    }
+
+    function frame(now) {
+        if (closed) return;
+        const dt = Math.min(.05, (now - (last || now)) / 1000); last = now;
+        if (!finished) {
+            const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+            price.textContent = fmt(item.price * e) + ' ' + unit;
+            setStage(Math.min(fin, Math.floor(e * (fin + 1))));
+            chars.forEach(c => { if (!c.classList.contains('on') && p >= +c.dataset.t) c.classList.add('on'); });
+            if (p > .3) art.classList.add('lit');
+            if (p >= 1) finish();
+        } else if (fin >= 4 && now - rise > 70) {
+            rise = now; const [x, y] = center(); fx.rise(x, y, palette());
+        }
+        fx.step(dt);
+        raf = requestAnimationFrame(frame);
+    }
+
+    function close() {
+        if (closed) return; closed = true; cancelAnimationFrame(raf);
+        ov.style.transition = 'opacity .25s'; ov.style.opacity = '0';
+        setTimeout(() => { ov.remove(); done(); }, 250);
+    }
+    ov.addEventListener('click', e => {
+        if (!finished) { finish(); return; }
+        if (e.target.closest('.rv-btn') && performance.now() - doneAt > 500) close();
+    });
+    window.addEventListener('resize', () => fx.size());
+    setStage(0);
+    requestAnimationFrame(now => { t0 = now; frame(now); });
+}
+
 // ===== ЛОАДЕР =====
 const LOADER_PHRASES = [
     "Заводим двигатель...",
@@ -2459,4 +2717,4 @@ updateUI();
 setTimeout(tickLoader, 200);
 </script>
 </body>
-    </html>
+                        </html>
