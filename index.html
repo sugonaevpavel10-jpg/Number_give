@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Номердай</title>
 
-<!-- Yandex RTB система -->
 <script>window.yaContextCb=window.yaContextCb||[]</script>
 <script src="https://yandex.ru/ads/system/context.js" async></script>
 
@@ -108,6 +107,7 @@ button { cursor: pointer; border: none; color: inherit; }
 }
 .menu-title { font-weight: 800; font-size: 14.5px; margin-bottom: 3px; }
 .menu-desc { font-size: 11px; color: var(--muted); font-weight: 600; }
+.menu-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 18px; display: block; }
 
 .screen {
     position: absolute; inset: 0; z-index: 90;
@@ -247,6 +247,9 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 }
 .upg-slot.filled { border-style: solid; border-color: var(--rc, var(--line)); }
 .upg-slot .car-svg { max-width: 130px; }
+.upg-slot .plate { max-width: 150px; height: 46px; }
+.upg-slot .plate .plate-main { font-size: 19px; letter-spacing: 1px; }
+.upg-slot .plate .plate-reg { width: 36px; } .upg-slot .plate .plate-reg b { font-size: 13px; }
 .upg-cap { font-size: 10.5px; font-weight: 800; letter-spacing: 1.5px; color: var(--muted); }
 .upg-plus { font-size: 34px; color: var(--gold); line-height: 1; }
 .upg-arrow { align-self: center; font-size: 22px; color: var(--gold); }
@@ -307,6 +310,9 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .pick-card { background: var(--card); border: 1px solid var(--rc); border-radius: 16px; padding: 10px 6px; cursor: pointer; }
 .pick-card:active { transform: scale(.96); }
 .pick-card .car-svg { max-width: 130px; }
+.pick-card .plate { max-width: 130px; height: 40px; }
+.pick-card .plate .plate-main { font-size: 16px; }
+.pick-card .plate .plate-reg { width: 30px; } .pick-card .plate .plate-reg b { font-size: 11px; }
 .pc-name { font-size: 12px; font-weight: 800; margin-top: 4px; }
 .pc-price { font-size: 12px; font-weight: 800; color: var(--green); }
 #toast {
@@ -323,24 +329,14 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .loan-badge { display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 13px; }
 .loan-warn { color: var(--red); font-weight: 800; font-size: 12px; animation: blink .8s infinite alternate; }
 
-/* === РЕКЛАМА: закреплена сверху, всегда видна, компактная === */
 .ad-wrap {
-    flex-shrink: 0;
-    position: relative;
-    z-index: 290;
-    width: 100%;
-    height: 64px;
-    max-height: 64px;
+    flex-shrink: 0; position: relative; z-index: 290;
+    width: 100%; height: 64px; max-height: 64px;
     background: rgba(10,8,20,0.92);
     border-bottom: 1px solid var(--line);
-    overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
 }
-.ad-wrap .ad-inner {
-    width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    overflow: hidden;
-}
+.ad-wrap .ad-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .ad-wrap .ad-inner > div { width: 100%; max-height: 64px; overflow: hidden; }
 .ad-wrap .ad-inner iframe { max-height: 64px !important; }
 
@@ -382,19 +378,12 @@ select.input-field { appearance: none; -webkit-appearance: none; }
     font-size: 12px; font-weight: 800; color: var(--gold); margin-bottom: 12px;
 }
 
-/* === НОВЫЕ СТИЛИ: ID и переводы === */
 .player-id-box {
-    width: 100%;
-    background: rgba(255,255,255,.05);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 12px 14px;
-    display: flex; flex-direction: column; gap: 6px;
+    width: 100%; background: rgba(255,255,255,.05);
+    border: 1px solid var(--line); border-radius: 16px;
+    padding: 12px 14px; display: flex; flex-direction: column; gap: 6px;
 }
-.player-id-label {
-    font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
-    color: var(--muted); text-transform: uppercase;
-}
+.player-id-label { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; }
 .player-id-row { display: flex; align-items: center; gap: 8px; }
 .player-id-value {
     flex: 1; font-family: 'Courier New', monospace; font-size: 17px; font-weight: 900;
@@ -403,14 +392,8 @@ select.input-field { appearance: none; -webkit-appearance: none; }
     border-radius: 12px; padding: 10px 12px; text-align: center;
     user-select: all; -webkit-user-select: all;
 }
-.transfer-history {
-    display: flex; flex-direction: column; gap: 8px; margin-top: 8px;
-}
-.transfer-row {
-    display: flex; align-items: center; gap: 10px;
-    padding: 10px 12px; border-radius: 14px;
-    background: var(--card-2); font-size: 12.5px;
-}
+.transfer-history { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.transfer-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 14px; background: var(--card-2); font-size: 12.5px; }
 .transfer-row.in { border-left: 3px solid var(--green); }
 .transfer-row.out { border-left: 3px solid var(--red); }
 .transfer-row .tr-ico { font-size: 18px; }
@@ -421,13 +404,11 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .transfer-row.in .tr-amt { color: var(--green); }
 .transfer-row.out .tr-amt { color: var(--red); }
 
-/* ======= Экран загрузки ======= */
 #loader {
     position: fixed; inset: 0; z-index: 9999;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     background: radial-gradient(900px 500px at 50% 20%, #3b2a6e 0%, transparent 70%), linear-gradient(180deg, #0b0814, #100c20);
-    transition: opacity .6s ease, visibility .6s ease;
-    padding: 20px;
+    transition: opacity .6s ease, visibility .6s ease; padding: 20px;
 }
 #loader.hide { opacity: 0; visibility: hidden; }
 .load-logo {
@@ -445,7 +426,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .load-car { margin-top: 24px; width: 200px; max-width: 60%; animation: bob 2s ease-in-out infinite; }
 @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
-/* ===== РАСКРЫТИЕ ДОРОГИХ ПРИЗОВ (номера и машины) ===== */
 @property --sc { syntax: '<color>'; inherits: true; initial-value: #9aa3b2; }
 .rv {
     --sc: #9aa3b2; --sh: 0px;
@@ -528,7 +508,6 @@ span.rvc { display: inline-block; }
 .rv.done .rv-hint { display: none; }
 @media (prefers-reduced-motion: reduce) { .rv-rays { animation: none; } .rv.shake .rv-main { animation: none; } }
 
-/* ===== НАСТРОЙКИ ===== */
 .set-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 16px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; cursor: pointer; }
 .set-t { font-weight: 800; font-size: 14px; } .set-d { font-size: 11.5px; color: var(--muted); font-weight: 600; margin-top: 3px; line-height: 1.35; }
 .sw { position: relative; width: 48px; height: 28px; flex-shrink: 0; border-radius: 14px; background: rgba(255,255,255,.14); transition: background .2s; }
@@ -541,7 +520,6 @@ span.rvc { display: inline-block; }
     <script defer src="https://revionapp.ru/v.js" data-site="numbergive-online-e19711"></script>
 </head>
 <body>
-<!-- ЭКРАН ЗАГРУЗКИ -->
 <div id="loader">
     <div class="load-logo">НОМЕРДАЙ</div>
     <div class="load-sub">БИЗНЕС НА КОЛЕСАХ</div>
@@ -570,7 +548,6 @@ span.rvc { display: inline-block; }
         </div>
     </div>
 
-    <!-- РЕКЛАМА: закреплена под шапкой, видна на всех экранах -->
     <div class="ad-wrap" id="ad-main">
         <div class="ad-inner">
             <div id="yandex_rtb_R-A-20432576-4"></div>
@@ -586,7 +563,6 @@ span.rvc { display: inline-block; }
     </div>
 
     <div class="content">
-        <!-- ГЛАВНАЯ -->
         <div class="main-screen" id="main-view">
             <div class="trend">🔥 Тренд дня: KIA +100%</div>
             <div class="title-big">НОМЕРДАЙ</div>
@@ -601,30 +577,30 @@ span.rvc { display: inline-block; }
                 <span id="streak-bonus" style="color: var(--green);">+2%</span>
             </div>
 
-            <div class="grid-menu">
-                <div class="menu-item" onclick="openScreen('screen-autosalon')"><div class="menu-icon">🚗</div><div class="menu-title">Автосалон</div><div class="menu-desc">Крутить тачки</div></div>
-                <div class="menu-item" onclick="openScreen('screen-gosznaki')"><div class="menu-icon">🔢</div><div class="menu-title">Госзнаки</div><div class="menu-desc">Крутить номера</div></div>
-                <div class="menu-item" onclick="openScreen('screen-garage')"><div class="menu-icon">🏎️</div><div class="menu-title">Гараж</div><div class="menu-desc" id="ui-garage-count">0 | 0</div></div>
-                <div class="menu-item" onclick="openScreen('screen-battle')"><div class="menu-icon">⚔️</div><div class="menu-title">Батл 1x1</div><div class="menu-desc" id="ui-battle-desc">MMR: 0 • Бронза</div></div>
-                <div class="menu-item" onclick="openScreen('screen-upgrade')"><div class="menu-icon">⬆️</div><div class="menu-title">Апгрейдер</div><div class="menu-desc">Улучшить</div></div>
-                <div class="menu-item" onclick="openScreen('screen-achievements')"><div class="menu-icon">🏆</div><div class="menu-title">Достижения</div><div class="menu-desc" id="ui-ach-count">0/8</div></div>
-                <div class="menu-item" onclick="openScreen('screen-contracts')"><div class="menu-icon">📝</div><div class="menu-title">Контракты</div><div class="menu-desc">Аренда тачек</div></div>
-                <div class="menu-item" onclick="openScreen('screen-fortune')"><div class="menu-icon">🎡</div><div class="menu-title">Фортуна</div><div class="menu-desc">Рулетка</div></div>
-                <div class="menu-item" onclick="openScreen('screen-shop')"><div class="menu-icon">🛒</div><div class="menu-title">Магазин дня</div><div class="menu-desc">Скидки</div></div>
-                <div class="menu-item" onclick="openScreen('screen-top')"><div class="menu-icon">📊</div><div class="menu-title">Топ</div><div class="menu-desc">Рейтинг</div></div>
-                <div class="menu-item" onclick="openScreen('screen-tasks')"><div class="menu-icon">📋</div><div class="menu-title">Задания</div><div class="menu-desc" id="ui-tasks-count">0/3</div></div>
-                <div class="menu-item" onclick="openScreen('screen-tuning')"><div class="menu-icon">🛠️</div><div class="menu-title">Тюнинг</div><div class="menu-desc">Удача</div></div>
-                <div class="menu-item" onclick="openScreen('screen-auction')"><div class="menu-icon">💎</div><div class="menu-title">Аукцион</div><div class="menu-desc">Ставки</div></div>
-                <div class="menu-item" onclick="openScreen('screen-bank')"><div class="menu-icon">💳</div><div class="menu-title">Банк</div><div class="menu-desc">Кредит, крипта</div></div>
-                <div class="menu-item" onclick="openScreen('screen-crystals')"><div class="menu-icon">💠</div><div class="menu-title">Кристаллы</div><div class="menu-desc">Мини-игры</div></div>
-                <div class="menu-item" onclick="openScreen('screen-profile')"><div class="menu-icon">👑</div><div class="menu-title">Профиль</div><div class="menu-desc">Статистика</div></div>
-                <div class="menu-item" onclick="openScreen('screen-catalog')"><div class="menu-icon">📚</div><div class="menu-title">Каталог</div><div class="menu-desc">Машины и номера</div></div>
-                <div class="menu-item" onclick="openScreen('screen-settings')"><div class="menu-icon">⚙️</div><div class="menu-title">Настройки</div><div class="menu-desc">Анимации, звук</div></div>
-                <div class="menu-item" onclick="openScreen('screen-rules')"><div class="menu-icon">📖</div><div class="menu-title">Правила</div><div class="menu-desc">Как играть</div></div>
-            </div>
-        </div>
+ <div class="grid-menu">
+    <div class="menu-item" onclick="openScreen('screen-autosalon')"><div class="menu-icon"><img src="icons/autosalon.png" alt="" onerror="this.replaceWith('🚗')"></div><div class="menu-title">Автосалон</div><div class="menu-desc">Крутить тачки</div></div>
+    <div class="menu-item" onclick="openScreen('screen-gosznaki')"><div class="menu-icon"><img src="icons/gosznaki.png" alt="" onerror="this.replaceWith('🔢')"></div><div class="menu-title">Госзнаки</div><div class="menu-desc">Крутить номера</div></div>
+    <div class="menu-item" onclick="openScreen('screen-garage')"><div class="menu-icon"><img src="icons/garage.png" alt="" onerror="this.replaceWith('🏎️')"></div><div class="menu-title">Гараж</div><div class="menu-desc" id="ui-garage-count">0 | 0</div></div>
+    <div class="menu-item" onclick="openScreen('screen-battle')"><div class="menu-icon"><img src="icons/battle.png" alt="" onerror="this.replaceWith('⚔️')"></div><div class="menu-title">Батл 1x1</div><div class="menu-desc" id="ui-battle-desc">MMR: 0 • Бронза</div></div>
+    <div class="menu-item" onclick="openScreen('screen-upgrade')"><div class="menu-icon"><img src="icons/upgrade.png" alt="" onerror="this.replaceWith('⬆️')"></div><div class="menu-title">Апгрейдер</div><div class="menu-desc">Улучшить машины</div></div>
+    <div class="menu-item" onclick="openScreen('screen-upgrade-num')"><div class="menu-icon"><img src="icons/upgrade-num.png" alt="" onerror="this.replaceWith('🔠')"></div><div class="menu-title">Апгрейдер номеров</div><div class="menu-desc">Улучшить номера</div></div>
+    <div class="menu-item" onclick="openScreen('screen-business')"><div class="menu-icon"><img src="icons/business.png" alt="" onerror="this.replaceWith('🏭')"></div><div class="menu-title">Бизнесы</div><div class="menu-desc" id="ui-biz-desc">Пассивный доход</div></div>
+    <div class="menu-item" onclick="openScreen('screen-achievements')"><div class="menu-icon"><img src="icons/achievements.png" alt="" onerror="this.replaceWith('🏆')"></div><div class="menu-title">Достижения</div><div class="menu-desc" id="ui-ach-count">0/8</div></div>
+    <div class="menu-item" onclick="openScreen('screen-contracts')"><div class="menu-icon"><img src="icons/contracts.png" alt="" onerror="this.replaceWith('📝')"></div><div class="menu-title">Контракты</div><div class="menu-desc">Аренда тачек</div></div>
+    <div class="menu-item" onclick="openScreen('screen-fortune')"><div class="menu-icon"><img src="icons/fortune.png" alt="" onerror="this.replaceWith('🎡')"></div><div class="menu-title">Фортуна</div><div class="menu-desc">Рулетка</div></div>
+    <div class="menu-item" onclick="openScreen('screen-shop')"><div class="menu-icon"><img src="icons/shop.png" alt="" onerror="this.replaceWith('🛒')"></div><div class="menu-title">Магазин дня</div><div class="menu-desc">Скидки</div></div>
+    <div class="menu-item" onclick="openScreen('screen-top')"><div class="menu-icon"><img src="icons/top.png" alt="" onerror="this.replaceWith('📊')"></div><div class="menu-title">Топ</div><div class="menu-desc">Рейтинг</div></div>
+    <div class="menu-item" onclick="openScreen('screen-tasks')"><div class="menu-icon"><img src="icons/tasks.png" alt="" onerror="this.replaceWith('📋')"></div><div class="menu-title">Задания</div><div class="menu-desc" id="ui-tasks-count">0/3</div></div>
+    <div class="menu-item" onclick="openScreen('screen-tuning')"><div class="menu-icon"><img src="icons/tuning.png" alt="" onerror="this.replaceWith('🛠️')"></div><div class="menu-title">Тюнинг</div><div class="menu-desc">Удача</div></div>
+    <div class="menu-item" onclick="openScreen('screen-auction')"><div class="menu-icon"><img src="icons/auction.png" alt="" onerror="this.replaceWith('💎')"></div><div class="menu-title">Аукцион</div><div class="menu-desc">Ставки</div></div>
+    <div class="menu-item" onclick="openScreen('screen-bank')"><div class="menu-icon"><img src="icons/bank.png" alt="" onerror="this.replaceWith('💳')"></div><div class="menu-title">Банк</div><div class="menu-desc">Кредит, крипта</div></div>
+    <div class="menu-item" onclick="openScreen('screen-crystals')"><div class="menu-icon"><img src="icons/crystals.png" alt="" onerror="this.replaceWith('💠')"></div><div class="menu-title">Кристаллы</div><div class="menu-desc">Мини-игры</div></div>
+    <div class="menu-item" onclick="openScreen('screen-profile')"><div class="menu-icon"><img src="icons/profile.png" alt="" onerror="this.replaceWith('👑')"></div><div class="menu-title">Профиль</div><div class="menu-desc">Статистика</div></div>
+    <div class="menu-item" onclick="openScreen('screen-catalog')"><div class="menu-icon"><img src="icons/catalog.png" alt="" onerror="this.replaceWith('📚')"></div><div class="menu-title">Каталог</div><div class="menu-desc">Машины и номера</div></div>
+    <div class="menu-item" onclick="openScreen('screen-settings')"><div class="menu-icon"><img src="icons/settings.png" alt="" onerror="this.replaceWith('⚙️')"></div><div class="menu-title">Настройки</div><div class="menu-desc">Анимации, звук</div></div>
+    <div class="menu-item" onclick="openScreen('screen-rules')"><div class="menu-icon"><img src="icons/rules.png" alt="" onerror="this.replaceWith('📖')"></div><div class="menu-title">Правила</div><div class="menu-desc">Как играть</div></div>
+</div>
 
-        <!-- АВТОСАЛОН -->
         <div class="screen" id="screen-autosalon">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-autosalon')">‹</button><div class="screen-title">Автосалон</div></div>
             <div class="pad">
@@ -641,7 +617,6 @@ span.rvc { display: inline-block; }
             </div>
         </div>
 
-        <!-- ГОСЗНАКИ -->
         <div class="screen" id="screen-gosznaki">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-gosznaki')">‹</button><div class="screen-title">Генератор номеров</div></div>
             <div class="pad">
@@ -658,7 +633,6 @@ span.rvc { display: inline-block; }
             </div>
         </div>
 
-        <!-- ГАРАЖ -->
         <div class="screen" id="screen-garage">
             <div class="screen-header">
                 <button class="back-btn" onclick="closeScreen('screen-garage')">‹</button>
@@ -676,9 +650,8 @@ span.rvc { display: inline-block; }
             </div>
         </div>
 
-        <!-- АПГРЕЙДЕР -->
         <div class="screen" id="screen-upgrade">
-            <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-upgrade')">‹</button><div class="screen-title">Апгрейдер</div></div>
+            <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-upgrade')">‹</button><div class="screen-title">Апгрейдер машин</div></div>
             <div class="pad">
                 <div class="upg-row">
                     <div class="upg-slot" id="upg-slot-cur" onclick="chooseUpgradeCar()"></div>
@@ -702,7 +675,47 @@ span.rvc { display: inline-block; }
             </div>
         </div>
 
-        <!-- БАНК -->
+        <div class="screen" id="screen-upgrade-num">
+            <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-upgrade-num')">‹</button><div class="screen-title">Апгрейдер номеров</div></div>
+            <div class="pad">
+                <div class="upg-row">
+                    <div class="upg-slot" id="upgn-slot-cur" onclick="chooseUpgradeNumber()"></div>
+                    <div class="upg-arrow">➜</div>
+                    <div class="upg-slot" id="upgn-slot-prize"></div>
+                </div>
+                <div class="upg-cap" style="text-align:center;">ШАНС</div>
+                <div class="chance-pills" id="chance-pills-n">
+                    <div class="chance-pill" onclick="setChanceN(10)">10%</div>
+                    <div class="chance-pill" onclick="setChanceN(25)">25%</div>
+                    <div class="chance-pill" onclick="setChanceN(50)">50%</div>
+                    <div class="chance-pill" onclick="setChanceN(75)">75%</div>
+                </div>
+                <div class="wheel-wrapper">
+                    <div class="wheel-bg" id="upgn-wheel-bg"></div>
+                    <div class="wheel-center" id="upgn-wheel-text">50%</div>
+                    <div class="wheel-arrow-container" id="upgn-arrow"><div class="wheel-arrow">▼</div></div>
+                </div>
+                <div style="text-align:center; color: var(--gold); font-weight: 700; font-size: 13px; line-height:1.5;">🔥 При проигрыше номер сгорает,<br>но вы получаете <span style="color: var(--green);">кэшбек 10%</span> от его стоимости в 💎.</div>
+                <button class="btn btn-gold" id="upgn-go" onclick="doUpgradeNumber()">АПГРЕЙД НОМЕРА</button>
+            </div>
+        </div>
+
+        <div class="screen" id="screen-business">
+            <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-business')">‹</button><div class="screen-title">Бизнесы</div></div>
+            <div class="pad">
+                <div class="card" style="display:flex; flex-direction:column; gap:6px;">
+                    <div class="loan-badge"><span>💰 Пассивный доход</span><span id="biz-total" style="color:var(--green); font-size:13px;">0 ₽/час</span></div>
+                    <p style="font-size:12px; color: var(--muted); margin:0;">Доход копится, пока вы играете. Собирайте его вручную.</p>
+                </div>
+                <div class="card" style="display:flex; flex-direction:column; gap:8px;">
+                    <div class="loan-badge"><span>🏛️ Налоги</span><span id="tax-amount" style="color:var(--red); font-size:13px;">0 ₽</span></div>
+                    <p style="font-size:12px; color: var(--muted); margin:0;">С каждого сбора удерживается <b style="color:var(--gold)">13%</b>. Если налог не оплачен — сбор дохода блокируется.</p>
+                    <button class="btn btn-green" id="tax-pay-btn" onclick="payTaxes()">Оплатить налоги</button>
+                </div>
+                <div id="biz-list" style="display:flex; flex-direction:column; gap:10px;"></div>
+            </div>
+        </div>
+
         <div class="screen" id="screen-bank">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-bank')">‹</button><div class="screen-title">Банк</div></div>
             <div class="pad">
@@ -728,7 +741,6 @@ span.rvc { display: inline-block; }
                 </div>
                 <button class="btn btn-gold" onclick="convertMoney()">Купить валюту</button>
 
-                <!-- ===== НОВОЕ: ПЕРЕВОД ИГРОКУ ===== -->
                 <div class="card" style="display:flex; flex-direction:column; gap:10px;">
                     <div class="loan-badge"><span>💸 Перевод игроку</span><span style="font-size:11px; color:var(--muted);">по ID</span></div>
                     <div style="font-size:11.5px; color:var(--muted); font-weight:600; line-height:1.4;">
@@ -740,7 +752,6 @@ span.rvc { display: inline-block; }
                     <div style="font-size:11px; color:var(--muted); font-weight:600; text-align:center;" id="transfer-recipient-hint"></div>
                     <div class="transfer-history" id="transfer-history"></div>
                 </div>
-                <!-- ===== /ПЕРЕВОД ===== -->
 
                 <div class="card" style="display:flex; flex-direction:column; gap:8px;">
                     <div class="loan-badge"><span>💠 Кристаллы</span></div>
@@ -760,7 +771,7 @@ span.rvc { display: inline-block; }
                 </div>
 
                 <div class="card" style="display:flex; flex-direction:column; gap:10px;">
-                    <div class="loan-badge"><span>💳 Кредит</span><span id="loan-badge-val" style="color:var(--red); font-size:12px;"></span></div>
+                    <div class="loan-badge"><span>💳 Кредит (до 500 млн ₽)</span><span id="loan-badge-val" style="color:var(--red); font-size:12px;"></span></div>
                     <div id="loan-active-box" style="display:none; flex-direction:column; gap:8px;">
                         <div style="background: var(--card-2); border-radius:14px; padding:12px; text-align:center;">
                             <div style="font-size:11px; color: var(--muted);">Долг</div>
@@ -771,7 +782,12 @@ span.rvc { display: inline-block; }
                         <button class="btn btn-green" onclick="repayLoan()">Выплатить <span id="loan-repay-sum"></span></button>
                     </div>
                     <div id="loan-form-box" style="display:flex; flex-direction:column; gap:8px;">
-                        <input type="number" id="loan-amount" class="input-field" placeholder="Сумма кредита (до 50 000 000 ₽)">
+                        <div style="font-size:11.5px; color:var(--muted); font-weight:600; line-height:1.5;">
+                            • до 10 млн — без залога<br>
+                            • 10–100 млн — залог: машина ≥ 5 млн ₽<br>
+                            • 100–500 млн — залог: машина ≥ 30 млн ₽
+                        </div>
+                        <input type="number" id="loan-amount" class="input-field" placeholder="Сумма кредита (до 500 000 000 ₽)">
                         <select id="loan-term" class="input-field">
                             <option value="0.5">Срок: 30 минут</option>
                             <option value="1">Срок: 1 час</option>
@@ -788,8 +804,8 @@ span.rvc { display: inline-block; }
                     <div id="crypto-list" style="display:flex; flex-direction:column; gap:8px; margin-top:10px;"></div>
                 </div>
             </div>
-            </div>
-                    <!-- КРИСТАЛЛЫ -->
+        </div>
+
         <div class="screen" id="screen-crystals">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-crystals')">‹</button><div class="screen-title">💠 Кристаллы</div></div>
             <div class="pad">
@@ -853,14 +869,12 @@ span.rvc { display: inline-block; }
             </div>
         </div>
 
-        <!-- ПРОФИЛЬ -->
         <div class="screen" id="screen-profile">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-profile')">‹</button><div class="screen-title">Профиль</div></div>
             <div class="pad" style="align-items:center;">
                 <div class="avatar" style="width:96px; height:96px; font-size:48px;">👤</div>
                 <h2 id="profile-name">Игрок</h2>
 
-                <!-- ===== НОВОЕ: ID ИГРОКА ===== -->
                 <div class="player-id-box">
                     <div class="player-id-label">Твой ID для переводов</div>
                     <div class="player-id-row">
@@ -871,7 +885,6 @@ span.rvc { display: inline-block; }
                         Поделитесь этим ID, чтобы вам перевели деньги.
                     </div>
                 </div>
-                <!-- ===== /ID ИГРОКА ===== -->
 
                 <p style="color: var(--muted);">Перерождений: <span id="profile-rebirths">0</span></p>
                 <p style="color: var(--muted); font-size:13px;">Стрик: <span id="profile-streak" style="color: var(--gold); font-weight:800;">0 дней</span></p>
@@ -888,7 +901,6 @@ span.rvc { display: inline-block; }
             </div>
         </div>
 
-        <!-- ФОРТУНА -->
         <div class="screen" id="screen-fortune">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-fortune')">‹</button><div class="screen-title">Фортуна</div></div>
             <div class="pad" style="align-items:center;">
@@ -905,7 +917,6 @@ span.rvc { display: inline-block; }
             </div>
         </div>
 
-        <!-- ТЮНИНГ -->
         <div class="screen" id="screen-tuning">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-tuning')">‹</button><div class="screen-title">Тюнинг</div></div>
             <div class="pad">
@@ -921,7 +932,6 @@ span.rvc { display: inline-block; }
             </div>
         </div>
 
-        <!-- АУКЦИОН -->
         <div class="screen" id="screen-auction">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-auction')">‹</button><div class="screen-title">Аукцион</div></div>
             <div class="pad">
@@ -940,7 +950,6 @@ span.rvc { display: inline-block; }
             </div>
         </div>
 
-        <!-- КОНТРАКТЫ -->
         <div class="screen" id="screen-contracts">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-contracts')">‹</button><div class="screen-title">Контракты</div></div>
             <div class="pad">
@@ -949,19 +958,16 @@ span.rvc { display: inline-block; }
             </div>
         </div>
 
-        <!-- ДОСТИЖЕНИЯ -->
         <div class="screen" id="screen-achievements">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-achievements')">‹</button><div class="screen-title">Достижения</div></div>
             <div class="pad" id="achievements-list"></div>
         </div>
 
-        <!-- КАТАЛОГ -->
         <div class="screen" id="screen-catalog">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-catalog')">‹</button><div class="screen-title">Каталог</div></div>
             <div class="pad"><div class="chips" id="catalog-chips"></div><div id="catalog-list" style="display:flex;flex-direction:column;gap:12px;"></div></div>
         </div>
 
-        <!-- ПРАВИЛА -->
         <div class="screen" id="screen-settings">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-settings')">‹</button><div class="screen-title">Настройки</div></div>
             <div class="pad" id="settings-list"></div>
@@ -971,23 +977,23 @@ span.rvc { display: inline-block; }
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-rules')">‹</button><div class="screen-title">Правила</div></div>
             <div class="pad rules">
                 <h3 style="margin-bottom:6px;">Как играть в НОМЕРДАЙ:</h3>
-                <p><b>1. Крутка:</b> в автосалоне тратите рубли, в госзнаках — кристаллы. X10 даёт 10 предметов сразу, но экономика рандомная — иногда в плюс, иногда в минус.</p>
+                <p><b>1. Крутка:</b> в автосалоне тратите рубли, в госзнаках — кристаллы. X10 даёт 10 предметов сразу.</p>
                 <p><b>2. Гараж:</b> выбитое можно оставить или продать.</p>
                 <p><b>3. Батлы:</b> 40 млн ₽ на 30 секунд, побеждает тот, у кого сумма машин больше.</p>
-                <p><b>4. Апгрейдер:</b> рискните машиной ради более дорогой. При проигрыше машина сгорает, но вы получаете <b>кэшбек 10%</b> от её стоимости.</p>
+                <p><b>4. Апгрейдер:</b> рискните машиной или номером ради более дорогого. При проигрыше предмет сгорает, но вы получаете <b>кэшбек 10%</b>.</p>
                 <p><b>5. Задания:</b> ежедневно 3 задания и награды.</p>
                 <p><b>6. Перерождение:</b> сброс прогресса ради +0.5% к удаче за каждое.</p>
                 <p><b>7. Помощь:</b> баланс < 4 999 999 ₽ → +2.5 млн ₽ раз в 30 минут.</p>
-                <p><b>8. Кредит:</b> до 50 млн ₽ на срок до 2 часов. От 10 млн — нужен залог машины. Просрочка — банк забирает всё.</p>
-                <p><b>9. Крипта:</b> BTC, ETH, SOL — цена меняется каждые 5 секунд. Купить можно на любую сумму в ₽.</p>
+                <p><b>8. Кредит:</b> до 500 млн ₽. До 10 млн — без залога. 10–100 млн — залог машины ≥ 5 млн. 100–500 млн — залог машины ≥ 30 млн. При просрочке банк забирает залоговую (или случайную) машину.</p>
+                <p><b>9. Крипта:</b> BTC, ETH, SOL — цена меняется каждые 5 секунд. Купить/продать можно с комиссией 1%.</p>
                 <p><b>10. Кристаллы:</b> рулетка, дуэль 50/50, ежедневный бонус, магазин и обмен 50 000 💎 → 50 млн ₽.</p>
-                <p><b>11. Стрик:</b> заходите каждый день, чтобы получать до +60% к удаче.</p>
-                <p><b>12. Пити:</b> 80 круток без Legendary — и она гарантированно выпадет.</p>
-                <p><b>13. Переводы:</b> в Банке можно перевести деньги другому игроку по его ID (смотрите ID в Профиле).</p>
+                <p><b>11. Бизнесы:</b> 6 бизнесов дают пассивный доход. Налог 13% с собранного. Если налог не оплачен — сбор блокируется.</p>
+                <p><b>12. Стрик:</b> заходите каждый день, чтобы получать до +60% к удаче.</p>
+                <p><b>13. Пити:</b> 80 круток без Legendary — и она гарантированно выпадет.</p>
+                <p><b>14. Переводы:</b> в Банке можно перевести деньги другому игроку по его ID.</p>
             </div>
         </div>
 
-        <!-- БАТЛ -->
         <div class="screen" id="screen-battle">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-battle')">‹</button><div class="screen-title">Батл 1x1</div></div>
             <div class="pad">
@@ -1015,7 +1021,6 @@ span.rvc { display: inline-block; }
             </div>
         </div>
 
-        <!-- МАГАЗИН -->
         <div class="screen" id="screen-shop">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-shop')">‹</button><div class="screen-title">Магазин дня</div></div>
             <div class="pad">
@@ -1026,7 +1031,6 @@ span.rvc { display: inline-block; }
             </div>
         </div>
 
-        <!-- ТОП -->
         <div class="screen" id="screen-top">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-top')">‹</button><div class="screen-title">Топ игроков</div></div>
             <div class="pad">
@@ -1037,7 +1041,6 @@ span.rvc { display: inline-block; }
             </div>
         </div>
 
-        <!-- ЗАДАНИЯ -->
         <div class="screen" id="screen-tasks">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-tasks')">‹</button><div class="screen-title">Задания</div></div>
             <div class="pad">
@@ -1051,15 +1054,13 @@ span.rvc { display: inline-block; }
         <div class="modal" id="modal"><div class="modal-box" id="modal-box"></div></div>
         <div id="toast"></div>
     </div>
-                        </div>
-                        <script>
-// ===== ОДНОРАЗОВЫЙ СБРОС ВСЕХ ИГРОКОВ =====
+</div>
+
+<script>
+// ===== СБРОС =====
 (function wipeEveryone() {
     if (localStorage.getItem('numberday_wipe_done_v1')) return;
-    const keys = [
-        'numberday_save_v14','numberday_save_v13','numberday_save_v12',
-        'numberday_save_v11','numberday_save_v10','numberday_save_v9','numberday_save_v8'
-    ];
+    const keys = ['numberday_save_v14','numberday_save_v13','numberday_save_v12','numberday_save_v11','numberday_save_v10','numberday_save_v9','numberday_save_v8'];
     keys.forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
     try { localStorage.setItem('numberday_wipe_done_v1', '1'); } catch (e) {}
     location.reload();
@@ -1070,25 +1071,16 @@ const fmt = n => Math.round(n).toLocaleString('ru-RU');
 const newUid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 const START_MONEY = 20000000;
 const START_CRYSTALS = 10060;
-const SAVE_KEY = 'numberday_save_v14';
+const SAVE_KEY = 'numberday_save_v15';
 const UPGRADE_CASHBACK = 0.10;
 
-// ===== НОВОЕ: РЕЕСТР ИГРОКОВ (демо-«сервер» в localStorage) =====
 const REGISTRY_KEY = 'numberday_players_registry_v1';
 const TRANSFER_LOG_KEY = 'numberday_transfers_v1';
 
-function loadRegistry() {
-    try { return JSON.parse(localStorage.getItem(REGISTRY_KEY)) || {}; } catch (e) { return {}; }
-}
-function saveRegistry(reg) {
-    try { localStorage.setItem(REGISTRY_KEY, JSON.stringify(reg)); } catch (e) {}
-}
-function loadTransferLog() {
-    try { return JSON.parse(localStorage.getItem(TRANSFER_LOG_KEY)) || []; } catch (e) { return []; }
-}
-function saveTransferLog(log) {
-    try { localStorage.setItem(TRANSFER_LOG_KEY, JSON.stringify(log.slice(0, 50))); } catch (e) {}
-}
+function loadRegistry() { try { return JSON.parse(localStorage.getItem(REGISTRY_KEY)) || {}; } catch (e) { return {}; } }
+function saveRegistry(reg) { try { localStorage.setItem(REGISTRY_KEY, JSON.stringify(reg)); } catch (e) {} }
+function loadTransferLog() { try { return JSON.parse(localStorage.getItem(TRANSFER_LOG_KEY)) || []; } catch (e) { return []; } }
+function saveTransferLog(log) { try { localStorage.setItem(TRANSFER_LOG_KEY, JSON.stringify(log.slice(0, 50))); } catch (e) {} }
 function generatePlayerId() {
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
     let s = '';
@@ -1098,7 +1090,6 @@ function generatePlayerId() {
 function ensureRegistrySeed() {
     const reg = loadRegistry();
     if (!Object.keys(reg).length) {
-        // Демо-боты, чтобы перевод можно было проверить сразу
         reg['ND-BOT001'] = { name: 'Shadow60', money: 120000000, bot: true };
         reg['ND-BOT002'] = { name: 'Viper77',  money: 45000000,  bot: true };
         reg['ND-BOT003'] = { name: 'Nitro88',  money: 8000000,   bot: true };
@@ -1124,7 +1115,6 @@ const CARS_DB = [];
     CARS_DB.push({ id: carId++, name: "Bugatti Chiron",   price: 1500000000, rarity: "hyper", shape: "sport" });
     CARS_DB.push({ id: carId++, name: "Koenigsegg Jesko", price: 2000000000, rarity: "hyper", shape: "sport" });
     CARS_DB.push({ id: carId++, name: "Pagani Huayra",    price: 1200000000, rarity: "hyper", shape: "sport" });
-    // ULTRA: дороже 2 млрд ₽, шанс выпадения очень маленький (см. getRandomItem)
     [["Rolls-Royce Boat Tail", 2800000000], ["Ferrari 250 GTO", 3500000000], ["Bugatti La Voiture Noire", 4700000000],
      ["Mercedes 300 SLR Uhlenhaut", 6000000000], ["Aston Martin Valkyrie AMR Pro", 7500000000], ["Koenigsegg CCXR Trevita", 10000000000]]
         .forEach(([name, price]) => CARS_DB.push({ id: carId++, name, price, rarity: "ultra", shape: "sport" }));
@@ -1155,8 +1145,7 @@ const NUMBERS_DB = [];
     const r = rng(77);
     const pick = () => NUMBER_LETTERS[Math.floor(r() * 12)];
     for (let i = 0; i < 100; i++) {
-        const rarity = i < 40 ? "common" : i < 68 ? "rare" : i < 88 ? "epic" : "legendary";   // 40/28/20/12
-        // диапазоны цен номеров (💎). Раньше: 100-150 / 500-750 / 1500-2250 / 5000-7500 (RTP ~75%)
+        const rarity = i < 40 ? "common" : i < 68 ? "rare" : i < 88 ? "epic" : "legendary";
         const [plo, phi] = NUMBER_PRICE_RANGES[rarity];
         const price = Math.round((plo + r() * (phi - plo)) / 10) * 10;
         let digits; const d = () => Math.floor(r() * 10);
@@ -1166,7 +1155,6 @@ const NUMBERS_DB = [];
         else { digits = `${d()}${d()}${d()}`; }
         NUMBERS_DB.push({ id: i, name: `${pick()}${digits}${pick()}${pick()}`, price, rarity });
     }
-    // ULTRA-номера: очень дорогие, шанс выпадения очень маленький
     [["А777АА", 250000, "Три семёрки, дублёр"], ["В777ВВ", 180000, "Три семёрки, дублёр"], ["К777КК", 150000, "Три семёрки, дублёр"],
      ["О777ОО", 120000, "Три семёрки, дублёр"], ["М777ММ", 100000, "Три семёрки, дублёр"], ["Х777ХХ", 90000, "Три семёрки, дублёр"],
      ["С001СС", 75000, "Первый номер региона"], ["Н001НН", 60000, "Первый номер региона"]]
@@ -1254,13 +1242,31 @@ const DAILY_TASKS = [
     { id: 'earned', icon: '💸', title: 'Куш', desc: 'Заработайте 50 млн ₽', goal: 50000000, reward: { money: 5000000, crystals: 500 }, label: '5 млн ₽ + 500 💎' }
 ];
 
+// ===== БИЗНЕСЫ =====
+const BUSINESSES_DEF = [
+    { id: 'taxi',   icon: '🚕', name: 'Таксопарк',   baseIncome: 200000, baseCost: 5000000,  costMul: 1.8, incMul: 1.55, limitHrs: 8 },
+    { id: 'wash',   icon: '🚿', name: 'Автомойка',   baseIncome: 150000, baseCost: 4000000,  costMul: 1.8, incMul: 1.55, limitHrs: 8 },
+    { id: 'tire',   icon: '🛞', name: 'Шиномонтаж',  baseIncome: 120000, baseCost: 3000000,  costMul: 1.8, incMul: 1.55, limitHrs: 8 },
+    { id: 'dealer', icon: '🏢', name: 'Автосалон',   baseIncome: 350000, baseCost: 12000000, costMul: 2.0, incMul: 1.6,  limitHrs: 8 },
+    { id: 'rent',   icon: '🔑', name: 'Прокат авто', baseIncome: 250000, baseCost: 8000000,  costMul: 1.9, incMul: 1.55, limitHrs: 8 },
+    { id: 'miner',  icon: '⛏️', name: 'Крипто-ферма',baseIncome: 180000, baseCost: 6000000,  costMul: 1.85,incMul: 1.55, limitHrs: 8 }
+];
+
+function defaultBusinesses() {
+    const b = {};
+    BUSINESSES_DEF.forEach(d => {
+        b[d.id] = { level: 0, acc: 0, lastTick: Date.now() };
+    });
+    return b;
+}
+
 function defaultState() {
     return {
-        playerId: '',                          // ← НОВОЕ: ID игрока
+        playerId: '',
         money: START_MONEY, crystals: START_CRYSTALS,
         usd: 0, eur: 0, cny: 0, rebirths: 0,
         garage: [], pending: { car: [], number: [] },
-        playerName: 'Игрок_2107', upgradeChance: 50,
+        playerName: 'Игрок_2107', upgradeChance: 50, upgradeChanceN: 50,
         battleCar: null, mmr: 0, battleWins: 0,
         currentBg: 'bg1', tuningLevel: 0, tuningBonus: 0,
         contracts: [], ach: {}, lastFortuneSpin: 0,
@@ -1269,6 +1275,9 @@ function defaultState() {
         loan: 0, loanDueAt: 0, lastAidAt: 0, loanCollateralUid: null,
         lastCrystalDaily: 0,
         pityCounter: 0, streakDays: 0, lastLoginDate: '',
+        businesses: defaultBusinesses(),
+        taxDebt: 0,
+        taxBlocked: false,
         crypto: {
             btc: { name: 'BTC', icon: '₿', color: '#f7931a', price: 5000000, prev: 5000000, hold: 0 },
             eth: { name: 'ETH', icon: 'Ξ', color: '#627eea', price: 350000, prev: 350000, hold: 0 },
@@ -1281,12 +1290,14 @@ try {
     const saved = JSON.parse(localStorage.getItem(SAVE_KEY));
     if (saved) state = { ...state, ...saved, pending: { car: [], number: [], ...(saved.pending || {}) }, crypto: { ...defaultState().crypto, ...(saved.crypto || {}) } };
 } catch (e) {}
+if (!state.businesses) state.businesses = defaultBusinesses();
+if (typeof state.taxDebt !== 'number') state.taxDebt = 0;
 ['car', 'number'].forEach(t => { state.garage.push(...state.pending[t]); state.pending[t] = []; });
 if (!state.eur) state.eur = 0;
 if (!state.cny) state.cny = 0;
 if (!state.lastCrystalDaily) state.lastCrystalDaily = 0;
+if (!state.upgradeChanceN) state.upgradeChanceN = 50;
 
-// ===== НОВОЕ: гарантируем ID игрока =====
 (function ensurePlayerId() {
     if (!state.playerId) {
         state.playerId = generatePlayerId();
@@ -1296,7 +1307,6 @@ if (!state.lastCrystalDaily) state.lastCrystalDaily = 0;
 
 function saveGame() {
     try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {}
-    // синхронизируем себя в реестре игроков
     try {
         const reg = loadRegistry();
         reg[state.playerId] = { name: state.playerName, money: state.money, bot: false };
@@ -1338,14 +1348,20 @@ function pickCar(cb) {
         <div class="pick-grid">${cars.map(c => `<div class="pick-card r-${c.rarity}" onclick="pickDone('${c.uid}')">${carSVG(c)}<div class="pc-name">${c.name}</div><div class="pc-price">${fmt(c.price)} ₽</div></div>`).join('')}</div>
         <button class="btn btn-glass" onclick="closeModal()">Отмена</button>`);
 }
+function pickNumber(cb) {
+    const nums = state.garage.filter(i => i.type === 'number').sort((a, b) => b.price - a.price);
+    if (!nums.length) { toast('В гараже нет номеров'); return; }
+    _pickCb = cb;
+    openModal(`<div class="modal-title">Выбери номер</div>
+        <div class="pick-grid">${nums.map(c => `<div class="pick-card r-${c.rarity}" onclick="pickDone('${c.uid}')">${plateHTML(c, true)}<div class="pc-name" style="color: var(--green);">${fmt(c.price)} 💎</div></div>`).join('')}</div>
+        <button class="btn btn-glass" onclick="closeModal()">Отмена</button>`);
+}
 function pickDone(u) { closeModal(); if (_pickCb) _pickCb(u); }
 
-// ===== НОВОЕ: ПЕРЕВОДЫ И ID =====
 function copyPlayerId() {
     const id = state.playerId;
     if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(id).then(() => toast('📋 ID скопирован: ' + id))
-            .catch(() => fallbackCopy(id));
+        navigator.clipboard.writeText(id).then(() => toast('📋 ID скопирован: ' + id)).catch(() => fallbackCopy(id));
     } else fallbackCopy(id);
 }
 function fallbackCopy(text) {
@@ -1397,39 +1413,24 @@ function transferMoney() {
     const amtEl = $('transfer-amount');
     const rawId = (idEl.value || '').trim().toUpperCase();
     const amount = Math.floor(Number(amtEl.value));
-
     if (!rawId) { toast('Введите ID получателя'); return; }
     if (rawId === state.playerId) { toast('Нельзя перевести самому себе'); return; }
     const recipient = getPlayerById(rawId);
     if (!recipient) { toast('Игрок с таким ID не найден'); return; }
     if (!amount || amount <= 0) { toast('Введите корректную сумму'); return; }
     if (amount > state.money) { toast(`Недостаточно средств. Баланс: ${fmt(state.money)} ₽`); return; }
-
     confirmBox(`Перевести <b>${fmt(amount)} ₽</b> игроку <b>${recipient.name}</b> (${rawId})?`, () => {
-        // списываем у себя
         state.money -= amount;
-        // начисляем получателю (если он есть в локальном state — только если совпадает ID, иначе пишем в реестр)
         const reg = loadRegistry();
         if (reg[rawId]) {
             reg[rawId].money = (reg[rawId].money || 0) + amount;
             reg[rawId].name = recipient.name;
             saveRegistry(reg);
-            // Если получатель — мы сами (маловероятно), начисляем
             if (rawId === state.playerId) state.money += amount;
         }
-
-        // записываем в лог
         const log = loadTransferLog();
-        log.unshift({
-            from: state.playerId,
-            fromName: state.playerName,
-            to: rawId,
-            toName: recipient.name,
-            amount,
-            ts: Date.now()
-        });
+        log.unshift({ from: state.playerId, fromName: state.playerName, to: rawId, toName: recipient.name, amount, ts: Date.now() });
         saveTransferLog(log);
-
         idEl.value = ''; amtEl.value = '';
         saveGame(); updateUI(); renderTransfers();
         toast(`✅ Переведено ${fmt(amount)} ₽ → ${recipient.name}`);
@@ -1550,18 +1551,38 @@ function renderTasks() {
 const AID_THRESHOLD = 4999999;
 const AID_AMOUNT = 2500000;
 const AID_INTERVAL = 30 * 60 * 1000;
-const LOAN_MAX = 50000000;
-const LOAN_COLLATERAL_FROM = 10000000;
+const LOAN_MAX = 500000000;
+const LOAN_TIER1 = 10000000;   // до 10 млн — без залога
+const LOAN_TIER2 = 100000000;  // 10..100 млн — залог ≥ 5 млн
+const COLLATERAL_MIN_1 = 5000000;
+const COLLATERAL_MIN_2 = 30000000;
 
 function checkLoanExpired() {
     if (state.loan > 0 && state.loanDueAt && Date.now() >= state.loanDueAt) {
-        state.loan = 0; state.loanDueAt = 0;
-        state.money = 0; state.garage = []; state.contracts = [];
-        state.battleCar = null; state.pending = { car: [], number: [] };
+        // Штраф: забираем залоговую машину (или рандомную) и списываем долг
+        let seized = null;
+        if (state.loanCollateralUid) {
+            const idx = state.garage.findIndex(i => i.uid === state.loanCollateralUid);
+            if (idx >= 0) seized = state.garage.splice(idx, 1)[0];
+        }
+        if (!seized) {
+            const cars = state.garage.filter(i => i.type === 'car');
+            if (cars.length) {
+                const pick = cars[Math.floor(Math.random() * cars.length)];
+                const idx = state.garage.findIndex(i => i.uid === pick.uid);
+                if (idx >= 0) seized = state.garage.splice(idx, 1)[0];
+            }
+        }
+        state.loan = 0;
+        state.loanDueAt = 0;
         state.loanCollateralUid = null;
+        if (state.battleCar && seized && state.battleCar === seized.uid) state.battleCar = null;
         saveGame(); updateUI();
         if ($('screen-bank') && $('screen-bank').classList.contains('active')) renderBank();
-        infoBox('🚫 Кредит просрочен!', 'Банк забрал <b>все деньги, машины и номера</b> (включая залог).');
+        const msg = seized
+            ? `Банк забрал <b>${seized.name}</b> (${fmt(seized.price)} ₽) за неуплату кредита.<br>Долг списан.`
+            : `Кредит просрочен. У вас не было машины для залога — долг списан.`;
+        infoBox('🚫 Кредит просрочен!', msg);
     }
 }
 function applyAidIfNeeded() {
@@ -1586,12 +1607,19 @@ function takeLoan() {
     if (!amount || amount < 1) { toast('Введите сумму кредита'); return; }
     if (amount > LOAN_MAX) { toast(`Максимум ${fmt(LOAN_MAX)} ₽`); return; }
     if (!hours || hours <= 0 || hours > 2) { toast('Срок до 2 часов'); return; }
-    pendingLoan = { amount, hours };
-    if (amount >= LOAN_COLLATERAL_FROM) {
-        const cars = state.garage.filter(i => i.type === 'car');
-        if (!cars.length) { toast('Нужен залог-машина (кредит от 10 млн)'); pendingLoan = null; return; }
+
+    // Правила залога
+    if (amount <= LOAN_TIER1) {
+        finalizeLoan(amount, hours, null);
+    } else if (amount <= LOAN_TIER2) {
+        const cars = state.garage.filter(i => i.type === 'car' && i.price >= COLLATERAL_MIN_1);
+        if (!cars.length) { toast(`Нужна машина-залог ≥ ${fmt(COLLATERAL_MIN_1)} ₽`); return; }
         pickCar(u => { finalizeLoan(amount, hours, u); });
-    } else finalizeLoan(amount, hours, null);
+    } else {
+        const cars = state.garage.filter(i => i.type === 'car' && i.price >= COLLATERAL_MIN_2);
+        if (!cars.length) { toast(`Нужна машина-залог ≥ ${fmt(COLLATERAL_MIN_2)} ₽`); return; }
+        pickCar(u => { finalizeLoan(amount, hours, u); });
+    }
 }
 function finalizeLoan(amount, hours, collateralUid) {
     state.loan = amount;
@@ -1658,6 +1686,8 @@ function exchangeCrystals() {
 }
 
 const CRYPTO_KEYS = ['btc', 'eth', 'sol'];
+const CRYPTO_FEE = 0.01;   // комиссия 1%
+
 function renderCrypto() {
     const list = $('crypto-list'); if (!list) return;
     list.innerHTML = CRYPTO_KEYS.map(k => {
@@ -1685,25 +1715,28 @@ function tradeCrypto(key, dir) {
     const amountEl = $('crypto-amount');
     const amount = Math.floor(Number(amountEl ? amountEl.value : 0));
     if (dir > 0) {
+        // покупка: списываем рубли и зачисляем монеты по текущей цене + комиссия
         if (!amount || amount <= 0) { toast('Введите сумму в ₽ для покупки'); return; }
         const maxAfford = Math.min(amount, state.money);
         if (maxAfford < c.price) { toast(`Минимум ${fmt(c.price)} ₽ (1 ${c.name})`); return; }
-        const qty = Math.floor(maxAfford / c.price);
+        const qty = Math.floor(maxAfford / (c.price * (1 + CRYPTO_FEE)));
         if (qty < 1) { toast('Недостаточно на 1 монету'); return; }
-        const cost = qty * c.price;
+        const cost = Math.round(qty * c.price * (1 + CRYPTO_FEE));
         state.money -= cost;
         c.hold += qty;
-        toast(`Куплено ${qty} ${c.name} за ${fmt(cost)} ₽`);
+        toast(`Куплено ${qty} ${c.name} за ${fmt(cost)} ₽ (с комиссией 1%)`);
     } else {
+        // продажа: зачисляем рубли по текущей цене минус комиссия
         if (!c.hold) { toast(`Нет ${c.name} для продажи`); return; }
         let qty;
         if (amount && amount > 0) {
-            qty = Math.min(c.hold, Math.floor(amount / c.price));
+            qty = Math.min(c.hold, Math.floor(amount / (c.price * (1 - CRYPTO_FEE))));
             if (qty < 1) { toast(`Минимум ${fmt(c.price)} ₽ (1 ${c.name})`); return; }
         } else qty = c.hold;
+        const revenue = Math.round(qty * c.price * (1 - CRYPTO_FEE));
         c.hold -= qty;
-        earnMoney(qty * c.price);
-        toast(`Продано ${qty} ${c.name} за ${fmt(qty * c.price)} ₽`);
+        earnMoney(revenue);
+        toast(`Продано ${qty} ${c.name} за ${fmt(revenue)} ₽ (с комиссией 1%)`);
     }
     updateUI(); renderBank(); saveGame();
 }
@@ -1722,8 +1755,133 @@ setInterval(() => {
 setInterval(() => {
     checkLoanExpired();
     applyAidIfNeeded();
+    tickBusinesses();
     if ($('screen-bank') && $('screen-bank').classList.contains('active')) renderBank();
+    if ($('screen-business') && $('screen-business').classList.contains('active')) renderBusinesses();
 }, 1000);
+
+// ===== БИЗНЕСЫ: расчёт доходов =====
+function bizLevelDef(b) {
+    return BUSINESSES_DEF.find(d => d.id === b) || null;
+}
+function bizIncomePerHour(id) {
+    const def = bizLevelDef(id);
+    const b = state.businesses[id];
+    if (!def || !b) return 0;
+    if (b.level <= 0) return 0;
+    return Math.round(def.baseIncome * Math.pow(def.incMul, b.level - 1));
+}
+function bizUpgradeCost(id) {
+    const def = bizLevelDef(id);
+    const b = state.businesses[id];
+    if (!def || !b) return 0;
+    return Math.round(def.baseCost * Math.pow(def.costMul, b.level));
+}
+function bizLimit(id) {
+    const def = bizLevelDef(id);
+    return def ? def.limitHrs * bizIncomePerHour(id) : 0;
+}
+function tickBusinesses() {
+    const now = Date.now();
+    BUSINESSES_DEF.forEach(def => {
+        const b = state.businesses[def.id];
+        if (!b) return;
+        const perHr = bizIncomePerHour(def.id);
+        if (perHr <= 0) { b.acc = 0; b.lastTick = now; return; }
+        const dt = Math.max(0, Math.min(now - (b.lastTick || now), 60 * 60 * 1000)) / 1000; // cap 1h
+        const add = perHr * (dt / 3600);
+        b.acc = Math.min(bizLimit(def.id), b.acc + add);
+        b.lastTick = now;
+    });
+}
+function collectBiz(id) {
+    const def = bizLevelDef(id); const b = state.businesses[id];
+    if (!def || !b) return;
+    if (state.taxBlocked) { toast('❌ Сбор заблокирован — оплатите налоги!'); return; }
+    if (b.acc <= 0) { toast('Пока нечего собирать'); return; }
+    const gross = Math.floor(b.acc);
+    const tax = Math.floor(gross * 0.13);
+    const net = gross - tax;
+    b.acc = 0;
+    earnMoney(net);
+    state.taxDebt += tax;
+    state.taxBlocked = state.taxDebt > 0;
+    saveGame(); updateUI(); renderBusinesses();
+    toast(`💵 +${fmt(net)} ₽ (налог ${fmt(tax)} ₽)`);
+}
+function payTaxes() {
+    if (state.taxDebt <= 0) { toast('Налогов нет'); return; }
+    if (state.money < state.taxDebt) { toast('Недостаточно денег'); return; }
+    const amt = state.taxDebt;
+    state.money -= amt;
+    state.taxDebt = 0;
+    state.taxBlocked = false;
+    saveGame(); updateUI(); renderBusinesses();
+    toast(`✅ Оплачены налоги: ${fmt(amt)} ₽`);
+}
+function upgradeBiz(id) {
+    const def = bizLevelDef(id); const b = state.businesses[id];
+    if (!def || !b) return;
+    const cost = bizUpgradeCost(id);
+    if (state.money < cost) { toast(`Нужно ${fmt(cost)} ₽`); return; }
+    state.money -= cost;
+    b.level++;
+    if (b.level === 1) b.lastTick = Date.now();
+    saveGame(); updateUI(); renderBusinesses();
+    toast(`🏭 ${def.name} → ур. ${b.level}`);
+}
+function renderBusinesses() {
+    const list = $('biz-list'); if (!list) return;
+    let total = 0;
+    BUSINESSES_DEF.forEach(d => total += bizIncomePerHour(d.id));
+    const tEl = $('biz-total'); if (tEl) tEl.textContent = fmt(total) + ' ₽/час';
+    const taxEl = $('tax-amount'); if (taxEl) taxEl.textContent = fmt(state.taxDebt) + ' ₽';
+    const tb = $('tax-pay-btn');
+    if (tb) {
+        if (state.taxDebt > 0) { tb.classList.remove('disabled'); tb.textContent = 'Оплатить налоги'; }
+        else { tb.classList.add('disabled'); tb.textContent = 'Налогов нет'; }
+    }
+    if ($('ui-biz-desc')) {
+        const owned = BUSINESSES_DEF.filter(d => state.businesses[d.id].level > 0).length;
+        $('ui-biz-desc').textContent = `${owned}/6 • ${fmt(total)} ₽/час`;
+    }
+    list.innerHTML = BUSINESSES_DEF.map(def => {
+        const b = state.businesses[def.id];
+        const lvl = b.level;
+        const cost = bizUpgradeCost(def.id);
+        const inc = bizIncomePerHour(def.id);
+        const lim = bizLimit(def.id);
+        const acc = Math.floor(b.acc || 0);
+        const tax = Math.floor(acc * 0.13);
+        const net = acc - tax;
+        const canCollect = acc > 0 && !state.taxBlocked;
+        const btnLabel = state.taxBlocked ? '🚫 Оплатите налог' : (acc > 0 ? `Собрать ${fmt(net)} ₽` : 'Пусто');
+        return `<div class="list-item" style="flex-direction:column; align-items:stretch; gap:8px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <div class="list-icon">${def.icon}</div>
+                <div class="li-main">
+                    <div class="li-title">${def.name} ${lvl > 0 ? `<span style="color:var(--gold);">ур.${lvl}</span>` : ''}</div>
+                    <div class="li-sub">${lvl > 0 ? `${fmt(inc)} ₽/час • лимит ${fmt(lim)} ₽` : 'Не куплен'}</div>
+                </div>
+            </div>
+            <div style="display:flex; gap:8px;">
+                <button class="btn btn-glass btn-sm" style="flex:1;" onclick="upgradeBiz('${def.id}')">${lvl === 0 ? 'Купить' : 'Апгрейд'}<br><span style="font-size:11px; color:var(--gold);">${fmt(cost)} ₽</span></button>
+                <button class="btn btn-green btn-sm" style="flex:1;" ${canCollect ? '' : 'disabled'} onclick="collectBiz('${def.id}')">${btnLabel}</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+setInterval(() => {
+    CRYPTO_KEYS.forEach(k => {
+        const c = state.crypto[k]; if (!c) return;
+        c.prev = c.price;
+        const delta = (Math.random() - 0.5) * 0.08;
+        c.price = Math.max(1, Math.round(c.price * (1 + delta)));
+    });
+    if ($('screen-bank') && $('screen-bank').classList.contains('active')) renderCrypto();
+    saveGame();
+}, 5000);
 
 const CRY_PRIZES = [
     { t: 'Пусто',     m: 0,          color: '#444' },
@@ -1830,7 +1988,6 @@ function updateUI() {
     const cnyEl = $('ui-cny'); if (cnyEl) cnyEl.textContent = state.cny || 0;
     const cryEl = $('ui-cry-bal'); if (cryEl) cryEl.textContent = fmt(state.crystals);
     $('profile-name').textContent = state.playerName;
-    // ===== НОВОЕ: показываем ID в профиле =====
     const pidEl = $('profile-id'); if (pidEl) pidEl.textContent = state.playerId;
     $('profile-rebirths').textContent = state.rebirths;
     $('ui-rebirth-cost').textContent = fmt(rebirthCost()) + ' ₽';
@@ -1852,6 +2009,7 @@ function updateUI() {
     renderStreak();
     updateCryPage();
     checkAchievements();
+    if ($('screen-business') && $('screen-business').classList.contains('active')) renderBusinesses();
     saveGame();
 }
 
@@ -1862,6 +2020,7 @@ function openScreen(id) {
     if (id === 'screen-autosalon') renderPending('car');
     if (id === 'screen-gosznaki') renderPending('number');
     if (id === 'screen-upgrade') updateUpgradeUI();
+    if (id === 'screen-upgrade-num') updateUpgradeNumUI();
     if (id === 'screen-garage') renderGarage();
     if (id === 'screen-battle') { ensureLobbies(); updateBattleUI(); }
     if (id === 'screen-profile') { renderBgPicker(); const pidEl = $('profile-id'); if (pidEl) pidEl.textContent = state.playerId; }
@@ -1876,6 +2035,7 @@ function openScreen(id) {
     if (id === 'screen-tasks') { resetDailyIfNeeded(); renderTasks(); }
     if (id === 'screen-top') renderTop();
     if (id === 'screen-settings') renderSettings();
+    if (id === 'screen-business') renderBusinesses();
     if (id === 'screen-fortune') { renderFortuneWheel(); updateFortuneBtn(); }
     el.classList.add('active');
 }
@@ -1896,34 +2056,27 @@ function closeScreen(id) {
 function getRandomItem(type, mode) {
     const pool = type === 'car' ? CARS_DB : NUMBERS_DB;
     const roll = Math.random() * 100;
-
     const streakBonus = Math.min((state.streakDays || 0) * 2, 60);
     let boost = 0;
     if (mode === 'boost') boost = 1.5;
     else if (mode === 'x10') boost = -1.0;
-
     const bonus = boost + state.rebirths * 0.5 + state.tuningBonus + streakBonus * 0.05;
-
     const cH = type === 'car' ? Math.max(0, 0.08 + boost * 0.01) : 0;
-    // ULTRA: машины 0.01%, номера 0.02% (буст чуть повышает, x10 чуть понижает)
     const cU = Math.max(0, (type === 'car' ? 0.01 : 0.02) * (1 + boost * 0.5));
     const cL = Math.max(0, 1.2 + bonus);
     const cE = Math.max(0, 5 + bonus);
     const cR = Math.max(0, 18 + bonus);
-
     let rar = 'common';
     if (roll < cU) rar = 'ultra';
     else if (roll < cU + cH) rar = 'hyper';
     else if (roll < cU + cH + cL) rar = 'legendary';
     else if (roll < cU + cH + cL + cE) rar = 'epic';
     else if (roll < cU + cH + cL + cE + cR) rar = 'rare';
-
     if (type === 'car') {
         state.pityCounter = (state.pityCounter || 0) + 1;
         if (rar === 'legendary' || rar === 'hyper' || rar === 'ultra') state.pityCounter = 0;
         else if (state.pityCounter >= 80) { rar = 'legendary'; state.pityCounter = 0; }
     }
-
     let filtered = pool.filter(i => i.rarity === rar);
     if (!filtered.length) filtered = pool.filter(i => i.rarity === 'legendary');
     if (!filtered.length) filtered = pool;
@@ -1960,22 +2113,16 @@ function spin(type, mode) {
 function finishSpin(type, mode) {
     const count = mode === 'x10' ? 10 : 1;
     let items = Array.from({ length: count }, () => makeItem(type, mode));
-
     if (mode === 'x10' && type === 'car') {
         const luck = 0.35 + Math.random() * 1.35;
-        items = items.map(it => ({
-            ...it,
-            price: Math.max(1000000, Math.round((it.price * luck) / 100000) * 100000)
-        }));
+        items = items.map(it => ({ ...it, price: Math.max(1000000, Math.round((it.price * luck) / 100000) * 100000) }));
         items.sort((a, b) => b.price - a.price);
     }
-
     state.pending[type] = items;
     state.spins += count;
     addDailyProgress('spins', count);
     if (type === 'car' && items.some(i => ['epic','legendary','hyper','ultra'].includes(i.rarity))) addDailyProgress('epicPlus', 1);
     if (items.some(i => i.type === 'car' && ['legendary','hyper','ultra'].includes(i.rarity))) state.gotLegendary = true;
-    // дорогой приз → красивое раскрытие, и только потом экран с кнопками «В гараж / Продать»
     const best = items.reduce((a, b) => (b.price > a.price ? b : a), items[0]);
     const finishUI = () => { busySpin = false; renderPending(type); updateUI(); };
     updateUI();
@@ -2112,6 +2259,7 @@ function spinWheel(el, target) {
     el._rot = rot; el.style.transform = `rotate(${rot}deg)`;
 }
 
+// ===== АПГРЕЙДЕР МАШИН =====
 let upgUid = null, upgBusy = false;
 function chooseUpgradeCar() { if (upgBusy) return; pickCar(u => { upgUid = u; updateUpgradeUI(); }); }
 function getUpgradePrize(car, chance) {
@@ -2140,7 +2288,6 @@ function updateUpgradeUI() {
     $('upg-wheel-text').textContent = c + '%';
     document.querySelectorAll('#chance-pills .chance-pill').forEach(p => p.classList.toggle('active', parseInt(p.textContent) === c));
 }
-
 function setChance(c) { if (upgBusy) return; state.upgradeChance = c; updateUpgradeUI(); saveGame(); }
 function doUpgrade() {
     if (upgBusy) return;
@@ -2176,6 +2323,69 @@ function doUpgrade() {
         }
         upgBusy = false; $('upg-go').classList.remove('disabled');
         updateUI(); updateUpgradeUI();
+    }, 3200);
+}
+
+// ===== АПГРЕЙДЕР НОМЕРОВ =====
+let upgnUid = null, upgnBusy = false;
+function chooseUpgradeNumber() { if (upgnBusy) return; pickNumber(u => { upgnUid = u; updateUpgradeNumUI(); }); }
+function getNumberUpgradePrize(number, chance) {
+    if (!number) return null;
+    const mult = chance === 10 ? 6 : chance === 25 ? 3 : chance === 50 ? 1.8 : 1.3;
+    const target = number.price * mult;
+    const cands = NUMBERS_DB.filter(c => c.price > number.price && (c.rarity !== 'ultra' || number.rarity === 'legendary' || number.rarity === 'ultra'));
+    if (!cands.length) return null;
+    cands.sort((a, b) => Math.abs(a.price - target) - Math.abs(b.price - target));
+    return cands[0];
+}
+function updateUpgradeNumUI() {
+    let num = state.garage.find(i => i.uid === upgnUid && i.type === 'number');
+    if (!num) upgnUid = null;
+    const prize = getNumberUpgradePrize(num, state.upgradeChanceN);
+    $('upgn-slot-cur').className = 'upg-slot' + (num ? ` filled r-${num.rarity}` : '');
+    $('upgn-slot-cur').innerHTML = num
+        ? `<div class="upg-cap">ТВОЙ</div>${plateHTML(num, false)}<div class="li-green" style="font-size:12px;">${fmt(num.price)} 💎</div>`
+        : `<div class="upg-plus">＋</div><div class="li-title" style="font-size:12px;">Выбрать номер</div><div class="li-sub">из гаража</div>`;
+    $('upgn-slot-prize').className = 'upg-slot' + (prize ? ` filled r-${prize.rarity}` : '');
+    $('upgn-slot-prize').innerHTML = prize
+        ? `<div class="upg-cap">ПРИЗ</div>${plateHTML(prize, false)}<div class="li-green" style="font-size:12px; color:#6fd3ff;">${fmt(prize.price)} 💎</div>`
+        : `<div class="upg-cap">ПРИЗ</div><div class="upg-plus" style="color: var(--muted);">?</div>${num ? '<div class="li-sub">Улучшать некуда</div>' : ''}`;
+    const c = state.upgradeChanceN;
+    $('upgn-wheel-bg').style.background = `conic-gradient(#1fae72 0 ${c}%, #d93353 ${c}% 100%)`;
+    $('upgn-wheel-text').textContent = c + '%';
+    document.querySelectorAll('#chance-pills-n .chance-pill').forEach(p => p.classList.toggle('active', parseInt(p.textContent) === c));
+}
+function setChanceN(c) { if (upgnBusy) return; state.upgradeChanceN = c; updateUpgradeNumUI(); saveGame(); }
+function doUpgradeNumber() {
+    if (upgnBusy) return;
+    const num = state.garage.find(i => i.uid === upgnUid && i.type === 'number');
+    if (!num) { toast('Выберите номер!'); return; }
+    const prize = getNumberUpgradePrize(num, state.upgradeChanceN);
+    if (!prize) { toast('Улучшать некуда'); return; }
+    upgnBusy = true; $('upgn-go').classList.add('disabled');
+    const chance = state.upgradeChanceN;
+    const win = Math.random() * 100 < chance;
+    const zone = chance * 3.6;
+    const target = win ? 4 + Math.random() * (zone - 8) : zone + 4 + Math.random() * (360 - zone - 8);
+    spinWheel($('upgn-arrow'), target);
+    setTimeout(() => {
+        const idx = state.garage.findIndex(i => i.uid === num.uid);
+        if (idx >= 0) state.garage.splice(idx, 1);
+        if (win) {
+            const got = { ...prize, type: 'number', uid: newUid() };
+            state.garage.push(got);
+            state.upgradeWins++;
+            upgnUid = got.uid;
+            if (SETTINGS.skipAnim) infoBox('🎉 ПОБЕДА!', `${plateHTML(got)}Номер <b>${got.name}</b><br>стоимостью ${fmt(got.price)} 💎`);
+            else playReveal(got, 'number', 1, () => {}, { always: true, title: '🎉 АПГРЕЙД УДАЛСЯ!', sub: `${num.name} ➜ ${got.name}<br><span style="color:var(--green);font-weight:800;">+${fmt(got.price - num.price)} 💎 к стоимости</span>`, btn: 'Отлично' });
+        } else {
+            const cashback = Math.round(num.price * UPGRADE_CASHBACK);
+            state.crystals += cashback;
+            upgnUid = null;
+            infoBox('🔥 ПРОИГРЫШ', `Номер <b>${num.name}</b> сгорел.<br><br>💸 Кэшбек 10%: <b style="color: #6fd3ff;">+${fmt(cashback)} 💎</b>`, 'Ладно');
+        }
+        upgnBusy = false; $('upgn-go').classList.remove('disabled');
+        updateUI(); updateUpgradeNumUI();
     }, 3200);
 }
 
@@ -2549,7 +2759,6 @@ setInterval(() => {
     if ($('tasks-timer')) $('tasks-timer').textContent = t;
 }, 1000);
 
-// ===== НАСТРОЙКИ =====
 const SETTINGS_KEY = 'numberday_settings_v1';
 const SETTINGS_DEFAULT = { skipAnim: false, fastAnim: false, sound: true, vibrate: true, calm: false };
 const SETTINGS_INFO = [
@@ -2573,7 +2782,6 @@ function renderSettings() {
         `<div class="set-row" onclick="toggleSetting('${k}')"><div><div class="set-t">${t}</div><div class="set-d">${d}</div></div><div class="sw ${SETTINGS[k] ? 'on' : ''}"></div></div>`).join('');
 }
 
-// ===== ЗВУКИ (синтез через WebAudio, файлов не нужно) =====
 let _ac = null;
 function sfxTone(f, t0, dur, vol, type) {
     const o = _ac.createOscillator(), g = _ac.createGain();
@@ -2589,7 +2797,7 @@ function sfx(kind, n) {
         const t = _ac.currentTime;
         if (kind === 'tick') sfxTone(n, t, 0.05, 0.05, 'square');
         else if (kind === 'stage') { sfxTone(440 * Math.pow(1.122, n * 2), t, 0.22, 0.12, 'triangle'); sfxTone(880 * Math.pow(1.122, n * 2), t + 0.05, 0.25, 0.06, 'sine'); }
-        else if (kind === 'win') {   // n = ступень 0..6: чем выше, тем длиннее и богаче аккорд
+        else if (kind === 'win') {
             const notes = [523, 659, 784, 1047, 1319, 1568, 2093].slice(0, 3 + Math.min(4, n));
             notes.forEach((f, i) => { sfxTone(f, t + i * 0.09, 0.9, 0.12, 'triangle'); sfxTone(f * 2, t + i * 0.09, 0.6, 0.04, 'sine'); });
             if (n >= 4) sfxTone(130, t, 1.2, 0.2, 'sawtooth');
@@ -2598,9 +2806,6 @@ function sfx(kind, n) {
     } catch (e) {}
 }
 
-// ===== РАСКРЫТИЕ ДОРОГИХ ПРИЗОВ =====
-// Цена растёт счётчиком, фон/плашка проходят ступени редкости, номер «собирается» по частям.
-// Показывается для призов от «rare» и выше. Тап по экрану — пропустить до финала.
 const RV_STAGES = [
     { n: 'Обычный',     c: '#9aa3b2' },
     { n: 'Необычный',   c: '#3ddc97' },
@@ -2610,8 +2815,8 @@ const RV_STAGES = [
     { n: 'Гиперкар',    c: '#ff3d6e' },
     { n: 'Ультра',      c: '#2de2ff' }
 ];
-const RV_FINAL = { common: 0, rare: 2, epic: 3, legendary: 4, hyper: 5, ultra: 6 };   // на какой ступени остановимся
-const RV_DUR   = [900, 1800, 2600, 3600, 4800, 6200, 8200];                         // длительность разгона, мс
+const RV_FINAL = { common: 0, rare: 2, epic: 3, legendary: 4, hyper: 5, ultra: 6 };
+const RV_DUR   = [900, 1800, 2600, 3600, 4800, 6200, 8200];
 
 function rvNumberDesc(n) {
     if (n.desc) return n.desc;
@@ -2686,7 +2891,7 @@ function playReveal(item, type, total, done, opts) {
             <div class="rv-tag"><div><div class="rv-rn"></div><div class="rv-dots">${RV_STAGES.map(() => '<i></i>').join('')}</div></div><div class="rv-price">0 ${unit}</div></div>
             <div class="rv-art">${isNum ? rvPlate(item) : carSVG(item)}</div>
             <div class="rv-desc">
-                <div class="rv-name">${isNum ? item.name : item.name}</div>
+                <div class="rv-name">${item.name}</div>
                 <div class="rv-sub">${opts.sub || (isNum ? rvNumberDesc(item) : RV_STAGES[fin].n)}</div>
                 ${total > 1 ? `<div class="rv-multi">Лучший приз из ${total}</div>` : ''}
             </div>
@@ -2695,7 +2900,6 @@ function playReveal(item, type, total, done, opts) {
         <button class="rv-skip">Пропустить ⏭</button>
         <div class="rv-hint">Нажми, чтобы пропустить</div>`;
     app.appendChild(ov);
-
     const tag = ov.querySelector('.rv-tag'), rn = ov.querySelector('.rv-rn'), price = ov.querySelector('.rv-price');
     const dots = [...ov.querySelectorAll('.rv-dots i')], art = ov.querySelector('.rv-art'), chars = [...ov.querySelectorAll('.rvc')];
     const fx = rvFx(ov.querySelector('.rv-fx'));
@@ -2703,9 +2907,7 @@ function playReveal(item, type, total, done, opts) {
     const center = () => { const a = art.getBoundingClientRect(), o = ov.getBoundingClientRect(); return [a.left - o.left + a.width / 2, a.top - o.top + a.height / 2]; };
     const palette = () => [RV_STAGES[fin].c, '#ffffff', '#ffe49a'];
     const retrigger = (cls, ms) => { if (SETTINGS.calm && (cls === 'flash' || cls === 'flash2' || cls === 'shake')) return; ov.classList.remove(cls); void ov.offsetWidth; ov.classList.add(cls); setTimeout(() => ov.classList.remove(cls), ms); };
-
     let stage = -1, finished = false, closed = false, raf = 0, last = 0, t0 = 0, rise = 0, doneAt = 0, lastTick = 0;
-
     function setStage(s) {
         if (s === stage) return;
         const up = stage >= 0; stage = s;
@@ -2719,7 +2921,6 @@ function playReveal(item, type, total, done, opts) {
             vib(12); sfx('stage', s);
         }
     }
-
     function finish() {
         if (finished) return; finished = true; doneAt = performance.now();
         price.textContent = fmt(item.price) + ' ' + unit;
@@ -2740,7 +2941,6 @@ function playReveal(item, type, total, done, opts) {
             retrigger('flash2', 1100); ov.style.setProperty('--sh', '10px'); retrigger('shake', 500); ov.classList.add('rays-fast'); vib([60, 40, 60, 40, 160]); }
         ov.classList.add('done'); sfx('win', fin);
     }
-
     function frame(now) {
         if (closed) return;
         const dt = Math.min(.05, (now - (last || now)) / 1000); last = now;
@@ -2758,7 +2958,6 @@ function playReveal(item, type, total, done, opts) {
         fx.step(dt);
         raf = requestAnimationFrame(frame);
     }
-
     function close() {
         if (closed) return; closed = true; cancelAnimationFrame(raf);
         ov.style.transition = 'opacity .25s'; ov.style.opacity = '0';
@@ -2773,7 +2972,6 @@ function playReveal(item, type, total, done, opts) {
     requestAnimationFrame(now => { t0 = now; frame(now); });
 }
 
-// ===== ЛОАДЕР =====
 const LOADER_PHRASES = [
     "Заводим двигатель...",
     "Полируем номера...",
@@ -2804,14 +3002,12 @@ function tickLoader() {
     }
 }
 
-// ===== СТАРТ =====
 ensureRegistrySeed();
 resetDailyIfNeeded();
 checkDailyStreak();
 renderStreak();
 updateUI();
 
-// слушатели для живого превью получателя перевода
 (function bindTransferInputs() {
     const idEl = $('transfer-id');
     if (idEl) idEl.addEventListener('input', () => { idEl.value = idEl.value.toUpperCase().replace(/[^A-Z0-9-]/g, ''); renderTransfers(); });
@@ -2822,4 +3018,4 @@ updateUI();
 setTimeout(tickLoader, 200);
 </script>
 </body>
-                                         </html>
+</html
