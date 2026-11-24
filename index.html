@@ -154,6 +154,14 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .chance-pill.active { background: rgba(246,200,98,.15); border-color: var(--gold); color: var(--gold); }
 /* ===== /НОВОЕ ===== */
 
+/* ===== НОВОЕ: стили для общего слота приза (grid-column) ===== */
+.upg-grid .upg-slot[style*="grid-column"] .car-svg { max-width: 160px; }
+.upg-grid .upg-slot[style*="grid-column"] .plate { max-width: 180px; height: 56px; }
+.upg-grid .upg-slot[style*="grid-column"] .plate .plate-main { font-size: 22px; }
+.upg-grid .upg-slot[style*="grid-column"] .plate .plate-reg { width: 40px; }
+.upg-grid .upg-slot[style*="grid-column"] .plate .plate-reg b { font-size: 15px; }
+/* ===== /НОВОЕ ===== */
+
 .wheel-wrapper { position: relative; width: 240px; height: 240px; margin: 8px auto; flex-shrink: 0; }
 .wheel-bg { width: 100%; height: 100%; border-radius: 50%; border: 5px solid #2a2438; box-shadow: 0 0 30px rgba(246,200,98,.2); }
 .wheel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 96px; height: 96px; background: radial-gradient(circle at 30% 25%, #3a3350, #14111f); border: 3px solid var(--gold-2); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: 900; z-index: 2; }
@@ -1656,15 +1664,17 @@ function addUpgCar(u) {
 }
 function removeUpgCar(u) { if (upgBusy) return; upgUids = upgUids.filter(x => x !== u); updateUpgradeUI(); }
 
-function getUpgradePrize(car, chance) {
-    if (!car) return null;
+// ===== НОВАЯ ЛОГИКА ПРИЗА ПО СУММЕ (машины) =====
+function getUpgradePrizeByPrice(totalPrice, chance, excludeRarity) {
     const mult = chance === 10 ? 6 : chance === 25 ? 3 : chance === 50 ? 1.8 : 1.3;
-    const target = car.price * mult;
-    const cands = CARS_DB.filter(c => c.price > car.price && (c.rarity !== 'ultra' || car.rarity === 'hyper' || car.rarity === 'ultra'));
+    const target = totalPrice * mult;
+    const cands = CARS_DB.filter(c => c.price > totalPrice && (c.rarity !== 'ultra' || excludeRarity === 'hyper' || excludeRarity === 'ultra'));
     if (!cands.length) return null;
     cands.sort((a, b) => Math.abs(a.price - target) - Math.abs(b.price - target));
     return cands[0];
 }
+
+
 function updateUpgradeUI() {
     upgUids = upgUids.filter(u => state.garage.find(i => i.uid === u && i.type === 'car'));
     const gridCur = $('upg-grid-cur');
@@ -1677,22 +1687,40 @@ function updateUpgradeUI() {
         }
         gridCur.innerHTML = h;
     }
+
+    // ПРИЗ — один, от суммы
+    const totalPrice = upgUids.reduce((s, u) => {
+        const c = state.garage.find(x => x.uid === u);
+        return s + (c ? c.price : 0);
+    }, 0);
+    const topRar = (() => {
+        const arr = upgUids.map(u => state.garage.find(x => x.uid === u)).filter(Boolean);
+        if (!arr.length) return 'common';
+        return arr.sort((a, b) => b.price - a.price)[0].rarity;
+    })();
+    const prize = totalPrice > 0 ? getUpgradePrizeByPrice(totalPrice, state.upgradeChance, topRar) : null;
+
     const gridP = $('upg-grid-prize');
     if (gridP) {
-        let hp = '';
-        for (let i = 0; i < MAX_UPG; i++) {
-            const u = upgUids[i], car = u ? state.garage.find(x => x.uid === u) : null;
-            const prize = car ? getUpgradePrize(car, state.upgradeChance) : null;
-            if (prize) hp += `<div class="upg-slot filled r-${prize.rarity}">${carSVG(prize)}<div class="li-green" style="font-size:10px;">${fmt(prize.price)} ₽</div></div>`;
-            else hp += `<div class="upg-slot"><div class="upg-plus" style="color:var(--muted);">?</div></div>`;
+        if (prize) {
+            gridP.innerHTML = `<div class="upg-slot filled r-${prize.rarity}" style="grid-column: 1 / -1; min-height: 160px;">
+                ${carSVG(prize)}
+                <div class="li-title" style="font-size:11px;">${prize.name}</div>
+                <div class="li-green" style="font-size:12px;">${fmt(prize.price)} ₽</div>
+            </div>`;
+        } else {
+            gridP.innerHTML = `<div class="upg-slot" style="grid-column: 1 / -1; min-height: 160px;"><div class="upg-cap">ПРИЗ</div><div class="upg-plus" style="color:var(--muted);">?</div>${upgUids.length ? '<div class="li-sub">Улучшать некуда</div>' : '<div class="li-sub">Выбери машины</div>'}</div>`;
         }
-        gridP.innerHTML = hp;
     }
+
     const c = state.upgradeChance;
     const wb = $('upg-wheel-bg'); if (wb) wb.style.background = `conic-gradient(#1fae72 0 ${c}%, #d93353 ${c}% 100%)`;
     const wt = $('upg-wheel-text'); if (wt) wt.textContent = c + '%';
     document.querySelectorAll('#chance-pills .chance-pill').forEach(p => p.classList.toggle('active', parseInt(p.textContent) === c));
-    const go = $('upg-go'); if (go) go.classList.toggle('disabled', !upgUids.length);
+    const go = $('upg-go'); if (go) go.classList.toggle('disabled', !upgUids.length || !prize);
+    // подпись на кнопке — сумма
+    if (go && upgUids.length) go.innerHTML = `АПГРЕЙД НА ${fmt(totalPrice)} ₽`;
+    else if (go) go.innerHTML = 'АПГРЕЙД МАШИН';
 }
 function setChance(c) { if (upgBusy) return; state.upgradeChance = c; updateUpgradeUI(); saveGame(); }
 
@@ -1700,45 +1728,39 @@ function doUpgrade() {
     if (upgBusy) return;
     const cars = upgUids.map(u => state.garage.find(i => i.uid === u && i.type === 'car')).filter(Boolean);
     if (!cars.length) { toast('Выберите машины!'); return; }
+    const totalPrice = cars.reduce((s, c) => s + c.price, 0);
+    const topRar = cars.sort((a, b) => b.price - a.price)[0].rarity;
+    const prize = getUpgradePrizeByPrice(totalPrice, state.upgradeChance, topRar);
+    if (!prize) { toast('Улучшать некуда'); return; }
+
     const chance = state.upgradeChance;
     upgBusy = true; const go = $('upg-go'); if (go) go.classList.add('disabled');
     const zone = chance * 3.6;
-    const anyWin = Math.random() * 100 < chance;
-    const target = anyWin ? 4 + Math.random() * (zone - 8) : zone + 4 + Math.random() * (360 - zone - 8);
+    const win = Math.random() * 100 < chance;
+    const target = win ? 4 + Math.random() * (zone - 8) : zone + 4 + Math.random() * (360 - zone - 8);
     spinWheel($('upg-arrow'), target);
+
     setTimeout(() => {
-        const wins = [], losses = [];
+        // удаляем все выбранные машины
         cars.forEach(car => {
-            const prize = getUpgradePrize(car, chance);
-            if (!prize) return;
-            const win = Math.random() * 100 < chance;
             const idx = state.garage.findIndex(i => i.uid === car.uid);
             if (idx >= 0) state.garage.splice(idx, 1);
             if (state.battleCar === car.uid) state.battleCar = null;
-            if (win) {
-                const got = { ...prize, type: 'car', uid: newUid() };
-                state.garage.push(got); state.upgradeWins++;
-                if (['legendary','hyper','ultra'].includes(got.rarity)) state.gotLegendary = true;
-                wins.push({ from: car, to: got });
-            } else {
-                const cashback = Math.round(car.price * UPGRADE_CASHBACK);
-                earnMoney(cashback); losses.push({ car, cashback });
-            }
         });
-        upgUids = []; upgBusy = false; if (go) go.classList.remove('disabled');
-        if (wins.length && losses.length) {
-            const wHtml = wins.map(w => `<div style="margin:6px 0;">${carSVG(w.to)}<div style="font-size:11px;">${w.from.name} → <b>${w.to.name}</b></div></div>`).join('');
-            const lHtml = losses.map(l => `<div style="font-size:11px; color:var(--red); margin:3px 0;">💸 ${l.car.name} — кэшбек ${fmt(l.cashback)} ₽</div>`).join('');
-            infoBox(`🎉 ${wins.length} / ${wins.length + losses.length} успешно`, `${wHtml}<br>${lHtml}`);
-        } else if (wins.length) {
-            const best = wins.reduce((a, b) => b.to.price > a.to.price ? b : a);
-            if (SETTINGS.skipAnim) infoBox('🎉 ВСЕ АПГРЕЙДЫ УДАЛИСЬ!', `${carSVG(best.to)}<b>${best.to.name}</b> за ${fmt(best.to.price)} ₽<br><br>Выиграно: ${wins.length}`);
-            else playReveal(best.to, 'car', 1, () => {
-                if (wins.length > 1) infoBox('🎉 Все успешно', wins.map(w => `${w.from.name} → <b>${w.to.name}</b>`).join('<br>'));
-            }, { always: true, title: `🎉 АПГРЕЙД УДАЛСЯ! (${wins.length})`, sub: wins.map(w => `${w.from.name} ➜ ${w.to.name}`).join('<br>'), btn: 'Отлично' });
+
+        if (win) {
+            const got = { ...prize, type: 'car', uid: newUid() };
+            state.garage.push(got);
+            state.upgradeWins++;
+            if (['legendary','hyper','ultra'].includes(got.rarity)) state.gotLegendary = true;
+            upgUids = []; upgBusy = false; if (go) go.classList.remove('disabled');
+            if (SETTINGS.skipAnim) infoBox('🎉 ПОБЕДА!', `${carSVG(got)}Вы получили <b>${got.name}</b><br>за ${fmt(got.price)} ₽<br><br><span style="color:var(--muted);font-size:12px;">Поставлено: ${cars.length} машин на ${fmt(totalPrice)} ₽</span>`);
+            else playReveal(got, 'car', 1, () => {}, { always: true, title: '🎉 АПГРЕЙД УДАЛСЯ!', sub: `${cars.length} машин (${fmt(totalPrice)} ₽) ➜ ${got.name}<br><span style="color:var(--green);font-weight:800;">+${fmt(got.price - totalPrice)} ₽ к стоимости</span>`, btn: 'Отлично' });
         } else {
-            const totalCb = losses.reduce((s, l) => s + l.cashback, 0);
-            infoBox('🔥 ПРОИГРЫШ', `Сгорело машин: <b>${losses.length}</b><br><br>💸 Кэшбек 10%: <b style="color:var(--green);">+${fmt(totalCb)} ₽</b>`, 'Ладно');
+            const cashback = Math.round(totalPrice * UPGRADE_CASHBACK);
+            earnMoney(cashback);
+            upgUids = []; upgBusy = false; if (go) go.classList.remove('disabled');
+            infoBox('🔥 ПРОИГРЫШ', `Сгорело машин: <b>${cars.length}</b><br>На сумму <b>${fmt(totalPrice)} ₽</b><br><br>💸 Кэшбек 10%: <b style="color: var(--green);">+${fmt(cashback)} ₽</b>`, 'Ладно');
         }
         updateUI(); updateUpgradeUI();
     }, 3200);
@@ -1762,15 +1784,16 @@ function addUpgNum(u) {
 }
 function removeUpgNum(u) { if (upgnBusy) return; upgnUids = upgnUids.filter(x => x !== u); updateUpgradeNumUI(); }
 
-function getNumberUpgradePrize(number, chance) {
-    if (!number) return null;
+// ===== НОВАЯ ЛОГИКА ПРИЗА ПО СУММЕ (номера) =====
+function getNumberUpgradePrizeByPrice(totalPrice, chance, excludeRarity) {
     const mult = chance === 10 ? 6 : chance === 25 ? 3 : chance === 50 ? 1.8 : 1.3;
-    const target = number.price * mult;
-    const cands = NUMBERS_DB.filter(c => c.price > number.price && (c.rarity !== 'ultra' || number.rarity === 'legendary' || number.rarity === 'ultra'));
+    const target = totalPrice * mult;
+    const cands = NUMBERS_DB.filter(c => c.price > totalPrice && (c.rarity !== 'ultra' || excludeRarity === 'legendary' || excludeRarity === 'ultra'));
     if (!cands.length) return null;
     cands.sort((a, b) => Math.abs(a.price - target) - Math.abs(b.price - target));
     return cands[0];
 }
+
 function updateUpgradeNumUI() {
     upgnUids = upgnUids.filter(u => state.garage.find(i => i.uid === u && i.type === 'number'));
     const gridCur = $('upgn-grid-cur');
@@ -1783,22 +1806,38 @@ function updateUpgradeNumUI() {
         }
         gridCur.innerHTML = h;
     }
+
+    const totalPrice = upgnUids.reduce((s, u) => {
+        const c = state.garage.find(x => x.uid === u);
+        return s + (c ? c.price : 0);
+    }, 0);
+    const topRar = (() => {
+        const arr = upgnUids.map(u => state.garage.find(x => x.uid === u)).filter(Boolean);
+        if (!arr.length) return 'common';
+        return arr.sort((a, b) => b.price - a.price)[0].rarity;
+    })();
+    const prize = totalPrice > 0 ? getNumberUpgradePrizeByPrice(totalPrice, state.upgradeChanceN, topRar) : null;
+
     const gridP = $('upgn-grid-prize');
     if (gridP) {
-        let hp = '';
-        for (let i = 0; i < MAX_UPG; i++) {
-            const u = upgnUids[i], num = u ? state.garage.find(x => x.uid === u) : null;
-            const prize = num ? getNumberUpgradePrize(num, state.upgradeChanceN) : null;
-            if (prize) hp += `<div class="upg-slot filled r-${prize.rarity}">${plateHTML(prize, true)}<div class="li-green" style="font-size:10px; color:#6fd3ff;">${fmt(prize.price)} 💎</div></div>`;
-            else hp += `<div class="upg-slot"><div class="upg-plus" style="color:var(--muted);">?</div></div>`;
+        if (prize) {
+            gridP.innerHTML = `<div class="upg-slot filled r-${prize.rarity}" style="grid-column: 1 / -1; min-height: 160px;">
+                ${plateHTML(prize, false)}
+                <div class="li-title" style="font-size:11px;">${prize.name}</div>
+                <div class="li-green" style="font-size:12px; color:#6fd3ff;">${fmt(prize.price)} 💎</div>
+            </div>`;
+        } else {
+            gridP.innerHTML = `<div class="upg-slot" style="grid-column: 1 / -1; min-height: 160px;"><div class="upg-cap">ПРИЗ</div><div class="upg-plus" style="color:var(--muted);">?</div>${upgnUids.length ? '<div class="li-sub">Улучшать некуда</div>' : '<div class="li-sub">Выбери номера</div>'}</div>`;
         }
-        gridP.innerHTML = hp;
     }
+
     const c = state.upgradeChanceN;
     const wb = $('upgn-wheel-bg'); if (wb) wb.style.background = `conic-gradient(#1fae72 0 ${c}%, #d93353 ${c}% 100%)`;
     const wt = $('upgn-wheel-text'); if (wt) wt.textContent = c + '%';
     document.querySelectorAll('#chance-pills-n .chance-pill').forEach(p => p.classList.toggle('active', parseInt(p.textContent) === c));
-    const go = $('upgn-go'); if (go) go.classList.toggle('disabled', !upgnUids.length);
+    const go = $('upgn-go'); if (go) go.classList.toggle('disabled', !upgnUids.length || !prize);
+    if (go && upgnUids.length) go.innerHTML = `АПГРЕЙД НА ${fmt(totalPrice)} 💎`;
+    else if (go) go.innerHTML = 'АПГРЕЙД НОМЕРОВ';
 }
 function setChanceN(c) { if (upgnBusy) return; state.upgradeChanceN = c; updateUpgradeNumUI(); saveGame(); }
 
@@ -1806,43 +1845,36 @@ function doUpgradeNumber() {
     if (upgnBusy) return;
     const nums = upgnUids.map(u => state.garage.find(i => i.uid === u && i.type === 'number')).filter(Boolean);
     if (!nums.length) { toast('Выберите номера!'); return; }
+    const totalPrice = nums.reduce((s, c) => s + c.price, 0);
+    const topRar = nums.sort((a, b) => b.price - a.price)[0].rarity;
+    const prize = getNumberUpgradePrizeByPrice(totalPrice, state.upgradeChanceN, topRar);
+    if (!prize) { toast('Улучшать некуда'); return; }
+
     const chance = state.upgradeChanceN;
     upgnBusy = true; const go = $('upgn-go'); if (go) go.classList.add('disabled');
     const zone = chance * 3.6;
-    const anyWin = Math.random() * 100 < chance;
-    const target = anyWin ? 4 + Math.random() * (zone - 8) : zone + 4 + Math.random() * (360 - zone - 8);
+    const win = Math.random() * 100 < chance;
+    const target = win ? 4 + Math.random() * (zone - 8) : zone + 4 + Math.random() * (360 - zone - 8);
     spinWheel($('upgn-arrow'), target);
+
     setTimeout(() => {
-        const wins = [], losses = [];
         nums.forEach(num => {
-            const prize = getNumberUpgradePrize(num, chance);
-            if (!prize) return;
-            const win = Math.random() * 100 < chance;
             const idx = state.garage.findIndex(i => i.uid === num.uid);
             if (idx >= 0) state.garage.splice(idx, 1);
-            if (win) {
-                const got = { ...prize, type: 'number', uid: newUid() };
-                state.garage.push(got); state.upgradeWins++;
-                wins.push({ from: num, to: got });
-            } else {
-                const cashback = Math.round(num.price * UPGRADE_CASHBACK);
-                state.crystals += cashback; losses.push({ num, cashback });
-            }
         });
-        upgnUids = []; upgnBusy = false; if (go) go.classList.remove('disabled');
-        if (wins.length && losses.length) {
-            const wHtml = wins.map(w => `<div style="margin:6px 0;">${plateHTML(w.to, true)}<div style="font-size:11px;">${w.from.name} → <b>${w.to.name}</b></div></div>`).join('');
-            const lHtml = losses.map(l => `<div style="font-size:11px; color:var(--red); margin:3px 0;">💸 ${l.num.name} — кэшбек ${fmt(l.cashback)} 💎</div>`).join('');
-            infoBox(`🎉 ${wins.length} / ${wins.length + losses.length} успешно`, `${wHtml}<br>${lHtml}`);
-        } else if (wins.length) {
-            const best = wins.reduce((a, b) => b.to.price > a.to.price ? b : a);
-            if (SETTINGS.skipAnim) infoBox('🎉 ВСЕ АПГРЕЙДЫ УДАЛИСЬ!', `${plateHTML(best.to)}<b>${best.to.name}</b> за ${fmt(best.to.price)} 💎<br><br>Выиграно: ${wins.length}`);
-            else playReveal(best.to, 'number', 1, () => {
-                if (wins.length > 1) infoBox('🎉 Все успешно', wins.map(w => `${w.from.name} → <b>${w.to.name}</b>`).join('<br>'));
-            }, { always: true, title: `🎉 АПГРЕЙД УДАЛСЯ! (${wins.length})`, sub: wins.map(w => `${w.from.name} ➜ ${w.to.name}`).join('<br>'), btn: 'Отлично' });
+
+        if (win) {
+            const got = { ...prize, type: 'number', uid: newUid() };
+            state.garage.push(got);
+            state.upgradeWins++;
+            upgnUids = []; upgnBusy = false; if (go) go.classList.remove('disabled');
+            if (SETTINGS.skipAnim) infoBox('🎉 ПОБЕДА!', `${plateHTML(got)}Номер <b>${got.name}</b><br>стоимостью ${fmt(got.price)} 💎<br><br><span style="color:var(--muted);font-size:12px;">Поставлено: ${nums.length} номеров на ${fmt(totalPrice)} 💎</span>`);
+            else playReveal(got, 'number', 1, () => {}, { always: true, title: '🎉 АПГРЕЙД УДАЛСЯ!', sub: `${nums.length} номеров (${fmt(totalPrice)} 💎) ➜ ${got.name}<br><span style="color:var(--green);font-weight:800;">+${fmt(got.price - totalPrice)} 💎 к стоимости</span>`, btn: 'Отлично' });
         } else {
-            const totalCb = losses.reduce((s, l) => s + l.cashback, 0);
-            infoBox('🔥 ПРОИГРЫШ', `Сгорело номеров: <b>${losses.length}</b><br><br>💸 Кэшбек 10%: <b style="color:#6fd3ff;">+${fmt(totalCb)} 💎</b>`, 'Ладно');
+            const cashback = Math.round(totalPrice * UPGRADE_CASHBACK);
+            state.crystals += cashback;
+            upgnUids = []; upgnBusy = false; if (go) go.classList.remove('disabled');
+            infoBox('🔥 ПРОИГРЫШ', `Сгорело номеров: <b>${nums.length}</b><br>На сумму <b>${fmt(totalPrice)} 💎</b><br><br>💸 Кэшбек 10%: <b style="color:#6fd3ff;">+${fmt(cashback)} 💎</b>`, 'Ладно');
         }
         updateUI(); updateUpgradeNumUI();
     }, 3200);
@@ -1997,6 +2029,7 @@ function upgradeTuning() {
 }
 const BID_STEP = 5000000;
 let auction = { car: null, bid: 0, leader: null, hold: 0, timer: 20, iv: null };
+
 function startAuction() {
     stopAuction();
     const pool = CARS_DB.filter(c => c.rarity === 'legendary');
@@ -2342,4 +2375,4 @@ setTimeout(tickLoader, 200);
 applyCustomIcons();
 </script>
 </body>
-    </html>
+                                                                                                                                           </html>
