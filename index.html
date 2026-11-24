@@ -87,7 +87,7 @@ button { cursor: pointer; border: none; color: inherit; }
     color: #1a1204; background: linear-gradient(135deg, #ffe49a, var(--gold), var(--gold-2));
     box-shadow: 0 6px 20px rgba(246,200,98,.3);
 }
-.progress-bar { width: 100%; height: 6px; background: var(--card-2); border-radius: 3px; margin-bottom: 20px; overflow: hidden; }
+.progress-bar { width: 100%; height: 6px; background: var(--card-2); border-radius: 3px; margin-bottom: 20px; overflow: hidden; flex-shrink: 0; }
 .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold-2), var(--gold)); width: 30%; border-radius: 3px; transition: width .4s; }
 
 .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
@@ -110,11 +110,13 @@ button { cursor: pointer; border: none; color: inherit; }
 .menu-desc { font-size: 11px; color: var(--muted); font-weight: 600; }
 .menu-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 18px; display: block; }
 
+/* Экраны — поверх главного меню, ровно на всю область .content */
 .screen {
     position: absolute; inset: 0; z-index: 90;
     background: var(--app-bg);
     display: none; flex-direction: column;
     overflow-y: auto; overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
 }
 .screen.active { display: flex; animation: slideIn .22s ease; }
 @keyframes slideIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
@@ -129,7 +131,7 @@ button { cursor: pointer; border: none; color: inherit; }
     font-size: 22px; font-weight: 700; display: flex; align-items: center; justify-content: center; padding-bottom: 3px;
 }
 .screen-title { font-size: 16px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; flex: 1; }
-.pad { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+.pad { padding: 16px; display: flex; flex-direction: column; gap: 14px; flex-shrink: 0; }
 
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 16px; }
 .btn {
@@ -258,7 +260,7 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .chance-pill { flex: 1; padding: 12px 0; border-radius: 14px; text-align: center; font-weight: 900; background: var(--card); border: 1px solid var(--line); }
 .chance-pill.active { background: rgba(246,200,98,.15); border-color: var(--gold); color: var(--gold); }
 
-.wheel-wrapper { position: relative; width: 240px; height: 240px; margin: 8px auto; }
+.wheel-wrapper { position: relative; width: 240px; height: 240px; margin: 8px auto; flex-shrink: 0; }
 .wheel-bg { width: 100%; height: 100%; border-radius: 50%; border: 5px solid #2a2438; box-shadow: 0 0 30px rgba(246,200,98,.2); }
 .wheel-center {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 96px; height: 96px;
@@ -271,7 +273,7 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .bank-card {
     height: 190px; border-radius: 22px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between;
     background: linear-gradient(135deg, #fff0b8, var(--gold) 45%, var(--gold-2)); color: #2a1d02;
-    box-shadow: 0 18px 40px rgba(246,200,98,.28);
+    box-shadow: 0 18px 40px rgba(246,200,98,.28); flex-shrink: 0;
 }
 .card-chip { width: 44px; height: 34px; background: linear-gradient(135deg, #e9e2cd, #b5ab8d); border-radius: 7px; }
 .card-number { font-size: 21px; letter-spacing: 3px; font-weight: 900; }
@@ -586,29 +588,30 @@ span.rvc { display: inline-block; }
                 <span id="streak-bonus" style="color: var(--green);">+2%</span>
             </div>
 
- <div class="grid-menu">
-    <div class="menu-item" onclick="openScreen('screen-autosalon')"><div class="menu-icon"><img src="icons/autosalon.png" alt="" onerror="this.replaceWith('🚗')"></div><div class="menu-title">Автосалон</div><div class="menu-desc">Крутить тачки</div></div>
-    <div class="menu-item" onclick="openScreen('screen-gosznaki')"><div class="menu-icon"><img src="icons/gosznaki.png" alt="" onerror="this.replaceWith('🔢')"></div><div class="menu-title">Госзнаки</div><div class="menu-desc">Крутить номера</div></div>
-    <div class="menu-item" onclick="openScreen('screen-garage')"><div class="menu-icon"><img src="icons/garage.png" alt="" onerror="this.replaceWith('🏎️')"></div><div class="menu-title">Гараж</div><div class="menu-desc" id="ui-garage-count">0 | 0</div></div>
-    <div class="menu-item" onclick="openScreen('screen-battle')"><div class="menu-icon"><img src="icons/battle.png" alt="" onerror="this.replaceWith('⚔️')"></div><div class="menu-title">Батл 1x1</div><div class="menu-desc" id="ui-battle-desc">MMR: 0 • Бронза</div></div>
-    <div class="menu-item" onclick="openScreen('screen-upgrade')"><div class="menu-icon"><img src="icons/upgrade.png" alt="" onerror="this.replaceWith('⬆️')"></div><div class="menu-title">Апгрейдер</div><div class="menu-desc">Улучшить машины</div></div>
-    <div class="menu-item" onclick="openScreen('screen-upgrade-num')"><div class="menu-icon"><img src="icons/upgrade-num.png" alt="" onerror="this.replaceWith('🔠')"></div><div class="menu-title">Апгрейдер номеров</div><div class="menu-desc">Улучшить номера</div></div>
-    <div class="menu-item" onclick="openScreen('screen-business')"><div class="menu-icon"><img src="icons/business.png" alt="" onerror="this.replaceWith('🏭')"></div><div class="menu-title">Бизнесы</div><div class="menu-desc" id="ui-biz-desc">Пассивный доход</div></div>
-    <div class="menu-item" onclick="openScreen('screen-achievements')"><div class="menu-icon"><img src="icons/achievements.png" alt="" onerror="this.replaceWith('🏆')"></div><div class="menu-title">Достижения</div><div class="menu-desc" id="ui-ach-count">0/8</div></div>
-    <div class="menu-item" onclick="openScreen('screen-contracts')"><div class="menu-icon"><img src="icons/contracts.png" alt="" onerror="this.replaceWith('📝')"></div><div class="menu-title">Контракты</div><div class="menu-desc">Аренда тачек</div></div>
-    <div class="menu-item" onclick="openScreen('screen-fortune')"><div class="menu-icon"><img src="icons/fortune.png" alt="" onerror="this.replaceWith('🎡')"></div><div class="menu-title">Фортуна</div><div class="menu-desc">Рулетка</div></div>
-    <div class="menu-item" onclick="openScreen('screen-shop')"><div class="menu-icon"><img src="icons/shop.png" alt="" onerror="this.replaceWith('🛒')"></div><div class="menu-title">Магазин дня</div><div class="menu-desc">Скидки</div></div>
-    <div class="menu-item" onclick="openScreen('screen-top')"><div class="menu-icon"><img src="icons/top.png" alt="" onerror="this.replaceWith('📊')"></div><div class="menu-title">Топ</div><div class="menu-desc">Рейтинг</div></div>
-    <div class="menu-item" onclick="openScreen('screen-tasks')"><div class="menu-icon"><img src="icons/tasks.png" alt="" onerror="this.replaceWith('📋')"></div><div class="menu-title">Задания</div><div class="menu-desc" id="ui-tasks-count">0/3</div></div>
-    <div class="menu-item" onclick="openScreen('screen-tuning')"><div class="menu-icon"><img src="icons/tuning.png" alt="" onerror="this.replaceWith('🛠️')"></div><div class="menu-title">Тюнинг</div><div class="menu-desc">Удача</div></div>
-    <div class="menu-item" onclick="openScreen('screen-auction')"><div class="menu-icon"><img src="icons/auction.png" alt="" onerror="this.replaceWith('💎')"></div><div class="menu-title">Аукцион</div><div class="menu-desc">Ставки</div></div>
-    <div class="menu-item" onclick="openScreen('screen-bank')"><div class="menu-icon"><img src="icons/bank.png" alt="" onerror="this.replaceWith('💳')"></div><div class="menu-title">Банк</div><div class="menu-desc">Кредит, крипта</div></div>
-    <div class="menu-item" onclick="openScreen('screen-crystals')"><div class="menu-icon"><img src="icons/crystals.png" alt="" onerror="this.replaceWith('💠')"></div><div class="menu-title">Кристаллы</div><div class="menu-desc">Мини-игры</div></div>
-    <div class="menu-item" onclick="openScreen('screen-profile')"><div class="menu-icon"><img src="icons/profile.png" alt="" onerror="this.replaceWith('👑')"></div><div class="menu-title">Профиль</div><div class="menu-desc">Статистика</div></div>
-    <div class="menu-item" onclick="openScreen('screen-catalog')"><div class="menu-icon"><img src="icons/catalog.png" alt="" onerror="this.replaceWith('📚')"></div><div class="menu-title">Каталог</div><div class="menu-desc">Машины и номера</div></div>
-    <div class="menu-item" onclick="openScreen('screen-settings')"><div class="menu-icon"><img src="icons/settings.png" alt="" onerror="this.replaceWith('⚙️')"></div><div class="menu-title">Настройки</div><div class="menu-desc">Анимации, звук</div></div>
-    <div class="menu-item" onclick="openScreen('screen-rules')"><div class="menu-icon"><img src="icons/rules.png" alt="" onerror="this.replaceWith('📖')"></div><div class="menu-title">Правила</div><div class="menu-desc">Как играть</div></div>
-</div>
+            <div class="grid-menu">
+                <div class="menu-item" onclick="openScreen('screen-autosalon')"><div class="menu-icon"><img src="icons/autosalon.png" alt="" onerror="this.replaceWith('🚗')"></div><div class="menu-title">Автосалон</div><div class="menu-desc">Крутить тачки</div></div>
+                <div class="menu-item" onclick="openScreen('screen-gosznaki')"><div class="menu-icon"><img src="icons/gosznaki.png" alt="" onerror="this.replaceWith('🔢')"></div><div class="menu-title">Госзнаки</div><div class="menu-desc">Крутить номера</div></div>
+                <div class="menu-item" onclick="openScreen('screen-garage')"><div class="menu-icon"><img src="icons/garage.png" alt="" onerror="this.replaceWith('🏎️')"></div><div class="menu-title">Гараж</div><div class="menu-desc" id="ui-garage-count">0 | 0</div></div>
+                <div class="menu-item" onclick="openScreen('screen-battle')"><div class="menu-icon"><img src="icons/battle.png" alt="" onerror="this.replaceWith('⚔️')"></div><div class="menu-title">Батл 1x1</div><div class="menu-desc" id="ui-battle-desc">MMR: 0 • Бронза</div></div>
+                <div class="menu-item" onclick="openScreen('screen-upgrade')"><div class="menu-icon"><img src="icons/upgrade.png" alt="" onerror="this.replaceWith('⬆️')"></div><div class="menu-title">Апгрейдер</div><div class="menu-desc">Улучшить машины</div></div>
+                <div class="menu-item" onclick="openScreen('screen-upgrade-num')"><div class="menu-icon"><img src="icons/upgrade-num.png" alt="" onerror="this.replaceWith('🔠')"></div><div class="menu-title">Апгрейдер номеров</div><div class="menu-desc">Улучшить номера</div></div>
+                <div class="menu-item" onclick="openScreen('screen-business')"><div class="menu-icon"><img src="icons/business.png" alt="" onerror="this.replaceWith('🏭')"></div><div class="menu-title">Бизнесы</div><div class="menu-desc" id="ui-biz-desc">Пассивный доход</div></div>
+                <div class="menu-item" onclick="openScreen('screen-achievements')"><div class="menu-icon"><img src="icons/achievements.png" alt="" onerror="this.replaceWith('🏆')"></div><div class="menu-title">Достижения</div><div class="menu-desc" id="ui-ach-count">0/8</div></div>
+                <div class="menu-item" onclick="openScreen('screen-contracts')"><div class="menu-icon"><img src="icons/contracts.png" alt="" onerror="this.replaceWith('📝')"></div><div class="menu-title">Контракты</div><div class="menu-desc">Аренда тачек</div></div>
+                <div class="menu-item" onclick="openScreen('screen-fortune')"><div class="menu-icon"><img src="icons/fortune.png" alt="" onerror="this.replaceWith('🎡')"></div><div class="menu-title">Фортуна</div><div class="menu-desc">Рулетка</div></div>
+                <div class="menu-item" onclick="openScreen('screen-shop')"><div class="menu-icon"><img src="icons/shop.png" alt="" onerror="this.replaceWith('🛒')"></div><div class="menu-title">Магазин дня</div><div class="menu-desc">Скидки</div></div>
+                <div class="menu-item" onclick="openScreen('screen-top')"><div class="menu-icon"><img src="icons/top.png" alt="" onerror="this.replaceWith('📊')"></div><div class="menu-title">Топ</div><div class="menu-desc">Рейтинг</div></div>
+                <div class="menu-item" onclick="openScreen('screen-tasks')"><div class="menu-icon"><img src="icons/tasks.png" alt="" onerror="this.replaceWith('📋')"></div><div class="menu-title">Задания</div><div class="menu-desc" id="ui-tasks-count">0/3</div></div>
+                <div class="menu-item" onclick="openScreen('screen-tuning')"><div class="menu-icon"><img src="icons/tuning.png" alt="" onerror="this.replaceWith('🛠️')"></div><div class="menu-title">Тюнинг</div><div class="menu-desc">Удача</div></div>
+                <div class="menu-item" onclick="openScreen('screen-auction')"><div class="menu-icon"><img src="icons/auction.png" alt="" onerror="this.replaceWith('💎')"></div><div class="menu-title">Аукцион</div><div class="menu-desc">Ставки</div></div>
+                <div class="menu-item" onclick="openScreen('screen-bank')"><div class="menu-icon"><img src="icons/bank.png" alt="" onerror="this.replaceWith('💳')"></div><div class="menu-title">Банк</div><div class="menu-desc">Кредит, крипта</div></div>
+                <div class="menu-item" onclick="openScreen('screen-crystals')"><div class="menu-icon"><img src="icons/crystals.png" alt="" onerror="this.replaceWith('💠')"></div><div class="menu-title">Кристаллы</div><div class="menu-desc">Мини-игры</div></div>
+                <div class="menu-item" onclick="openScreen('screen-profile')"><div class="menu-icon"><img src="icons/profile.png" alt="" onerror="this.replaceWith('👑')"></div><div class="menu-title">Профиль</div><div class="menu-desc">Статистика</div></div>
+                <div class="menu-item" onclick="openScreen('screen-catalog')"><div class="menu-icon"><img src="icons/catalog.png" alt="" onerror="this.replaceWith('📚')"></div><div class="menu-title">Каталог</div><div class="menu-desc">Машины и номера</div></div>
+                <div class="menu-item" onclick="openScreen('screen-settings')"><div class="menu-icon"><img src="icons/settings.png" alt="" onerror="this.replaceWith('⚙️')"></div><div class="menu-title">Настройки</div><div class="menu-desc">Анимации, звук</div></div>
+                <div class="menu-item" onclick="openScreen('screen-rules')"><div class="menu-icon"><img src="icons/rules.png" alt="" onerror="this.replaceWith('📖')"></div><div class="menu-title">Правила</div><div class="menu-desc">Как играть</div></div>
+            </div>
+        </div><!-- /#main-view (ИСПРАВЛЕНО: раньше этот блок не закрывался, и все экраны оказывались ВНУТРИ прокручиваемого меню) -->
 
         <div class="screen" id="screen-autosalon">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-autosalon')">‹</button><div class="screen-title">Автосалон</div></div>
@@ -774,7 +777,7 @@ span.rvc { display: inline-block; }
                 <div class="card" style="display:flex; flex-direction:column; gap:8px;">
                     <div class="loan-badge"><span>🆘 Помощь новичкам</span></div>
                     <p style="font-size:12px; color: var(--muted); margin:0;">
-                        Если баланс < <b style="color:var(--gold)">4 999 999 ₽</b> → +2 500 000 ₽ каждые 30 минут.
+                        Если баланс &lt; <b style="color:var(--gold)">4 999 999 ₽</b> → +2 500 000 ₽ каждые 30 минут.
                     </p>
                     <div style="font-size:12px; font-weight:800; color: var(--blue);" id="aid-status">—</div>
                 </div>
@@ -992,7 +995,7 @@ span.rvc { display: inline-block; }
                 <p><b>4. Апгрейдер:</b> рискните машиной или номером ради более дорогого. При проигрыше предмет сгорает, но вы получаете <b>кэшбек 10%</b>.</p>
                 <p><b>5. Задания:</b> ежедневно 3 задания и награды.</p>
                 <p><b>6. Перерождение:</b> сброс прогресса ради +0.5% к удаче за каждое.</p>
-                <p><b>7. Помощь:</b> баланс < 4 999 999 ₽ → +2.5 млн ₽ раз в 30 минут.</p>
+                <p><b>7. Помощь:</b> баланс &lt; 4 999 999 ₽ → +2.5 млн ₽ раз в 30 минут.</p>
                 <p><b>8. Кредит:</b> до 500 млн ₽. До 10 млн — без залога. 10–100 млн — залог машины ≥ 5 млн. 100–500 млн — залог машины ≥ 30 млн. При просрочке банк забирает залоговую (или случайную) машину.</p>
                 <p><b>9. Крипта:</b> BTC, ETH, SOL — цена меняется каждые 5 секунд. Купить/продать можно с комиссией 1%.</p>
                 <p><b>10. Кристаллы:</b> рулетка, дуэль 50/50, ежедневный бонус, магазин и обмен 50 000 💎 → 50 млн ₽.</p>
@@ -1059,11 +1062,11 @@ span.rvc { display: inline-block; }
                 <div id="tasks-list" style="display:flex; flex-direction:column; gap:10px;"></div>
             </div>
         </div>
+    </div><!-- /.content -->
 
-        <div class="modal" id="modal"><div class="modal-box" id="modal-box"></div></div>
-        <div id="toast"></div>
-    </div>
-</div>
+    <div class="modal" id="modal"><div class="modal-box" id="modal-box"></div></div>
+    <div id="toast"></div>
+</div><!-- /#app -->
 
 <script>
 // ===== СБРОС =====
@@ -1314,18 +1317,13 @@ if (!state.upgradeChanceN) state.upgradeChanceN = 50;
     }
 })();
 
-// Дебаунс сохранения — снижает лаги при частых вызовах
-let _saveTimer = null;
 function saveGame() {
-    clearTimeout(_saveTimer);
-    _saveTimer = setTimeout(() => {
-        try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {}
-        try {
-            const reg = loadRegistry();
-            reg[state.playerId] = { name: state.playerName, money: state.money, bot: false };
-            saveRegistry(reg);
-        } catch (e) {}
-    }, 120);
+    try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {}
+    try {
+        const reg = loadRegistry();
+        reg[state.playerId] = { name: state.playerName, money: state.money, bot: false };
+        saveRegistry(reg);
+    } catch (e) {}
 }
 
 function earnMoney(amount) {
@@ -2014,7 +2012,6 @@ function updateUI() {
 const SPIN_SCREENS = { 'screen-autosalon': 'car', 'screen-gosznaki': 'number' };
 function openScreen(id) {
     const el = $(id); if (!el) return;
-    el.scrollTop = 0;
     if (id === 'screen-autosalon') renderPending('car');
     if (id === 'screen-gosznaki') renderPending('number');
     if (id === 'screen-upgrade') updateUpgradeUI();
@@ -2035,7 +2032,13 @@ function openScreen(id) {
     if (id === 'screen-settings') renderSettings();
     if (id === 'screen-business') renderBusinesses();
     if (id === 'screen-fortune') { renderFortuneWheel(); updateFortuneBtn(); }
+    // Если открываем экран поверх другого экрана (например Банк -> Кристаллы), закрываем предыдущий,
+    // чтобы не копились слои и скролл всегда начинался сверху.
+    document.querySelectorAll('.screen.active').forEach(s => { if (s !== el) s.classList.remove('active'); });
     el.classList.add('active');
+    el.scrollTop = 0;
+    // Страховка: показываем новый экран с самого верха
+    requestAnimationFrame(() => { el.scrollTop = 0; });
 }
 function closeScreen(id) {
     const t = SPIN_SCREENS[id];
@@ -2057,8 +2060,8 @@ function getRandomItem(type, mode) {
     const streakBonus = Math.min((state.streakDays || 0) * 2, 60);
     let boost = 0;
     // БУСТ: шансы выше обычного прокрута (машины и номера)
-    if (mode === 'boost') boost = 2.0;
-    else if (mode === 'x10') boost = -1.0;
+    if (mode === 'boost') boost = 2.5; // выше X10
+    else if (mode === 'x10') boost = 1.5; // выше обычной крутки
     const bonus = boost + state.rebirths * 0.5 + state.tuningBonus + streakBonus * 0.05;
     const cH = type === 'car' ? Math.max(0, 0.08 + boost * 0.01) : 0;
     const cU = Math.max(0, (type === 'car' ? 0.01 : 0.02) * (1 + boost * 0.5));
@@ -2236,7 +2239,7 @@ function renderBgPicker() {
     });
 }
 
-const rebirthCost = () => 100000000 + state.rebirths * 500000000;
+const rebirthCost = () => 100000000 + state.rebirths * 350000000;
 function rebirth() {
     const cost = rebirthCost();
     if (state.money < cost) { toast(`Для перерождения нужно ${fmt(cost)} ₽`); return; }
@@ -2592,7 +2595,7 @@ function buyShopCrystals(price, crys) {
     updateUI(); toast('Куплено!');
 }
 
-const tuneCost = () => 50000000 + state.tuningLevel * 250000000;
+const tuneCost = () => 50000000 + state.tuningLevel * 100000000;
 function updateTuningUI() {
     $('tune-level').textContent = state.tuningLevel;
     $('tune-bonus').textContent = state.tuningBonus + '%';
@@ -2931,11 +2934,11 @@ function playReveal(item, type, total, done, opts) {
         else if (fin === 4) { fx.burst(x, y, 120, pal, 400); fx.burst(x, y, 26, ['#ffc247', '#ffe49a'], 520, 'coin'); retrigger('flash', 800);
             ov.style.setProperty('--sh', '6px'); retrigger('shake', 500); ov.classList.add('rays-fast'); vib([40, 30, 80]); }
         else if (fin >= 6) { const rb = ['#2de2ff', '#ff3d6e', '#ffc247', '#b86bff', '#3ddc97', '#fff'];
-            fx.burst(x, y, 220, rb, 540); fx.burst(x, y, 60, ['#ffc247', '#ffe49a'], 640, 'coin'); fx.rain(120, rb);
+            fx.burst(x, y, 260, rb, 560); fx.burst(x, y, 80, ['#ffc247', '#ffe49a'], 680, 'coin'); fx.rain(160, rb);
             retrigger('flash2', 1100); setTimeout(() => !closed && retrigger('flash', 800), 1200);
             ov.style.setProperty('--sh', '14px'); retrigger('shake', 500); setTimeout(() => !closed && retrigger('shake', 500), 1200);
             ov.classList.add('rays-fast'); vib([80, 40, 80, 40, 80, 40, 220]); }
-        else { fx.burst(x, y, 150, pal, 440); fx.burst(x, y, 40, ['#ffc247', '#ffe49a'], 520, 'coin'); fx.rain(60, [RV_STAGES[5].c, '#ffc247', '#fff', '#ffe49a']);
+        else { fx.burst(x, y, 190, pal, 480); fx.burst(x, y, 60, ['#ffc247', '#ffe49a'], 600, 'coin'); fx.rain(90, [RV_STAGES[5].c, '#ffc247', '#fff', '#ffe49a']);
             retrigger('flash2', 1100); ov.style.setProperty('--sh', '10px'); retrigger('shake', 500); ov.classList.add('rays-fast'); vib([60, 40, 60, 40, 160]); }
         ov.classList.add('done'); sfx('win', fin);
     }
@@ -3016,4 +3019,4 @@ updateUI();
 setTimeout(tickLoader, 200);
 </script>
 </body>
-    </html>
+</html>
