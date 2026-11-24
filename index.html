@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Номердай</title>
+<script>
+/* Иконки: icons/<имя>.png, если файла нет - эмодзи */
+function iconErr(img, emoji){ img.replaceWith(emoji); }
+</script>
 
 <script>window.yaContextCb=window.yaContextCb||[]</script>
 <script src="https://yandex.ru/ads/system/context.js" async></script>
@@ -589,27 +593,27 @@ span.rvc { display: inline-block; }
             </div>
 
             <div class="grid-menu">
-                <div class="menu-item" onclick="openScreen('screen-autosalon')"><div class="menu-icon"><img src="icons/autosalon.png" alt="" onerror="this.replaceWith('🚗')"></div><div class="menu-title">Автосалон</div><div class="menu-desc">Крутить тачки</div></div>
-                <div class="menu-item" onclick="openScreen('screen-gosznaki')"><div class="menu-icon"><img src="icons/gosznaki.png" alt="" onerror="this.replaceWith('🔢')"></div><div class="menu-title">Госзнаки</div><div class="menu-desc">Крутить номера</div></div>
-                <div class="menu-item" onclick="openScreen('screen-garage')"><div class="menu-icon"><img src="icons/garage.png" alt="" onerror="this.replaceWith('🏎️')"></div><div class="menu-title">Гараж</div><div class="menu-desc" id="ui-garage-count">0 | 0</div></div>
-                <div class="menu-item" onclick="openScreen('screen-battle')"><div class="menu-icon"><img src="icons/battle.png" alt="" onerror="this.replaceWith('⚔️')"></div><div class="menu-title">Батл 1x1</div><div class="menu-desc" id="ui-battle-desc">MMR: 0 • Бронза</div></div>
-                <div class="menu-item" onclick="openScreen('screen-upgrade')"><div class="menu-icon"><img src="icons/upgrade.png" alt="" onerror="this.replaceWith('⬆️')"></div><div class="menu-title">Апгрейдер</div><div class="menu-desc">Улучшить машины</div></div>
-                <div class="menu-item" onclick="openScreen('screen-upgrade-num')"><div class="menu-icon"><img src="icons/upgrade-num.png" alt="" onerror="this.replaceWith('🔠')"></div><div class="menu-title">Апгрейдер номеров</div><div class="menu-desc">Улучшить номера</div></div>
-                <div class="menu-item" onclick="openScreen('screen-business')"><div class="menu-icon"><img src="icons/business.png" alt="" onerror="this.replaceWith('🏭')"></div><div class="menu-title">Бизнесы</div><div class="menu-desc" id="ui-biz-desc">Пассивный доход</div></div>
-                <div class="menu-item" onclick="openScreen('screen-achievements')"><div class="menu-icon"><img src="icons/achievements.png" alt="" onerror="this.replaceWith('🏆')"></div><div class="menu-title">Достижения</div><div class="menu-desc" id="ui-ach-count">0/8</div></div>
-                <div class="menu-item" onclick="openScreen('screen-contracts')"><div class="menu-icon"><img src="icons/contracts.png" alt="" onerror="this.replaceWith('📝')"></div><div class="menu-title">Контракты</div><div class="menu-desc">Аренда тачек</div></div>
-                <div class="menu-item" onclick="openScreen('screen-fortune')"><div class="menu-icon"><img src="icons/fortune.png" alt="" onerror="this.replaceWith('🎡')"></div><div class="menu-title">Фортуна</div><div class="menu-desc">Рулетка</div></div>
-                <div class="menu-item" onclick="openScreen('screen-shop')"><div class="menu-icon"><img src="icons/shop.png" alt="" onerror="this.replaceWith('🛒')"></div><div class="menu-title">Магазин дня</div><div class="menu-desc">Скидки</div></div>
-                <div class="menu-item" onclick="openScreen('screen-top')"><div class="menu-icon"><img src="icons/top.png" alt="" onerror="this.replaceWith('📊')"></div><div class="menu-title">Топ</div><div class="menu-desc">Рейтинг</div></div>
-                <div class="menu-item" onclick="openScreen('screen-tasks')"><div class="menu-icon"><img src="icons/tasks.png" alt="" onerror="this.replaceWith('📋')"></div><div class="menu-title">Задания</div><div class="menu-desc" id="ui-tasks-count">0/3</div></div>
-                <div class="menu-item" onclick="openScreen('screen-tuning')"><div class="menu-icon"><img src="icons/tuning.png" alt="" onerror="this.replaceWith('🛠️')"></div><div class="menu-title">Тюнинг</div><div class="menu-desc">Удача</div></div>
-                <div class="menu-item" onclick="openScreen('screen-auction')"><div class="menu-icon"><img src="icons/auction.png" alt="" onerror="this.replaceWith('💎')"></div><div class="menu-title">Аукцион</div><div class="menu-desc">Ставки</div></div>
-                <div class="menu-item" onclick="openScreen('screen-bank')"><div class="menu-icon"><img src="icons/bank.png" alt="" onerror="this.replaceWith('💳')"></div><div class="menu-title">Банк</div><div class="menu-desc">Кредит, крипта</div></div>
-                <div class="menu-item" onclick="openScreen('screen-crystals')"><div class="menu-icon"><img src="icons/crystals.png" alt="" onerror="this.replaceWith('💠')"></div><div class="menu-title">Кристаллы</div><div class="menu-desc">Мини-игры</div></div>
-                <div class="menu-item" onclick="openScreen('screen-profile')"><div class="menu-icon"><img src="icons/profile.png" alt="" onerror="this.replaceWith('👑')"></div><div class="menu-title">Профиль</div><div class="menu-desc">Статистика</div></div>
-                <div class="menu-item" onclick="openScreen('screen-catalog')"><div class="menu-icon"><img src="icons/catalog.png" alt="" onerror="this.replaceWith('📚')"></div><div class="menu-title">Каталог</div><div class="menu-desc">Машины и номера</div></div>
-                <div class="menu-item" onclick="openScreen('screen-settings')"><div class="menu-icon"><img src="icons/settings.png" alt="" onerror="this.replaceWith('⚙️')"></div><div class="menu-title">Настройки</div><div class="menu-desc">Анимации, звук</div></div>
-                <div class="menu-item" onclick="openScreen('screen-rules')"><div class="menu-icon"><img src="icons/rules.png" alt="" onerror="this.replaceWith('📖')"></div><div class="menu-title">Правила</div><div class="menu-desc">Как играть</div></div>
+                <div class="menu-item" onclick="openScreen('screen-autosalon')"><div class="menu-icon"><img src="icons/autosalon.png" alt="" onerror="iconErr(this,'🚗')"></div><div class="menu-title">Автосалон</div><div class="menu-desc">Крутить тачки</div></div>
+                <div class="menu-item" onclick="openScreen('screen-gosznaki')"><div class="menu-icon"><img src="icons/gosznaki.png" alt="" onerror="iconErr(this,'🔢')"></div><div class="menu-title">Госзнаки</div><div class="menu-desc">Крутить номера</div></div>
+                <div class="menu-item" onclick="openScreen('screen-garage')"><div class="menu-icon"><img src="icons/garage.png" alt="" onerror="iconErr(this,'🏎️')"></div><div class="menu-title">Гараж</div><div class="menu-desc" id="ui-garage-count">0 | 0</div></div>
+                <div class="menu-item" onclick="openScreen('screen-battle')"><div class="menu-icon"><img src="icons/battle.png" alt="" onerror="iconErr(this,'⚔️')"></div><div class="menu-title">Батл 1x1</div><div class="menu-desc" id="ui-battle-desc">MMR: 0 • Бронза</div></div>
+                <div class="menu-item" onclick="openScreen('screen-upgrade')"><div class="menu-icon"><img src="icons/upgrade.png" alt="" onerror="iconErr(this,'⬆️')"></div><div class="menu-title">Апгрейдер</div><div class="menu-desc">Улучшить машины</div></div>
+                <div class="menu-item" onclick="openScreen('screen-upgrade-num')"><div class="menu-icon"><img src="icons/upgrade-num.png" alt="" onerror="iconErr(this,'🔠')"></div><div class="menu-title">Апгрейдер номеров</div><div class="menu-desc">Улучшить номера</div></div>
+                <div class="menu-item" onclick="openScreen('screen-business')"><div class="menu-icon"><img src="icons/business.png" alt="" onerror="iconErr(this,'🏭')"></div><div class="menu-title">Бизнесы</div><div class="menu-desc" id="ui-biz-desc">Пассивный доход</div></div>
+                <div class="menu-item" onclick="openScreen('screen-achievements')"><div class="menu-icon"><img src="icons/achievements.png" alt="" onerror="iconErr(this,'🏆')"></div><div class="menu-title">Достижения</div><div class="menu-desc" id="ui-ach-count">0/8</div></div>
+                <div class="menu-item" onclick="openScreen('screen-contracts')"><div class="menu-icon"><img src="icons/contracts.png" alt="" onerror="iconErr(this,'📝')"></div><div class="menu-title">Контракты</div><div class="menu-desc">Аренда тачек</div></div>
+                <div class="menu-item" onclick="openScreen('screen-fortune')"><div class="menu-icon"><img src="icons/fortune.png" alt="" onerror="iconErr(this,'🎡')"></div><div class="menu-title">Фортуна</div><div class="menu-desc">Рулетка</div></div>
+                <div class="menu-item" onclick="openScreen('screen-shop')"><div class="menu-icon"><img src="icons/shop.png" alt="" onerror="iconErr(this,'🛒')"></div><div class="menu-title">Магазин дня</div><div class="menu-desc">Скидки</div></div>
+                <div class="menu-item" onclick="openScreen('screen-top')"><div class="menu-icon"><img src="icons/top.png" alt="" onerror="iconErr(this,'📊')"></div><div class="menu-title">Топ</div><div class="menu-desc">Рейтинг</div></div>
+                <div class="menu-item" onclick="openScreen('screen-tasks')"><div class="menu-icon"><img src="icons/tasks.png" alt="" onerror="iconErr(this,'📋')"></div><div class="menu-title">Задания</div><div class="menu-desc" id="ui-tasks-count">0/3</div></div>
+                <div class="menu-item" onclick="openScreen('screen-tuning')"><div class="menu-icon"><img src="icons/tuning.png" alt="" onerror="iconErr(this,'🛠️')"></div><div class="menu-title">Тюнинг</div><div class="menu-desc">Удача</div></div>
+                <div class="menu-item" onclick="openScreen('screen-auction')"><div class="menu-icon"><img src="icons/auction.png" alt="" onerror="iconErr(this,'💎')"></div><div class="menu-title">Аукцион</div><div class="menu-desc">Ставки</div></div>
+                <div class="menu-item" onclick="openScreen('screen-bank')"><div class="menu-icon"><img src="icons/bank.png" alt="" onerror="iconErr(this,'💳')"></div><div class="menu-title">Банк</div><div class="menu-desc">Кредит, крипта</div></div>
+                <div class="menu-item" onclick="openScreen('screen-crystals')"><div class="menu-icon"><img src="icons/crystals.png" alt="" onerror="iconErr(this,'💠')"></div><div class="menu-title">Кристаллы</div><div class="menu-desc">Мини-игры</div></div>
+                <div class="menu-item" onclick="openScreen('screen-profile')"><div class="menu-icon"><img src="icons/profile.png" alt="" onerror="iconErr(this,'👑')"></div><div class="menu-title">Профиль</div><div class="menu-desc">Статистика</div></div>
+                <div class="menu-item" onclick="openScreen('screen-catalog')"><div class="menu-icon"><img src="icons/catalog.png" alt="" onerror="iconErr(this,'📚')"></div><div class="menu-title">Каталог</div><div class="menu-desc">Машины и номера</div></div>
+                <div class="menu-item" onclick="openScreen('screen-settings')"><div class="menu-icon"><img src="icons/settings.png" alt="" onerror="iconErr(this,'⚙️')"></div><div class="menu-title">Настройки</div><div class="menu-desc">Анимации, звук</div></div>
+                <div class="menu-item" onclick="openScreen('screen-rules')"><div class="menu-icon"><img src="icons/rules.png" alt="" onerror="iconErr(this,'📖')"></div><div class="menu-title">Правила</div><div class="menu-desc">Как играть</div></div>
             </div>
         </div><!-- /#main-view (ИСПРАВЛЕНО: раньше этот блок не закрывался, и все экраны оказывались ВНУТРИ прокручиваемого меню) -->
 
