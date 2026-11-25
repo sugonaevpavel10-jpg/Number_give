@@ -77,6 +77,7 @@ button { cursor: pointer; border: none; color: inherit; }
 .spin-std { background: var(--card-2); border: 1px solid rgba(246,200,98,.45); }
 .spin-boost { background: linear-gradient(135deg, #ffe49a, var(--gold), var(--gold-2)); color: #1a1204; box-shadow: 0 8px 24px rgba(246,200,98,.28); }
 .spin-x10 { background: linear-gradient(135deg, #ff6b9e, #8a3dff); color: #fff; box-shadow: 0 8px 24px rgba(138,61,255,.35); }
+.spin-x100 { background: linear-gradient(135deg, #ff3d6e, #b8004d); color: #fff; box-shadow: 0 8px 24px rgba(255,61,110,.4); border: 1px solid rgba(255,180,200,.4); }
 .spin-btns { display: flex; flex-direction: column; gap: 10px; }
 .r-common { --rc: #9aa3b2; } .r-rare { --rc: #4aa3ff; } .r-epic { --rc: #b86bff; }
 .r-legendary { --rc: #ffc247; } .r-hyper { --rc: #ff3d6e; } .r-ultra { --rc: #2de2ff; }
@@ -134,6 +135,13 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .li-gold { color: var(--gold); font-weight: 800; font-size: 13px; margin-top: 2px; }
 .li-green { color: var(--green); font-weight: 800; font-size: 13px; }
 .badge { background: var(--card-2); padding: 5px 10px; border-radius: 10px; font-size: 12px; font-weight: 800; }
+
+/* ===== ВКЛАДКИ ВНУТРИ ЭКРАНА (для Казино и Апгрейдов) ===== */
+.inner-tabs { display: flex; gap: 8px; padding: 0 16px 0; margin-top: 6px; }
+.inner-tab { flex: 1; padding: 11px 8px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); font-weight: 800; font-size: 13px; color: var(--muted); cursor: pointer; text-align: center; transition: .15s; }
+.inner-tab.active { background: linear-gradient(135deg, #ffe49a, var(--gold)); border-color: transparent; color: #1a1204; box-shadow: 0 6px 18px rgba(246,200,98,.25); }
+.inner-panel { display: none; flex-direction: column; gap: 14px; }
+.inner-panel.active { display: flex; }
 
 .upg-row-multi { display: flex; align-items: stretch; gap: 6px; width: 100%; }
 .upg-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
@@ -384,19 +392,17 @@ span.rvc { display: inline-block; }
                 <div class="menu-item" onclick="openScreen('screen-gosznaki')"><div class="menu-icon" data-ico="gosznaki" data-emo="🔢"><img src="icons/gosznaki.png" alt="" onerror="iconErr(this,'🔢')"></div><div class="menu-title">Госзнаки</div><div class="menu-desc">Крутить номера</div></div>
                 <div class="menu-item" onclick="openScreen('screen-garage')"><div class="menu-icon" data-ico="garage" data-emo="🏎️"><img src="icons/garage.png" alt="" onerror="iconErr(this,'🏎️')"></div><div class="menu-title">Гараж</div><div class="menu-desc" id="ui-garage-count">0 | 0</div></div>
                 <div class="menu-item" onclick="openScreen('screen-battle')"><div class="menu-icon" data-ico="battle" data-emo="⚔️"><img src="icons/battle.png" alt="" onerror="iconErr(this,'⚔️')"></div><div class="menu-title">Батл 1x1</div><div class="menu-desc" id="ui-battle-desc">MMR: 0 • Бронза</div></div>
-                <div class="menu-item" onclick="openScreen('screen-upgrade')"><div class="menu-icon" data-ico="upgrade" data-emo="⬆️"><img src="icons/upgrade.png" alt="" onerror="iconErr(this,'⬆️')"></div><div class="menu-title">Апгрейдер</div><div class="menu-desc">Улучшить машины</div></div>
-                <div class="menu-item" onclick="openScreen('screen-upgrade-num')"><div class="menu-icon" data-ico="upgrade-num" data-emo="🔠"><img src="icons/upgrade-num.png" alt="" onerror="iconErr(this,'🔠')"></div><div class="menu-title">Апгрейдер номеров</div><div class="menu-desc">Улучшить номера</div></div>
+                <div class="menu-item" onclick="openScreen('screen-upgrades')"><div class="menu-icon" data-ico="upgrade" data-emo="⬆️"><img src="icons/upgrade.png" alt="" onerror="iconErr(this,'⬆️')"></div><div class="menu-title">Апгрейды</div><div class="menu-desc">Машины и номера</div></div>
                 <div class="menu-item" onclick="openScreen('screen-business')"><div class="menu-icon" data-ico="business" data-emo="🏭"><img src="icons/business.png" alt="" onerror="iconErr(this,'🏭')"></div><div class="menu-title">Бизнесы</div><div class="menu-desc" id="ui-biz-desc">Пассивный доход</div></div>
                 <div class="menu-item" onclick="openScreen('screen-achievements')"><div class="menu-icon" data-ico="achievements" data-emo="🏆"><img src="icons/achievements.png" alt="" onerror="iconErr(this,'🏆')"></div><div class="menu-title">Достижения</div><div class="menu-desc" id="ui-ach-count">0/12</div></div>
                 <div class="menu-item" onclick="openScreen('screen-contracts')"><div class="menu-icon" data-ico="contracts" data-emo="📝"><img src="icons/contracts.png" alt="" onerror="iconErr(this,'📝')"></div><div class="menu-title">Контракты</div><div class="menu-desc">Аренда тачек</div></div>
-                <div class="menu-item" onclick="openScreen('screen-fortune')"><div class="menu-icon" data-ico="fortune" data-emo="🎡"><img src="icons/fortune.png" alt="" onerror="iconErr(this,'🎡')"></div><div class="menu-title">Фортуна</div><div class="menu-desc">Рулетка</div></div>
+                <div class="menu-item" onclick="openScreen('screen-casino')"><div class="menu-icon" data-ico="casino" data-emo="🎰"><img src="icons/casino.png" alt="" onerror="iconErr(this,'🎰')"></div><div class="menu-title">Казино</div><div class="menu-desc">Фортуна • Кристаллы</div></div>
                 <div class="menu-item" onclick="openScreen('screen-shop')"><div class="menu-icon" data-ico="shop" data-emo="🛒"><img src="icons/shop.png" alt="" onerror="iconErr(this,'🛒')"></div><div class="menu-title">Магазин дня</div><div class="menu-desc">Скидки и боксы</div></div>
                 <div class="menu-item" onclick="openScreen('screen-top')"><div class="menu-icon" data-ico="top" data-emo="📊"><img src="icons/top.png" alt="" onerror="iconErr(this,'📊')"></div><div class="menu-title">Топ</div><div class="menu-desc">Рейтинг</div></div>
                 <div class="menu-item" onclick="openScreen('screen-tasks')"><div class="menu-icon" data-ico="tasks" data-emo="📋"><img src="icons/tasks.png" alt="" onerror="iconErr(this,'📋')"></div><div class="menu-title">Задания</div><div class="menu-desc" id="ui-tasks-count">0/3</div></div>
                 <div class="menu-item" onclick="openScreen('screen-tuning')"><div class="menu-icon" data-ico="tuning" data-emo="🛠️"><img src="icons/tuning.png" alt="" onerror="iconErr(this,'🛠️')"></div><div class="menu-title">Тюнинг</div><div class="menu-desc">Удача</div></div>
                 <div class="menu-item" onclick="openScreen('screen-auction')"><div class="menu-icon" data-ico="auction" data-emo="💎"><img src="icons/auction.png" alt="" onerror="iconErr(this,'💎')"></div><div class="menu-title">Аукцион</div><div class="menu-desc">Ставки</div></div>
                 <div class="menu-item" onclick="openScreen('screen-bank')"><div class="menu-icon" data-ico="bank" data-emo="💳"><img src="icons/bank.png" alt="" onerror="iconErr(this,'💳')"></div><div class="menu-title">Банк</div><div class="menu-desc">Кредит, крипта</div></div>
-                <div class="menu-item" onclick="openScreen('screen-crystals')"><div class="menu-icon" data-ico="crystals" data-emo="💠"><img src="icons/crystals.png" alt="" onerror="iconErr(this,'💠')"></div><div class="menu-title">Кристаллы</div><div class="menu-desc">Мини-игры</div></div>
                 <div class="menu-item" onclick="openScreen('screen-profile')"><div class="menu-icon" data-ico="profile" data-emo="👑"><img src="icons/profile.png" alt="" onerror="iconErr(this,'👑')"></div><div class="menu-title">Профиль</div><div class="menu-desc">Статистика</div></div>
                 <div class="menu-item" onclick="openScreen('screen-catalog')"><div class="menu-icon" data-ico="catalog" data-emo="📚"><img src="icons/catalog.png" alt="" onerror="iconErr(this,'📚')"></div><div class="menu-title">Каталог</div><div class="menu-desc">Машины и номера</div></div>
                 <div class="menu-item" onclick="openScreen('screen-settings')"><div class="menu-icon" data-ico="settings" data-emo="⚙️"><img src="icons/settings.png" alt="" onerror="iconErr(this,'⚙️')"></div><div class="menu-title">Настройки</div><div class="menu-desc">Анимации, звук</div></div>
@@ -416,6 +422,7 @@ span.rvc { display: inline-block; }
                     <button class="spin-btn spin-std" onclick="spin('car', false)"><span>🎲 Крутить</span><b>5 000 000 ₽</b></button>
                     <button class="spin-btn spin-boost" onclick="spin('car', 'boost')"><span>⚡ BOOST</span><b>10 000 000 ₽</b></button>
                     <button class="spin-btn spin-x10" onclick="spin('car', 'x10')"><span>🎰 X10 КРУТИТЬ</span><b>450 000 000 ₽</b></button>
+                    <button class="spin-btn spin-x100" onclick="spin('car', 'x100')"><span>💥 X100 КРУТИТЬ</span><b>7 000 000 000 ₽</b></button>
                 </div>
             </div>
         </div>
@@ -453,73 +460,77 @@ span.rvc { display: inline-block; }
             </div>
         </div>
 
-        <div class="screen" id="screen-upgrade">
-            <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-upgrade')">‹</button><div class="screen-title">Апгрейдер машин</div></div>
-            <div class="pad">
-                <div class="upg-row-multi">
-                    <div class="upg-col">
-                        <div class="upg-cap" style="text-align:center;">ТВОИ (до 6)</div>
-                        <div class="upg-grid" id="upg-grid-cur" onclick="chooseUpgradeCar()"></div>
-                    </div>
-                    <div class="upg-arrow">➜</div>
-                    <div class="upg-col">
-                        <div class="upg-cap" style="text-align:center;">ПРИЗЫ</div>
-                        <div class="upg-grid" id="upg-grid-prize"></div>
-                    </div>
-                </div>
-                <div class="upg-cap" style="text-align:center;">ШАНС</div>
-                <div class="chance-pills" id="chance-pills">
-                    <div class="chance-pill" onclick="setChance(10)">10%</div>
-                    <div class="chance-pill" onclick="setChance(25)">25%</div>
-                    <div class="chance-pill" onclick="setChance(50)">50%</div>
-                    <div class="chance-pill" onclick="setChance(75)">75%</div>
-                </div>
-                <div class="chance-custom">
-                    <input type="number" id="chance-input" class="input-field" placeholder="Свой шанс, % (1–95)" min="1" max="95" step="1">
-                    <button class="btn btn-glass" onclick="applyCustomChance()">OK</button>
-                </div>
-                <div class="wheel-wrapper">
-                    <div class="wheel-bg" id="upg-wheel-bg"></div>
-                    <div class="wheel-center" id="upg-wheel-text">50%</div>
-                    <div class="wheel-arrow-container" id="upg-arrow"><div class="wheel-arrow">▼</div></div>
-                </div>
-                <div style="text-align:center; color: var(--gold); font-weight: 700; font-size: 13px; line-height:1.5;">🔥 При проигрыше машина сгорает,<br>но вы получаете <span style="color: var(--green);">кэшбек 10%</span> от её стоимости.</div>
-                <button class="btn btn-gold" id="upg-go" onclick="doUpgrade()">АПГРЕЙД МАШИН</button>
+        <!-- ЕДИНАЯ ВКЛАДКА АПГРЕЙДОВ -->
+        <div class="screen" id="screen-upgrades">
+            <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-upgrades')">‹</button><div class="screen-title">Апгрейды</div></div>
+            <div class="inner-tabs">
+                <div class="inner-tab active" data-sub="upg-car" onclick="switchUpgradesTab('upg-car')">🚗 Машины</div>
+                <div class="inner-tab" data-sub="upg-num" onclick="switchUpgradesTab('upg-num')">🔢 Номера</div>
             </div>
-        </div>
-
-        <div class="screen" id="screen-upgrade-num">
-            <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-upgrade-num')">‹</button><div class="screen-title">Апгрейдер номеров</div></div>
             <div class="pad">
-                <div class="upg-row-multi">
-                    <div class="upg-col">
-                        <div class="upg-cap" style="text-align:center;">ТВОИ (до 6)</div>
-                        <div class="upg-grid" id="upgn-grid-cur" onclick="chooseUpgradeNumber()"></div>
+                <div class="inner-panel active" id="upg-car">
+                    <div class="upg-row-multi">
+                        <div class="upg-col">
+                            <div class="upg-cap" style="text-align:center;">ТВОИ (до 6)</div>
+                            <div class="upg-grid" id="upg-grid-cur" onclick="chooseUpgradeCar()"></div>
+                        </div>
+                        <div class="upg-arrow">➜</div>
+                        <div class="upg-col">
+                            <div class="upg-cap" style="text-align:center;">ПРИЗЫ</div>
+                            <div class="upg-grid" id="upg-grid-prize"></div>
+                        </div>
                     </div>
-                    <div class="upg-arrow">➜</div>
-                    <div class="upg-col">
-                        <div class="upg-cap" style="text-align:center;">ПРИЗЫ</div>
-                        <div class="upg-grid" id="upgn-grid-prize"></div>
+                    <div class="upg-cap" style="text-align:center;">ШАНС</div>
+                    <div class="chance-pills" id="chance-pills">
+                        <div class="chance-pill" onclick="setChance(10)">10%</div>
+                        <div class="chance-pill" onclick="setChance(25)">25%</div>
+                        <div class="chance-pill" onclick="setChance(50)">50%</div>
+                        <div class="chance-pill" onclick="setChance(75)">75%</div>
                     </div>
+                    <div class="chance-custom">
+                        <input type="number" id="chance-input" class="input-field" placeholder="Свой шанс, % (1–95)" min="1" max="95" step="1">
+                        <button class="btn btn-glass" onclick="applyCustomChance()">OK</button>
+                    </div>
+                    <div class="wheel-wrapper">
+                        <div class="wheel-bg" id="upg-wheel-bg"></div>
+                        <div class="wheel-center" id="upg-wheel-text">50%</div>
+                        <div class="wheel-arrow-container" id="upg-arrow"><div class="wheel-arrow">▼</div></div>
+                    </div>
+                    <div style="text-align:center; color: var(--gold); font-weight: 700; font-size: 13px; line-height:1.5;">🔥 При проигрыше машина сгорает,<br>но вы получаете <span style="color: var(--green);">кэшбек 10%</span> от её стоимости.</div>
+                    <button class="btn btn-gold" id="upg-go" onclick="doUpgrade()">АПГРЕЙД МАШИН</button>
                 </div>
-                <div class="upg-cap" style="text-align:center;">ШАНС</div>
-                <div class="chance-pills" id="chance-pills-n">
-                    <div class="chance-pill" onclick="setChanceN(10)">10%</div>
-                    <div class="chance-pill" onclick="setChanceN(25)">25%</div>
-                    <div class="chance-pill" onclick="setChanceN(50)">50%</div>
-                    <div class="chance-pill" onclick="setChanceN(75)">75%</div>
+
+                <div class="inner-panel" id="upg-num">
+                    <div class="upg-row-multi">
+                        <div class="upg-col">
+                            <div class="upg-cap" style="text-align:center;">ТВОИ (до 6)</div>
+                            <div class="upg-grid" id="upgn-grid-cur" onclick="chooseUpgradeNumber()"></div>
+                        </div>
+                        <div class="upg-arrow">➜</div>
+                        <div class="upg-col">
+                            <div class="upg-cap" style="text-align:center;">ПРИЗЫ</div>
+                            <div class="upg-grid" id="upgn-grid-prize"></div>
+                        </div>
+                    </div>
+                    <div class="upg-cap" style="text-align:center;">ШАНС</div>
+                    <div class="chance-pills" id="chance-pills-n">
+                        <div class="chance-pill" onclick="setChanceN(10)">10%</div>
+                        <div class="chance-pill" onclick="setChanceN(25)">25%</div>
+                        <div class="chance-pill" onclick="setChanceN(50)">50%</div>
+                        <div class="chance-pill" onclick="setChanceN(75)">75%</div>
+                    </div>
+                    <div class="chance-custom">
+                        <input type="number" id="chance-input-n" class="input-field" placeholder="Свой шанс, % (1–95)" min="1" max="95" step="1">
+                        <button class="btn btn-glass" onclick="applyCustomChanceN()">OK</button>
+                    </div>
+                    <div class="wheel-wrapper">
+                        <div class="wheel-bg" id="upgn-wheel-bg"></div>
+                        <div class="wheel-center" id="upgn-wheel-text">50%</div>
+                        <div class="wheel-arrow-container" id="upgn-arrow"><div class="wheel-arrow">▼</div></div>
+                    </div>
+                    <div style="text-align:center; color: var(--gold); font-weight: 700; font-size: 13px; line-height:1.5;">🔥 При проигрыше номер сгорает,<br>но вы получаете <span style="color: var(--green);">кэшбек 10%</span> от его стоимости в 💎.</div>
+                    <button class="btn btn-gold" id="upgn-go" onclick="doUpgradeNumber()">АПГРЕЙД НОМЕРОВ</button>
                 </div>
-                <div class="chance-custom">
-                    <input type="number" id="chance-input-n" class="input-field" placeholder="Свой шанс, % (1–95)" min="1" max="95" step="1">
-                    <button class="btn btn-glass" onclick="applyCustomChanceN()">OK</button>
-                </div>
-                <div class="wheel-wrapper">
-                    <div class="wheel-bg" id="upgn-wheel-bg"></div>
-                    <div class="wheel-center" id="upgn-wheel-text">50%</div>
-                    <div class="wheel-arrow-container" id="upgn-arrow"><div class="wheel-arrow">▼</div></div>
-                </div>
-                <div style="text-align:center; color: var(--gold); font-weight: 700; font-size: 13px; line-height:1.5;">🔥 При проигрыше номер сгорает,<br>но вы получаете <span style="color: var(--green);">кэшбек 10%</span> от его стоимости в 💎.</div>
-                <button class="btn btn-gold" id="upgn-go" onclick="doUpgradeNumber()">АПГРЕЙД НОМЕРОВ</button>
             </div>
         </div>
 
@@ -576,7 +587,7 @@ span.rvc { display: inline-block; }
                     <div class="loan-badge"><span>💠 Кристаллы</span></div>
                     <p style="font-size:12px; color: var(--muted); margin:0;"><b style="color:#6fd3ff">50 000 💎</b> → <b style="color:var(--green)">300 000 000 ₽</b></p>
                     <button class="btn btn-gold" id="cry-exchange-btn" onclick="exchangeCrystals()">Обменять 50 000 💎 → 300 млн ₽</button>
-                    <button class="btn btn-glass" onclick="openScreen('screen-crystals')">💠 Мини-игры и магазин</button>
+                    <button class="btn btn-glass" onclick="openScreen('screen-casino'); switchCasinoTab('cas-crys');">💠 Кристаллы и мини-игры</button>
                 </div>
 
                 <div class="card" style="display:flex; flex-direction:column; gap:8px;">
@@ -614,40 +625,60 @@ span.rvc { display: inline-block; }
             </div>
         </div>
 
-        <div class="screen" id="screen-crystals">
-            <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-crystals')">‹</button><div class="screen-title">💠 Кристаллы</div></div>
+        <!-- ЕДИНАЯ ВКЛАДКА КАЗИНО (Фортуна + Кристаллы) -->
+        <div class="screen" id="screen-casino">
+            <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-casino')">‹</button><div class="screen-title">🎰 Казино</div></div>
+            <div class="inner-tabs">
+                <div class="inner-tab active" data-sub="cas-fortune" onclick="switchCasinoTab('cas-fortune')">🎡 Фортуна</div>
+                <div class="inner-tab" data-sub="cas-crys" onclick="switchCasinoTab('cas-crys')">💠 Кристаллы</div>
+            </div>
             <div class="pad">
-                <div style="text-align:center; font-weight:900; font-size:18px;">Баланс: <span style="color:#6fd3ff"><span id="cry-page-bal">0</span> 💎</span></div>
-                <div class="card" style="display:flex; flex-direction:column; gap:10px; align-items:center;">
-                    <div style="font-weight:900; font-size:15px;">🎡 Рулетка кристаллов</div>
-                    <div class="cry-wheel-wrap">
-                        <div class="cry-wheel" id="cry-wheel-bg"></div>
-                        <div class="cry-arrow-wrap" id="cry-arrow"><div class="cry-arrow">▼</div></div>
-                        <div class="cry-center">💠</div>
+                <div class="inner-panel active" id="cas-fortune">
+                    <div class="trend" style="margin-bottom:0;">🔥 Тренд дня: KIA +100%</div>
+                    <h2 style="text-align:center;">🎡 Рулетка Фортуны</h2>
+                    <p style="font-size:12px; color: var(--muted); text-align:center;" id="fortune-status">Бесплатный спин доступен!</p>
+                    <div class="wheel-wrapper">
+                        <div class="wheel-bg" id="fortune-wheel-bg"></div>
+                        <div class="wheel-center">🎁</div>
+                        <div class="wheel-arrow-container" id="fortune-arrow"><div class="wheel-arrow">▼</div></div>
                     </div>
-                    <button class="btn btn-gold" id="cry-spin-btn" onclick="spinCrystalWheel()">Крутить за 1 000 💎</button>
-                    <div style="font-size:11px; color: var(--muted); text-align:center;" id="cry-spin-result"></div>
+                    <div id="fortune-legend" style="font-size:11px; color: var(--muted); font-weight:700; text-align:center; line-height:1.8;"></div>
+                    <button class="btn btn-gold" id="fortune-btn" onclick="spinFortune()">🎁 КРУТИТЬ БЕСПЛАТНО</button>
                 </div>
-                <div class="card" style="display:flex; flex-direction:column; gap:10px;">
-                    <div style="font-weight:900; font-size:15px;">⚔️ Кристалл-дуэль 50/50</div>
-                    <p style="font-size:12px; color: var(--muted); margin:0;">Ставка: либо удвоишь, либо потеряешь.</p>
-                    <input type="number" id="duel-amount" class="input-field" placeholder="Ставка в 💎 (мин 1 000)">
-                    <button class="btn btn-purple" onclick="crystalDuel()">⚔️ Играть</button>
-                </div>
-                <div class="card" style="display:flex; flex-direction:column; gap:10px;">
-                    <div style="font-weight:900; font-size:15px;">🎁 Ежедневный бонус</div>
-                    <p style="font-size:12px; color: var(--muted); margin:0;">+500 💎 раз в сутки.</p>
-                    <button class="btn btn-green" id="daily-bonus-btn" onclick="claimCrystalDaily()">Забрать бонус</button>
-                </div>
-                <div class="card" style="display:flex; flex-direction:column; gap:10px;">
-                    <div style="font-weight:900; font-size:15px;">🛒 Магазин за 💎</div>
-                    <div class="list-item"><div class="list-icon">🚗</div><div class="li-main"><div class="li-title">Legendary-машина</div><div class="li-gold">25 000 💎</div></div><button class="btn-join" onclick="buyLegendaryCry()">КУПИТЬ</button></div>
-                    <div class="list-item"><div class="list-icon">🎲</div><div class="li-main"><div class="li-title">Пачка X10 машин</div><div class="li-gold">8 000 💎</div></div><button class="btn-join" onclick="buySpinPackCry()">КУПИТЬ</button></div>
-                    <div class="list-item"><div class="list-icon">💰</div><div class="li-main"><div class="li-title">1 000 000 ₽</div><div class="li-gold">1 000 💎</div></div><button class="btn-join" onclick="buyMoneyCry()">КУПИТЬ</button></div>
-                </div>
-                <div class="crystal-grid">
-                    <div class="crystal-tile" onclick="openScreen('screen-gosznaki')"><div class="t-icon">🔢</div><div class="t-title">Госзнаки</div><div class="t-sub">Крутки за 💎</div></div>
-                    <div class="crystal-tile" onclick="openScreen('screen-fortune')"><div class="t-icon">🎡</div><div class="t-title">Фортуна</div><div class="t-sub">Бесплатный спин</div></div>
+
+                <div class="inner-panel" id="cas-crys">
+                    <div style="text-align:center; font-weight:900; font-size:18px;">Баланс: <span style="color:#6fd3ff"><span id="cry-page-bal">0</span> 💎</span></div>
+                    <div class="card" style="display:flex; flex-direction:column; gap:10px; align-items:center;">
+                        <div style="font-weight:900; font-size:15px;">🎡 Рулетка кристаллов</div>
+                        <div class="cry-wheel-wrap">
+                            <div class="cry-wheel" id="cry-wheel-bg"></div>
+                            <div class="cry-arrow-wrap" id="cry-arrow"><div class="cry-arrow">▼</div></div>
+                            <div class="cry-center">💠</div>
+                        </div>
+                        <button class="btn btn-gold" id="cry-spin-btn" onclick="spinCrystalWheel()">Крутить за 1 000 💎</button>
+                        <div style="font-size:11px; color: var(--muted); text-align:center;" id="cry-spin-result"></div>
+                    </div>
+                    <div class="card" style="display:flex; flex-direction:column; gap:10px;">
+                        <div style="font-weight:900; font-size:15px;">⚔️ Кристалл-дуэль 50/50</div>
+                        <p style="font-size:12px; color: var(--muted); margin:0;">Ставка: либо удвоишь, либо потеряешь.</p>
+                        <input type="number" id="duel-amount" class="input-field" placeholder="Ставка в 💎 (мин 1 000)">
+                        <button class="btn btn-purple" onclick="crystalDuel()">⚔️ Играть</button>
+                    </div>
+                    <div class="card" style="display:flex; flex-direction:column; gap:10px;">
+                        <div style="font-weight:900; font-size:15px;">🎁 Ежедневный бонус</div>
+                        <p style="font-size:12px; color: var(--muted); margin:0;">+500 💎 раз в сутки.</p>
+                        <button class="btn btn-green" id="daily-bonus-btn" onclick="claimCrystalDaily()">Забрать бонус</button>
+                    </div>
+                    <div class="card" style="display:flex; flex-direction:column; gap:10px;">
+                        <div style="font-weight:900; font-size:15px;">🛒 Магазин за 💎</div>
+                        <div class="list-item"><div class="list-icon">🚗</div><div class="li-main"><div class="li-title">Legendary-машина</div><div class="li-gold">25 000 💎</div></div><button class="btn-join" onclick="buyLegendaryCry()">КУПИТЬ</button></div>
+                        <div class="list-item"><div class="list-icon">🎲</div><div class="li-main"><div class="li-title">Пачка X10 машин</div><div class="li-gold">8 000 💎</div></div><button class="btn-join" onclick="buySpinPackCry()">КУПИТЬ</button></div>
+                        <div class="list-item"><div class="list-icon">💰</div><div class="li-main"><div class="li-title">1 000 000 ₽</div><div class="li-gold">1 000 💎</div></div><button class="btn-join" onclick="buyMoneyCry()">КУПИТЬ</button></div>
+                    </div>
+                    <div class="crystal-grid">
+                        <div class="crystal-tile" onclick="openScreen('screen-gosznaki')"><div class="t-icon">🔢</div><div class="t-title">Госзнаки</div><div class="t-sub">Крутки за 💎</div></div>
+                        <div class="crystal-tile" onclick="switchCasinoTab('cas-fortune')"><div class="t-icon">🎡</div><div class="t-title">Фортуна</div><div class="t-sub">Бесплатный спин</div></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -681,28 +712,12 @@ span.rvc { display: inline-block; }
             </div>
         </div>
 
-        <div class="screen" id="screen-fortune">
-            <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-fortune')">‹</button><div class="screen-title">Фортуна</div></div>
-            <div class="pad" style="align-items:center;">
-                <div class="trend" style="margin-bottom:0;">🔥 Тренд дня: KIA +100%</div>
-                <h2>🎡 Рулетка</h2>
-                <p style="font-size:12px; color: var(--muted);" id="fortune-status">Бесплатный спин доступен!</p>
-                <div class="wheel-wrapper">
-                    <div class="wheel-bg" id="fortune-wheel-bg"></div>
-                    <div class="wheel-center">🎁</div>
-                    <div class="wheel-arrow-container" id="fortune-arrow"><div class="wheel-arrow">▼</div></div>
-                </div>
-                <div id="fortune-legend" style="font-size:11px; color: var(--muted); font-weight:700; text-align:center; line-height:1.8;"></div>
-                <button class="btn btn-gold" id="fortune-btn" onclick="spinFortune()">🎁 КРУТИТЬ БЕСПЛАТНО</button>
-            </div>
-        </div>
-
         <div class="screen" id="screen-tuning">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-tuning')">‹</button><div class="screen-title">Тюнинг</div></div>
             <div class="pad">
                 <div class="card" style="display:flex; flex-direction:column; gap:12px;">
                     <h3>Прокачка салона (Удача)</h3>
-                    <p style="font-size:13px; color: var(--muted);">+1% к шансу дорогих машин за уровень. Каждый уровень также даёт +0.5% к цене продажи машин и +0.25% к цене продажи номеров.</p>
+                    <p style="font-size:13px; color: var(--muted);">+0.5% к шансу дорогих машин за уровень (максимум +25%). Каждый уровень также даёт +0.5% к цене продажи машин и +0.25% к цене продажи номеров.</p>
                     <div style="display:flex; justify-content:space-between; font-weight:800; font-size:14px;">
                         <span>Уровень: <span id="tune-level" style="color: var(--blue);">0</span></span>
                         <span>Бонус: <span id="tune-bonus" style="color: var(--green);">0%</span></span>
@@ -757,16 +772,16 @@ span.rvc { display: inline-block; }
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-rules')">‹</button><div class="screen-title">Правила</div></div>
             <div class="pad rules">
                 <h3 style="margin-bottom:6px;">Как играть в НОМЕРДАЙ:</h3>
-                <p><b>1. Крутка:</b> в автосалоне тратите рубли, в госзнаках — кристаллы. X10 даёт 10 предметов сразу.</p>
+                <p><b>1. Крутка:</b> в автосалоне тратите рубли, в госзнаках — кристаллы. X10 даёт 10 предметов сразу. X100 в автосалоне — самый дорогой, но и самый рискованный режим с повышенным шансом на редкие тачки.</p>
                 <p><b>2. Гараж:</b> выбитое можно оставить или продать.</p>
                 <p><b>3. Батлы:</b> 40 млн ₽ на 30 секунд, побеждает тот, у кого сумма машин больше.</p>
-                <p><b>4. Апгрейдер:</b> рискните машиной или номером ради более дорогого. Можно ставить до 6 штук за раз и выбирать любой шанс от 1% до 95%. Пока крутится колесо, выйти из апгрейдера нельзя. При проигрыше предмет сгорает, но вы получаете <b>кэшбек 10%</b>.</p>
+                <p><b>4. Апгрейды:</b> в одной вкладке можно рискнуть машиной или номером ради более дорогого. Можно ставить до 6 штук за раз и выбирать любой шанс от 1% до 95%. При проигрыше предмет сгорает, но вы получаете <b>кэшбек 10%</b>.</p>
                 <p><b>5. Задания:</b> ежедневно 3 задания и награды.</p>
                 <p><b>6. Перерождение:</b> сброс прогресса ради +0.5% к удаче за каждое.</p>
                 <p><b>7. Помощь:</b> баланс &lt; 4 999 999 ₽ → +2.5 млн ₽ раз в 30 минут.</p>
                 <p><b>8. Кредит:</b> до 500 млн ₽. До 10 млн — без залога. 10–100 млн — залог машины ≥ 5 млн. 100–500 млн — залог машины ≥ 30 млн. При просрочке банк забирает залоговую (или случайную) машину.</p>
                 <p><b>9. Крипта:</b> BTC, ETH, SOL — цена меняется каждые 5 секунд, у рынка бывают растущие и падающие тренды: ловите рост и продавайте в плюс. Комиссия 1%.</p>
-                <p><b>10. Кристаллы:</b> рулетка, дуэль 50/50, ежедневный бонус, магазин и обмен 50 000 💎 → 300 млн ₽.</p>
+                <p><b>10. Казино:</b> вкладка содержит Фортуну (бесплатный спин раз в сутки) и Кристаллы (рулетка, дуэль 50/50, ежедневный бонус, магазин, обмен 50 000 💎 → 300 млн ₽).</p>
                 <p><b>11. Бизнесы:</b> 6 бизнесов дают пассивный доход. Налог 13% с собранного. Можно собрать все бизнесы подряд, но выйти из вкладки можно только после оплаты налога.</p>
                 <p><b>12. Стрик:</b> заходите каждый день, чтобы получать до +60% к удаче.</p>
                 <p><b>13. Пити:</b> 80 круток без Legendary — и она гарантированно выпадет.</p>
@@ -843,7 +858,7 @@ span.rvc { display: inline-block; }
 // ===== СБРОС =====
 (function wipeEveryone() {
     if (localStorage.getItem('numberday_wipe_done_v1')) return;
-    const keys = ['numberday_save_v14','numberday_save_v13','numberday_save_v12','numberday_save_v11','numberday_save_v10','numberday_save_v9','numberday_save_v8'];
+    const keys = ['numberday_save_v15','numberday_save_v14','numberday_save_v13','numberday_save_v12','numberday_save_v11','numberday_save_v10','numberday_save_v9','numberday_save_v8'];
     keys.forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
     try { localStorage.setItem('numberday_wipe_done_v1', '1'); } catch (e) {}
     location.reload();
@@ -854,10 +869,14 @@ const fmt = n => Math.round(n).toLocaleString('ru-RU');
 const newUid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 const START_MONEY = 20000000;
 const START_CRYSTALS = 10060;
-const SAVE_KEY = 'numberday_save_v15';
+const SAVE_KEY = 'numberday_save_v16';
 const UPGRADE_CASHBACK = 0.10;
 const MAX_UPG = 6;
-const CRY_EXCHANGE_RATE = 300000000; // 50 000 💎 -> 300 000 000 ₽
+const CRY_EXCHANGE_RATE = 300000000;
+
+// ---- Константы ставок ----
+const CAR_SPIN_COST = { std: 5000000, boost: 10000000, x10: 450000000, x100: 7000000000 };
+const NUMBER_SPIN_COST = { std: 300, boost: 1000, x10: 5000 };
 
 const REGISTRY_KEY = 'numberday_players_registry_v1';
 const TRANSFER_LOG_KEY = 'numberday_transfers_v1';
@@ -908,7 +927,6 @@ const CARS_DB = [];
             CARS_DB.push({ id: carId++, name: `${BRANDS[i % BRANDS.length]} ${MODELS[i % MODELS.length]} ${carId}`, price, rarity, shape: SHAPES[i % SHAPES.length] });
         }
     });
-    // ===== НОВЫЕ МАШИНЫ: 154 шт., от 3 млн до 100 млрд ₽ =====
     const EXTRA_BRANDS = ["Skoda","Volvo","Jaguar","Land Rover","Lexus","Infiniti","Maserati","Bentley","Rolls-Royce","McLaren","Aston Martin","Lotus","Genesis","Cadillac","Dodge","Jeep","Tesla","Alfa Romeo","Peugeot","Citroen","Opel","Suzuki","Maybach","Hennessey","Rimac","Zenvo","SSC","Lucid","Pininfarina","Spyker"];
     const EXTRA_MODELS = ["Aero","Vision","Apex","Titan","Phantom","Cobra","Stallion","Falcon","Comet","Zenith","Ghost","Vortex","Nova","Raptor","Royale","Imperial","Eclipse","Inferno","Storm","Legend","Prime","Elite","Fury","Orion"];
     const N = 154, MINP = 3000000, MAXP = 100000000000;
@@ -944,7 +962,6 @@ const NUMBERS_DB = [];
      ["С001СС", 75000, "Первый номер региона"], ["Н001НН", 60000, "Первый номер региона"]]
         .forEach(([name, price, desc], k) => NUMBERS_DB.push({ id: 100 + k, name, price, rarity: "ultra", desc }));
 
-    // ===== НОВЫЕ НОМЕРА: +142 (дешёвые и очень дорогие) =====
     const r2 = rng(2024), used = new Set(NUMBERS_DB.map(n => n.name));
     let nid = 200;
     const L = () => NUMBER_LETTERS[Math.floor(r2() * 12)], D = () => Math.floor(r2() * 10);
@@ -1078,7 +1095,8 @@ if (!state.achClaimed) state.achClaimed = {};
 if (!state.ach) state.ach = {};
 if (!state.shop) state.shop = { date: '', bought: {} };
 if (typeof state.luckUntil !== 'number') state.luckUntil = 0;
-state.tuningBonus = (state.tuningLevel || 0) * 1; // 1% за уровень
+// Тюнинг: +0.5% за уровень, максимум +25%
+state.tuningBonus = Math.min(25, (state.tuningLevel || 0) * 0.5);
 ['car', 'number'].forEach(t => { state.garage.push(...state.pending[t]); state.pending[t] = []; });
 if (!state.eur) state.eur = 0; if (!state.cny) state.cny = 0;
 if (!state.lastCrystalDaily) state.lastCrystalDaily = 0;
@@ -1373,9 +1391,6 @@ function tradeCrypto(key, dir) {
     }
     updateUI(); renderBank(); saveGame();
 }
-// Рынок крипты: трендовые движения (momentum) + лёгкий возврат к базовой цене.
-// Раньше цена была чистым случайным блужданием, поэтому с комиссией выходило в минус.
-// Теперь есть затяжные тренды роста/падения — можно купить на росте и продать в плюс.
 setInterval(() => {
     CRYPTO_KEYS.forEach(k => {
         const c = state.crypto[k]; if (!c) return;
@@ -1568,14 +1583,13 @@ function openScreen(id) {
     if (upgBusy || upgnBusy) { toast('Дождитесь окончания апгрейда!'); return; }
     if (id === 'screen-autosalon') renderPending('car');
     if (id === 'screen-gosznaki') renderPending('number');
-    if (id === 'screen-upgrade') updateUpgradeUI();
-    if (id === 'screen-upgrade-num') updateUpgradeNumUI();
+    if (id === 'screen-upgrades') { updateUpgradeUI(); updateUpgradeNumUI(); }
     if (id === 'screen-garage') renderGarage();
     if (id === 'screen-battle') { ensureLobbies(); updateBattleUI(); }
     if (id === 'screen-profile') { renderBgPicker(); const pidEl = $('profile-id'); if (pidEl) pidEl.textContent = state.playerId; }
     if (id === 'screen-tuning') updateTuningUI();
     if (id === 'screen-bank') { renderBank(); renderTransfers(); }
-    if (id === 'screen-crystals') { renderCryWheel(); updateCryPage(); }
+    if (id === 'screen-casino') { renderCryWheel(); updateCryPage(); renderFortuneWheel(); updateFortuneBtn(); }
     if (id === 'screen-auction') startAuction();
     if (id === 'screen-contracts') renderContracts();
     if (id === 'screen-achievements') renderAchievements();
@@ -1585,14 +1599,12 @@ function openScreen(id) {
     if (id === 'screen-top') renderTop();
     if (id === 'screen-settings') renderSettings();
     if (id === 'screen-business') renderBusinesses();
-    if (id === 'screen-fortune') { renderFortuneWheel(); updateFortuneBtn(); }
     document.querySelectorAll('.screen.active').forEach(s => { if (s !== el) s.classList.remove('active'); });
     el.classList.add('active'); el.scrollTop = 0;
     requestAnimationFrame(() => { el.scrollTop = 0; });
 }
 function closeScreen(id) {
-    // Нельзя выйти из апгрейдера, пока крутится колесо
-    if ((id === 'screen-upgrade' && upgBusy) || (id === 'screen-upgrade-num' && upgnBusy)) { toast('⏳ Дождитесь окончания апгрейда!'); return; }
+    if ((id === 'screen-upgrades' && (upgBusy || upgnBusy))) { toast('⏳ Дождитесь окончания апгрейда!'); return; }
     if (id === 'screen-business' && state.taxDebt > 0 && state.money >= state.taxDebt) { toast('🏛️ Сначала оплатите налоги (' + fmt(state.taxDebt) + ' ₽)!'); return; }
     const t = SPIN_SCREENS[id];
     if (t && state.pending[t].length && !busySpin) {
@@ -1602,18 +1614,42 @@ function closeScreen(id) {
     if (id === 'screen-auction') stopAuction();
     $(id).classList.remove('active'); closeModal(); updateUI();
 }
+// Переключение вкладок
+function switchUpgradesTab(sub) {
+    document.querySelectorAll('#screen-upgrades .inner-tab').forEach(t => t.classList.toggle('active', t.dataset.sub === sub));
+    document.querySelectorAll('#screen-upgrades .inner-panel').forEach(p => p.classList.toggle('active', p.id === sub));
+}
+function switchCasinoTab(sub) {
+    document.querySelectorAll('#screen-casino .inner-tab').forEach(t => t.classList.toggle('active', t.dataset.sub === sub));
+    document.querySelectorAll('#screen-casino .inner-panel').forEach(p => p.classList.toggle('active', p.id === sub));
+}
 function getRandomItem(type, mode) {
     const pool = type === 'car' ? CARS_DB : NUMBERS_DB;
     const roll = Math.random() * 100;
     const streakBonus = Math.min((state.streakDays || 0) * 2, 60);
     let boost = 0;
-    if (mode === 'boost') boost = 2.5; else if (mode === 'x10') boost = 1.5;
+    if (mode === 'boost') boost = 2.5;
+    else if (mode === 'x10') boost = 1.5;
+    else if (mode === 'x100') boost = 2.2; // x100: базовый буст чуть выше x10, НО ниже итог по редким (см. ниже)
     const potion = (state.luckUntil || 0) > Date.now() ? 5 : 0;
     const bonus = boost + state.rebirths * 0.5 + state.tuningBonus + streakBonus * 0.05 + potion;
-    const cH = type === 'car' ? Math.max(0, 0.08 + boost * 0.01) : 0;
-    const cU = Math.max(0, (type === 'car' ? 0.01 : 0.02) * (1 + boost * 0.5));
-    const cL = Math.max(0, 1.2 + bonus - (mode === 'x10' ? 1 : 0));
-    const cE = Math.max(0, 5 + bonus), cR = Math.max(0, 18 + bonus);
+    // Параметры для x100: legendary/hyper/ultra ДОЛЖНЫ быть ниже, чем у x10
+    let cH, cU, cL, cE, cR;
+    if (mode === 'x100') {
+        // У x10: cH=0.08+1.5*0.01=0.095, cU=0.01*(1+1.5*0.5)=0.0175, cL=1.2+1.5-1=1.7
+        // У x100 делаем legendary/hyper/ultra чуть меньше, чем у x10, оставшийся процент уходит в common/rare
+        cH = 0.06;   // 0.06% (у x10 было 0.095%)
+        cU = 0.012;  // 0.012% (у x10 было 0.0175%)
+        cL = 1.35;   // 1.35% (у x10 было 1.7%)
+        cE = 5 + boost * 0.9; // 5 + 1.98 = 6.98
+        cR = 18 + boost * 0.9; // 18 + 1.98 = 19.98
+    } else {
+        cH = type === 'car' ? Math.max(0, 0.08 + boost * 0.01) : 0;
+        cU = Math.max(0, (type === 'car' ? 0.01 : 0.02) * (1 + boost * 0.5));
+        cL = Math.max(0, 1.2 + bonus - (mode === 'x10' ? 1 : 0));
+        cE = Math.max(0, 5 + bonus);
+        cR = Math.max(0, 18 + bonus);
+    }
     let rar = 'common';
     if (roll < cU) rar = 'ultra'; else if (roll < cU + cH) rar = 'hyper'; else if (roll < cU + cH + cL) rar = 'legendary';
     else if (roll < cU + cH + cL + cE) rar = 'epic'; else if (roll < cU + cH + cL + cE + cR) rar = 'rare';
@@ -1632,10 +1668,17 @@ let busySpin = false;
 function spin(type, mode) {
     if (busySpin) return;
     if (state.pending[type].length) { toast('Сначала заберите предыдущие призы'); return; }
-    const costMoney = mode === 'x10' ? 450000000 : mode === 'boost' ? 10000000 : 5000000;
-    const costCrys = type === 'number' ? (mode === 'x10' ? 5000 : mode === 'boost' ? 1000 : 300) : (mode === 'x10' ? 5000 : mode === 'boost' ? 1500 : 500);
-    if (type === 'car') { if (state.money < costMoney) { toast('Недостаточно рублей!'); return; } state.money -= costMoney; }
-    else { if (state.crystals < costCrys) { toast('Недостаточно кристаллов!'); return; } state.crystals -= costCrys; }
+    // Цены: см. CAR_SPIN_COST / NUMBER_SPIN_COST
+    let costMoney = 0, costCrys = 0;
+    if (type === 'car') {
+        costMoney = mode === 'x100' ? CAR_SPIN_COST.x100 : mode === 'x10' ? CAR_SPIN_COST.x10 : mode === 'boost' ? CAR_SPIN_COST.boost : CAR_SPIN_COST.std;
+        if (state.money < costMoney) { toast('Недостаточно рублей!'); return; }
+        state.money -= costMoney;
+    } else {
+        costCrys = mode === 'x10' ? NUMBER_SPIN_COST.x10 : mode === 'boost' ? NUMBER_SPIN_COST.boost : NUMBER_SPIN_COST.std;
+        if (state.crystals < costCrys) { toast('Недостаточно кристаллов!'); return; }
+        state.crystals -= costCrys;
+    }
     busySpin = true; updateUI();
     $(type + '-actions').style.display = 'none';
     $(type + '-controls').style.display = 'flex';
@@ -1650,10 +1693,16 @@ function spin(type, mode) {
     }, 100);
 }
 function finishSpin(type, mode) {
-    const count = mode === 'x10' ? 10 : 1;
+    // x100 — 100 предметов, x10 — 10, остальное — 1
+    const count = mode === 'x100' ? 100 : mode === 'x10' ? 10 : 1;
     let items = Array.from({ length: count }, () => makeItem(type, mode));
     if (mode === 'x10' && type === 'car') {
         const luck = 0.35 + Math.random() * 1.35;
+        items = items.map(it => ({ ...it, price: Math.max(1000000, Math.round((it.price * luck) / 100000) * 100000) }));
+        items.sort((a, b) => b.price - a.price);
+    }
+    if (mode === 'x100' && type === 'car') {
+        const luck = 0.5 + Math.random() * 1.2;
         items = items.map(it => ({ ...it, price: Math.max(1000000, Math.round((it.price * luck) / 100000) * 100000) }));
         items.sort((a, b) => b.price - a.price);
     }
@@ -1677,7 +1726,9 @@ function renderPending(type) {
         display.innerHTML = `<div class="r-${it.rarity}" style="width:100%; display:flex; flex-direction:column; align-items:center;">${artOf(it)}<div class="car-name" ${type === 'number' ? 'style="font-size:15px; color: var(--muted);"' : ''}>${it.name}</div><div class="rar-label">${it.rarity}</div><div class="car-price ${priceCls(it)}">${fmt(it.price)} ${unit}</div></div>`;
         $(type + '-keep').textContent = 'В гараж'; $(type + '-sell').textContent = 'Продать';
     } else {
-        display.innerHTML = `<div class="res-head">Выпало: <b>${items.length}</b> • Стоимость: <b>${fmt(total)} ${unit}</b></div><div class="res-grid">${items.map(it => `<div class="res-card r-${it.rarity}">${artOf(it, true)}<div class="rc-name">${it.name}</div><div class="rar-label" style="font-size:9px;">${it.rarity}</div><div class="rc-price ${priceCls(it)}">${fmt(it.price)} ${unit}</div></div>`).join('')}</div>`;
+        // Для x100 — показываем только топ-10, чтобы не грузить DOM
+        const show = items.length > 12 ? items.slice(0, 12) : items;
+        display.innerHTML = `<div class="res-head">Выпало: <b>${items.length}</b> • Стоимость: <b>${fmt(total)} ${unit}</b></div><div class="res-grid">${show.map(it => `<div class="res-card r-${it.rarity}">${artOf(it, true)}<div class="rc-name">${it.name}</div><div class="rar-label" style="font-size:9px;">${it.rarity}</div><div class="rc-price ${priceCls(it)}">${fmt(it.price)} ${unit}</div></div>`).join('')}</div>`;
         $(type + '-keep').textContent = 'Все в гараж'; $(type + '-sell').textContent = 'Продать всё';
     }
     if (items.some(i => i.rarity === 'ultra')) display.classList.add('glow-ultra');
@@ -1784,7 +1835,6 @@ function addUpgCar(u) {
 }
 function removeUpgCar(u) { if (upgBusy) return; upgUids = upgUids.filter(x => x !== u); updateUpgradeUI(); }
 
-// Множитель приза зависит от выбранного шанса (любое значение 1–95%)
 function upgMult(chance) { return Math.max(1.05, (100 / chance) * 0.85); }
 const clampChance = v => Math.max(1, Math.min(95, Math.round(Number(v) || 0)));
 
@@ -2127,7 +2177,7 @@ function updateFortuneBtn() {
     else { btn.classList.remove('disabled'); btn.textContent = '🎁 КРУТИТЬ БЕСПЛАТНО'; status.textContent = 'Бесплатный спин доступен!'; }
 }
 
-// ===== МАГАЗИН ДНЯ (новые ежедневные предложения) =====
+// ===== МАГАЗИН ДНЯ =====
 function shopState() {
     const t = todayKey();
     if (!state.shop || state.shop.date !== t) state.shop = { date: t, bought: {} };
@@ -2226,11 +2276,20 @@ function buyShop(id) {
     saveGame(); updateUI(); renderShop();
 }
 const tuneCost = () => 50000000 + state.tuningLevel * 450000000;
-function updateTuningUI() { $('tune-level').textContent = state.tuningLevel; $('tune-bonus').textContent = state.tuningBonus + '%'; $('tune-cost').textContent = fmt(tuneCost()) + ' ₽'; }
+function updateTuningUI() {
+    // Тюнинг: +0.5% за уровень, максимум +25%
+    state.tuningBonus = Math.min(25, state.tuningLevel * 0.5);
+    $('tune-level').textContent = state.tuningLevel;
+    $('tune-bonus').textContent = state.tuningBonus.toFixed(1) + '%';
+    $('tune-cost').textContent = fmt(tuneCost()) + ' ₽';
+}
 function upgradeTuning() {
+    if (state.tuningLevel >= 50) { toast('Максимальный уровень тюнинга'); return; }
     const cost = tuneCost();
     if (state.money < cost) { toast(`Нужно ${fmt(cost)} ₽`); return; }
-    state.money -= cost; state.tuningLevel++; state.tuningBonus += 1; updateUI(); updateTuningUI(); toast(`Тюнинг: +${state.tuningBonus}%`);
+    state.money -= cost; state.tuningLevel++;
+    state.tuningBonus = Math.min(25, state.tuningLevel * 0.5);
+    updateUI(); updateTuningUI(); toast(`Тюнинг: +${state.tuningBonus.toFixed(1)}% (ур. ${state.tuningLevel})`);
 }
 const BID_STEP = 5000000;
 let auction = { car: null, bid: 0, leader: null, hold: 0, timer: 20, iv: null };
@@ -2301,17 +2360,21 @@ function renderAchievements() {
 }
 let catalogTab = 'car';
 function dropChance(type, rar, mode) {
-    const boost = mode === 'boost' ? 2.5 : mode === 'x10' ? 1.5 : 0;
-    const cH = type === 'car' ? 0.08 + boost * 0.01 : 0;
-    const cU = (type === 'car' ? 0.01 : 0.02) * (1 + boost * 0.5);
-    const cL = Math.max(0, 1.2 + boost - (mode === 'x10' ? 1 : 0)), cE = 5 + boost, cR = 18 + boost;
+    const boost = mode === 'boost' ? 2.5 : mode === 'x10' ? 1.5 : mode === 'x100' ? 2.2 : 0;
+    let cH, cU, cL, cE, cR;
+    if (mode === 'x100') { cH = 0.06; cU = 0.012; cL = 1.35; cE = 5 + boost * 0.9; cR = 18 + boost * 0.9; }
+    else {
+        cH = type === 'car' ? 0.08 + boost * 0.01 : 0;
+        cU = (type === 'car' ? 0.01 : 0.02) * (1 + boost * 0.5);
+        cL = Math.max(0, 1.2 + boost - (mode === 'x10' ? 1 : 0)); cE = 5 + boost; cR = 18 + boost;
+    }
     const cat = { ultra: cU, hyper: cH, legendary: cL, epic: cE, rare: cR, common: 100 - cU - cH - cL - cE - cR }[rar] || 0;
     const db = type === 'car' ? CARS_DB : NUMBERS_DB;
     const n = db.filter(i => i.rarity === rar).length || 1;
     return cat / n;
 }
 const fmtPct = x => (x >= 1 ? x.toFixed(2) : x >= 0.01 ? x.toFixed(3) : x.toFixed(4)).replace(/\.?0+$/, '') + '%';
-const chanceLine = (type, rar) => `<div class="li-sub" style="font-size:10px;">Шанс: ${fmtPct(dropChance(type, rar, false))} · X10 ${fmtPct(dropChance(type, rar, 'x10'))} · Буст ${fmtPct(dropChance(type, rar, 'boost'))}</div>`;
+const chanceLine = (type, rar) => `<div class="li-sub" style="font-size:10px;">Шанс: ${fmtPct(dropChance(type, rar, false))} · X10 ${fmtPct(dropChance(type, rar, 'x10'))} · X100 ${fmtPct(dropChance(type, rar, 'x100'))}</div>`;
 function renderCatalog() {
     $('catalog-chips').innerHTML = [['car', `Машины (${CARS_DB.length})`], ['number', `Номера (${NUMBERS_DB.length})`]].map(([k, l]) => `<div class="chip ${catalogTab === k ? 'active' : ''}" onclick="catalogTab='${k}'; renderCatalog();">${l}</div>`).join('');
     const own = new Set(state.garage.filter(i => i.type === catalogTab).map(i => i.id));
@@ -2587,4 +2650,4 @@ setTimeout(tickLoader, 200);
 applyCustomIcons();
 </script>
 </body>
-</html>
+                                                                       </html>
