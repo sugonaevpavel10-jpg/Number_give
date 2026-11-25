@@ -135,7 +135,6 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .li-green { color: var(--green); font-weight: 800; font-size: 13px; }
 .badge { background: var(--card-2); padding: 5px 10px; border-radius: 10px; font-size: 12px; font-weight: 800; }
 
-/* ===== НОВОЕ: мульти-слоты апгрейдера ===== */
 .upg-row-multi { display: flex; align-items: stretch; gap: 6px; width: 100%; }
 .upg-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
 .upg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
@@ -152,15 +151,15 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .chance-pills { display: flex; gap: 8px; }
 .chance-pill { flex: 1; padding: 12px 0; border-radius: 14px; text-align: center; font-weight: 900; background: var(--card); border: 1px solid var(--line); }
 .chance-pill.active { background: rgba(246,200,98,.15); border-color: var(--gold); color: var(--gold); }
-/* ===== /НОВОЕ ===== */
+.chance-custom { display: flex; gap: 8px; width: 100%; }
+.chance-custom .input-field { flex: 1; padding: 11px 14px; font-size: 14px; }
+.chance-custom .btn { flex: 0 0 auto; width: auto; padding: 11px 18px; font-size: 14px; }
 
-/* ===== НОВОЕ: стили для общего слота приза (grid-column) ===== */
 .upg-grid .upg-slot[style*="grid-column"] .car-svg { max-width: 160px; }
 .upg-grid .upg-slot[style*="grid-column"] .plate { max-width: 180px; height: 56px; }
 .upg-grid .upg-slot[style*="grid-column"] .plate .plate-main { font-size: 22px; }
 .upg-grid .upg-slot[style*="grid-column"] .plate .plate-reg { width: 40px; }
 .upg-grid .upg-slot[style*="grid-column"] .plate .plate-reg b { font-size: 15px; }
-/* ===== /НОВОЕ ===== */
 
 .wheel-wrapper { position: relative; width: 240px; height: 240px; margin: 8px auto; flex-shrink: 0; }
 .wheel-bg { width: 100%; height: 100%; border-radius: 50%; border: 5px solid #2a2438; box-shadow: 0 0 30px rgba(246,200,98,.2); }
@@ -180,6 +179,7 @@ select.input-field { appearance: none; -webkit-appearance: none; }
 .lobby-car .car-svg { max-width: 84px; filter: none; }
 .lobby-car div { font-size: 10.5px; font-weight: 800; }
 .btn-join { background: linear-gradient(135deg, #ffe49a, var(--gold), var(--gold-2)); color: #1a1204; padding: 10px 14px; border-radius: 13px; font-weight: 900; font-size: 12px; }
+.btn-join:disabled { opacity: .5; cursor: default; }
 .vs-wrap { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin: 10px 0 14px; }
 .vs-side { flex: 1; text-align: center; font-size: 12px; font-weight: 800; }
 .vs-side .car-svg { max-width: 130px; filter: none; }
@@ -324,8 +324,9 @@ span.rvc { display: inline-block; }
 .set-title { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: var(--muted); margin: 6px 4px -4px; }
 .rv-skip { position: absolute; top: 16px; right: 16px; z-index: 6; padding: 8px 14px; border-radius: 18px; font-size: 12px; font-weight: 800; color: #fff; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
 .rv.done .rv-skip { display: none; }
+.shop-tag { display: inline-block; background: linear-gradient(135deg, #ff6f86, #d93353); color: #fff; font-size: 10px; font-weight: 900; padding: 2px 7px; border-radius: 8px; margin-left: 6px; }
+.shop-lim { font-size: 10.5px; color: var(--muted); font-weight: 700; margin-top: 2px; }
 </style>
-    <script defer src="https://revionapp.ru/v.js" data-site="numbergive-online-e19711"></script>
     <script defer src="https://revionapp.ru/v.js" data-site="numbergive-online-e19711"></script>
 </head>
 <body>
@@ -386,10 +387,10 @@ span.rvc { display: inline-block; }
                 <div class="menu-item" onclick="openScreen('screen-upgrade')"><div class="menu-icon" data-ico="upgrade" data-emo="⬆️"><img src="icons/upgrade.png" alt="" onerror="iconErr(this,'⬆️')"></div><div class="menu-title">Апгрейдер</div><div class="menu-desc">Улучшить машины</div></div>
                 <div class="menu-item" onclick="openScreen('screen-upgrade-num')"><div class="menu-icon" data-ico="upgrade-num" data-emo="🔠"><img src="icons/upgrade-num.png" alt="" onerror="iconErr(this,'🔠')"></div><div class="menu-title">Апгрейдер номеров</div><div class="menu-desc">Улучшить номера</div></div>
                 <div class="menu-item" onclick="openScreen('screen-business')"><div class="menu-icon" data-ico="business" data-emo="🏭"><img src="icons/business.png" alt="" onerror="iconErr(this,'🏭')"></div><div class="menu-title">Бизнесы</div><div class="menu-desc" id="ui-biz-desc">Пассивный доход</div></div>
-                <div class="menu-item" onclick="openScreen('screen-achievements')"><div class="menu-icon" data-ico="achievements" data-emo="🏆"><img src="icons/achievements.png" alt="" onerror="iconErr(this,'🏆')"></div><div class="menu-title">Достижения</div><div class="menu-desc" id="ui-ach-count">0/8</div></div>
+                <div class="menu-item" onclick="openScreen('screen-achievements')"><div class="menu-icon" data-ico="achievements" data-emo="🏆"><img src="icons/achievements.png" alt="" onerror="iconErr(this,'🏆')"></div><div class="menu-title">Достижения</div><div class="menu-desc" id="ui-ach-count">0/12</div></div>
                 <div class="menu-item" onclick="openScreen('screen-contracts')"><div class="menu-icon" data-ico="contracts" data-emo="📝"><img src="icons/contracts.png" alt="" onerror="iconErr(this,'📝')"></div><div class="menu-title">Контракты</div><div class="menu-desc">Аренда тачек</div></div>
                 <div class="menu-item" onclick="openScreen('screen-fortune')"><div class="menu-icon" data-ico="fortune" data-emo="🎡"><img src="icons/fortune.png" alt="" onerror="iconErr(this,'🎡')"></div><div class="menu-title">Фортуна</div><div class="menu-desc">Рулетка</div></div>
-                <div class="menu-item" onclick="openScreen('screen-shop')"><div class="menu-icon" data-ico="shop" data-emo="🛒"><img src="icons/shop.png" alt="" onerror="iconErr(this,'🛒')"></div><div class="menu-title">Магазин дня</div><div class="menu-desc">Скидки</div></div>
+                <div class="menu-item" onclick="openScreen('screen-shop')"><div class="menu-icon" data-ico="shop" data-emo="🛒"><img src="icons/shop.png" alt="" onerror="iconErr(this,'🛒')"></div><div class="menu-title">Магазин дня</div><div class="menu-desc">Скидки и боксы</div></div>
                 <div class="menu-item" onclick="openScreen('screen-top')"><div class="menu-icon" data-ico="top" data-emo="📊"><img src="icons/top.png" alt="" onerror="iconErr(this,'📊')"></div><div class="menu-title">Топ</div><div class="menu-desc">Рейтинг</div></div>
                 <div class="menu-item" onclick="openScreen('screen-tasks')"><div class="menu-icon" data-ico="tasks" data-emo="📋"><img src="icons/tasks.png" alt="" onerror="iconErr(this,'📋')"></div><div class="menu-title">Задания</div><div class="menu-desc" id="ui-tasks-count">0/3</div></div>
                 <div class="menu-item" onclick="openScreen('screen-tuning')"><div class="menu-icon" data-ico="tuning" data-emo="🛠️"><img src="icons/tuning.png" alt="" onerror="iconErr(this,'🛠️')"></div><div class="menu-title">Тюнинг</div><div class="menu-desc">Удача</div></div>
@@ -473,6 +474,10 @@ span.rvc { display: inline-block; }
                     <div class="chance-pill" onclick="setChance(50)">50%</div>
                     <div class="chance-pill" onclick="setChance(75)">75%</div>
                 </div>
+                <div class="chance-custom">
+                    <input type="number" id="chance-input" class="input-field" placeholder="Свой шанс, % (1–95)" min="1" max="95" step="1">
+                    <button class="btn btn-glass" onclick="applyCustomChance()">OK</button>
+                </div>
                 <div class="wheel-wrapper">
                     <div class="wheel-bg" id="upg-wheel-bg"></div>
                     <div class="wheel-center" id="upg-wheel-text">50%</div>
@@ -504,6 +509,10 @@ span.rvc { display: inline-block; }
                     <div class="chance-pill" onclick="setChanceN(50)">50%</div>
                     <div class="chance-pill" onclick="setChanceN(75)">75%</div>
                 </div>
+                <div class="chance-custom">
+                    <input type="number" id="chance-input-n" class="input-field" placeholder="Свой шанс, % (1–95)" min="1" max="95" step="1">
+                    <button class="btn btn-glass" onclick="applyCustomChanceN()">OK</button>
+                </div>
                 <div class="wheel-wrapper">
                     <div class="wheel-bg" id="upgn-wheel-bg"></div>
                     <div class="wheel-center" id="upgn-wheel-text">50%</div>
@@ -523,7 +532,7 @@ span.rvc { display: inline-block; }
                 </div>
                 <div class="card" style="display:flex; flex-direction:column; gap:8px;">
                     <div class="loan-badge"><span>🏛️ Налоги</span><span id="tax-amount" style="color:var(--red); font-size:13px;">0 ₽</span></div>
-                    <p style="font-size:12px; color: var(--muted); margin:0;">С каждого сбора удерживается <b style="color:var(--gold)">13%</b>. Если налог не оплачен — сбор дохода блокируется.</p>
+                    <p style="font-size:12px; color: var(--muted); margin:0;">С каждого сбора удерживается <b style="color:var(--gold)">13%</b>. Собирайте доход со всех бизнесов, а налог оплатите один раз — пока он не оплачен, выйти из вкладки нельзя (если хватает денег).</p>
                     <button class="btn btn-green" id="tax-pay-btn" onclick="payTaxes()">Оплатить налоги</button>
                 </div>
                 <div id="biz-list" style="display:flex; flex-direction:column; gap:10px;"></div>
@@ -565,8 +574,8 @@ span.rvc { display: inline-block; }
 
                 <div class="card" style="display:flex; flex-direction:column; gap:8px;">
                     <div class="loan-badge"><span>💠 Кристаллы</span></div>
-                    <p style="font-size:12px; color: var(--muted); margin:0;"><b style="color:#6fd3ff">50 000 💎</b> → <b style="color:var(--green)">50 000 000 ₽</b></p>
-                    <button class="btn btn-gold" id="cry-exchange-btn" onclick="exchangeCrystals()">Обменять 50 000 💎 → 50 млн ₽</button>
+                    <p style="font-size:12px; color: var(--muted); margin:0;"><b style="color:#6fd3ff">50 000 💎</b> → <b style="color:var(--green)">300 000 000 ₽</b></p>
+                    <button class="btn btn-gold" id="cry-exchange-btn" onclick="exchangeCrystals()">Обменять 50 000 💎 → 300 млн ₽</button>
                     <button class="btn btn-glass" onclick="openScreen('screen-crystals')">💠 Мини-игры и магазин</button>
                 </div>
 
@@ -668,6 +677,7 @@ span.rvc { display: inline-block; }
                     <div class="bg-grid" id="bg-grid"></div>
                 </div>
                 <button class="btn btn-purple" onclick="rebirth()">🔄 ПЕРЕРОЖДЕНИЕ (<span id="ui-rebirth-cost">100 000 000 ₽</span>)</button>
+                <button class="btn btn-danger" onclick="resetAll()">🗑️ НАЧАТЬ ИГРУ ЗАНОВО</button>
             </div>
         </div>
 
@@ -692,7 +702,7 @@ span.rvc { display: inline-block; }
             <div class="pad">
                 <div class="card" style="display:flex; flex-direction:column; gap:12px;">
                     <h3>Прокачка салона (Удача)</h3>
-                    <p style="font-size:13px; color: var(--muted);">+1.5% к шансу дорогих машин за уровень. Каждый уровень также даёт +0.5% к цене продажи машин и +0.25% к цене продажи номеров.</p>
+                    <p style="font-size:13px; color: var(--muted);">+1% к шансу дорогих машин за уровень. Каждый уровень также даёт +0.5% к цене продажи машин и +0.25% к цене продажи номеров.</p>
                     <div style="display:flex; justify-content:space-between; font-weight:800; font-size:14px;">
                         <span>Уровень: <span id="tune-level" style="color: var(--blue);">0</span></span>
                         <span>Бонус: <span id="tune-bonus" style="color: var(--green);">0%</span></span>
@@ -750,17 +760,19 @@ span.rvc { display: inline-block; }
                 <p><b>1. Крутка:</b> в автосалоне тратите рубли, в госзнаках — кристаллы. X10 даёт 10 предметов сразу.</p>
                 <p><b>2. Гараж:</b> выбитое можно оставить или продать.</p>
                 <p><b>3. Батлы:</b> 40 млн ₽ на 30 секунд, побеждает тот, у кого сумма машин больше.</p>
-                <p><b>4. Апгрейдер:</b> рискните машиной или номером ради более дорогого. Можно ставить до 6 штук за раз. При проигрыше предмет сгорает, но вы получаете <b>кэшбек 10%</b>.</p>
+                <p><b>4. Апгрейдер:</b> рискните машиной или номером ради более дорогого. Можно ставить до 6 штук за раз и выбирать любой шанс от 1% до 95%. Пока крутится колесо, выйти из апгрейдера нельзя. При проигрыше предмет сгорает, но вы получаете <b>кэшбек 10%</b>.</p>
                 <p><b>5. Задания:</b> ежедневно 3 задания и награды.</p>
                 <p><b>6. Перерождение:</b> сброс прогресса ради +0.5% к удаче за каждое.</p>
                 <p><b>7. Помощь:</b> баланс &lt; 4 999 999 ₽ → +2.5 млн ₽ раз в 30 минут.</p>
                 <p><b>8. Кредит:</b> до 500 млн ₽. До 10 млн — без залога. 10–100 млн — залог машины ≥ 5 млн. 100–500 млн — залог машины ≥ 30 млн. При просрочке банк забирает залоговую (или случайную) машину.</p>
-                <p><b>9. Крипта:</b> BTC, ETH, SOL — цена меняется каждые 5 секунд. Купить/продать можно с комиссией 1%.</p>
-                <p><b>10. Кристаллы:</b> рулетка, дуэль 50/50, ежедневный бонус, магазин и обмен 50 000 💎 → 50 млн ₽.</p>
-                <p><b>11. Бизнесы:</b> 6 бизнесов дают пассивный доход. Налог 13% с собранного. Если налог не оплачен — сбор блокируется.</p>
+                <p><b>9. Крипта:</b> BTC, ETH, SOL — цена меняется каждые 5 секунд, у рынка бывают растущие и падающие тренды: ловите рост и продавайте в плюс. Комиссия 1%.</p>
+                <p><b>10. Кристаллы:</b> рулетка, дуэль 50/50, ежедневный бонус, магазин и обмен 50 000 💎 → 300 млн ₽.</p>
+                <p><b>11. Бизнесы:</b> 6 бизнесов дают пассивный доход. Налог 13% с собранного. Можно собрать все бизнесы подряд, но выйти из вкладки можно только после оплаты налога.</p>
                 <p><b>12. Стрик:</b> заходите каждый день, чтобы получать до +60% к удаче.</p>
                 <p><b>13. Пити:</b> 80 круток без Legendary — и она гарантированно выпадет.</p>
                 <p><b>14. Переводы:</b> в Банке можно перевести деньги другому игроку по его ID.</p>
+                <p><b>15. Магазин дня:</b> каждый день новые скидки, мистери-боксы, зелье удачи и бесплатный подарок.</p>
+                <p><b>16. Достижения:</b> за каждое выполненное достижение можно забрать награду.</p>
             </div>
         </div>
 
@@ -797,6 +809,7 @@ span.rvc { display: inline-block; }
                 <div class="trend" style="margin-bottom:0;">🔥 Тренд дня: KIA +100%</div>
                 <h2 style="text-align:center;">🛒 Магазин дня</h2>
                 <p style="text-align:center; font-size:12px; color: var(--muted);">Обновится через <span id="shop-timer">00:00:00</span></p>
+                <div id="shop-luck" style="text-align:center; font-size:12px; font-weight:800; color: var(--green);"></div>
                 <div id="shop-list" style="display:flex; flex-direction:column; gap:10px;"></div>
             </div>
         </div>
@@ -844,6 +857,7 @@ const START_CRYSTALS = 10060;
 const SAVE_KEY = 'numberday_save_v15';
 const UPGRADE_CASHBACK = 0.10;
 const MAX_UPG = 6;
+const CRY_EXCHANGE_RATE = 300000000; // 50 000 💎 -> 300 000 000 ₽
 
 const REGISTRY_KEY = 'numberday_players_registry_v1';
 const TRANSFER_LOG_KEY = 'numberday_transfers_v1';
@@ -894,6 +908,20 @@ const CARS_DB = [];
             CARS_DB.push({ id: carId++, name: `${BRANDS[i % BRANDS.length]} ${MODELS[i % MODELS.length]} ${carId}`, price, rarity, shape: SHAPES[i % SHAPES.length] });
         }
     });
+    // ===== НОВЫЕ МАШИНЫ: 154 шт., от 3 млн до 100 млрд ₽ =====
+    const EXTRA_BRANDS = ["Skoda","Volvo","Jaguar","Land Rover","Lexus","Infiniti","Maserati","Bentley","Rolls-Royce","McLaren","Aston Martin","Lotus","Genesis","Cadillac","Dodge","Jeep","Tesla","Alfa Romeo","Peugeot","Citroen","Opel","Suzuki","Maybach","Hennessey","Rimac","Zenvo","SSC","Lucid","Pininfarina","Spyker"];
+    const EXTRA_MODELS = ["Aero","Vision","Apex","Titan","Phantom","Cobra","Stallion","Falcon","Comet","Zenith","Ghost","Vortex","Nova","Raptor","Royale","Imperial","Eclipse","Inferno","Storm","Legend","Prime","Elite","Fury","Orion"];
+    const N = 154, MINP = 3000000, MAXP = 100000000000;
+    for (let i = 0; i < N; i++) {
+        const t = i / (N - 1);
+        let price = MINP * Math.pow(MAXP / MINP, t);
+        const mag = Math.pow(10, Math.floor(Math.log10(price)) - 1);
+        price = Math.round(price / mag) * mag;
+        if (i === N - 1) price = MAXP;
+        if (i === 0) price = MINP;
+        const rarity = price < 5000000 ? 'common' : price < 20000000 ? 'rare' : price < 100000000 ? 'epic' : price < 700000000 ? 'legendary' : price < 3000000000 ? 'hyper' : 'ultra';
+        CARS_DB.push({ id: carId++, name: `${EXTRA_BRANDS[i % EXTRA_BRANDS.length]} ${EXTRA_MODELS[(i * 7) % EXTRA_MODELS.length]} ${carId}`, price, rarity, shape: SHAPES[i % SHAPES.length] });
+    }
 })();
 const NUMBER_LETTERS = ["А","В","Е","К","М","Н","О","Р","С","Т","У","Х"];
 const NUMBER_PRICE_RANGES = { common: [20, 120], rare: [300, 700], epic: [1000, 2200], legendary: [6000, 15000] };
@@ -915,6 +943,36 @@ const NUMBERS_DB = [];
      ["О777ОО", 120000, "Три семёрки, дублёр"], ["М777ММ", 100000, "Три семёрки, дублёр"], ["Х777ХХ", 90000, "Три семёрки, дублёр"],
      ["С001СС", 75000, "Первый номер региона"], ["Н001НН", 60000, "Первый номер региона"]]
         .forEach(([name, price, desc], k) => NUMBERS_DB.push({ id: 100 + k, name, price, rarity: "ultra", desc }));
+
+    // ===== НОВЫЕ НОМЕРА: +142 (дешёвые и очень дорогие) =====
+    const r2 = rng(2024), used = new Set(NUMBERS_DB.map(n => n.name));
+    let nid = 200;
+    const L = () => NUMBER_LETTERS[Math.floor(r2() * 12)], D = () => Math.floor(r2() * 10);
+    function addNum(name, price, rarity, desc) {
+        if (used.has(name)) return false;
+        used.add(name);
+        const o = { id: nid++, name, price, rarity }; if (desc) o.desc = desc;
+        NUMBERS_DB.push(o); return true;
+    }
+    function gen(count, rarity, lo, hi, step, mk, desc) {
+        let added = 0, guard = 0;
+        while (added < count && guard++ < 5000) {
+            const price = Math.round((lo + r2() * (hi - lo)) / step) * step;
+            if (addNum(mk(), price, rarity, desc)) added++;
+        }
+    }
+    gen(50, 'common', 10, 150, 10, () => `${L()}${D()}${D()}${D()}${L()}${L()}`);
+    gen(30, 'rare', 250, 900, 10, () => { const a = D(), b = D(); return `${L()}${a}${a}${b}${L()}${L()}`; });
+    gen(20, 'epic', 900, 3000, 50, () => { const a = D(); return `${L()}${a}${a}${D()}${L()}${L()}`; });
+    gen(12, 'legendary', 5000, 20000, 100, () => { const x = D(); return `${L()}${x}${x}${x}${L()}${L()}`; });
+    const ultraBase = [['777', 400000], ['888', 350000], ['999', 300000], ['555', 220000], ['333', 200000], ['111', 190000], ['007', 600000], ['001', 500000], ['002', 260000], ['005', 240000], ['123', 160000], ['321', 140000], ['100', 120000], ['200', 110000], ['300', 105000], ['700', 130000], ['800', 125000], ['900', 118000], ['666', 450000], ['000', 900000], ['101', 150000], ['505', 135000], ['707', 145000], ['909', 128000], ['010', 170000], ['020', 115000], ['050', 112000], ['070', 122000], ['090', 108000], ['222', 210000]];
+    let got = 0, loops = 0;
+    while (got < 30 && loops++ < 200) {
+        const [dg, base] = ultraBase[got % ultraBase.length];
+        const l1 = L(), l2 = L(), l3 = L();
+        const price = Math.round(base * (0.8 + r2() * 0.5) / 1000) * 1000;
+        if (addNum(`${l1}${dg}${l2}${l3}`, price, 'ultra', 'Элитный номер')) got++;
+    }
 })();
 const PAL = {
     common:    { col: '#9aa3b2', dark: '#586070' }, rare:      { col: '#4aa3ff', dark: '#1f5fc7' },
@@ -963,14 +1021,18 @@ const BACKGROUNDS = [
     { id: 'bg6', style: 'radial-gradient(900px 500px at 50% -10%, #8a5a10 0%, transparent 60%), linear-gradient(180deg, #17110a 0%, #241a0b 60%, #0c0904 100%)' }
 ];
 const ACHIEVEMENTS = [
-    { id: 'ach1', title: 'Первый шаг', desc: 'Сделайте 1 крутку', icon: '🎲' },
-    { id: 'ach2', title: 'Миллионер', desc: 'Накопите 100 млн ₽', icon: '💰' },
-    { id: 'ach3', title: 'Коллекционер', desc: 'Соберите 10 машин в гараже', icon: '🚗' },
-    { id: 'ach4', title: 'Батл-мастер', desc: 'Выиграйте 5 батлов', icon: '⚔️' },
-    { id: 'ach5', title: 'Апгрейдер', desc: 'Успешно прокачайте машину', icon: '⬆️' },
-    { id: 'ach6', title: 'Перерожденец', desc: 'Сделайте 1 перерождение', icon: '🔄' },
-    { id: 'ach7', title: 'Легенда', desc: 'Выбейте Legendary машину', icon: '🏆' },
-    { id: 'ach8', title: 'Тюнер', desc: 'Прокачайте салон 1 раз', icon: '🛠️' }
+    { id: 'ach1',  title: 'Первый шаг',    desc: 'Сделайте 1 крутку',            icon: '🎲', reward: { money: 1000000 },               label: '1 000 000 ₽' },
+    { id: 'ach2',  title: 'Миллионер',     desc: 'Накопите 100 млн ₽',           icon: '💰', reward: { crystals: 1000 },               label: '1 000 💎' },
+    { id: 'ach3',  title: 'Коллекционер',  desc: 'Соберите 10 машин в гараже',   icon: '🚗', reward: { money: 5000000 },               label: '5 000 000 ₽' },
+    { id: 'ach4',  title: 'Батл-мастер',   desc: 'Выиграйте 5 батлов',           icon: '⚔️', reward: { money: 10000000, crystals: 500 }, label: '10 млн ₽ + 500 💎' },
+    { id: 'ach5',  title: 'Апгрейдер',     desc: 'Успешно прокачайте машину',    icon: '⬆️', reward: { money: 8000000 },               label: '8 000 000 ₽' },
+    { id: 'ach6',  title: 'Перерожденец',  desc: 'Сделайте 1 перерождение',      icon: '🔄', reward: { crystals: 3000 },               label: '3 000 💎' },
+    { id: 'ach7',  title: 'Легенда',       desc: 'Выбейте Legendary машину',     icon: '🏆', reward: { money: 20000000, crystals: 1000 }, label: '20 млн ₽ + 1 000 💎' },
+    { id: 'ach8',  title: 'Тюнер',         desc: 'Прокачайте салон 1 раз',       icon: '🛠️', reward: { crystals: 1500 },               label: '1 500 💎' },
+    { id: 'ach9',  title: 'Бизнесмен',     desc: 'Купите 3 бизнеса',             icon: '🏭', reward: { money: 15000000 },              label: '15 000 000 ₽' },
+    { id: 'ach10', title: 'Миллиардер',    desc: 'Накопите 1 млрд ₽',            icon: '🤑', reward: { crystals: 5000 },               label: '5 000 💎' },
+    { id: 'ach11', title: 'Номерной',      desc: 'Соберите 10 номеров',          icon: '🔢', reward: { crystals: 2000 },               label: '2 000 💎' },
+    { id: 'ach12', title: 'Гиперкар',      desc: 'Получите Hyper или Ultra машину', icon: '🚀', reward: { money: 50000000, crystals: 3000 }, label: '50 млн ₽ + 3 000 💎' }
 ];
 const DAILY_TASKS = [
     { id: 'spins', icon: '🎲', title: 'Прокрути', desc: 'Сделайте 10 круток', goal: 10, reward: { money: 1000000 }, label: '1 000 000 ₽' },
@@ -979,27 +1041,29 @@ const DAILY_TASKS = [
 ];
 const BIZ_PERIOD_MIN = 45;
 const BUSINESSES_DEF = [
-    { id: 'taxi',   icon: '🚕', name: 'Таксопарк',   baseIncome: 300000, baseCost: 5000000,  costMul: 1.8, incMul: 1.55, limitHrs: 8 },
-    { id: 'wash',   icon: '🚿', name: 'Автомойка',   baseIncome: 225000, baseCost: 4000000,  costMul: 1.8, incMul: 1.55, limitHrs: 8 },
-    { id: 'tire',   icon: '🛞', name: 'Шиномонтаж',  baseIncome: 180000, baseCost: 3000000,  costMul: 1.8, incMul: 1.55, limitHrs: 8 },
-    { id: 'dealer', icon: '🏢', name: 'Автосалон',   baseIncome: 525000, baseCost: 12000000, costMul: 2.0, incMul: 1.6,  limitHrs: 8 },
-    { id: 'rent',   icon: '🔑', name: 'Прокат авто', baseIncome: 375000, baseCost: 8000000,  costMul: 1.9, incMul: 1.55, limitHrs: 8 },
-    { id: 'miner',  icon: '⛏️', name: 'Крипто-ферма',baseIncome: 270000, baseCost: 6000000,  costMul: 1.85,incMul: 1.55, limitHrs: 8 }
+    { id: 'taxi',   icon: '🚕', name: 'Таксопарк',   baseIncome: 900000,  baseCost: 5000000,  costMul: 1.8, incMul: 1.55, limitHrs: 8 },
+    { id: 'wash',   icon: '🚿', name: 'Автомойка',   baseIncome: 675000,  baseCost: 4000000,  costMul: 1.8, incMul: 1.55, limitHrs: 8 },
+    { id: 'tire',   icon: '🛞', name: 'Шиномонтаж',  baseIncome: 540000,  baseCost: 3000000,  costMul: 1.8, incMul: 1.55, limitHrs: 8 },
+    { id: 'dealer', icon: '🏢', name: 'Автосалон',   baseIncome: 1575000, baseCost: 12000000, costMul: 2.0, incMul: 1.6,  limitHrs: 8 },
+    { id: 'rent',   icon: '🔑', name: 'Прокат авто', baseIncome: 1125000, baseCost: 8000000,  costMul: 1.9, incMul: 1.55, limitHrs: 8 },
+    { id: 'miner',  icon: '⛏️', name: 'Крипто-ферма',baseIncome: 810000,  baseCost: 6000000,  costMul: 1.85,incMul: 1.55, limitHrs: 8 }
 ];
 function defaultBusinesses() { const b = {}; BUSINESSES_DEF.forEach(d => { b[d.id] = { level: 0, acc: 0, lastTick: Date.now() }; }); return b; }
+const CRYPTO_BASE = { btc: 5000000, eth: 350000, sol: 18000 };
 function defaultState() {
     return {
         playerId: '', money: START_MONEY, crystals: START_CRYSTALS, usd: 0, eur: 0, cny: 0, rebirths: 0,
         garage: [], pending: { car: [], number: [] }, playerName: 'Игрок_2107', upgradeChance: 50, upgradeChanceN: 50,
         battleCar: null, mmr: 0, battleWins: 0, currentBg: 'bg1', tuningLevel: 0, tuningBonus: 0,
-        contracts: [], ach: {}, lastFortuneSpin: 0, spins: 0, upgradeWins: 0, gotLegendary: false,
+        contracts: [], ach: {}, achClaimed: {}, lastFortuneSpin: 0, spins: 0, upgradeWins: 0, gotLegendary: false,
         dailyDate: '', dailyProgress: { spins: 0, epicPlus: 0, earned: 0 }, dailyClaimed: { spins: false, epicPlus: false, earned: false },
         loan: 0, loanDueAt: 0, lastAidAt: 0, loanCollateralUid: null, lastCrystalDaily: 0,
         pityCounter: 0, streakDays: 0, lastLoginDate: '', businesses: defaultBusinesses(), taxDebt: 0, taxBlocked: false,
+        shop: { date: '', bought: {} }, luckUntil: 0,
         crypto: {
-            btc: { name: 'BTC', icon: '₿', color: '#f7931a', price: 5000000, prev: 5000000, hold: 0 },
-            eth: { name: 'ETH', icon: 'Ξ', color: '#627eea', price: 350000, prev: 350000, hold: 0 },
-            sol: { name: 'SOL', icon: '◎', color: '#14f195', price: 18000, prev: 18000, hold: 0 }
+            btc: { name: 'BTC', icon: '₿', color: '#f7931a', price: 5000000, prev: 5000000, hold: 0, trend: 0 },
+            eth: { name: 'ETH', icon: 'Ξ', color: '#627eea', price: 350000, prev: 350000, hold: 0, trend: 0 },
+            sol: { name: 'SOL', icon: '◎', color: '#14f195', price: 18000, prev: 18000, hold: 0, trend: 0 }
         }
     };
 }
@@ -1010,6 +1074,11 @@ try {
 } catch (e) {}
 if (!state.businesses) state.businesses = defaultBusinesses();
 if (typeof state.taxDebt !== 'number') state.taxDebt = 0;
+if (!state.achClaimed) state.achClaimed = {};
+if (!state.ach) state.ach = {};
+if (!state.shop) state.shop = { date: '', bought: {} };
+if (typeof state.luckUntil !== 'number') state.luckUntil = 0;
+state.tuningBonus = (state.tuningLevel || 0) * 1; // 1% за уровень
 ['car', 'number'].forEach(t => { state.garage.push(...state.pending[t]); state.pending[t] = []; });
 if (!state.eur) state.eur = 0; if (!state.cny) state.cny = 0;
 if (!state.lastCrystalDaily) state.lastCrystalDaily = 0;
@@ -1085,16 +1154,35 @@ function transferMoney() {
         toast(`✅ Переведено ${fmt(amount)} ₽ → ${recipient.name}`);
     }, 'Перевести');
 }
-function checkAchievements() {
-    const cond = {
+// ===== ДОСТИЖЕНИЯ + НАГРАДЫ =====
+function achCondition(id) {
+    const bizOwned = BUSINESSES_DEF.filter(d => state.businesses[d.id] && state.businesses[d.id].level > 0).length;
+    return {
         ach1: state.spins >= 1, ach2: state.money >= 100000000,
         ach3: state.garage.filter(i => i.type === 'car').length >= 10,
         ach4: state.battleWins >= 5, ach5: state.upgradeWins >= 1,
-        ach6: state.rebirths >= 1, ach7: state.gotLegendary, ach8: state.tuningLevel >= 1
-    };
-    let n = 0;
-    ACHIEVEMENTS.forEach(a => { if (cond[a.id] && !state.ach[a.id]) { state.ach[a.id] = true; toast(`🏆 Достижение: ${a.title}`); } if (state.ach[a.id]) n++; });
-    const el = $('ui-ach-count'); if (el) el.textContent = `${n}/8`;
+        ach6: state.rebirths >= 1, ach7: state.gotLegendary, ach8: state.tuningLevel >= 1,
+        ach9: bizOwned >= 3, ach10: state.money >= 1000000000,
+        ach11: state.garage.filter(i => i.type === 'number').length >= 10,
+        ach12: state.garage.some(i => i.type === 'car' && (i.rarity === 'hyper' || i.rarity === 'ultra'))
+    }[id];
+}
+function checkAchievements() {
+    let n = 0, claimable = 0;
+    ACHIEVEMENTS.forEach(a => {
+        if (achCondition(a.id) && !state.ach[a.id]) { state.ach[a.id] = true; toast(`🏆 Достижение: ${a.title} — заберите награду!`); }
+        if (state.ach[a.id]) { n++; if (!state.achClaimed[a.id]) claimable++; }
+    });
+    const el = $('ui-ach-count'); if (el) el.textContent = `${n}/${ACHIEVEMENTS.length}` + (claimable ? ` • 🎁${claimable}` : '');
+}
+function claimAch(id) {
+    const a = ACHIEVEMENTS.find(x => x.id === id); if (!a) return;
+    if (!state.ach[id]) { toast('Достижение ещё не выполнено'); return; }
+    if (state.achClaimed[id]) { toast('Награда уже получена'); return; }
+    state.achClaimed[id] = true;
+    if (a.reward.money) earnMoney(a.reward.money);
+    if (a.reward.crystals) state.crystals += a.reward.crystals;
+    saveGame(); updateUI(); renderAchievements(); toast(`🎁 Награда: ${a.label}`);
 }
 const TIERS = [{ name: 'Дилер', from: 0 }, { name: 'Бизнесмен', from: 100000000 }, { name: 'Магнат', from: 500000000 }, { name: 'Легенда', from: 2000000000 }];
 const rankName = m => m < 1000 ? 'Бронза' : m < 2000 ? 'Серебро' : 'Золото';
@@ -1247,16 +1335,17 @@ function renderBank() {
     renderCrypto(); renderTransfers();
     const cb = $('cry-exchange-btn'); if (cb) { if (state.crystals >= 50000) cb.classList.remove('disabled'); else cb.classList.add('disabled'); }
 }
-function exchangeCrystals() { if (state.crystals < 50000) { toast('Нужно 50 000 💎'); return; } state.crystals -= 50000; earnMoney(50000000); updateUI(); renderBank(); toast('💎 50 000 → 50 000 000 ₽'); }
+function exchangeCrystals() { if (state.crystals < 50000) { toast('Нужно 50 000 💎'); return; } state.crystals -= 50000; earnMoney(CRY_EXCHANGE_RATE); updateUI(); renderBank(); toast('💎 50 000 → 300 000 000 ₽'); }
 const CRYPTO_KEYS = ['btc', 'eth', 'sol'], CRYPTO_FEE = 0.01;
 function renderCrypto() {
     const list = $('crypto-list'); if (!list) return;
     list.innerHTML = CRYPTO_KEYS.map(k => {
         const c = state.crypto[k]; if (!c) return '';
         const ch = c.prev ? ((c.price - c.prev) / c.prev) * 100 : 0, cls = ch >= 0 ? 'up' : 'down', arrow = ch >= 0 ? '▲' : '▼';
+        const tr = c.trend || 0, hint = tr > 0.01 ? '🔥 тренд вверх' : tr < -0.01 ? '📉 тренд вниз' : '➖ боковик';
         return `<div class="crypto-row">
             <div class="crypto-icon" style="background:${c.color}22;color:${c.color};">${c.icon}</div>
-            <div class="crypto-info"><div class="crypto-price">${c.name} · ${fmt(c.price)} ₽</div><div class="crypto-change ${cls}">${arrow} ${Math.abs(ch).toFixed(2)}%</div><div style="font-size:11px; color: var(--muted);">У вас: ${c.hold} ${c.name}</div></div>
+            <div class="crypto-info"><div class="crypto-price">${c.name} · ${fmt(c.price)} ₽</div><div class="crypto-change ${cls}">${arrow} ${Math.abs(ch).toFixed(2)}% <span style="font-size:10px; color:var(--muted); font-weight:700;">${hint}</span></div><div style="font-size:11px; color: var(--muted);">У вас: ${c.hold} ${c.name}</div></div>
             <div class="crypto-btns"><button class="crypto-btn crypto-buy" onclick="tradeCrypto('${k}', 1)">Купить</button><button class="crypto-btn crypto-sell" onclick="tradeCrypto('${k}', -1)">Продать</button></div>
         </div>`;
     }).join('');
@@ -1284,14 +1373,27 @@ function tradeCrypto(key, dir) {
     }
     updateUI(); renderBank(); saveGame();
 }
+// Рынок крипты: трендовые движения (momentum) + лёгкий возврат к базовой цене.
+// Раньше цена была чистым случайным блужданием, поэтому с комиссией выходило в минус.
+// Теперь есть затяжные тренды роста/падения — можно купить на росте и продать в плюс.
 setInterval(() => {
-    CRYPTO_KEYS.forEach(k => { const c = state.crypto[k]; if (!c) return; c.prev = c.price; const delta = (Math.random() - 0.5) * 0.08; c.price = Math.max(1, Math.round(c.price * (1 + delta))); });
+    CRYPTO_KEYS.forEach(k => {
+        const c = state.crypto[k]; if (!c) return;
+        const base = CRYPTO_BASE[k];
+        c.prev = c.price;
+        c.trend = (c.trend || 0) * 0.88 + (Math.random() - 0.5) * 0.045;
+        c.trend = Math.max(-0.06, Math.min(0.06, c.trend));
+        let delta = c.trend + (Math.random() - 0.5) * 0.02 + ((base - c.price) / base) * 0.012;
+        delta = Math.max(-0.1, Math.min(0.1, delta));
+        c.price = Math.max(Math.round(base * 0.15), Math.round(c.price * (1 + delta)));
+    });
     if ($('screen-bank') && $('screen-bank').classList.contains('active')) renderCrypto();
 }, 5000);
 setInterval(() => {
     checkLoanExpired(); applyAidIfNeeded(); tickBusinesses();
     if ($('screen-bank') && $('screen-bank').classList.contains('active')) renderBank();
     if ($('screen-business') && $('screen-business').classList.contains('active')) renderBusinesses();
+    if ($('screen-shop') && $('screen-shop').classList.contains('active')) updateShopLuck();
 }, 1000);
 function bizLevelDef(b) { return BUSINESSES_DEF.find(d => d.id === b) || null; }
 function bizIncomePerHour(id) { const def = bizLevelDef(id), b = state.businesses[id]; if (!def || !b || b.level <= 0) return 0; return Math.round(def.baseIncome * Math.pow(def.incMul, b.level - 1)); }
@@ -1310,10 +1412,9 @@ function tickBusinesses() {
 }
 function collectBiz(id) {
     const def = bizLevelDef(id), b = state.businesses[id]; if (!def || !b) return;
-    if (state.taxBlocked) { toast('❌ Сбор заблокирован — оплатите налоги!'); return; }
     if (b.acc <= 0) { toast('Пока нечего собирать'); return; }
     const gross = Math.floor(b.acc), tax = Math.floor(gross * 0.13), net = gross - tax;
-    b.acc = 0; earnMoney(net); state.taxDebt += tax; state.taxBlocked = state.taxDebt > 0;
+    b.acc = 0; earnMoney(net); state.taxDebt += tax; state.taxBlocked = false;
     saveGame(); updateUI(); renderBusinesses(); toast(`💵 +${fmt(net)} ₽ (налог ${fmt(tax)} ₽)`);
 }
 function payTaxes() {
@@ -1342,8 +1443,8 @@ function renderBusinesses() {
     list.innerHTML = BUSINESSES_DEF.map(def => {
         const b = state.businesses[def.id], lvl = b.level, cost = bizUpgradeCost(def.id), inc = bizIncomePerHour(def.id), lim = bizLimit(def.id);
         const acc = Math.floor(b.acc || 0), tax = Math.floor(acc * 0.13), net = acc - tax;
-        const canCollect = acc > 0 && !state.taxBlocked;
-        const btnLabel = state.taxBlocked ? '🚫 Оплатите налог' : (acc > 0 ? `Собрать ${fmt(net)} ₽` : 'Пусто');
+        const canCollect = acc > 0;
+        const btnLabel = acc > 0 ? `Собрать ${fmt(net)} ₽` : 'Пусто';
         return `<div class="list-item" style="flex-direction:column; align-items:stretch; gap:8px;">
             <div style="display:flex; align-items:center; gap:10px;">
                 <div class="list-icon">${def.icon}</div>
@@ -1464,6 +1565,7 @@ function updateUI() {
 const SPIN_SCREENS = { 'screen-autosalon': 'car', 'screen-gosznaki': 'number' };
 function openScreen(id) {
     const el = $(id); if (!el) return;
+    if (upgBusy || upgnBusy) { toast('Дождитесь окончания апгрейда!'); return; }
     if (id === 'screen-autosalon') renderPending('car');
     if (id === 'screen-gosznaki') renderPending('number');
     if (id === 'screen-upgrade') updateUpgradeUI();
@@ -1489,6 +1591,9 @@ function openScreen(id) {
     requestAnimationFrame(() => { el.scrollTop = 0; });
 }
 function closeScreen(id) {
+    // Нельзя выйти из апгрейдера, пока крутится колесо
+    if ((id === 'screen-upgrade' && upgBusy) || (id === 'screen-upgrade-num' && upgnBusy)) { toast('⏳ Дождитесь окончания апгрейда!'); return; }
+    if (id === 'screen-business' && state.taxDebt > 0 && state.money >= state.taxDebt) { toast('🏛️ Сначала оплатите налоги (' + fmt(state.taxDebt) + ' ₽)!'); return; }
     const t = SPIN_SCREENS[id];
     if (t && state.pending[t].length && !busySpin) {
         const n = state.pending[t].length;
@@ -1503,7 +1608,8 @@ function getRandomItem(type, mode) {
     const streakBonus = Math.min((state.streakDays || 0) * 2, 60);
     let boost = 0;
     if (mode === 'boost') boost = 2.5; else if (mode === 'x10') boost = 1.5;
-    const bonus = boost + state.rebirths * 0.5 + state.tuningBonus + streakBonus * 0.05;
+    const potion = (state.luckUntil || 0) > Date.now() ? 5 : 0;
+    const bonus = boost + state.rebirths * 0.5 + state.tuningBonus + streakBonus * 0.05 + potion;
     const cH = type === 'car' ? Math.max(0, 0.08 + boost * 0.01) : 0;
     const cU = Math.max(0, (type === 'car' ? 0.01 : 0.02) * (1 + boost * 0.5));
     const cL = Math.max(0, 1.2 + bonus - (mode === 'x10' ? 1 : 0));
@@ -1638,6 +1744,19 @@ function rebirth() {
         updateUI(); infoBox('🔄 Перерождение!', `Перерождений: ${state.rebirths} (+${(state.rebirths * 0.5).toFixed(1)}% к удаче).<br>Старт: ${fmt(START_MONEY)} ₽`);
     }, 'Переродиться');
 }
+function resetAll() {
+    confirmBox('Весь прогресс будет <b>полностью удалён</b>: деньги, кристаллы, гараж, бизнесы, достижения, перерождения. Это нельзя отменить. Начать заново?', () => {
+        confirmBox('Точно удалить ВСЁ и начать с нуля?', () => {
+            const keepId = state.playerId, keepName = state.playerName;
+            state = defaultState();
+            state.playerId = keepId; state.playerName = keepName;
+            upgUids = []; upgnUids = [];
+            saveGame(); checkDailyStreak(); updateUI();
+            closeScreen('screen-profile');
+            toast('🔄 Игра начата заново!');
+        }, 'Да, удалить');
+    }, 'Продолжить');
+}
 function spinWheel(el, target) {
     let rot = el._rot || 0;
     const cur = ((rot % 360) + 360) % 360;
@@ -1645,7 +1764,7 @@ function spinWheel(el, target) {
     el._rot = rot; el.style.transform = `rotate(${rot}deg)`;
 }
 
-// ===== НОВАЯ ЛОГИКА: МУЛЬТИ-АПГРЕЙДЕР МАШИН (до 6) =====
+// ===== МУЛЬТИ-АПГРЕЙДЕР МАШИН (до 6) =====
 let upgUids = [], upgBusy = false, _pickCb = null;
 function pickDone(u) { closeModal(); if (_pickCb) { const cb = _pickCb; _pickCb = null; cb(u); } }
 
@@ -1665,16 +1784,17 @@ function addUpgCar(u) {
 }
 function removeUpgCar(u) { if (upgBusy) return; upgUids = upgUids.filter(x => x !== u); updateUpgradeUI(); }
 
-// ===== НОВАЯ ЛОГИКА ПРИЗА ПО СУММЕ (машины) =====
+// Множитель приза зависит от выбранного шанса (любое значение 1–95%)
+function upgMult(chance) { return Math.max(1.05, (100 / chance) * 0.85); }
+const clampChance = v => Math.max(1, Math.min(95, Math.round(Number(v) || 0)));
+
 function getUpgradePrizeByPrice(totalPrice, chance, excludeRarity) {
-    const mult = chance === 10 ? 6 : chance === 25 ? 3 : chance === 50 ? 1.8 : 1.3;
-    const target = totalPrice * mult;
+    const target = totalPrice * upgMult(chance);
     const cands = CARS_DB.filter(c => c.price > totalPrice && (c.rarity !== 'ultra' || excludeRarity === 'hyper' || excludeRarity === 'ultra'));
     if (!cands.length) return null;
     cands.sort((a, b) => Math.abs(a.price - target) - Math.abs(b.price - target));
     return cands[0];
 }
-
 
 function updateUpgradeUI() {
     upgUids = upgUids.filter(u => state.garage.find(i => i.uid === u && i.type === 'car'));
@@ -1688,12 +1808,7 @@ function updateUpgradeUI() {
         }
         gridCur.innerHTML = h;
     }
-
-    // ПРИЗ — один, от суммы
-    const totalPrice = upgUids.reduce((s, u) => {
-        const c = state.garage.find(x => x.uid === u);
-        return s + (c ? c.price : 0);
-    }, 0);
+    const totalPrice = upgUids.reduce((s, u) => { const c = state.garage.find(x => x.uid === u); return s + (c ? c.price : 0); }, 0);
     const topRar = (() => {
         const arr = upgUids.map(u => state.garage.find(x => x.uid === u)).filter(Boolean);
         if (!arr.length) return 'common';
@@ -1713,24 +1828,28 @@ function updateUpgradeUI() {
             gridP.innerHTML = `<div class="upg-slot" style="grid-column: 1 / -1; min-height: 160px;"><div class="upg-cap">ПРИЗ</div><div class="upg-plus" style="color:var(--muted);">?</div>${upgUids.length ? '<div class="li-sub">Улучшать некуда</div>' : '<div class="li-sub">Выбери машины</div>'}</div>`;
         }
     }
-
     const c = state.upgradeChance;
     const wb = $('upg-wheel-bg'); if (wb) wb.style.background = `conic-gradient(#1fae72 0 ${c}%, #d93353 ${c}% 100%)`;
     const wt = $('upg-wheel-text'); if (wt) wt.textContent = c + '%';
     document.querySelectorAll('#chance-pills .chance-pill').forEach(p => p.classList.toggle('active', parseInt(p.textContent) === c));
-    const go = $('upg-go'); if (go) go.classList.toggle('disabled', !upgUids.length || !prize);
-    // подпись на кнопке — сумма
+    const go = $('upg-go'); if (go) go.classList.toggle('disabled', upgBusy || !upgUids.length || !prize);
     if (go && upgUids.length) go.innerHTML = `АПГРЕЙД НА ${fmt(totalPrice)} ₽`;
     else if (go) go.innerHTML = 'АПГРЕЙД МАШИН';
 }
-function setChance(c) { if (upgBusy) return; state.upgradeChance = c; updateUpgradeUI(); saveGame(); }
+function setChance(c) { if (upgBusy) return; state.upgradeChance = clampChance(c); updateUpgradeUI(); saveGame(); }
+function applyCustomChance() {
+    if (upgBusy) return;
+    const el = $('chance-input'), v = Number(el.value);
+    if (!v || v < 1 || v > 95) { toast('Введите шанс от 1 до 95%'); return; }
+    setChance(v); el.value = ''; toast(`Шанс: ${state.upgradeChance}%`);
+}
 
 function doUpgrade() {
     if (upgBusy) return;
     const cars = upgUids.map(u => state.garage.find(i => i.uid === u && i.type === 'car')).filter(Boolean);
     if (!cars.length) { toast('Выберите машины!'); return; }
     const totalPrice = cars.reduce((s, c) => s + c.price, 0);
-    const topRar = cars.sort((a, b) => b.price - a.price)[0].rarity;
+    const topRar = cars.slice().sort((a, b) => b.price - a.price)[0].rarity;
     const prize = getUpgradePrizeByPrice(totalPrice, state.upgradeChance, topRar);
     if (!prize) { toast('Улучшать некуда'); return; }
 
@@ -1738,17 +1857,15 @@ function doUpgrade() {
     upgBusy = true; const go = $('upg-go'); if (go) go.classList.add('disabled');
     const zone = chance * 3.6;
     const win = Math.random() * 100 < chance;
-    const target = win ? 4 + Math.random() * (zone - 8) : zone + 4 + Math.random() * (360 - zone - 8);
+    const target = win ? zone * 0.1 + Math.random() * zone * 0.8 : zone + (360 - zone) * 0.05 + Math.random() * (360 - zone) * 0.9;
     spinWheel($('upg-arrow'), target);
 
     setTimeout(() => {
-        // удаляем все выбранные машины
         cars.forEach(car => {
             const idx = state.garage.findIndex(i => i.uid === car.uid);
             if (idx >= 0) state.garage.splice(idx, 1);
             if (state.battleCar === car.uid) state.battleCar = null;
         });
-
         if (win) {
             const got = { ...prize, type: 'car', uid: newUid() };
             state.garage.push(got);
@@ -1767,7 +1884,7 @@ function doUpgrade() {
     }, 3200);
 }
 
-// ===== НОВАЯ ЛОГИКА: МУЛЬТИ-АПГРЕЙДЕР НОМЕРОВ (до 6) =====
+// ===== МУЛЬТИ-АПГРЕЙДЕР НОМЕРОВ (до 6) =====
 let upgnUids = [], upgnBusy = false;
 function chooseUpgradeNumber() {
     if (upgnBusy) return;
@@ -1785,10 +1902,8 @@ function addUpgNum(u) {
 }
 function removeUpgNum(u) { if (upgnBusy) return; upgnUids = upgnUids.filter(x => x !== u); updateUpgradeNumUI(); }
 
-// ===== НОВАЯ ЛОГИКА ПРИЗА ПО СУММЕ (номера) =====
 function getNumberUpgradePrizeByPrice(totalPrice, chance, excludeRarity) {
-    const mult = chance === 10 ? 6 : chance === 25 ? 3 : chance === 50 ? 1.8 : 1.3;
-    const target = totalPrice * mult;
+    const target = totalPrice * upgMult(chance);
     const cands = NUMBERS_DB.filter(c => c.price > totalPrice && (c.rarity !== 'ultra' || excludeRarity === 'legendary' || excludeRarity === 'ultra'));
     if (!cands.length) return null;
     cands.sort((a, b) => Math.abs(a.price - target) - Math.abs(b.price - target));
@@ -1807,11 +1922,7 @@ function updateUpgradeNumUI() {
         }
         gridCur.innerHTML = h;
     }
-
-    const totalPrice = upgnUids.reduce((s, u) => {
-        const c = state.garage.find(x => x.uid === u);
-        return s + (c ? c.price : 0);
-    }, 0);
+    const totalPrice = upgnUids.reduce((s, u) => { const c = state.garage.find(x => x.uid === u); return s + (c ? c.price : 0); }, 0);
     const topRar = (() => {
         const arr = upgnUids.map(u => state.garage.find(x => x.uid === u)).filter(Boolean);
         if (!arr.length) return 'common';
@@ -1831,23 +1942,28 @@ function updateUpgradeNumUI() {
             gridP.innerHTML = `<div class="upg-slot" style="grid-column: 1 / -1; min-height: 160px;"><div class="upg-cap">ПРИЗ</div><div class="upg-plus" style="color:var(--muted);">?</div>${upgnUids.length ? '<div class="li-sub">Улучшать некуда</div>' : '<div class="li-sub">Выбери номера</div>'}</div>`;
         }
     }
-
     const c = state.upgradeChanceN;
     const wb = $('upgn-wheel-bg'); if (wb) wb.style.background = `conic-gradient(#1fae72 0 ${c}%, #d93353 ${c}% 100%)`;
     const wt = $('upgn-wheel-text'); if (wt) wt.textContent = c + '%';
     document.querySelectorAll('#chance-pills-n .chance-pill').forEach(p => p.classList.toggle('active', parseInt(p.textContent) === c));
-    const go = $('upgn-go'); if (go) go.classList.toggle('disabled', !upgnUids.length || !prize);
+    const go = $('upgn-go'); if (go) go.classList.toggle('disabled', upgnBusy || !upgnUids.length || !prize);
     if (go && upgnUids.length) go.innerHTML = `АПГРЕЙД НА ${fmt(totalPrice)} 💎`;
     else if (go) go.innerHTML = 'АПГРЕЙД НОМЕРОВ';
 }
-function setChanceN(c) { if (upgnBusy) return; state.upgradeChanceN = c; updateUpgradeNumUI(); saveGame(); }
+function setChanceN(c) { if (upgnBusy) return; state.upgradeChanceN = clampChance(c); updateUpgradeNumUI(); saveGame(); }
+function applyCustomChanceN() {
+    if (upgnBusy) return;
+    const el = $('chance-input-n'), v = Number(el.value);
+    if (!v || v < 1 || v > 95) { toast('Введите шанс от 1 до 95%'); return; }
+    setChanceN(v); el.value = ''; toast(`Шанс: ${state.upgradeChanceN}%`);
+}
 
 function doUpgradeNumber() {
     if (upgnBusy) return;
     const nums = upgnUids.map(u => state.garage.find(i => i.uid === u && i.type === 'number')).filter(Boolean);
     if (!nums.length) { toast('Выберите номера!'); return; }
     const totalPrice = nums.reduce((s, c) => s + c.price, 0);
-    const topRar = nums.sort((a, b) => b.price - a.price)[0].rarity;
+    const topRar = nums.slice().sort((a, b) => b.price - a.price)[0].rarity;
     const prize = getNumberUpgradePrizeByPrice(totalPrice, state.upgradeChanceN, topRar);
     if (!prize) { toast('Улучшать некуда'); return; }
 
@@ -1855,7 +1971,7 @@ function doUpgradeNumber() {
     upgnBusy = true; const go = $('upgn-go'); if (go) go.classList.add('disabled');
     const zone = chance * 3.6;
     const win = Math.random() * 100 < chance;
-    const target = win ? 4 + Math.random() * (zone - 8) : zone + 4 + Math.random() * (360 - zone - 8);
+    const target = win ? zone * 0.1 + Math.random() * zone * 0.8 : zone + (360 - zone) * 0.05 + Math.random() * (360 - zone) * 0.9;
     spinWheel($('upgn-arrow'), target);
 
     setTimeout(() => {
@@ -1863,7 +1979,6 @@ function doUpgradeNumber() {
             const idx = state.garage.findIndex(i => i.uid === num.uid);
             if (idx >= 0) state.garage.splice(idx, 1);
         });
-
         if (win) {
             const got = { ...prize, type: 'number', uid: newUid() };
             state.garage.push(got);
@@ -1880,7 +1995,6 @@ function doUpgradeNumber() {
         updateUI(); updateUpgradeNumUI();
     }, 3200);
 }
-// ===== /КОНЕЦ НОВОГО АПГРЕЙДЕРА =====
 
 const BOT_NAMES = ['Shadow60','Neo60','Viper77','Ghost21','Rocket99','Drift42','Phantom','Nitro88','Racer13','Blaze07'];
 const BOT_AV = ['😈','🥷','🦊','🐺','🦁','💀','🤖','👽'];
@@ -2012,21 +2126,111 @@ function updateFortuneBtn() {
     if (left > 0) { btn.classList.add('disabled'); btn.textContent = 'Подождите'; status.textContent = `Следующий спин через ${Math.floor(left / 3600000)}ч ${Math.floor((left % 3600000) / 60000)}м`; }
     else { btn.classList.remove('disabled'); btn.textContent = '🎁 КРУТИТЬ БЕСПЛАТНО'; status.textContent = 'Бесплатный спин доступен!'; }
 }
-function renderShop() {
-    const kia = CARS_DB.find(c => c.rarity === 'common');
-    const kiaPrice = Math.round(kia.price * 1.26 / 100000) * 100000;
-    $('shop-list').innerHTML = `
-        <div class="list-item"><div class="li-art r-${kia.rarity}">${carSVG(kia)}</div><div class="li-main"><div class="li-title">${kia.name}</div><div class="li-sub">Скидка 30%</div><div class="li-gold">${fmt(kiaPrice)} ₽</div></div><button class="btn-join" onclick="buyShopCar(${kiaPrice})">КУПИТЬ</button></div>
-        <div class="list-item"><div class="list-icon">💎</div><div class="li-main"><div class="li-title">5 000 кристаллов</div><div class="li-sub">Для круток</div><div class="li-gold">3 000 000 ₽</div></div><button class="btn-join" onclick="buyShopCrystals(3000000, 5000)">КУПИТЬ</button></div>`;
+
+// ===== МАГАЗИН ДНЯ (новые ежедневные предложения) =====
+function shopState() {
+    const t = todayKey();
+    if (!state.shop || state.shop.date !== t) state.shop = { date: t, bought: {} };
+    return state.shop;
 }
-function buyShopCar(price) { if (state.money < price) { toast('Недостаточно средств!'); return; } const kia = CARS_DB.find(c => c.rarity === 'common'); state.money -= price; state.garage.push({ ...kia, type: 'car', uid: newUid() }); updateUI(); toast('Машина в гараже!'); }
-function buyShopCrystals(price, crys) { if (state.money < price) { toast('Недостаточно средств!'); return; } state.money -= price; state.crystals += crys; updateUI(); toast('Куплено!'); }
+function seedFromDate() { let h = 7; for (const ch of todayKey()) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h; }
+function weightedRarity(weights) {
+    const total = weights.reduce((s, w) => s + w[1], 0); let x = Math.random() * total;
+    for (const [rar, w] of weights) { if ((x -= w) < 0) return rar; }
+    return weights[0][0];
+}
+function randFrom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function getShopOffers() {
+    const r = rng(seedFromDate());
+    const pickR = arr => arr[Math.floor(r() * arr.length)];
+    const carA = pickR(CARS_DB.filter(c => ['rare', 'epic', 'legendary'].includes(c.rarity)));
+    const dA = Math.round(25 + r() * 25);
+    const carB = pickR(CARS_DB.filter(c => c.rarity === 'hyper'));
+    const dB = Math.round(15 + r() * 15);
+    const num = pickR(NUMBERS_DB.filter(n => ['epic', 'legendary'].includes(n.rarity)));
+    const dN = Math.round(30 + r() * 20);
+    return [
+        { id: 'carDeal', kind: 'car', item: carA, disc: dA, price: Math.round(carA.price * (1 - dA / 100) / 100000) * 100000, cur: 'money', limit: 1, title: 'Тачка дня' },
+        { id: 'hyperDeal', kind: 'car', item: carB, disc: dB, price: Math.round(carB.price * (1 - dB / 100) / 1000000) * 1000000, cur: 'money', limit: 1, title: 'Гиперкар недели' },
+        { id: 'numDeal', kind: 'number', item: num, disc: dN, price: Math.round(num.price * (1 - dN / 100) / 10) * 10, cur: 'crys', limit: 1, title: 'Номер дня' },
+        { id: 'mystery', kind: 'icon', icon: '🎁', title: 'Мистери-бокс', sub: 'Случайная машина: Epic — 70%, Legendary — 25%, Hyper — 5%', price: 20000000, cur: 'money', limit: 3 },
+        { id: 'plates', kind: 'icon', icon: '🔢', title: 'Набор номеров', sub: '3 случайных номера Rare и выше', price: 1200, cur: 'crys', limit: 3 },
+        { id: 'luck', kind: 'icon', icon: '🍀', title: 'Зелье удачи', sub: '+5% к шансу дорогих призов на 30 минут (суммируется)', price: 30000000, cur: 'money', limit: 2 },
+        { id: 'crys', kind: 'icon', icon: '💎', title: '5 000 кристаллов', sub: 'Для круток', price: 3000000, cur: 'money', limit: 5 },
+        { id: 'gift', kind: 'icon', icon: '🎀', title: 'Бесплатный подарок', sub: 'Случайные ₽ и 💎 раз в день', price: 0, cur: 'free', limit: 1 }
+    ];
+}
+function shopPriceText(o) { return o.cur === 'free' ? 'БЕСПЛАТНО' : o.cur === 'crys' ? `${fmt(o.price)} 💎` : `${fmt(o.price)} ₽`; }
+function renderShop() {
+    const st = shopState();
+    $('shop-list').innerHTML = getShopOffers().map(o => {
+        const n = st.bought[o.id] || 0, left = o.limit - n, soldOut = left <= 0;
+        let art, title, sub;
+        if (o.kind === 'car') { art = `<div class="li-art r-${o.item.rarity}">${carSVG(o.item)}</div>`; title = `${o.item.name}`; sub = `${o.title} · <span style="color:var(--red);font-weight:800;">−${o.disc}%</span> <s style="color:var(--muted)">${fmt(o.item.price)} ₽</s>`; }
+        else if (o.kind === 'number') { art = `<div class="li-art r-${o.item.rarity}" style="width:118px;">${plateHTML(o.item, true)}</div>`; title = o.title; sub = `${o.item.name} · <span style="color:var(--red);font-weight:800;">−${o.disc}%</span> <s style="color:var(--muted)">${fmt(o.item.price)} 💎</s>`; }
+        else { art = `<div class="list-icon">${o.icon}</div>`; title = o.title; sub = o.sub; }
+        return `<div class="list-item" style="${soldOut ? 'opacity:.55;' : ''}">${art}<div class="li-main"><div class="li-title">${title}</div><div class="li-sub">${sub}</div><div class="li-gold">${shopPriceText(o)}</div><div class="shop-lim">Осталось: ${left}/${o.limit}</div></div><button class="btn-join" ${soldOut ? 'disabled' : ''} onclick="buyShop('${o.id}')">${soldOut ? 'РАЗОБРАНО' : (o.cur === 'free' ? 'ЗАБРАТЬ' : 'КУПИТЬ')}</button></div>`;
+    }).join('');
+    updateShopLuck();
+}
+function updateShopLuck() {
+    const el = $('shop-luck'); if (!el) return;
+    const left = (state.luckUntil || 0) - Date.now();
+    if (left > 0) el.textContent = `🍀 Зелье удачи активно: ещё ${Math.floor(left / 60000)}м ${String(Math.floor((left % 60000) / 1000)).padStart(2, '0')}с`;
+    else el.textContent = '';
+}
+function buyShop(id) {
+    const st = shopState();
+    const o = getShopOffers().find(x => x.id === id); if (!o) return;
+    if ((st.bought[id] || 0) >= o.limit) { toast('Сегодня уже разобрано'); return; }
+    if (o.cur === 'money') { if (state.money < o.price) { toast(`Нужно ${fmt(o.price)} ₽`); return; } state.money -= o.price; }
+    else if (o.cur === 'crys') { if (state.crystals < o.price) { toast(`Нужно ${fmt(o.price)} 💎`); return; } state.crystals -= o.price; }
+    st.bought[id] = (st.bought[id] || 0) + 1;
+    if (id === 'carDeal' || id === 'hyperDeal') {
+        state.garage.push({ ...o.item, type: 'car', uid: newUid() });
+        if (['legendary', 'hyper', 'ultra'].includes(o.item.rarity)) state.gotLegendary = true;
+        toast(`🚗 ${o.item.name} в гараже!`);
+    } else if (id === 'numDeal') {
+        state.garage.push({ ...o.item, type: 'number', uid: newUid() });
+        toast(`🔢 Номер ${o.item.name} в гараже!`);
+    } else if (id === 'mystery') {
+        const rar = weightedRarity([['epic', 70], ['legendary', 25], ['hyper', 5]]);
+        const car = randFrom(CARS_DB.filter(c => c.rarity === rar));
+        state.garage.push({ ...car, type: 'car', uid: newUid() });
+        if (['legendary', 'hyper', 'ultra'].includes(car.rarity)) state.gotLegendary = true;
+        updateUI(); renderShop();
+        infoBox('🎁 Мистери-бокс', `<div class="r-${car.rarity}">${carSVG(car)}</div><b>${car.name}</b><br><span class="rar-label r-${car.rarity}">${car.rarity}</span><br>Стоимость: ${fmt(car.price)} ₽`);
+        return;
+    } else if (id === 'plates') {
+        const got = [];
+        for (let i = 0; i < 3; i++) {
+            const rar = weightedRarity([['rare', 60], ['epic', 30], ['legendary', 10]]);
+            const n = randFrom(NUMBERS_DB.filter(x => x.rarity === rar));
+            const it = { ...n, type: 'number', uid: newUid() }; state.garage.push(it); got.push(it);
+        }
+        updateUI(); renderShop();
+        infoBox('🔢 Набор номеров', got.map(n => plateHTML(n, true) + `<div style="font-size:11px; margin:2px 0 8px; color:#6fd3ff;">${fmt(n.price)} 💎</div>`).join(''));
+        return;
+    } else if (id === 'luck') {
+        state.luckUntil = Math.max(Date.now(), state.luckUntil || 0) + 30 * 60 * 1000;
+        toast('🍀 Удача +5% на 30 минут!');
+    } else if (id === 'crys') {
+        state.crystals += 5000; toast('💎 +5 000 кристаллов');
+    } else if (id === 'gift') {
+        const m = (500000 + Math.floor(Math.random() * 4) * 500000), c = 250 + Math.floor(Math.random() * 4) * 250;
+        earnMoney(m); state.crystals += c;
+        updateUI(); renderShop();
+        infoBox('🎀 Подарок дня', `<span style="font-size:20px; font-weight:900; color: var(--gold);">+${fmt(m)} ₽<br>+${fmt(c)} 💎</span>`);
+        return;
+    }
+    saveGame(); updateUI(); renderShop();
+}
 const tuneCost = () => 50000000 + state.tuningLevel * 450000000;
 function updateTuningUI() { $('tune-level').textContent = state.tuningLevel; $('tune-bonus').textContent = state.tuningBonus + '%'; $('tune-cost').textContent = fmt(tuneCost()) + ' ₽'; }
 function upgradeTuning() {
     const cost = tuneCost();
     if (state.money < cost) { toast(`Нужно ${fmt(cost)} ₽`); return; }
-    state.money -= cost; state.tuningLevel++; state.tuningBonus += 1.5; updateUI(); updateTuningUI(); toast(`Тюнинг: +${state.tuningBonus}%`);
+    state.money -= cost; state.tuningLevel++; state.tuningBonus += 1; updateUI(); updateTuningUI(); toast(`Тюнинг: +${state.tuningBonus}%`);
 }
 const BID_STEP = 5000000;
 let auction = { car: null, bid: 0, leader: null, hold: 0, timer: 20, iv: null };
@@ -2086,7 +2290,14 @@ function rentCar(u) { const idx = state.garage.findIndex(i => i.uid === u); if (
 function returnCar(u) { const idx = state.contracts.findIndex(c => c.car.uid === u); if (idx < 0) return; state.garage.push(state.contracts[idx].car); state.contracts.splice(idx, 1); renderContracts(); updateUI(); toast('Машина вернулась'); }
 setInterval(() => { if (state.contracts.length) { earnMoney(state.contracts.reduce((s, c) => s + c.income, 0)); updateUI(); } }, 10000);
 function renderAchievements() {
-    $('achievements-list').innerHTML = ACHIEVEMENTS.map(a => { const on = !!state.ach[a.id]; return `<div class="list-item"><div class="list-icon" style="${on ? 'background: rgba(61,220,151,.18);' : ''}">${a.icon}</div><div class="li-main"><div class="li-title">${a.title}</div><div class="li-sub">${a.desc}</div></div><div style="font-size:20px;">${on ? '✅' : '🔒'}</div></div>`; }).join('');
+    $('achievements-list').innerHTML = ACHIEVEMENTS.map(a => {
+        const on = !!state.ach[a.id], claimed = !!state.achClaimed[a.id];
+        let right;
+        if (!on) right = `<div style="font-size:20px;">🔒</div>`;
+        else if (claimed) right = `<div style="font-size:20px;">✅</div>`;
+        else right = `<button class="btn-join" onclick="claimAch('${a.id}')">Забрать</button>`;
+        return `<div class="list-item"><div class="list-icon" style="${on ? 'background: rgba(61,220,151,.18);' : ''}">${a.icon}</div><div class="li-main"><div class="li-title">${a.title}</div><div class="li-sub">${a.desc}</div><div class="li-gold">🎁 ${a.label}</div></div>${right}</div>`;
+    }).join('');
 }
 let catalogTab = 'car';
 function dropChance(type, rar, mode) {
@@ -2376,4 +2587,4 @@ setTimeout(tickLoader, 200);
 applyCustomIcons();
 </script>
 </body>
-                                                                                                                                           </html>
+</html>
