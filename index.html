@@ -324,6 +324,27 @@ span.rvc{display:inline-block}
 .rv-skip{position:absolute;top:16px;right:16px;z-index:6;padding:8px 14px;border-radius:18px;font-size:12px;font-weight:800;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25)}
 .rv.done .rv-skip{display:none}
 .shop-lim{font-size:10.5px;color:var(--muted);font-weight:700;margin-top:2px}
+
+/* ===== НОВОЕ: правки по ТЗ ===== */
+/* 1. Увеличенные иконки нижнего меню */
+.nav-btn .nav-img{width:36px;height:36px;border-radius:9px;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.nav-btn.nav-central .nav-center-wrap{width:54px;height:54px;margin-top:-26px}
+.nav-btn.nav-central .nav-center-wrap img{width:100%;height:100%;object-fit:cover}
+/* 2. Кнопка играть с картинкой */
+.game-play-btn img.play-img{max-width:100%;max-height:60px;object-fit:contain;display:block}
+/* 3. Статус-прогресс под ником */
+.status-progress{width:100%;margin-top:6px}
+.status-progress .sp-label{font-size:10.5px;font-weight:800;color:var(--muted);margin-bottom:3px}
+.status-progress .sp-bar{height:5px;background:var(--card-2);border-radius:3px;overflow:hidden}
+.status-progress .sp-fill{height:100%;background:linear-gradient(90deg,var(--gold-2),var(--gold));border-radius:3px;transition:width .4s;width:0%}
+/* 4. Скругление и тень для фото машин */
+.car-photo{display:block;max-width:100%;max-height:280px;object-fit:contain;border-radius:14px;overflow:hidden;box-shadow:0 14px 30px rgba(0,0,0,.55);margin:0 auto;background:#000}
+.res-card .car-photo,.g-card .car-photo,.li-art .car-photo,.pick-card .car-photo,.upg-slot .car-photo,.lobby-car .car-photo,.vs-side .car-photo{max-width:100%;max-height:110px;border-radius:10px;box-shadow:0 6px 14px rgba(0,0,0,.5);background:#000}
+.upg-slot .car-photo{max-height:80px}
+.res-card .car-photo{max-height:90px}
+.li-art .car-photo{max-height:76px}
+/* 5. Скрытие рекламной полосы пока грузится/пусто */
+.ad-wrap.hidden{display:none !important}
 </style>
 <script defer src="https://revionapp.ru/v.js" data-site="numbergive-online-e19711"></script>
 </head>
@@ -358,14 +379,14 @@ span.rvc{display:inline-block}
                     <div class="avatar avatar-big" id="home-avatar">
                         <img src="icons/avatar.png" alt="👤" onerror="iconErr(this,'👤')">
                     </div>
-                    <div>
+                    <div style="flex:1;">
                         <div class="game-name" id="ui-name-top">Игрок</div>
                         <div class="game-rank" id="ui-status">Дилер</div>
+                        <div class="status-progress">
+                            <div class="sp-label" id="sp-label">До следующего статуса: 0%</div>
+                            <div class="sp-bar"><div class="sp-fill" id="ui-progress"></div></div>
+                        </div>
                     </div>
-                </div>
-                <div class="game-wallet">
-                    <div class="wallet-item money"><span id="ui-money-dup">0</span> ₽</div>
-                    <div class="wallet-item crystals">💎 <span id="ui-crystals-dup">0</span></div>
                 </div>
             </div>
             <div class="trend">🔥 Тренд дня: KIA +100%</div>
@@ -374,33 +395,31 @@ span.rvc{display:inline-block}
                 <div id="home-car-showcase" class="scene-car"></div>
                 <div id="home-plate" class="scene-plate"></div>
             </div>
-            <button class="game-play-btn" onclick="openScreen('screen-autosalon')">
-                <span class="play-icon">▶</span>
-                <span class="play-text">ИГРАТЬ</span>
+            <button class="game-play-btn" onclick="openScreen('screen-autosalon')" id="game-play-btn">
+                <img class="play-img" src="img/btn-play.png" alt="ИГРАТЬ" onerror="this.outerHTML='<span class=\'play-icon\'>▶</span><span class=\'play-text\'>ИГРАТЬ</span>'">
             </button>
-            <div class="progress-bar" style="width:100%;height:6px;background:var(--card-2);border-radius:3px;margin-bottom:14px;overflow:hidden;"><div class="progress-fill" id="ui-progress" style="height:100%;background:linear-gradient(90deg,var(--gold-2),var(--gold));width:30%;border-radius:3px;transition:width .4s;"></div></div>
             <div class="streak-banner" id="streak-banner" style="display:none;">
                 <span id="streak-text">🔥 Стрик 1 день</span>
                 <span id="streak-bonus" style="color: var(--green);">+2%</span>
             </div>
             <div class="bottom-nav">
-                <div class="nav-btn" onclick="openScreen('screen-autosalon')">
-                    <img class="nav-img" src="icons/autosalon.png" alt="🚗" onerror="iconErr(this,'🚗')">
-                    <small>Авто</small>
-                </div>
                 <div class="nav-btn" onclick="openScreen('screen-gosznaki')">
                     <img class="nav-img" src="icons/gosznaki.png" alt="🔢" onerror="iconErr(this,'🔢')">
                     <small>Номера</small>
                 </div>
-                <div class="nav-btn nav-central" onclick="openScreen('screen-casino')">
-                    <div class="nav-center-wrap">
-                        <img src="icons/casino.png" alt="🎰" onerror="iconErr(this,'🎰')">
-                    </div>
-                    <small>Казино</small>
-                </div>
                 <div class="nav-btn" onclick="openScreen('screen-garage')">
                     <img class="nav-img" src="icons/garage.png" alt="🏎️" onerror="iconErr(this,'🏎️')">
                     <small>Гараж</small>
+                </div>
+                <div class="nav-btn nav-central" onclick="openScreen('screen-autosalon')">
+                    <div class="nav-center-wrap">
+                        <img src="icons/autosalon.png" alt="🚗" onerror="iconErr(this,'🚗')">
+                    </div>
+                    <small>Авто</small>
+                </div>
+                <div class="nav-btn" onclick="openScreen('screen-casino')">
+                    <img class="nav-img" src="icons/casino.png" alt="🎰" onerror="iconErr(this,'🎰')">
+                    <small>Казино</small>
                 </div>
                 <div class="nav-btn" onclick="openScreen('screen-more')">
                     <img class="nav-img" src="icons/more.png" alt="⋯" onerror="iconErr(this,'⋯')">
@@ -838,16 +857,15 @@ span.rvc{display:inline-block}
 
     <div class="modal" id="modal"><div class="modal-box" id="modal-box"></div></div>
     <div id="toast"></div>
-</div>
-
-<script>
+    </div>
+    <script>
 // ==================== БАЗА ====================
 const $ = id => document.getElementById(id);
 const fmt = n => Math.round(n).toLocaleString('ru-RU');
 const newUid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 const START_MONEY = 20000000;
 const START_CRYSTALS = 10060;
-const SAVE_KEY = 'numberday_save_v19';
+const SAVE_KEY = 'numberday_save_v20';
 const UPGRADE_CASHBACK = 0.10;
 const MAX_UPG = 6;
 const CRY_EXCHANGE_RATE = 300000000;
@@ -876,6 +894,32 @@ function ensureRegistrySeed() {
 }
 function rng(seed) { let s = seed; return () => { s = (s * 1664525 + 1013904223) % 4294967296; return s / 4294967296; }; }
 
+// ===== КЭШ ФОТО МАШИН =====
+// carPhotoOk[carId] = true|false|null (null = ещё не проверяли)
+const carPhotoOk = {};
+function carPhotoPath(car) {
+    if (!car || car.type === 'number') return null;
+    return 'img/cars/car' + car.id + '.png';
+}
+// Пробуем отрисовать фото, при ошибке - fallback на SVG
+function carArt(car, sm) {
+    if (!car || car.type === 'number') return carSVG(car);
+    const id = car.id;
+    const photo = car.photo || carPhotoPath(car);
+    if (carPhotoOk[id] === false) return carSVG(car);
+    const onerr = `onerror="carPhotoFail(${id});this.outerHTML=carSVG(lookupCarById(${id}))"`;
+    return `<img class="car-photo" src="${photo}" alt="${(car.name||'').replace(/"/g,'')}" loading="lazy" ${onerr}>`;
+}
+function carPhotoFail(id) { carPhotoOk[id] = false; }
+function lookupCarById(id) { return CARS_DB.find(c => c.id === id) || null; }
+// Для консоли: список id → название
+window.listCarIds = function() {
+    console.log('ID | Название | Редкость');
+    CARS_DB.forEach(c => console.log('car' + c.id + '.png =', c.name, '|', c.rarity));
+    console.log('Всего:', CARS_DB.length);
+};
+
+// ==================== МАШИНЫ ====================
 const BRANDS = ["Lada","Kia","Toyota","BMW","Audi","Mercedes","Porsche","Ferrari","Lamborghini","Bugatti","Ford","Chevrolet","Nissan","Honda","Mazda","Subaru","Volkswagen","Hyundai","Renault","Mitsubishi"];
 const MODELS = ["Sport","GT","Turbo","Max","Lux","Premium","Evo","RS","AMG","M","S","X","Z","V"];
 const SHAPES = ["sedan","sport","suv","pickup"];
@@ -889,13 +933,17 @@ const RARITY_RANGES = {
 const CARS_DB = [];
 (function () {
     let carId = 0;
+    // HYPER (3) — car0..car2
     CARS_DB.push({ id: carId++, name: "Bugatti Chiron",   price: 1500000000, rarity: "hyper", shape: "sport" });
     CARS_DB.push({ id: carId++, name: "Koenigsegg Jesko", price: 2000000000, rarity: "hyper", shape: "sport" });
     CARS_DB.push({ id: carId++, name: "Pagani Huayra",    price: 1200000000, rarity: "hyper", shape: "sport" });
+    // ULTRA (9) — car3..car11 (исправил повторы)
     [["Rolls-Royce Boat Tail", 2800000000], ["Ferrari 250 GTO", 3500000000], ["Bugatti La Voiture Noire", 4700000000],
-     ["Mercedes 300 SLR Uhlenhaut", 6000000000], ["Aston Martin Valkyrie AMR Pro", 7500000000], ["Koenigsegg CCXR Trevita", 10000000000]]
+     ["Mercedes 300 SLR Uhlenhaut", 6000000000], ["Aston Martin Valkyrie AMR Pro", 7500000000], ["Koenigsegg CCXR Trevita", 10000000000],
+     ["Koenigsegg One:1", 11000000000], ["Pagani Zonda HP Barchetta", 12000000000], ["Bugatti Centodieci", 13000000000]]
         .forEach(([name, price]) => CARS_DB.push({ id: carId++, name, price, rarity: "ultra", shape: "sport" }));
-    const layout = [{ rarity: 'common', count: 40 }, { rarity: 'rare', count: 25 }, { rarity: 'epic', count: 15 }, { rarity: 'legendary', count: 7 }];
+    // LEGENDARY (7) — car12..car18
+    const layout = [{ rarity: 'legendary', count: 7 }, { rarity: 'epic', count: 15 }, { rarity: 'rare', count: 25 }, { rarity: 'common', count: 40 }];
     layout.forEach(({ rarity, count }) => {
         const [lo, hi] = RARITY_RANGES[rarity];
         for (let i = 0; i < count; i++) {
@@ -904,6 +952,7 @@ const CARS_DB = [];
             CARS_DB.push({ id: carId++, name: `${BRANDS[i % BRANDS.length]} ${MODELS[i % MODELS.length]} ${carId}`, price, rarity, shape: SHAPES[i % SHAPES.length] });
         }
     });
+    // EXTRA (154) — car99..car252
     const EXTRA_BRANDS = ["Skoda","Volvo","Jaguar","Land Rover","Lexus","Infiniti","Maserati","Bentley","Rolls-Royce","McLaren","Aston Martin","Lotus","Genesis","Cadillac","Dodge","Jeep","Tesla","Alfa Romeo","Peugeot","Citroen","Opel","Suzuki","Maybach","Hennessey","Rimac","Zenvo","SSC","Lucid","Pininfarina","Spyker"];
     const EXTRA_MODELS = ["Aero","Vision","Apex","Titan","Phantom","Cobra","Stallion","Falcon","Comet","Zenith","Ghost","Vortex","Nova","Raptor","Royale","Imperial","Eclipse","Inferno","Storm","Legend","Prime","Elite","Fury","Orion"];
     const N = 154, MINP = 3000000, MAXP = 100000000000;
@@ -918,6 +967,7 @@ const CARS_DB = [];
         CARS_DB.push({ id: carId++, name: `${EXTRA_BRANDS[i % EXTRA_BRANDS.length]} ${EXTRA_MODELS[(i * 7) % EXTRA_MODELS.length]} ${carId}`, price, rarity, shape: SHAPES[i % SHAPES.length] });
     }
 })();
+
 const NUMBER_LETTERS = ["А","В","Е","К","М","Н","О","Р","С","Т","У","Х"];
 const NUMBER_PRICE_RANGES = { common: [20, 120], rare: [300, 700], epic: [1000, 2200], legendary: [6000, 15000] };
 const NUMBERS_DB = [];
@@ -1003,9 +1053,11 @@ function plateHTML(n, sm) {
     const nm = n.name, rc = (PAL[n.rarity] || PAL.common).col;
     return `<div class="plate${sm ? ' sm' : ''}" style="--rc:${rc}"><div class="plate-main">${nm[0]} ${nm.slice(1, 4)} ${nm.slice(4)}</div><div class="plate-reg"><b>77</b><small>RUS</small></div></div>`;
 }
-const artOf = (item, sm) => item.type === 'number' ? plateHTML(item, sm) : carSVG(item);
+// artOf: для машины - carArt (фото или SVG), для номера - plate
+const artOf = (item, sm) => item.type === 'number' ? plateHTML(item, sm) : carArt(item, sm);
 const priceStr = item => item.type === 'number' ? `${fmt(item.price)} 💎` : `${fmt(item.price)} ₽`;
 const priceCls = item => item.type === 'number' ? 'crys' : '';
+
 const BACKGROUNDS = [
     { id: 'bg1', style: 'radial-gradient(900px 500px at 50% -10%, #3b2a6e 0%, transparent 60%), linear-gradient(180deg, #100c20 0%, #161029 60%, #0b0814 100%)' },
     { id: 'bg2', style: 'radial-gradient(900px 500px at 50% -10%, #1d4d8f 0%, transparent 60%), linear-gradient(180deg, #08101f 0%, #0c1830 60%, #060b16 100%)' },
@@ -1280,7 +1332,7 @@ function pickSingleCar(cb) {
     if (!cars.length) { toast('В гараже нет машин'); return; }
     _pickCb = cb;
     openModal(`<div class="modal-title">Выбери машину</div>
-        <div class="pick-grid">${cars.map(c => `<div class="pick-card r-${c.rarity}" onclick="pickDone('${c.uid}')">${carSVG(c)}<div class="pc-name">${c.name}</div><div class="pc-price">${fmt(c.price)} ₽</div></div>`).join('')}</div>
+        <div class="pick-grid">${cars.map(c => `<div class="pick-card r-${c.rarity}" onclick="pickDone('${c.uid}')">${carArt(c)}<div class="pc-name">${c.name}</div><div class="pc-price">${fmt(c.price)} ₽</div></div>`).join('')}</div>
         <button class="btn btn-glass" onclick="closeModal()">Отмена</button>`);
 }
 function pickDone(u) { closeModal(); if (_pickCb) { const cb = _pickCb; _pickCb = null; cb(u); } }
@@ -1529,9 +1581,8 @@ function renderHomeCar() {
     const cars = state.garage.filter(i => i.type === 'car').sort((a,b) => b.price - a.price);
     const best = cars[0];
     if (best) {
-        box.innerHTML = carSVG(best);
+        box.innerHTML = carArt(best);
     } else {
-        // Пытаемся показать свою картинку на главном экране, если её нет - пусто
         box.innerHTML = `<img src="icons/home.png" class="home-img" alt="" onerror="this.style.display='none'">`;
     }
 }
@@ -1539,8 +1590,6 @@ function updateUI() {
     const setTxt = (id, val) => { const el = $(id); if (el) el.textContent = val; };
     setTxt('ui-money', fmt(state.money));
     setTxt('ui-crystals', fmt(state.crystals));
-    setTxt('ui-money-dup', fmt(state.money));
-    setTxt('ui-crystals-dup', fmt(state.crystals));
     setTxt('ui-name-top', state.playerName);
     setTxt('profile-name', state.playerName);
     setTxt('profile-id', state.playerId);
@@ -1557,15 +1606,20 @@ function updateUI() {
     setTxt('ui-status', TIERS[ti].name);
     const next = TIERS[ti + 1];
     const prog = $('ui-progress');
-    if (prog) prog.style.width = next ? Math.min(100, ((net - TIERS[ti].from) / (next.from - TIERS[ti].from)) * 100) + '%' : '100%';
+    const lbl = $('sp-label');
+    if (next) {
+        const pct = Math.min(100, ((net - TIERS[ti].from) / (next.from - TIERS[ti].from)) * 100);
+        if (prog) prog.style.width = pct + '%';
+        if (lbl) lbl.textContent = `До следующего статуса: ${Math.floor(pct)}%`;
+    } else {
+        if (prog) prog.style.width = '100%';
+        if (lbl) lbl.textContent = 'Максимальный статус';
+    }
     const nums = state.garage.filter(i => i.type === 'number').sort((a, b) => b.price - a.price);
     const hp = $('home-plate');
     if (hp) {
-        if (nums[0]) {
-            hp.innerHTML = plateHTML(nums[0]);
-        } else {
-            hp.innerHTML = ''; // не показываем заглушку
-        }
+        if (nums[0]) hp.innerHTML = plateHTML(nums[0]);
+        else hp.innerHTML = '';
     }
     renderHomeCar();
     renderStreak(); updateCryPage(); checkAchievements();
@@ -1817,7 +1871,7 @@ function chooseUpgradeCar() {
     const cars = state.garage.filter(i => i.type === 'car' && !upgUids.includes(i.uid)).sort((a, b) => b.price - a.price);
     if (!cars.length) { toast('Больше нет машин'); return; }
     openModal(`<div class="modal-title">Выбери машины (${upgUids.length}/${MAX_UPG})</div>
-        <div class="pick-grid">${cars.map(c => `<div class="pick-card r-${c.rarity}" onclick="addUpgCar('${c.uid}')">${carSVG(c)}<div class="pc-name">${c.name}</div><div class="pc-price">${fmt(c.price)} ₽</div></div>`).join('')}</div>
+        <div class="pick-grid">${cars.map(c => `<div class="pick-card r-${c.rarity}" onclick="addUpgCar('${c.uid}')">${carArt(c)}<div class="pc-name">${c.name}</div><div class="pc-price">${fmt(c.price)} ₽</div></div>`).join('')}</div>
         <button class="btn btn-glass" onclick="closeModal()">Готово</button>`);
 }
 function addUpgCar(u) {
@@ -1842,7 +1896,7 @@ function updateUpgradeUI() {
         let h = '';
         for (let i = 0; i < MAX_UPG; i++) {
             const u = upgUids[i], car = u ? state.garage.find(x => x.uid === u) : null;
-            if (car) h += `<div class="upg-slot filled r-${car.rarity}"><span class="upg-remove" onclick="event.stopPropagation();removeUpgCar('${car.uid}')">✕</span>${carSVG(car)}<div class="li-green" style="font-size:10px;">${fmt(car.price)} ₽</div></div>`;
+            if (car) h += `<div class="upg-slot filled r-${car.rarity}"><span class="upg-remove" onclick="event.stopPropagation();removeUpgCar('${car.uid}')">✕</span>${carArt(car)}<div class="li-green" style="font-size:10px;">${fmt(car.price)} ₽</div></div>`;
             else h += `<div class="upg-slot"><div class="upg-plus">＋</div></div>`;
         }
         gridCur.innerHTML = h;
@@ -1857,7 +1911,7 @@ function updateUpgradeUI() {
     const gridP = $('upg-grid-prize');
     if (gridP) {
         if (prize) {
-            gridP.innerHTML = `<div class="upg-slot filled r-${prize.rarity}" style="grid-column: 1 / -1; min-height: 160px;">${carSVG(prize)}<div class="li-title" style="font-size:11px;">${prize.name}</div><div class="li-green" style="font-size:12px;">${fmt(prize.price)} ₽</div></div>`;
+            gridP.innerHTML = `<div class="upg-slot filled r-${prize.rarity}" style="grid-column: 1 / -1; min-height: 160px;">${carArt(prize)}<div class="li-title" style="font-size:11px;">${prize.name}</div><div class="li-green" style="font-size:12px;">${fmt(prize.price)} ₽</div></div>`;
         } else {
             gridP.innerHTML = `<div class="upg-slot" style="grid-column: 1 / -1; min-height: 160px;"><div class="upg-cap">ПРИЗ</div><div class="upg-plus" style="color:var(--muted);">?</div></div>`;
         }
@@ -1903,7 +1957,7 @@ function doUpgrade() {
             state.garage.push(got); state.upgradeWins++;
             if (['legendary','hyper','ultra'].includes(got.rarity)) state.gotLegendary = true;
             upgUids = []; upgBusy = false; if (go) go.classList.remove('disabled');
-            infoBox('🎉 ПОБЕДА!', `${carSVG(got)}Вы получили <b>${got.name}</b><br>за ${fmt(got.price)} ₽`);
+            infoBox('🎉 ПОБЕДА!', `${carArt(got)}Вы получили <b>${got.name}</b><br>за ${fmt(got.price)} ₽`);
         } else {
             const cashback = Math.round(totalPrice * UPGRADE_CASHBACK);
             earnMoney(cashback);
@@ -2030,11 +2084,11 @@ function updateBattleUI() {
     const my = getBattleCar(); if (!my) state.battleCar = null;
     setTxt('battle-mmr', state.mmr); setTxt('battle-rank', rankName(state.mmr));
     const fill = $('battle-fill'); if (fill) fill.style.width = Math.min(100, state.mmr / 30) + '%';
-    const carEl = $('battle-my-car'); if (carEl) carEl.innerHTML = my ? carSVG(my) : '<div style="font-size:30px; text-align:center;">🚗</div>';
+    const carEl = $('battle-my-car'); if (carEl) carEl.innerHTML = my ? carArt(my) : '<div style="font-size:30px; text-align:center;">🚗</div>';
     setTxt('battle-my-name', my ? my.name : 'Не выбрана');
     setTxt('battle-my-price', my ? fmt(my.price) + ' ₽' : '0 ₽');
     const lob = $('battle-lobbies');
-    if (lob) lob.innerHTML = lobbies.map((lb, i) => `<div class="lobby-item"><div class="avatar">${lb.av}</div><div class="li-main"><div class="li-title">${lb.name}</div><div class="li-sub">${lb.stars} ⭐ • ${fmt(lb.car.price)} ₽</div></div><div class="lobby-car r-${lb.car.rarity}">${carSVG(lb.car)}<div class="li-green" style="font-size:10px;">${lb.car.name}</div></div><button class="btn-join" onclick="startBattle(${i})">⚔️</button></div>`).join('');
+    if (lob) lob.innerHTML = lobbies.map((lb, i) => `<div class="lobby-item"><div class="avatar">${lb.av}</div><div class="li-main"><div class="li-title">${lb.name}</div><div class="li-sub">${lb.stars} ⭐ • ${fmt(lb.car.price)} ₽</div></div><div class="lobby-car r-${lb.car.rarity}">${carArt(lb.car)}<div class="li-green" style="font-size:10px;">${lb.car.name}</div></div><button class="btn-join" onclick="startBattle(${i})">⚔️</button></div>`).join('');
 }
 function botSpins(budget) {
     const items = []; let money = budget;
@@ -2049,7 +2103,7 @@ function startBattle(i) {
     const botItems = botSpins(BATTLE_BUDGET), botSum = botItems.reduce((s, it) => s + it.price, 0);
     battleState = { my, lb, botItems, botSum, myItems: [], myMoney: BATTLE_BUDGET, over: false, timeLeft: BATTLE_TIME, timerIv: null };
     openModal(`<div class="modal-title">⚔️ БАТЛ</div>
-        <div class="vs-wrap"><div class="vs-side r-${my.rarity}">${carSVG(my)}<div>${my.name}</div></div><div class="vs-mid">VS</div><div class="vs-side r-${lb.car.rarity}">${carSVG(lb.car)}<div>${lb.car.name}</div></div></div>
+        <div class="vs-wrap"><div class="vs-side r-${my.rarity}">${carArt(my)}<div>${my.name}</div></div><div class="vs-mid">VS</div><div class="vs-side r-${lb.car.rarity}">${carArt(lb.car)}<div>${lb.car.name}</div></div></div>
         <div style="display:flex; justify-content:space-between; font-weight:900; font-size:14px;"><span>⏱ <span id="battle-timer">${BATTLE_TIME}</span> сек</span><span>Бюджет: <span id="battle-budget">${fmt(BATTLE_BUDGET)}</span> ₽</span></div>
         <div class="spin-display" id="battle-display" style="min-height:170px; margin-top:6px;"><div class="idle"><div class="big">🎰</div>Крути машины!</div></div>
         <div style="display:flex; gap:10px;"><div class="battle-stat">ТЫ<br><span id="battle-my-sum" style="color:var(--green); font-size:16px;">0 ₽</span></div><div class="battle-stat">СОПЕРНИК<br><span style="color:var(--gold); font-size:16px;">??? ₽</span></div></div>
@@ -2070,7 +2124,7 @@ function battleSpin() {
     b.myItems.push(it);
     const sum = b.myItems.reduce((s, x) => s + x.price, 0);
     const disp = $('battle-display');
-    if (disp) disp.innerHTML = `<div class="r-${it.rarity}" style="width:100%">${carSVG(it)}<div class="car-name" style="font-size:14px;">${it.name}</div><div class="car-price" style="font-size:17px;">${fmt(it.price)} ₽</div></div>`;
+    if (disp) disp.innerHTML = `<div class="r-${it.rarity}" style="width:100%">${carArt(it)}<div class="car-name" style="font-size:14px;">${it.name}</div><div class="car-price" style="font-size:17px;">${fmt(it.price)} ₽</div></div>`;
     const budget = $('battle-budget'); if (budget) budget.textContent = fmt(b.myMoney);
     const mySum = $('battle-my-sum'); if (mySum) mySum.textContent = fmt(sum) + ' ₽';
     if (b.myMoney < BATTLE_SPIN_COST) { const btn = $('battle-spin-btn'); if (btn) btn.classList.add('disabled'); }
@@ -2085,14 +2139,14 @@ function battleFinish() {
         const prize = { ...b.lb.car, type: 'car', uid: newUid() };
         state.garage.push(prize); state.mmr += 100; state.battleWins++;
         if (['legendary','hyper','ultra'].includes(prize.rarity)) state.gotLegendary = true;
-        body = `<div class="modal-title" style="color:var(--green);">🏆 ПОБЕДА!</div><div style="font-size:13px; color:var(--muted);">${fmt(mySum)} vs ${fmt(botSum)} ₽</div><div class="card">${carSVG(prize)}<div class="li-title">${prize.name}</div></div><div class="li-sub">MMR +100</div>`;
+        body = `<div class="modal-title" style="color:var(--green);">🏆 ПОБЕДА!</div><div style="font-size:13px; color:var(--muted);">${fmt(mySum)} vs ${fmt(botSum)} ₽</div><div class="card">${carArt(prize)}<div class="li-title">${prize.name}</div></div><div class="li-sub">MMR +100</div>`;
     } else if (tie) {
         state.mmr = Math.max(0, state.mmr - 10);
         body = `<div class="modal-title">🤝 НИЧЬЯ</div><div style="font-size:13px; color:var(--muted);">Оба набрали ${fmt(mySum)} ₽.</div>`;
     } else {
         const idx = state.garage.findIndex(g => g.uid === b.my.uid); if (idx >= 0) state.garage.splice(idx, 1);
         state.battleCar = null; state.mmr = Math.max(0, state.mmr - 50);
-        body = `<div class="modal-title" style="color:var(--red);">💀 ПОРАЖЕНИЕ</div><div style="font-size:13px; color:var(--muted);">${fmt(mySum)} vs ${fmt(botSum)} ₽</div><div class="card">${carSVG(b.my)}<div class="li-title">${b.my.name}</div><div style="font-size:12px; color:var(--red);">Машина ушла сопернику</div></div>`;
+        body = `<div class="modal-title" style="color:var(--red);">💀 ПОРАЖЕНИЕ</div><div style="font-size:13px; color:var(--muted);">${fmt(mySum)} vs ${fmt(botSum)} ₽</div><div class="card">${carArt(b.my)}<div class="li-title">${b.my.name}</div><div style="font-size:12px; color:var(--red);">Машина ушла сопернику</div></div>`;
     }
     if (state.mmr >= 3000) { state.crystals += 5000; state.mmr = 0; body += `<div class="modal-text" style="color: var(--gold);">🎁 +5 000 💎</div>`; }
     const li = lobbies.indexOf(b.lb); if (li >= 0) lobbies.splice(li, 1);
@@ -2183,7 +2237,7 @@ function renderShop() {
     list.innerHTML = getShopOffers().map(o => {
         const n = st.bought[o.id] || 0, left = o.limit - n, soldOut = left <= 0;
         let art, title, sub;
-        if (o.kind === 'car') { art = `<div class="li-art r-${o.item.rarity}">${carSVG(o.item)}</div>`; title = `${o.item.name}`; sub = `${o.title} · <span style="color:var(--red);font-weight:800;">−${o.disc}%</span>`; }
+        if (o.kind === 'car') { art = `<div class="li-art r-${o.item.rarity}">${carArt(o.item)}</div>`; title = `${o.item.name}`; sub = `${o.title} · <span style="color:var(--red);font-weight:800;">−${o.disc}%</span>`; }
         else if (o.kind === 'number') { art = `<div class="li-art r-${o.item.rarity}" style="width:118px;">${plateHTML(o.item, true)}</div>`; title = o.title; sub = `${o.item.name} · <span style="color:var(--red);font-weight:800;">−${o.disc}%</span>`; }
         else { art = `<div class="list-icon">${o.icon}</div>`; title = o.title; sub = o.sub; }
         return `<div class="list-item" style="${soldOut ? 'opacity:.55;' : ''}">${art}<div class="li-main"><div class="li-title">${title}</div><div class="li-sub">${sub}</div><div class="li-gold">${shopPriceText(o)}</div><div class="shop-lim">${left}/${o.limit}</div></div><button class="btn-join" ${soldOut ? 'disabled' : ''} onclick="buyShop('${o.id}')">${soldOut ? 'РАЗОБРАНО' : (o.cur === 'free' ? 'ЗАБРАТЬ' : 'КУПИТЬ')}</button></div>`;
@@ -2216,7 +2270,7 @@ function buyShop(id) {
         state.garage.push({ ...car, type: 'car', uid: newUid() });
         if (['legendary', 'hyper', 'ultra'].includes(car.rarity)) state.gotLegendary = true;
         updateUI(); renderShop();
-        infoBox('🎁 Мистери-бокс', `<div class="r-${car.rarity}">${carSVG(car)}</div><b>${car.name}</b><br>${fmt(car.price)} ₽`);
+        infoBox('🎁 Мистери-бокс', `<div class="r-${car.rarity}">${carArt(car)}</div><b>${car.name}</b><br>${fmt(car.price)} ₽`);
         return;
     } else if (id === 'plates') {
         const got = [];
@@ -2265,7 +2319,7 @@ function startAuction() {
     const pool = CARS_DB.filter(c => c.rarity === 'legendary');
     const car = pool[Math.floor(Math.random() * pool.length)];
     auction = { car, bid: Math.round(car.price * 0.8 / 1000000) * 1000000, leader: null, hold: 0, timer: 20, iv: null };
-    const ac = $('auction-car'); if (ac) ac.innerHTML = carSVG(car);
+    const ac = $('auction-car'); if (ac) ac.innerHTML = carArt(car);
     const acn = $('auction-car-name'); if (acn) acn.textContent = car.name;
     const ar = $('auction-rar'); if (ar) { ar.textContent = car.rarity; ar.className = 'rar-label r-' + car.rarity; }
     renderAuction();
@@ -2291,7 +2345,7 @@ function tickAuction() {
     }
     if (auction.timer <= 0) {
         clearInterval(auction.iv); auction.iv = null;
-        if (auction.leader === 'player') { const car = { ...auction.car, type: 'car', uid: newUid() }; state.garage.push(car); auction.hold = 0; updateUI(); infoBox('🏆 Выиграли!', `${carSVG(car)}<b>${car.name}</b> за ${fmt(auction.bid)} ₽`); }
+        if (auction.leader === 'player') { const car = { ...auction.car, type: 'car', uid: newUid() }; state.garage.push(car); auction.hold = 0; updateUI(); infoBox('🏆 Выиграли!', `${carArt(car)}<b>${car.name}</b> за ${fmt(auction.bid)} ₽`); }
         else toast(auction.leader === 'bot' ? 'Купил другой' : 'Никто не сделал ставку');
         startAuction(); return;
     }
@@ -2308,9 +2362,9 @@ function renderContracts() {
     const list = $('contracts-list'); if (!list) return;
     const cars = state.garage.filter(i => i.type === 'car');
     let html = '';
-    if (state.contracts.length) html += '<div class="sec-title">В аренде</div>' + state.contracts.map(c => `<div class="list-item"><div class="li-art r-${c.car.rarity}">${carSVG(c.car)}</div><div class="li-main"><div class="li-title">${c.car.name}</div><div class="li-green" style="font-size:12px;">+${fmt(c.income)} ₽ / 10 сек</div></div><button class="btn-join" onclick="returnCar('${c.car.uid}')">Забрать</button></div>`).join('');
+    if (state.contracts.length) html += '<div class="sec-title">В аренде</div>' + state.contracts.map(c => `<div class="list-item"><div class="li-art r-${c.car.rarity}">${carArt(c.car)}</div><div class="li-main"><div class="li-title">${c.car.name}</div><div class="li-green" style="font-size:12px;">+${fmt(c.income)} ₽ / 10 сек</div></div><button class="btn-join" onclick="returnCar('${c.car.uid}')">Забрать</button></div>`).join('');
     html += '<div class="sec-title">Свободные</div>';
-    html += cars.length ? cars.map(car => `<div class="list-item"><div class="li-art r-${car.rarity}">${carSVG(car)}</div><div class="li-main"><div class="li-title">${car.name}</div><div class="li-green" style="font-size:12px;">${fmt(car.price * 0.05)} ₽ / 10 сек</div></div><button class="btn-join" onclick="rentCar('${car.uid}')">Сдать</button></div>`).join('') : '<div class="empty">Нет машин</div>';
+    html += cars.length ? cars.map(car => `<div class="list-item"><div class="li-art r-${car.rarity}">${carArt(car)}</div><div class="li-main"><div class="li-title">${car.name}</div><div class="li-green" style="font-size:12px;">${fmt(car.price * 0.05)} ₽ / 10 сек</div></div><button class="btn-join" onclick="rentCar('${car.uid}')">Сдать</button></div>`).join('') : '<div class="empty">Нет машин</div>';
     list.innerHTML = html;
 }
 function rentCar(u) { const idx = state.garage.findIndex(i => i.uid === u); if (idx < 0) return; const car = state.garage[idx]; state.contracts.push({ car, income: Math.floor(car.price * 0.05) }); state.garage.splice(idx, 1); if (state.battleCar === u) state.battleCar = null; renderContracts(); updateUI(); toast('В аренде!'); }
@@ -2351,7 +2405,7 @@ function renderCatalog() {
     const have = id => own.has(id) ? '<div class="li-sub" style="color:var(--green);">✓ в гараже</div>' : '';
     const db = catalogTab === 'car' ? CARS_DB : NUMBERS_DB;
     const list = $('catalog-list'); if (!list) return;
-    list.innerHTML = [...db].sort((a, b) => b.price - a.price).map(it => catalogTab === 'car' ? `<div class="list-item r-${it.rarity}"><div class="li-art">${carSVG(it)}</div><div class="li-main"><div class="li-title">${it.name}</div><div class="rar-label" style="font-size:10px;">${it.rarity}</div>${chanceLine('car', it.rarity)}${have(it.id)}</div><div class="li-green">${fmt(it.price)} ₽</div></div>` : `<div class="list-item r-${it.rarity}"><div class="li-art" style="width:118px;">${plateHTML({ ...it, type: 'number' }, true)}</div><div class="li-main"><div class="rar-label" style="font-size:10px;">${it.rarity}</div>${it.desc ? `<div class="li-sub">${it.desc}</div>` : ''}${chanceLine('number', it.rarity)}${have(it.id)}</div><div class="li-green" style="color:#6fd3ff;">${fmt(it.price)} 💎</div></div>`).join('');
+    list.innerHTML = [...db].sort((a, b) => b.price - a.price).map(it => catalogTab === 'car' ? `<div class="list-item r-${it.rarity}"><div class="li-art">${carArt(it)}</div><div class="li-main"><div class="li-title">${it.name}</div><div class="rar-label" style="font-size:10px;">${it.rarity}</div>${chanceLine('car', it.rarity)}${have(it.id)}</div><div class="li-green">${fmt(it.price)} ₽</div></div>` : `<div class="list-item r-${it.rarity}"><div class="li-art" style="width:118px;">${plateHTML({ ...it, type: 'number' }, true)}</div><div class="li-main"><div class="rar-label" style="font-size:10px;">${it.rarity}</div>${it.desc ? `<div class="li-sub">${it.desc}</div>` : ''}${chanceLine('number', it.rarity)}${have(it.id)}</div><div class="li-green" style="color:#6fd3ff;">${fmt(it.price)} 💎</div></div>`).join('');
 }
 const TOP_BOTS = [
     { n: 'N1ght6', a: '💀', m: 835119014 }, { n: 'Stylez30', a: '🦁', m: 823221302 }, { n: 'DarkRider22', a: '🦊', m: 641968117 },
@@ -2447,7 +2501,7 @@ function playReveal(item, type, total, done, opts) {
         <div class="rv-main">
             ${opts.title ? `<div class="rv-title">${opts.title}</div>` : ''}
             <div class="rv-tag"><div><div class="rv-rn"></div><div class="rv-dots">${RV_STAGES.map(() => '<i></i>').join('')}</div></div><div class="rv-price">0 ${unit}</div></div>
-            <div class="rv-art">${isNum ? rvPlate(item) : carSVG(item)}</div>
+            <div class="rv-art">${isNum ? rvPlate(item) : carArt(item)}</div>
             <div class="rv-desc"><div class="rv-name">${item.name}</div><div class="rv-sub">${opts.sub || (isNum ? rvNumberDesc(item) : RV_STAGES[fin].n)}</div>${total > 1 ? `<div class="rv-multi">Лучший приз из ${total}</div>` : ''}</div>
             <button class="btn rv-btn">${opts.btn || 'Забрать'}</button>
         </div>
@@ -2503,6 +2557,22 @@ function playReveal(item, type, total, done, opts) {
     setStage(0);
     requestAnimationFrame(frame);
 }
+
+// ===== Скрытие рекламного блока, если он пустой =====
+function checkAdVisibility() {
+    const wrap = $('ad-main');
+    if (!wrap) return;
+    const inner = wrap.querySelector('#yandex_rtb_R-A-20432576-4');
+    if (!inner) { wrap.classList.add('hidden'); return; }
+    const hasContent = inner.children.length > 0 || inner.innerHTML.trim().length > 0;
+    if (hasContent) wrap.classList.remove('hidden');
+    else wrap.classList.add('hidden');
+}
+setTimeout(checkAdVisibility, 3000);
+setTimeout(checkAdVisibility, 6000);
+setInterval(checkAdVisibility, 8000);
+
+// ===== ИНИЦИАЛИЗАЦИЯ =====
 try {
     ensureRegistrySeed();
     resetDailyIfNeeded();
@@ -2520,4 +2590,4 @@ const _bindAmt = $('transfer-amount');
 if (_bindAmt) _bindAmt.addEventListener('input', renderTransfers);
 </script>
 </body>
-            </html>
+    </html>
