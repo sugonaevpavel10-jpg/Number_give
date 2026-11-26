@@ -546,6 +546,7 @@ span.rvc { display: inline-block; }
                     <p style="font-size:12px; color: var(--muted); margin:0;">С каждого сбора удерживается <b style="color:var(--gold)">13%</b>. Собирайте доход со всех бизнесов, а налог оплатите один раз — пока он не оплачен, выйти из вкладки нельзя (если хватает денег).</p>
                     <button class="btn btn-green" id="tax-pay-btn" onclick="payTaxes()">Оплатить налоги</button>
                 </div>
+                <button class="btn btn-green" id="biz-collect-all" onclick="collectAllBiz()">💵 Забрать всё</button>
                 <div id="biz-list" style="display:flex; flex-direction:column; gap:10px;"></div>
             </div>
         </div>
@@ -1432,6 +1433,18 @@ function collectBiz(id) {
     b.acc = 0; earnMoney(net); state.taxDebt += tax; state.taxBlocked = false;
     saveGame(); updateUI(); renderBusinesses(); toast(`💵 +${fmt(net)} ₽ (налог ${fmt(tax)} ₽)`);
 }
+function collectAllBiz() {
+    let gross = 0, tax = 0;
+    BUSINESSES_DEF.forEach(def => {
+        const b = state.businesses[def.id]; if (!b) return;
+        const g = Math.floor(b.acc || 0); if (g <= 0) return;
+        gross += g; tax += Math.floor(g * 0.13); b.acc = 0;
+    });
+    if (gross <= 0) { toast('Пока нечего собирать'); return; }
+    const net = gross - tax;
+    earnMoney(net); state.taxDebt += tax; state.taxBlocked = false;
+    saveGame(); updateUI(); renderBusinesses(); toast(`💵 Собрано всё: +${fmt(net)} ₽ (налог ${fmt(tax)} ₽)`);
+}
 function payTaxes() {
     if (state.taxDebt <= 0) { toast('Налогов нет'); return; }
     if (state.money < state.taxDebt) { toast('Недостаточно денег'); return; }
@@ -1455,6 +1468,12 @@ function renderBusinesses() {
     const tb = $('tax-pay-btn');
     if (tb) { if (state.taxDebt > 0) { tb.classList.remove('disabled'); tb.textContent = 'Оплатить налоги'; } else { tb.classList.add('disabled'); tb.textContent = 'Налогов нет'; } }
     if ($('ui-biz-desc')) { const owned = BUSINESSES_DEF.filter(d => state.businesses[d.id].level > 0).length; $('ui-biz-desc').textContent = `${owned}/6 • ${fmt(total)} ₽/45 мин`; }
+    const allBtn = $('biz-collect-all');
+    if (allBtn) {
+        const allNet = BUSINESSES_DEF.reduce((sum, d) => { const g = Math.floor((state.businesses[d.id] || {}).acc || 0); return sum + g - Math.floor(g * 0.13); }, 0);
+        allBtn.classList.toggle('disabled', allNet <= 0);
+        allBtn.textContent = allNet > 0 ? `💵 Забрать всё: ${fmt(allNet)} ₽` : '💵 Забрать всё';
+    }
     list.innerHTML = BUSINESSES_DEF.map(def => {
         const b = state.businesses[def.id], lvl = b.level, cost = bizUpgradeCost(def.id), inc = bizIncomePerHour(def.id), lim = bizLimit(def.id);
         const acc = Math.floor(b.acc || 0), tax = Math.floor(acc * 0.13), net = acc - tax;
@@ -1623,6 +1642,8 @@ function switchCasinoTab(sub) {
     document.querySelectorAll('#screen-casino .inner-tab').forEach(t => t.classList.toggle('active', t.dataset.sub === sub));
     document.querySelectorAll('#screen-casino .inner-panel').forEach(p => p.classList.toggle('active', p.id === sub));
 }
+// Множитель шансов на редкие машины (epic и выше) в BOOST, X10 и X100
+const CAR_LUCK_MULT = 2;
 function getRandomItem(type, mode) {
     const pool = type === 'car' ? CARS_DB : NUMBERS_DB;
     const roll = Math.random() * 100;
@@ -1650,6 +1671,7 @@ function getRandomItem(type, mode) {
         cE = Math.max(0, 5 + bonus);
         cR = Math.max(0, 18 + bonus);
     }
+    if (type === 'car' && ['boost', 'x10', 'x100'].includes(mode)) { cU *= CAR_LUCK_MULT; cH *= CAR_LUCK_MULT; cL *= CAR_LUCK_MULT; cE *= CAR_LUCK_MULT; }
     let rar = 'common';
     if (roll < cU) rar = 'ultra'; else if (roll < cU + cH) rar = 'hyper'; else if (roll < cU + cH + cL) rar = 'legendary';
     else if (roll < cU + cH + cL + cE) rar = 'epic'; else if (roll < cU + cH + cL + cE + cR) rar = 'rare';
@@ -1921,7 +1943,7 @@ function doUpgrade() {
             state.garage.push(got);
             state.upgradeWins++;
             if (['legendary','hyper','ultra'].includes(got.rarity)) state.gotLegendary = true;
-            upgUids = []; upgBusy = false; if (go) go.classList.remove('disabled');
+            upgUids = [got.uid]; upgBusy = false; if (go) go.classList.remove('disabled'); // выигранная машина сразу встаёт на следующий апгрейд
             if (SETTINGS.skipAnim) infoBox('🎉 ПОБЕДА!', `${carSVG(got)}Вы получили <b>${got.name}</b><br>за ${fmt(got.price)} ₽<br><br><span style="color:var(--muted);font-size:12px;">Поставлено: ${cars.length} машин на ${fmt(totalPrice)} ₽</span>`);
             else playReveal(got, 'car', 1, () => {}, { always: true, title: '🎉 АПГРЕЙД УДАЛСЯ!', sub: `${cars.length} машин (${fmt(totalPrice)} ₽) ➜ ${got.name}<br><span style="color:var(--green);font-weight:800;">+${fmt(got.price - totalPrice)} ₽ к стоимости</span>`, btn: 'Отлично' });
         } else {
@@ -2275,7 +2297,7 @@ function buyShop(id) {
     }
     saveGame(); updateUI(); renderShop();
 }
-const tuneCost = () => 50000000 + state.tuningLevel * 450000000;
+const tuneCost = () => 50000000 + state.tuningLevel * 150000000;
 function updateTuningUI() {
     // Тюнинг: +0.5% за уровень, максимум +25%
     state.tuningBonus = Math.min(25, state.tuningLevel * 0.5);
@@ -2368,6 +2390,7 @@ function dropChance(type, rar, mode) {
         cU = (type === 'car' ? 0.01 : 0.02) * (1 + boost * 0.5);
         cL = Math.max(0, 1.2 + boost - (mode === 'x10' ? 1 : 0)); cE = 5 + boost; cR = 18 + boost;
     }
+    if (type === 'car' && ['boost', 'x10', 'x100'].includes(mode)) { cU *= CAR_LUCK_MULT; cH *= CAR_LUCK_MULT; cL *= CAR_LUCK_MULT; cE *= CAR_LUCK_MULT; }
     const cat = { ultra: cU, hyper: cH, legendary: cL, epic: cE, rare: cR, common: 100 - cU - cH - cL - cE - cR }[rar] || 0;
     const db = type === 'car' ? CARS_DB : NUMBERS_DB;
     const n = db.filter(i => i.rarity === rar).length || 1;
@@ -2650,4 +2673,4 @@ setTimeout(tickLoader, 200);
 applyCustomIcons();
 </script>
 </body>
-    </html>
+            </html>
