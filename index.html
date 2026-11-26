@@ -98,6 +98,10 @@ button { cursor: pointer; border: none; color: inherit; }
 .res-head b { color: var(--gold); }
 .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
 .res-card { background: var(--card); border: 1px solid var(--rc); border-radius: 16px; padding: 10px 8px; display: flex; flex-direction: column; align-items: center; gap: 2px; box-shadow: 0 0 14px color-mix(in srgb, var(--rc) 25%, transparent); }
+.res-hint { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+.res-card { cursor: pointer; position: relative; }
+.res-card.sel { outline: 3px solid var(--green); background: rgba(61,220,151,.18); }
+.res-card.sel::after { content: '✓'; position: absolute; top: 6px; right: 8px; color: var(--green); font-weight: 900; }
 .res-card .car-svg { max-width: 130px; }
 .res-card .rc-name { font-size: 12px; font-weight: 800; margin-top: 4px; }
 .res-card .rc-price { font-size: 12px; font-weight: 800; color: var(--green); }
@@ -414,6 +418,7 @@ span.rvc { display: inline-block; }
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-autosalon')">‹</button><div class="screen-title">Автосалон</div></div>
             <div class="pad">
                 <div class="spin-display" id="car-display"></div>
+                <button class="btn btn-gold" id="car-pick" style="display:none; margin-bottom:0;" onclick="keepSelected('car')"></button>
                 <div class="action-row" id="car-actions">
                     <button class="btn btn-green" id="car-keep" onclick="keepPending('car')">В гараж</button>
                     <button class="btn btn-danger" id="car-sell" onclick="sellPending('car')">Продать</button>
@@ -431,6 +436,7 @@ span.rvc { display: inline-block; }
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-gosznaki')">‹</button><div class="screen-title">Генератор номеров</div></div>
             <div class="pad">
                 <div class="spin-display" id="number-display"></div>
+                <button class="btn btn-gold" id="number-pick" style="display:none; margin-bottom:0;" onclick="keepSelected('number')"></button>
                 <div class="action-row" id="number-actions">
                     <button class="btn btn-green" id="number-keep" onclick="keepPending('number')">В гараж</button>
                     <button class="btn btn-danger" id="number-sell" onclick="sellPending('number')">Продать</button>
@@ -876,6 +882,7 @@ const MAX_UPG = 6;
 const CRY_EXCHANGE_RATE = 300000000;
 
 // ---- Константы ставок ----
+const X100_PAYBACK_CHANCE = 0.2; // шанс окупа X100 (0.2 = 20%)
 const CAR_SPIN_COST = { std: 5000000, boost: 10000000, x10: 450000000, x100: 7000000000 };
 const NUMBER_SPIN_COST = { std: 300, boost: 1000, x10: 5000 };
 
@@ -1726,6 +1733,12 @@ function finishSpin(type, mode) {
     if (mode === 'x100' && type === 'car') {
         const luck = 0.5 + Math.random() * 1.2;
         items = items.map(it => ({ ...it, price: Math.max(1000000, Math.round((it.price * luck) / 100000) * 100000) }));
+        // Иногда X100 окупается: цены всех машин растут так, что сумма выходит 110–160% от ставки
+        if (Math.random() < X100_PAYBACK_CHANCE) {
+            const sum = items.reduce((s, i) => s + i.price, 0);
+            const k = CAR_SPIN_COST.x100 * (1.1 + Math.random() * 0.5) / sum;
+            if (k > 1) items = items.map(it => ({ ...it, price: Math.round((it.price * k) / 100000) * 100000 }));
+        }
         items.sort((a, b) => b.price - a.price);
     }
     state.pending[type] = items;
@@ -1740,6 +1753,7 @@ function finishSpin(type, mode) {
 function renderPending(type) {
     const items = state.pending[type];
     const display = $(type + '-display'), actions = $(type + '-actions'), controls = $(type + '-controls');
+    $(type + '-pick').style.display = 'none';
     display.classList.remove('glow-hyper', 'glow-ultra');
     if (!items.length) { display.innerHTML = `<div class="idle"><div class="big">${type === 'car' ? '🚗' : '🔢'}</div>Нажми на кнопку!</div>`; actions.style.display = 'none'; controls.style.display = 'flex'; return; }
     const total = items.reduce((s, i) => s + i.price, 0), unit = type === 'car' ? '₽' : '💎';
@@ -1748,14 +1762,38 @@ function renderPending(type) {
         display.innerHTML = `<div class="r-${it.rarity}" style="width:100%; display:flex; flex-direction:column; align-items:center;">${artOf(it)}<div class="car-name" ${type === 'number' ? 'style="font-size:15px; color: var(--muted);"' : ''}>${it.name}</div><div class="rar-label">${it.rarity}</div><div class="car-price ${priceCls(it)}">${fmt(it.price)} ${unit}</div></div>`;
         $(type + '-keep').textContent = 'В гараж'; $(type + '-sell').textContent = 'Продать';
     } else {
-        // Для x100 — показываем только топ-10, чтобы не грузить DOM
-        const show = items.length > 12 ? items.slice(0, 12) : items;
-        display.innerHTML = `<div class="res-head">Выпало: <b>${items.length}</b> • Стоимость: <b>${fmt(total)} ${unit}</b></div><div class="res-grid">${show.map(it => `<div class="res-card r-${it.rarity}">${artOf(it, true)}<div class="rc-name">${it.name}</div><div class="rar-label" style="font-size:9px;">${it.rarity}</div><div class="rc-price ${priceCls(it)}">${fmt(it.price)} ${unit}</div></div>`).join('')}</div>`;
+        const show = items; // показываем все, чтобы можно было выбрать любую
+        display.innerHTML = `<div class="res-head">Выпало: <b>${items.length}</b> • Стоимость: <b>${fmt(total)} ${unit}</b></div><div class="res-hint">Нажми на то, что хочешь оставить. Остальное продастся.</div><div class="res-grid">${show.map(it => `<div class="res-card r-${it.rarity}${it.sel ? ' sel' : ''}" onclick="togglePick('${type}', '${it.uid}', this)">${artOf(it, true)}<div class="rc-name">${it.name}</div><div class="rar-label" style="font-size:9px;">${it.rarity}</div><div class="rc-price ${priceCls(it)}">${fmt(it.price)} ${unit}</div></div>`).join('')}</div>`;
         $(type + '-keep').textContent = 'Все в гараж'; $(type + '-sell').textContent = 'Продать всё';
     }
     if (items.some(i => i.rarity === 'ultra')) display.classList.add('glow-ultra');
     else if (items.some(i => i.rarity === 'hyper')) display.classList.add('glow-hyper');
     actions.style.display = 'flex'; controls.style.display = 'none';
+    updatePickBtn(type);
+}
+function updatePickBtn(type) {
+    const btn = $(type + '-pick'), items = state.pending[type];
+    if (items.length < 2) { btn.style.display = 'none'; return; }
+    const sel = items.filter(i => i.sel), rest = items.filter(i => !i.sel).reduce((s, i) => s + sellValue(i), 0);
+    btn.style.display = 'block';
+    btn.classList.toggle('disabled', !sel.length);
+    btn.textContent = sel.length ? `Оставить ${sel.length}, остальное продать за ${fmt(rest)} ${type === 'car' ? '₽' : '💎'}` : 'Выбери, что оставить';
+}
+function togglePick(type, uid, el) {
+    const it = state.pending[type].find(i => i.uid === uid); if (!it) return;
+    it.sel = !it.sel; el.classList.toggle('sel', it.sel);
+    updatePickBtn(type);
+}
+function keepSelected(type) {
+    const items = state.pending[type];
+    const keep = items.filter(i => i.sel), sell = items.filter(i => !i.sel);
+    if (!keep.length) return;
+    const sum = sell.reduce((s, i) => s + sellValue(i), 0);
+    keep.forEach(i => delete i.sel);
+    state.garage.push(...keep);
+    if (type === 'car') earnMoney(sum); else state.crystals += sum;
+    state.pending[type] = []; renderPending(type); updateUI(); saveGame();
+    toast(`В гараж: ${keep.length}, продано на ${fmt(sum)} ${type === 'car' ? '₽' : '💎'}`);
 }
 function keepPending(type) { const items = state.pending[type]; if (!items.length) return; state.garage.push(...items); state.pending[type] = []; renderPending(type); updateUI(); toast(`В гараж добавлено: ${items.length}`); }
 const sellValue = it => Math.round(it.price * (1 + state.tuningLevel * (it.type === 'car' ? 0.005 : 0.0025)));
