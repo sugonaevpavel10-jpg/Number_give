@@ -365,6 +365,67 @@ span.rvc{display:inline-block}
 .rv-skip{position:absolute;top:16px;right:16px;z-index:6;padding:8px 14px;border-radius:18px;font-size:12px;font-weight:800;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25)}
 .rv.done .rv-skip{display:none}
 .shop-lim{font-size:10.5px;color:var(--muted);font-weight:700;margin-top:2px}
+
+/* ===== ПРОПУСК В ГАРАЖ (профиль на главной) ===== */
+.driver-tag{width:100%;display:flex;align-items:stretch;background:#17161b;border:1px solid #34323b;border-radius:6px;overflow:hidden;cursor:pointer;text-align:left}
+.dt-letter{width:54px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#e9e4d8;color:#17161b;font-family:'Bebas Neue','Arial Narrow',sans-serif;font-size:30px;font-weight:700}
+.dt-body{flex:1;min-width:0;padding:8px 12px}
+.dt-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.dt-body .game-name{font-weight:700;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.dt-body .game-rank{color:#e9e4d8;font-weight:600;margin:0}
+.fuel{display:flex;align-items:center;gap:6px;margin-top:7px;font-size:10px;color:#8c8994;font-weight:700}
+.fuel-track{flex:1;height:8px;position:relative;background:#2b2930}
+.fuel-fill{height:100%;width:0;background:#e0a526;transition:width .4s}
+.fuel-track::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(10% - 2px),#17161b calc(10% - 2px) 10%)}
+.dt-body .sp-label{font-size:10px;color:#8c8994;margin-top:4px}
+
+/* ===== МАШИНА НА ГЛАВНОЙ ===== */
+.home-pick{position:relative;z-index:1;margin-top:10px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.home-car-name{font-size:14px;font-weight:800;text-align:center}
+
+/* ===== ВЫБОР: ОСТАВИТЬ / ПРОДАТЬ ===== */
+.res-card.pickable,.g-card.pickable{cursor:pointer;position:relative}
+.res-card.picked,.g-card.picked{outline:3px solid var(--green);outline-offset:-3px;background:rgba(61,220,151,.14)}
+.res-card.picked::after,.g-card.picked::after{content:'✓';position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;background:var(--green);color:#02210f;font-weight:900;display:flex;align-items:center;justify-content:center}
+.action-row{flex-wrap:wrap;position:sticky;bottom:0;z-index:8;padding:8px 0;background:rgba(10,8,20,.96)}
+.action-row .btn{flex:1}
+.action-row .btn-pick{flex-basis:100%}
+.sel-bar{position:sticky;bottom:0;z-index:8;display:flex;flex-direction:column;gap:8px;padding:8px 0;background:rgba(10,8,20,.96)}
+
+/* ===== АНИМАЦИИ ФОТО ПО РЕДКОСТЯМ ===== */
+.rv-art .car-photo{width:100%;max-width:330px;position:relative;z-index:1}
+.rv-art::before,.rv-art::after{content:'';position:absolute;pointer-events:none}
+/* обычная: плавно всплывает */
+.rv-common .rv-art .car-photo{animation:aCommon .7s ease-out both}
+@keyframes aCommon{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+/* редкая: въезжает слева с заносом */
+.rv-rare .rv-art .car-photo{animation:aRare .9s cubic-bezier(.15,.85,.25,1) both}
+@keyframes aRare{0%{opacity:0;transform:translateX(-130%) skewX(-16deg)}70%{opacity:1;transform:translateX(5%) skewX(5deg)}100%{transform:none}}
+/* эпическая: раскручивается из точки, потом пульсирует */
+.rv-epic .rv-art .car-photo{animation:aEpic 1.2s cubic-bezier(.2,1.4,.4,1) both,pEpic 1.4s 1.2s ease-in-out infinite}
+@keyframes aEpic{from{opacity:0;transform:scale(.05) rotate(-540deg)}to{opacity:1;transform:none}}
+@keyframes pEpic{0%,100%{box-shadow:0 0 14px #b86bff}50%{box-shadow:0 0 46px #b86bff}}
+/* легендарная: переворот карточки и золотое свечение */
+.rv-legendary .rv-art{perspective:900px}
+.rv-legendary .rv-art .car-photo{animation:aLeg 1.6s cubic-bezier(.2,.9,.3,1) both,pLeg 1.6s 1.6s ease-in-out infinite}
+@keyframes aLeg{from{opacity:0;transform:rotateY(900deg) scale(.4)}to{opacity:1;transform:none}}
+@keyframes pLeg{0%,100%{box-shadow:0 0 18px #ffc247;transform:none}50%{box-shadow:0 0 60px #ffc247;transform:scale(1.05)}}
+/* гиперкар: влетает на скорости, красные полосы */
+.rv-hyper .rv-art .car-photo{animation:aHyper 1s cubic-bezier(.1,.9,.2,1) both,pHyper .5s 1s linear infinite}
+@keyframes aHyper{0%{opacity:0;transform:translateX(160%) scaleX(2.2);filter:blur(12px)}60%{opacity:1;transform:translateX(-8%) scaleX(.92);filter:blur(0)}80%{transform:translateX(3%) scaleX(1.03)}100%{opacity:1;transform:none}}
+@keyframes pHyper{0%,100%{transform:translate(0,0);box-shadow:0 0 28px #ff3d6e}25%{transform:translate(1px,-1px)}50%{box-shadow:0 0 56px #ff3d6e}75%{transform:translate(-1px,1px)}}
+.rv-hyper .rv-art::before{left:-30%;right:-30%;top:-30px;bottom:-30px;background:repeating-linear-gradient(180deg,transparent 0 17px,rgba(255,61,110,.55) 17px 20px);-webkit-mask-image:linear-gradient(90deg,#000,transparent 35%,transparent 65%,#000);mask-image:linear-gradient(90deg,#000,transparent 35%,transparent 65%,#000);animation:aLines .25s linear infinite}
+@keyframes aLines{from{transform:translateX(24px)}to{transform:translateX(-24px)}}
+/* ультра: падает сверху, ударные волны, переливы */
+.rv-ultra .rv-art .car-photo{animation:aUltra 1.3s cubic-bezier(.3,1.3,.4,1) both,pUltra 2.4s 1.3s linear infinite}
+@keyframes aUltra{0%{opacity:0;transform:translateY(-300%) scale(3)}55%{opacity:1;transform:translateY(0) scale(1.18)}70%{transform:scale(.9)}100%{opacity:1;transform:none}}
+@keyframes pUltra{0%,100%{box-shadow:0 0 40px #2de2ff;filter:none}33%{box-shadow:0 0 70px #b86bff;filter:hue-rotate(35deg) brightness(1.15)}66%{box-shadow:0 0 70px #ffc247;filter:hue-rotate(-35deg) brightness(1.15)}}
+.rv-ultra .rv-art::before,.rv-ultra .rv-art::after{left:50%;top:50%;width:120px;height:120px;margin:-60px;border:4px solid #2de2ff;border-radius:50%;opacity:0;animation:aWave 1.8s .7s ease-out infinite}
+.rv-ultra .rv-art::after{animation-delay:1.6s;border-color:#fff}
+@keyframes aWave{0%{opacity:.9;transform:scale(.3)}100%{opacity:0;transform:scale(4.5)}}
+/* спокойный режим */
+.rv-calm .rv-art .car-photo{animation:aCommon .5s ease-out both}
+.rv.rv-calm .rv-art::before,.rv.rv-calm .rv-art::after{display:none}
 </style>
 <script defer src="https://revionapp.ru/v.js" data-site="numbergive-online-e19711"></script>
 </head>
@@ -395,17 +456,15 @@ span.rvc{display:inline-block}
     <div class="content">
         <div class="main-screen" id="main-view">
             <div class="game-top">
-                <div class="game-profile">
-                    <div class="avatar avatar-big" id="home-avatar">
-                        <img src="icons/avatar.png" alt="👤" onerror="iconErr(this,'👤')">
-                    </div>
-                    <div style="flex:1;">
-                        <div class="game-name" id="ui-name-top">Игрок</div>
-                        <div class="game-rank" id="ui-status">Дилер</div>
-                        <div class="status-progress">
-                            <div class="sp-label" id="sp-label">До следующего статуса: 0%</div>
-                            <div class="sp-bar"><div class="sp-fill" id="ui-progress"></div></div>
+                <div class="driver-tag" onclick="openScreen('screen-profile')">
+                    <div class="dt-letter" id="home-letter">И</div>
+                    <div class="dt-body">
+                        <div class="dt-row">
+                            <div class="game-name" id="ui-name-top">Игрок</div>
+                            <div class="game-rank" id="ui-status">Дилер</div>
                         </div>
+                        <div class="fuel"><span>E</span><div class="fuel-track"><div class="fuel-fill" id="ui-progress"></div></div><span>F</span></div>
+                        <div class="sp-label" id="sp-label">До следующего статуса: 0%</div>
                     </div>
                 </div>
             </div>
@@ -413,7 +472,10 @@ span.rvc{display:inline-block}
             <div class="game-scene">
                 <div class="scene-glow"></div>
                 <div id="home-car-showcase" class="scene-car"></div>
-                <div id="home-plate" class="scene-plate"></div>
+                <div class="home-pick">
+                    <div id="home-car-name" class="home-car-name"></div>
+                    <button class="btn btn-glass btn-sm" onclick="chooseHomeCar()">Выбрать машину из гаража</button>
+                </div>
             </div>
             <button class="game-play-btn" onclick="openScreen('screen-autosalon')" id="game-play-btn">
                 <img class="play-img" src="img/btn-play.png" alt="ИГРАТЬ" onerror="this.outerHTML='<div class=&quot;fallback-btn&quot;><span class=&quot;play-icon&quot;>▶</span><span class=&quot;play-text&quot;>ИГРАТЬ</span></div>'">
@@ -476,6 +538,7 @@ span.rvc{display:inline-block}
                 <div class="action-row" id="car-actions">
                     <button class="btn btn-green" id="car-keep" onclick="keepPending('car')">В гараж</button>
                     <button class="btn btn-danger" id="car-sell" onclick="sellPending('car')">Продать</button>
+                    <button class="btn btn-gold btn-pick" id="car-pick" onclick="keepSelected('car')" style="display:none;"></button>
                 </div>
                 <div class="spin-btns" id="car-controls">
                     <button class="spin-btn spin-std" onclick="spin('car', false)"><span>🎲 Крутить</span><b>5 000 000 ₽</b></button>
@@ -493,6 +556,7 @@ span.rvc{display:inline-block}
                 <div class="action-row" id="number-actions">
                     <button class="btn btn-green" id="number-keep" onclick="keepPending('number')">В гараж</button>
                     <button class="btn btn-danger" id="number-sell" onclick="sellPending('number')">Продать</button>
+                    <button class="btn btn-gold btn-pick" id="number-pick" onclick="keepSelected('number')" style="display:none;"></button>
                 </div>
                 <div class="spin-btns" id="number-controls">
                     <button class="spin-btn spin-std" onclick="spin('number', false)"><span>🎲 Крутить</span><b>300 💎</b></button>
@@ -515,7 +579,9 @@ span.rvc{display:inline-block}
                     <option value="price-asc">Сначала дешёвые</option>
                     <option value="rarity">По редкости</option>
                 </select>
+                <button class="btn btn-glass" id="garage-select-btn" onclick="toggleGarageSelect()">Выбрать, что продать</button>
                 <div class="garage-list" id="garage-grid"></div>
+                <div class="sel-bar" id="garage-sel-bar" style="display:none;"></div>
             </div>
         </div>
 
@@ -596,11 +662,11 @@ span.rvc{display:inline-block}
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-business')">‹</button><div class="screen-title">Бизнесы</div></div>
             <div class="pad">
                 <div class="card" style="display:flex; flex-direction:column; gap:6px;">
-                    <div class="loan-badge"><span>💰 Пассивный доход</span><span id="biz-total" style="color:var(--green); font-size:13px;">0 ₽/45 мин</span></div>
+                    <div class="loan-badge"><span>💰 Пассивный доход</span><span id="biz-total" style="color:var(--green); font-size:13px;">0 ₽/20 мин</span></div>
                 </div>
                 <div class="card" style="display:flex; flex-direction:column; gap:8px;">
-                    <div class="loan-badge"><span>🏛️ Налоги</span><span id="tax-amount" style="color:var(--red); font-size:13px;">0 ₽</span></div>
-                    <button class="btn btn-green" id="tax-pay-btn" onclick="payTaxes()">Оплатить налоги</button>
+                    <div style="font-size:12px; color:var(--muted); text-align:center;">Налог 13% списывается сам, когда забираешь деньги.</div>
+                    <button class="btn btn-green" id="collect-all-btn" onclick="collectAllBiz()">Забрать всё</button>
                 </div>
                 <div id="biz-list" style="display:flex; flex-direction:column; gap:10px;"></div>
             </div>
@@ -786,7 +852,7 @@ span.rvc{display:inline-block}
         <div class="screen" id="screen-contracts">
             <div class="screen-header"><button class="back-btn" onclick="closeScreen('screen-contracts')">‹</button><div class="screen-title">Контракты</div></div>
             <div class="pad">
-                <p style="font-size:13px; color: var(--muted); text-align:center;">Сдавайте машины в аренду и получайте пассивный доход каждые 10 секунд.</p>
+                <p style="font-size:13px; color: var(--muted); text-align:center;">Сдавайте машины в аренду и получайте пассивный доход каждые 2 минуты.</p>
                 <div id="contracts-list" style="display:flex; flex-direction:column; gap:10px;"></div>
             </div>
         </div>
@@ -820,7 +886,7 @@ span.rvc{display:inline-block}
                 <p><b>8. Кредит:</b> до 500 млн ₽. При просрочке банк забирает машину.</p>
                 <p><b>9. Крипта:</b> BTC, ETH, SOL — ловите тренды. Комиссия 1%.</p>
                 <p><b>10. Казино:</b> Фортуна и Кристаллы.</p>
-                <p><b>11. Бизнесы:</b> пассивный доход, налог 13%.</p>
+                <p><b>11. Бизнесы:</b> доход раз в 20 минут, забрать можно в любой момент, налог 13% списывается сразу.</p>
                 <p><b>12. Стрик:</b> до +60% к удаче.</p>
                 <p><b>13. Пити:</b> 80 круток без Legendary — гарант.</p>
                 <p><b>14. Переводы:</b> по ID в Банке.</p>
@@ -1098,7 +1164,7 @@ const DAILY_TASKS = [
     { id: 'epicPlus', icon: '💎', title: 'Epic+', desc: 'Выбейте Epic или выше', goal: 1, reward: { crystals: 2500 }, label: '2 500 💎' },
     { id: 'earned', icon: '💸', title: 'Куш', desc: 'Заработайте 50 млн ₽', goal: 50000000, reward: { money: 5000000, crystals: 500 }, label: '5 млн ₽ + 500 💎' }
 ];
-const BIZ_PERIOD_MIN = 45;
+const BIZ_PERIOD_MIN = 20;
 const BUSINESSES_DEF = [
     { id: 'taxi',   icon: '🚕', name: 'Таксопарк',   baseIncome: 900000,  baseCost: 5000000,  costMul: 1.8, incMul: 1.55, limitHrs: 8 },
     { id: 'wash',   icon: '🚿', name: 'Автомойка',   baseIncome: 675000,  baseCost: 4000000,  costMul: 1.8, incMul: 1.55, limitHrs: 8 },
@@ -1132,7 +1198,8 @@ try {
     if (saved) state = { ...state, ...saved, pending: { car: [], number: [], ...(saved.pending || {}) }, crypto: { ...defaultState().crypto, ...(saved.crypto || {}) } };
 } catch (e) {}
 if (!state.businesses) state.businesses = defaultBusinesses();
-if (typeof state.taxDebt !== 'number') state.taxDebt = 0;
+// старый долг по налогу обнуляется: при сборе деньги уже приходили за вычетом налога
+state.taxDebt = 0; state.taxBlocked = false;
 if (!state.achClaimed) state.achClaimed = {};
 if (!state.ach) state.ach = {};
 if (!state.shop) state.shop = { date: '', bought: {} };
@@ -1466,19 +1533,23 @@ function tickBusinesses() {
         b.lastTick = now;
     });
 }
-function collectBiz(id) {
-    const def = bizLevelDef(id), b = state.businesses[id]; if (!def || !b) return;
-    if (b.acc <= 0) { toast('Нечего собирать'); return; }
-    const gross = Math.floor(b.acc), tax = Math.floor(gross * 0.13), net = gross - tax;
-    b.acc = 0; earnMoney(net); state.taxDebt += tax; state.taxBlocked = false;
-    saveGame(); updateUI(); renderBusinesses(); toast(`💵 +${fmt(net)} ₽ (налог ${fmt(tax)} ₽)`);
+function takeBizMoney(id) {
+    const b = state.businesses[id]; if (!b) return null;
+    const gross = Math.floor(b.acc || 0); if (gross <= 0) return null;
+    const tax = Math.floor(gross * 0.13), net = gross - tax;
+    b.acc -= gross; earnMoney(net);
+    return { net, tax };
 }
-function payTaxes() {
-    if (state.taxDebt <= 0) { toast('Налогов нет'); return; }
-    if (state.money < state.taxDebt) { toast('Недостаточно'); return; }
-    const amt = state.taxDebt;
-    state.money -= amt; state.taxDebt = 0; state.taxBlocked = false;
-    saveGame(); updateUI(); renderBusinesses(); toast(`✅ Оплачено: ${fmt(amt)} ₽`);
+function collectBiz(id) {
+    const r = takeBizMoney(id);
+    if (!r) { toast('Нечего собирать'); return; }
+    saveGame(); updateUI(); renderBusinesses(); toast(`💵 +${fmt(r.net)} ₽ (налог ${fmt(r.tax)} ₽ списан)`);
+}
+function collectAllBiz() {
+    let net = 0, tax = 0;
+    BUSINESSES_DEF.forEach(d => { const r = takeBizMoney(d.id); if (r) { net += r.net; tax += r.tax; } });
+    if (!net) { toast('Нечего собирать'); return; }
+    saveGame(); updateUI(); renderBusinesses(); toast(`💵 +${fmt(net)} ₽ (налог ${fmt(tax)} ₽ списан)`);
 }
 function upgradeBiz(id) {
     const def = bizLevelDef(id), b = state.businesses[id]; if (!def || !b) return;
@@ -1491,11 +1562,8 @@ function upgradeBiz(id) {
 function renderBusinesses() {
     const list = $('biz-list'); if (!list) return;
     let total = 0; BUSINESSES_DEF.forEach(d => total += bizIncomePerHour(d.id));
-    const tEl = $('biz-total'); if (tEl) tEl.textContent = fmt(total) + ' ₽/45 мин';
-    const taxEl = $('tax-amount'); if (taxEl) taxEl.textContent = fmt(state.taxDebt) + ' ₽';
-    const tb = $('tax-pay-btn');
-    if (tb) { if (state.taxDebt > 0) { tb.classList.remove('disabled'); tb.textContent = 'Оплатить налоги'; } else { tb.classList.add('disabled'); tb.textContent = 'Налогов нет'; } }
-    list.innerHTML = BUSINESSES_DEF.map(def => {
+    const tEl = $('biz-total'); if (tEl) tEl.textContent = `${fmt(total)} ₽/${BIZ_PERIOD_MIN} мин`;
+    const html = BUSINESSES_DEF.map(def => {
         const b = state.businesses[def.id], lvl = b.level, cost = bizUpgradeCost(def.id), inc = bizIncomePerHour(def.id), lim = bizLimit(def.id);
         const acc = Math.floor(b.acc || 0), tax = Math.floor(acc * 0.13), net = acc - tax;
         const canCollect = acc > 0;
@@ -1504,7 +1572,7 @@ function renderBusinesses() {
             <div style="display:flex; align-items:center; gap:10px;">
                 <div class="list-icon">${def.icon}</div>
                 <div class="li-main"><div class="li-title">${def.name} ${lvl > 0 ? `<span style="color:var(--gold);">ур.${lvl}</span>` : ''}</div>
-                <div class="li-sub">${lvl > 0 ? `${fmt(inc)} ₽/45 мин` : 'Не куплен'}</div></div>
+                <div class="li-sub">${lvl > 0 ? `${fmt(inc)} ₽/${BIZ_PERIOD_MIN} мин` : 'Не куплен'}</div></div>
             </div>
             <div style="display:flex; gap:8px;">
                 <button class="btn btn-glass btn-sm" style="flex:1;" onclick="upgradeBiz('${def.id}')">${lvl === 0 ? 'Купить' : 'Апгрейд'}<br><span style="font-size:11px; color:var(--gold);">${fmt(cost)} ₽</span></button>
@@ -1512,6 +1580,7 @@ function renderBusinesses() {
             </div>
         </div>`;
     }).join('');
+    if (list._html !== html) { list.innerHTML = html; list._html = html; }
 }
 const CRY_PRIZES = [
     { t: 'Пусто', m: 0, color: '#444' }, { t: '100 000 ₽', m: 100000, color: '#4a7aff' },
@@ -1592,12 +1661,16 @@ function renderHomeCar() {
     const box = $('home-car-showcase');
     if (!box) return;
     const cars = state.garage.filter(i => i.type === 'car').sort((a,b) => b.price - a.price);
-    const best = cars[0];
-    if (best) {
-        box.innerHTML = carArt(best);
-    } else {
-        box.innerHTML = `<img src="icons/home.png" class="home-img" alt="" onerror="this.style.display='none'">`;
+    const car = cars.find(c => c.uid === state.homeCarUid) || cars[0];
+    const key = car ? car.uid : 'none';
+    if (box._key !== key) {
+        box._key = key;
+        box.innerHTML = car ? carArt(car) : `<img src="icons/home.png" class="home-img" alt="" onerror="this.style.display='none'">`;
     }
+    const name = $('home-car-name'); if (name) name.textContent = car ? car.name : 'В гараже пока нет машин';
+}
+function chooseHomeCar() {
+    pickSingleCar(u => { state.homeCarUid = u; saveGame(); renderHomeCar(); });
 }
 function updateUI() {
     const setTxt = (id, val) => { const el = $(id); if (el) el.textContent = val; };
@@ -1628,12 +1701,7 @@ function updateUI() {
         if (prog) prog.style.width = '100%';
         if (lbl) lbl.textContent = 'Максимальный статус';
     }
-    const nums = state.garage.filter(i => i.type === 'number').sort((a, b) => b.price - a.price);
-    const hp = $('home-plate');
-    if (hp) {
-        if (nums[0]) hp.innerHTML = plateHTML(nums[0]);
-        else hp.innerHTML = '';
-    }
+    const letter = $('home-letter'); if (letter) letter.textContent = (state.playerName || 'И').trim().charAt(0).toUpperCase();
     renderHomeCar();
     renderStreak(); updateCryPage(); checkAchievements();
     if ($('screen-business') && $('screen-business').classList.contains('active')) renderBusinesses();
@@ -1646,7 +1714,7 @@ function openScreen(id) {
     if (id === 'screen-autosalon') renderPending('car');
     if (id === 'screen-gosznaki') renderPending('number');
     if (id === 'screen-upgrades') { updateUpgradeUI(); updateUpgradeNumUI(); }
-    if (id === 'screen-garage') renderGarage();
+    if (id === 'screen-garage') { garageSelecting = false; garageSel.clear(); renderGarage(); }
     if (id === 'screen-battle') { ensureLobbies(); updateBattleUI(); }
     if (id === 'screen-profile') { renderBgPicker(); const pidEl = $('profile-id'); if (pidEl) pidEl.textContent = state.playerId; }
     if (id === 'screen-tuning') updateTuningUI();
@@ -1667,7 +1735,6 @@ function openScreen(id) {
 }
 function closeScreen(id) {
     if ((id === 'screen-upgrades' && (upgBusy || upgnBusy))) { toast('⏳ Дождитесь окончания!'); return; }
-    if (id === 'screen-business' && state.taxDebt > 0 && state.money >= state.taxDebt) { toast('🏛️ Сначала оплатите налоги'); return; }
     const t = SPIN_SCREENS[id];
     if (t && state.pending[t].length && !busySpin) {
         const n = state.pending[t].length;
@@ -1685,27 +1752,27 @@ function switchCasinoTab(sub) {
     document.querySelectorAll('#screen-casino .inner-tab').forEach(t => t.classList.toggle('active', t.dataset.sub === sub));
     document.querySelectorAll('#screen-casino .inner-panel').forEach(p => p.classList.toggle('active', p.id === sub));
 }
+// Шансы (в %) — одни и те же для круток и для каталога
+function rarityWeights(type, mode, luck) {
+    const boost = mode === 'boost' ? 2.5 : mode === 'x10' ? 1.5 : mode === 'x100' ? 2.2 : 0;
+    const bonus = boost + luck;
+    if (type === 'car' && mode === 'x100') return { cU: 0.035, cH: 0.9, cL: 7, cE: 18, cR: 30 };
+    if (type === 'car' && mode === 'x10') return { cU: 0.022, cH: 0.45, cL: 4.5 + luck, cE: 13 + luck, cR: 28 + luck };
+    return {
+        cH: type === 'car' ? 0.08 + boost * 0.01 : 0,
+        cU: (type === 'car' ? 0.01 : 0.02) * (1 + boost * 0.5),
+        cL: Math.max(0, 1.2 + bonus - (mode === 'x10' ? 1 : 0)),
+        cE: Math.max(0, 5 + bonus),
+        cR: Math.max(0, 18 + bonus)
+    };
+}
 function getRandomItem(type, mode) {
     const pool = type === 'car' ? CARS_DB : NUMBERS_DB;
     const roll = Math.random() * 100;
     const streakBonus = Math.min((state.streakDays || 0) * 2, 60);
-    let boost = 0;
-    if (mode === 'boost') boost = 2.5;
-    else if (mode === 'x10') boost = 1.5;
-    else if (mode === 'x100') boost = 2.2;
     const potion = (state.luckUntil || 0) > Date.now() ? 5 : 0;
-    const bonus = boost + state.rebirths * 0.5 + state.tuningBonus + streakBonus * 0.05 + potion;
-    let cH, cU, cL, cE, cR;
-    if (mode === 'x100') {
-        cH = 0.06; cU = 0.012; cL = 1.35;
-        cE = 5 + boost * 0.9; cR = 18 + boost * 0.9;
-    } else {
-        cH = type === 'car' ? Math.max(0, 0.08 + boost * 0.01) : 0;
-        cU = Math.max(0, (type === 'car' ? 0.01 : 0.02) * (1 + boost * 0.5));
-        cL = Math.max(0, 1.2 + bonus - (mode === 'x10' ? 1 : 0));
-        cE = Math.max(0, 5 + bonus);
-        cR = Math.max(0, 18 + bonus);
-    }
+    const luck = state.rebirths * 0.5 + state.tuningBonus + streakBonus * 0.05 + potion;
+    const { cU, cH, cL, cE, cR } = rarityWeights(type, mode, luck);
     let rar = 'common';
     if (roll < cU) rar = 'ultra'; else if (roll < cU + cH) rar = 'hyper'; else if (roll < cU + cH + cL) rar = 'legendary';
     else if (roll < cU + cH + cL + cE) rar = 'epic'; else if (roll < cU + cH + cL + cE + cR) rar = 'rare';
@@ -1721,6 +1788,7 @@ function getRandomItem(type, mode) {
 }
 const makeItem = (type, mode) => ({ ...getRandomItem(type, mode), type, uid: newUid() });
 let busySpin = false;
+const pendingSel = { car: new Set(), number: new Set() };
 function spin(type, mode) {
     if (busySpin) return;
     if (state.pending[type].length) { toast('Сначала заберите призы'); return; }
@@ -1742,8 +1810,8 @@ function spin(type, mode) {
     if (display) display.classList.remove('glow-hyper', 'glow-ultra');
     let n = 0;
     const iv = setInterval(() => {
-        const t = getRandomItem(type, mode);
-        const it = { ...t, type };
+        const pool = type === 'car' ? CARS_DB : NUMBERS_DB;
+        const it = { ...randFrom(pool), type };
         if (display) display.innerHTML = `<div class="r-${it.rarity}" style="width:100%">${artOf(it)}<div class="car-name" style="font-size:15px; color: var(--muted);">${it.name}</div></div>`;
         if (++n > 10) { clearInterval(iv); finishSpin(type, mode); }
     }, 100);
@@ -1757,6 +1825,7 @@ function finishSpin(type, mode) {
         items.sort((a, b) => b.price - a.price);
     }
     state.pending[type] = items;
+    pendingSel[type] = new Set();
     state.spins += count; addDailyProgress('spins', count);
     if (type === 'car' && items.some(i => ['epic','legendary','hyper','ultra'].includes(i.rarity))) addDailyProgress('epicPlus', 1);
     if (items.some(i => i.type === 'car' && ['legendary','hyper','ultra'].includes(i.rarity))) state.gotLegendary = true;
@@ -1778,16 +1847,41 @@ function renderPending(type) {
         const keep = $(type + '-keep'), sell = $(type + '-sell');
         if (keep) keep.textContent = 'В гараж'; if (sell) sell.textContent = 'Продать';
     } else {
-        const show = items.length > 12 ? items.slice(0, 12) : items;
-        display.innerHTML = `<div class="res-head">Выпало: <b>${items.length}</b> • Стоимость: <b>${fmt(total)} ${unit}</b></div><div class="res-grid">${show.map(it => `<div class="res-card r-${it.rarity}">${artOf(it, true)}<div class="rc-name">${it.name}</div><div class="rar-label" style="font-size:9px;">${it.rarity}</div><div class="rc-price ${priceCls(it)}">${fmt(it.price)} ${unit}</div></div>`).join('')}</div>`;
+        display.innerHTML = `<div class="res-head">Выпало: <b>${items.length}</b> • Стоимость: <b>${fmt(total)} ${unit}</b></div><div style="font-size:12px; color:var(--muted); margin-bottom:10px;">Нажми на то, что хочешь оставить</div><div class="res-grid">${items.map(it => `<div class="res-card pickable r-${it.rarity}" data-uid="${it.uid}" onclick="togglePick('${type}', this)">${artOf(it, true)}<div class="rc-name">${it.name}</div><div class="rar-label" style="font-size:9px;">${it.rarity}</div><div class="rc-price ${priceCls(it)}">${fmt(it.price)} ${unit}</div></div>`).join('')}</div>`;
         const keep = $(type + '-keep'), sell = $(type + '-sell');
         if (keep) keep.textContent = 'Все в гараж'; if (sell) sell.textContent = 'Продать всё';
     }
+    updatePickBtn(type);
     if (items.some(i => i.rarity === 'ultra')) display.classList.add('glow-ultra');
     else if (items.some(i => i.rarity === 'hyper')) display.classList.add('glow-hyper');
     if (actions) actions.style.display = 'flex'; if (controls) controls.style.display = 'none';
 }
 function keepPending(type) { const items = state.pending[type]; if (!items.length) return; state.garage.push(...items); state.pending[type] = []; renderPending(type); updateUI(); toast(`В гараж: ${items.length}`); }
+function togglePick(type, el) {
+    const sel = pendingSel[type], u = el.dataset.uid;
+    if (sel.has(u)) sel.delete(u); else sel.add(u);
+    el.classList.toggle('picked', sel.has(u));
+    updatePickBtn(type);
+}
+function updatePickBtn(type) {
+    const btn = $(type + '-pick'); if (!btn) return;
+    const items = state.pending[type], sel = pendingSel[type];
+    // при повторном открытии экрана восстанавливаем отметки
+    document.querySelectorAll(`#${type}-display .res-card`).forEach(c => c.classList.toggle('picked', sel.has(c.dataset.uid)));
+    btn.style.display = items.length > 1 && sel.size ? 'flex' : 'none';
+    const rest = items.filter(i => !sel.has(i.uid)).reduce((s, i) => s + sellValue(i), 0);
+    btn.textContent = `Оставить отмеченные (${sel.size}), остальные продать за ${fmt(rest)} ${type === 'car' ? '₽' : '💎'}`;
+}
+function keepSelected(type) {
+    const items = state.pending[type], sel = pendingSel[type];
+    if (!items.length || !sel.size) return;
+    const keep = items.filter(i => sel.has(i.uid));
+    const sum = items.filter(i => !sel.has(i.uid)).reduce((s, i) => s + sellValue(i), 0);
+    state.garage.push(...keep);
+    if (type === 'car') earnMoney(sum); else state.crystals += sum;
+    state.pending[type] = []; pendingSel[type] = new Set();
+    renderPending(type); updateUI(); toast(`В гараж: ${keep.length}, продано на ${fmt(sum)} ${type === 'car' ? '₽' : '💎'}`);
+}
 const sellValue = it => Math.round(it.price * (1 + state.tuningLevel * (it.type === 'car' ? 0.005 : 0.0025)));
 function sellPending(type) {
     const items = state.pending[type]; if (!items.length) return;
@@ -1796,9 +1890,41 @@ function sellPending(type) {
     state.pending[type] = []; renderPending(type); updateUI(); toast(`Продано: ${fmt(sum)} ${type === 'car' ? '₽' : '💎'}`);
 }
 let garageFilter = 'all';
+let garageSelecting = false;
+const garageSel = new Set();
+function toggleGarageSelect() { garageSelecting = !garageSelecting; garageSel.clear(); renderGarage(); }
+function toggleGarageItem(u) { if (garageSel.has(u)) garageSel.delete(u); else garageSel.add(u); renderGarage(); }
+const garageVisible = () => state.garage.filter(i => garageFilter === 'all' || i.type === garageFilter);
+function sellValueText(list) {
+    const rub = list.filter(i => i.type === 'car').reduce((s, i) => s + sellValue(i), 0);
+    const cry = list.filter(i => i.type === 'number').reduce((s, i) => s + sellValue(i), 0);
+    return [rub ? `${fmt(rub)} ₽` : '', cry ? `${fmt(cry)} 💎` : ''].filter(Boolean).join(' + ') || '0';
+}
+function sellGarageList(list) {
+    const ids = new Set(list.map(i => i.uid));
+    list.forEach(it => { if (it.type === 'car') earnMoney(sellValue(it)); else state.crystals += sellValue(it); });
+    state.garage = state.garage.filter(i => !ids.has(i.uid));
+    if (ids.has(state.battleCar)) state.battleCar = null;
+    garageSelecting = false; garageSel.clear(); renderGarage(); updateUI();
+}
+// keepMarked = true: продать всё, КРОМЕ отмеченного (только в открытой вкладке)
+function sellMarked(keepMarked) {
+    const list = garageVisible().filter(i => garageSel.has(i.uid) !== keepMarked);
+    if (!list.length) { toast('Нечего продавать'); return; }
+    confirmBox(`Продать ${list.length} шт. за <b>${sellValueText(list)}</b>?`, () => sellGarageList(list), 'Продать');
+}
+function renderGarageSelBar() {
+    const btn = $('garage-select-btn'); if (btn) btn.textContent = garageSelecting ? 'Отменить выбор' : 'Выбрать, что продать';
+    const bar = $('garage-sel-bar'); if (!bar) return;
+    bar.style.display = garageSelecting && garageSel.size ? 'flex' : 'none';
+    const marked = garageVisible().filter(i => garageSel.has(i.uid));
+    const rest = garageVisible().filter(i => !garageSel.has(i.uid));
+    bar.innerHTML = `<button class="btn btn-danger" onclick="sellMarked(false)">Продать отмеченные (${marked.length}) за ${sellValueText(marked)}</button>
+        <button class="btn btn-green" onclick="sellMarked(true)">Оставить отмеченные, остальные (${rest.length}) продать</button>`;
+}
 function renderGarage() {
     const chips = $('garage-chips');
-    if (chips) chips.innerHTML = [['all', 'Всё'], ['car', 'Машины'], ['number', 'Номера']].map(([k, l]) => `<div class="chip ${garageFilter === k ? 'active' : ''}" onclick="garageFilter='${k}'; renderGarage();">${l}</div>`).join('');
+    if (chips) chips.innerHTML = [['all', 'Всё'], ['car', 'Машины'], ['number', 'Номера']].map(([k, l]) => `<div class="chip ${garageFilter === k ? 'active' : ''}" onclick="garageFilter='${k}'; garageSel.clear(); renderGarage();">${l}</div>`).join('');
     const sortEl = $('sort-garage');
     const mode = sortEl ? sortEl.value : 'price-desc';
     let list = state.garage.filter(i => garageFilter === 'all' || i.type === garageFilter);
@@ -1806,7 +1932,8 @@ function renderGarage() {
     if (mode === 'price-asc') list.sort((a, b) => a.price - b.price);
     if (mode === 'rarity') { const o = { ultra:-1, hyper:0, legendary:1, epic:2, rare:3, common:4 }; list.sort((a, b) => o[a.rarity] - o[b.rarity]); }
     const grid = $('garage-grid');
-    if (grid) grid.innerHTML = list.length ? list.map(it => `<div class="g-card r-${it.rarity}"><div class="g-art">${artOf(it, true)}</div><div class="g-name">${it.name}</div><div class="rar-label" style="font-size:9px;">${it.rarity}</div><div class="g-price ${priceCls(it)}">${priceStr(it)}</div><button class="btn btn-danger btn-sm" style="width:100%;" onclick="sellFromGarage('${it.uid}')">Продать</button></div>`).join('') : '<div class="empty">Здесь пока пусто</div>';
+    if (grid) grid.innerHTML = list.length ? list.map(it => `<div class="g-card r-${it.rarity}${garageSelecting ? ' pickable' : ''}${garageSel.has(it.uid) ? ' picked' : ''}" ${garageSelecting ? `onclick="toggleGarageItem('${it.uid}')"` : ''}><div class="g-art">${artOf(it, true)}</div><div class="g-name">${it.name}</div><div class="rar-label" style="font-size:9px;">${it.rarity}</div><div class="g-price ${priceCls(it)}">${priceStr(it)}</div>${garageSelecting ? '' : `<button class="btn btn-danger btn-sm" style="width:100%;" onclick="sellFromGarage('${it.uid}')">Продать</button>`}</div>`).join('') : '<div class="empty">Здесь пока пусто</div>';
+    renderGarageSelBar();
 }
 function sellFromGarage(u) {
     const idx = state.garage.findIndex(i => i.uid === u); if (idx < 0) return;
@@ -1969,8 +2096,8 @@ function doUpgrade() {
             const got = { ...prize, type: 'car', uid: newUid() };
             state.garage.push(got); state.upgradeWins++;
             if (['legendary','hyper','ultra'].includes(got.rarity)) state.gotLegendary = true;
-            upgUids = []; upgBusy = false; if (go) go.classList.remove('disabled');
-            infoBox('🎉 ПОБЕДА!', `${carArt(got)}Вы получили <b>${got.name}</b><br>за ${fmt(got.price)} ₽`);
+            upgUids = [got.uid]; upgBusy = false; if (go) go.classList.remove('disabled');
+            playReveal(got, 'car', 1, () => {}, { title: 'АПГРЕЙД УДАЛСЯ' });
         } else {
             const cashback = Math.round(totalPrice * UPGRADE_CASHBACK);
             earnMoney(cashback);
@@ -2068,7 +2195,7 @@ function doUpgradeNumber() {
         if (win) {
             const got = { ...prize, type: 'number', uid: newUid() };
             state.garage.push(got); state.upgradeWins++;
-            upgnUids = []; upgnBusy = false; if (go) go.classList.remove('disabled');
+            upgnUids = [got.uid]; upgnBusy = false; if (go) go.classList.remove('disabled');
             infoBox('🎉 ПОБЕДА!', `${plateHTML(got)}Номер <b>${got.name}</b> за ${fmt(got.price)} 💎`);
         } else {
             const cashback = Math.round(totalPrice * UPGRADE_CASHBACK);
@@ -2165,7 +2292,8 @@ function battleFinish() {
     const li = lobbies.indexOf(b.lb); if (li >= 0) lobbies.splice(li, 1);
     ensureLobbies(); battling = false; battleState = null;
     updateUI(); updateBattleUI();
-    openModal(body + `<button class="btn btn-gold" onclick="closeModal()">ОК</button>`);
+    const showResult = () => openModal(body + `<button class="btn btn-gold" onclick="closeModal()">ОК</button>`);
+    if (win) { closeModal(); playReveal(b.lb.car, 'car', 1, showResult, { title: 'ПОБЕДА В БАТЛЕ' }); } else showResult();
 }
 const FORTUNE_PRIZES = [
     { t: '1 000 000 ₽', m: 1000000, color: '#ff4d6d' }, { t: '500 💎', c: 500, color: '#1fae72' },
@@ -2283,7 +2411,7 @@ function buyShop(id) {
         state.garage.push({ ...car, type: 'car', uid: newUid() });
         if (['legendary', 'hyper', 'ultra'].includes(car.rarity)) state.gotLegendary = true;
         updateUI(); renderShop();
-        infoBox('🎁 Мистери-бокс', `<div class="r-${car.rarity}">${carArt(car)}</div><b>${car.name}</b><br>${fmt(car.price)} ₽`);
+        playReveal(car, 'car', 1, () => {}, { title: 'МИСТЕРИ-БОКС' });
         return;
     } else if (id === 'plates') {
         const got = [];
@@ -2358,7 +2486,7 @@ function tickAuction() {
     }
     if (auction.timer <= 0) {
         clearInterval(auction.iv); auction.iv = null;
-        if (auction.leader === 'player') { const car = { ...auction.car, type: 'car', uid: newUid() }; state.garage.push(car); auction.hold = 0; updateUI(); infoBox('🏆 Выиграли!', `${carArt(car)}<b>${car.name}</b> за ${fmt(auction.bid)} ₽`); }
+        if (auction.leader === 'player') { const car = { ...auction.car, type: 'car', uid: newUid() }; state.garage.push(car); auction.hold = 0; updateUI(); playReveal(car, 'car', 1, () => {}, { title: 'ЛОТ ТВОЙ' }); }
         else toast(auction.leader === 'bot' ? 'Купил другой' : 'Никто не сделал ставку');
         startAuction(); return;
     }
@@ -2371,18 +2499,31 @@ function placeBid() {
     state.money -= newBid; auction.hold = newBid; auction.bid = newBid; auction.leader = 'player';
     auction.timer = Math.max(auction.timer, 10); updateUI(); renderAuction();
 }
+const CONTRACT_PERIOD = 2 * 60 * 1000;
+function contractLeft(c) {
+    const s = Math.max(0, Math.ceil(((c.nextAt || 0) - Date.now()) / 1000));
+    return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+}
 function renderContracts() {
     const list = $('contracts-list'); if (!list) return;
     const cars = state.garage.filter(i => i.type === 'car');
     let html = '';
-    if (state.contracts.length) html += '<div class="sec-title">В аренде</div>' + state.contracts.map(c => `<div class="list-item"><div class="li-art r-${c.car.rarity}">${carArt(c.car)}</div><div class="li-main"><div class="li-title">${c.car.name}</div><div class="li-green" style="font-size:12px;">+${fmt(c.income)} ₽ / 10 сек</div></div><button class="btn-join" onclick="returnCar('${c.car.uid}')">Забрать</button></div>`).join('');
+    if (state.contracts.length) html += '<div class="sec-title">В аренде</div>' + state.contracts.map(c => `<div class="list-item"><div class="li-art r-${c.car.rarity}">${carArt(c.car)}</div><div class="li-main"><div class="li-title">${c.car.name}</div><div class="li-green" style="font-size:12px;">+${fmt(c.income)} ₽ / 2 мин</div><div class="li-sub">Выплата через <span data-contract="${c.car.uid}">${contractLeft(c)}</span></div></div><button class="btn-join" onclick="returnCar('${c.car.uid}')">Забрать</button></div>`).join('');
     html += '<div class="sec-title">Свободные</div>';
-    html += cars.length ? cars.map(car => `<div class="list-item"><div class="li-art r-${car.rarity}">${carArt(car)}</div><div class="li-main"><div class="li-title">${car.name}</div><div class="li-green" style="font-size:12px;">${fmt(car.price * 0.05)} ₽ / 10 сек</div></div><button class="btn-join" onclick="rentCar('${car.uid}')">Сдать</button></div>`).join('') : '<div class="empty">Нет машин</div>';
+    html += cars.length ? cars.map(car => `<div class="list-item"><div class="li-art r-${car.rarity}">${carArt(car)}</div><div class="li-main"><div class="li-title">${car.name}</div><div class="li-green" style="font-size:12px;">${fmt(car.price * 0.05)} ₽ / 2 мин</div></div><button class="btn-join" onclick="rentCar('${car.uid}')">Сдать</button></div>`).join('') : '<div class="empty">Нет машин</div>';
     list.innerHTML = html;
 }
-function rentCar(u) { const idx = state.garage.findIndex(i => i.uid === u); if (idx < 0) return; const car = state.garage[idx]; state.contracts.push({ car, income: Math.floor(car.price * 0.05) }); state.garage.splice(idx, 1); if (state.battleCar === u) state.battleCar = null; renderContracts(); updateUI(); toast('В аренде!'); }
+function rentCar(u) { const idx = state.garage.findIndex(i => i.uid === u); if (idx < 0) return; const car = state.garage[idx]; state.contracts.push({ car, income: Math.floor(car.price * 0.05), nextAt: Date.now() + CONTRACT_PERIOD }); state.garage.splice(idx, 1); if (state.battleCar === u) state.battleCar = null; renderContracts(); updateUI(); toast('В аренде!'); }
 function returnCar(u) { const idx = state.contracts.findIndex(c => c.car.uid === u); if (idx < 0) return; state.garage.push(state.contracts[idx].car); state.contracts.splice(idx, 1); renderContracts(); updateUI(); toast('Вернулась'); }
-setInterval(() => { if (state.contracts.length) { earnMoney(state.contracts.reduce((s, c) => s + c.income, 0)); updateUI(); } }, 10000);
+setInterval(() => {
+    const now = Date.now(); let paid = 0;
+    state.contracts.forEach(c => {
+        if (!c.nextAt) c.nextAt = now + CONTRACT_PERIOD;
+        if (now >= c.nextAt) { paid += c.income; c.nextAt = now + CONTRACT_PERIOD; }
+        const el = document.querySelector(`[data-contract="${c.car.uid}"]`); if (el) el.textContent = contractLeft(c);
+    });
+    if (paid) { earnMoney(paid); updateUI(); toast(`📝 Аренда: +${fmt(paid)} ₽`); }
+}, 1000);
 function renderAchievements() {
     const list = $('achievements-list'); if (!list) return;
     list.innerHTML = ACHIEVEMENTS.map(a => {
@@ -2396,14 +2537,7 @@ function renderAchievements() {
 }
 let catalogTab = 'car';
 function dropChance(type, rar, mode) {
-    const boost = mode === 'boost' ? 2.5 : mode === 'x10' ? 1.5 : mode === 'x100' ? 2.2 : 0;
-    let cH, cU, cL, cE, cR;
-    if (mode === 'x100') { cH = 0.06; cU = 0.012; cL = 1.35; cE = 5 + boost * 0.9; cR = 18 + boost * 0.9; }
-    else {
-        cH = type === 'car' ? 0.08 + boost * 0.01 : 0;
-        cU = (type === 'car' ? 0.01 : 0.02) * (1 + boost * 0.5);
-        cL = Math.max(0, 1.2 + boost - (mode === 'x10' ? 1 : 0)); cE = 5 + boost; cR = 18 + boost;
-    }
+    const { cU, cH, cL, cE, cR } = rarityWeights(type, mode, 0);
     const cat = { ultra: cU, hyper: cH, legendary: cL, epic: cE, rare: cR, common: 100 - cU - cH - cL - cE - cR }[rar] || 0;
     const db = type === 'car' ? CARS_DB : NUMBERS_DB;
     const n = db.filter(i => i.rarity === rar).length || 1;
@@ -2505,11 +2639,11 @@ function playReveal(item, type, total, done, opts) {
     opts = opts || {};
     const fin = RV_FINAL[item.rarity];
     const app = $('app');
-    if (fin == null || fin < (opts.always ? 0 : 2) || !app || SETTINGS.skipAnim) { done(); return; }
+    if (fin == null || fin < (opts.always || type === 'car' ? 0 : 2) || !app || SETTINGS.skipAnim) { done(); return; }
     const isNum = type === 'number', unit = isNum ? '💎' : '₽';
     const dur = RV_DUR[fin] * (SETTINGS.fastAnim ? .5 : 1);
     const ov = document.createElement('div');
-    ov.className = 'rv';
+    ov.className = 'rv' + (isNum ? '' : ' rv-' + item.rarity) + (SETTINGS.calm ? ' rv-calm' : '');
     ov.innerHTML = `<div class="rv-bg"></div><div class="rv-rays"></div><div class="rv-flash"></div>
         <div class="rv-main">
             ${opts.title ? `<div class="rv-title">${opts.title}</div>` : ''}
@@ -2540,7 +2674,7 @@ function playReveal(item, type, total, done, opts) {
         setStage(fin);
         chars.forEach(c => c.classList.add('on'));
         art.classList.add('lit', 'shine');
-        if (fin >= 4) ov.classList.add('flash', 'shake');
+        if (fin >= 4 && !SETTINGS.calm) ov.classList.add('flash', 'shake');
         ov.classList.add('done'); sfx('win', fin);
     }
     function frame(now) {
@@ -2601,4 +2735,4 @@ const _bindAmt = $('transfer-amount');
 if (_bindAmt) _bindAmt.addEventListener('input', renderTransfers);
 </script>
 </body>
-  </html>
+                      </html>
